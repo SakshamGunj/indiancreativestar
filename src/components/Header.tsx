@@ -7,9 +7,11 @@ import {
   ChevronDown,
   Instagram,
   Facebook,
-  Twitter
+  Twitter,
+  ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -22,6 +24,7 @@ const navigation = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +40,10 @@ export function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleEnterNowClick = () => {
+    window.location.href = "#register";
+  };
 
   return (
     <header
@@ -105,10 +112,10 @@ export function Header() {
             <Twitter className="h-5 w-5" />
           </a>
           <Button
-            className="creative-btn ml-4"
-            onClick={() => window.location.href = "#register"}
+            className="creative-btn ml-4 group"
+            onClick={handleEnterNowClick}
           >
-            Enter Now
+            Enter Now <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
@@ -177,13 +184,13 @@ export function Header() {
                 </a>
               </div>
               <Button
-                className="w-full creative-btn"
+                className="w-full creative-btn group"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   window.location.href = "#register";
                 }}
               >
-                Enter Now
+                Enter Now <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </div>

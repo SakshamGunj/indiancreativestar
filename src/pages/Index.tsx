@@ -16,6 +16,9 @@ import { Header } from "@/components/Header";
 import { StatsSection } from "@/components/StatsSection";
 import { EarlyBirdBanner } from "@/components/EarlyBirdBanner";
 import { Footer } from "@/components/Footer";
+import { AboutSection } from "@/components/AboutSection";
+import { CertificateSection } from "@/components/CertificateSection";
+import { useNavigate } from "react-router-dom";
 import { 
   ArrowDown, 
   Award, 
@@ -27,11 +30,13 @@ import {
   TrendingUp, 
   Users,
   Star,
-  Clock
+  Clock,
+  ArrowRight
 } from "lucide-react";
 
 const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Show confetti after 5 seconds
@@ -41,6 +46,10 @@ const Index = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleEnterCompetitions = () => {
+    navigate("/competitions");
+  };
 
   return (
     <>
@@ -85,10 +94,12 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: "0.4s" }}>
-                <RegistrationModal 
-                  contestType="art" 
-                  buttonText="Enter Now" 
-                />
+                <Button 
+                  className="creative-btn group"
+                  onClick={handleEnterCompetitions}
+                >
+                  Enter Now <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
                 
                 <Button variant="outline" className="creative-btn-secondary">
                   Learn More <ArrowDown className="ml-2 h-4 w-4" />
@@ -118,20 +129,22 @@ const Index = () => {
                     <div className="flex flex-col items-center creative-card p-4 animate-float" style={{ animationDelay: "0s" }}>
                       <Palette className="h-6 w-6 text-creative-blue mb-2" />
                       <h3 className="font-medium">Art Contest</h3>
-                      <RegistrationModal 
-                        contestType="art" 
-                        buttonText="Join Now" 
-                        buttonClassName="text-sm py-1.5 px-4 mt-2 creative-btn" 
-                      />
+                      <Button 
+                        className="text-sm py-1.5 px-4 mt-2 creative-btn"
+                        onClick={() => navigate("/competitions")}
+                      >
+                        Join Now
+                      </Button>
                     </div>
                     <div className="flex flex-col items-center creative-card p-4 animate-float" style={{ animationDelay: "0.5s" }}>
                       <PenLine className="h-6 w-6 text-creative-pink mb-2" />
                       <h3 className="font-medium">Poetry Contest</h3>
-                      <RegistrationModal 
-                        contestType="poetry" 
-                        buttonText="Join Now" 
-                        buttonClassName="text-sm py-1.5 px-4 mt-2 creative-btn" 
-                      />
+                      <Button 
+                        className="text-sm py-1.5 px-4 mt-2 creative-btn"
+                        onClick={() => navigate("/competitions")}
+                      >
+                        Join Now
+                      </Button>
                     </div>
                   </div>
                   
@@ -150,6 +163,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* About Section */}
+      <AboutSection />
       
       {/* Who Can Participate */}
       <section className="section-padding">
@@ -163,7 +179,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="creative-card p-6 flex flex-col items-center text-center">
+            <div className="creative-card p-6 flex flex-col items-center text-center hover:scale-105 transition-all duration-300">
               <div className="h-16 w-16 rounded-full bg-creative-purple/20 flex items-center justify-center mb-6">
                 <Users className="h-8 w-8 text-creative-purple" />
               </div>
@@ -173,7 +189,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="creative-card p-6 flex flex-col items-center text-center">
+            <div className="creative-card p-6 flex flex-col items-center text-center hover:scale-105 transition-all duration-300">
               <div className="h-16 w-16 rounded-full bg-creative-blue/20 flex items-center justify-center mb-6">
                 <TrendingUp className="h-8 w-8 text-creative-blue" />
               </div>
@@ -183,7 +199,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="creative-card p-6 flex flex-col items-center text-center">
+            <div className="creative-card p-6 flex flex-col items-center text-center hover:scale-105 transition-all duration-300">
               <div className="h-16 w-16 rounded-full bg-creative-pink/20 flex items-center justify-center mb-6">
                 <Users className="h-8 w-8 text-creative-pink" />
               </div>
@@ -193,7 +209,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="creative-card p-6 flex flex-col items-center text-center">
+            <div className="creative-card p-6 flex flex-col items-center text-center hover:scale-105 transition-all duration-300">
               <div className="h-16 w-16 rounded-full bg-creative-orange/20 flex items-center justify-center mb-6">
                 <Palette className="h-8 w-8 text-creative-orange" />
               </div>
@@ -205,10 +221,12 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-12 animate-fade-in">
-            <RegistrationModal 
-              contestType="art" 
-              buttonText="Join the Community Today" 
-            />
+            <Button 
+              className="creative-btn group"
+              onClick={handleEnterCompetitions}
+            >
+              Join the Community Today <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
         </div>
       </section>
@@ -226,7 +244,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="relative">
-              <div className="creative-card p-8 h-full">
+              <div className="creative-card p-8 h-full hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-5 -left-5 h-10 w-10 rounded-full bg-creative-purple flex items-center justify-center text-white font-bold border-2 border-background">
                   1
                 </div>
@@ -248,7 +266,7 @@ const Index = () => {
             </div>
             
             <div className="relative">
-              <div className="creative-card p-8 h-full">
+              <div className="creative-card p-8 h-full hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-5 -left-5 h-10 w-10 rounded-full bg-creative-blue flex items-center justify-center text-white font-bold border-2 border-background">
                   2
                 </div>
@@ -270,7 +288,7 @@ const Index = () => {
             </div>
             
             <div className="relative">
-              <div className="creative-card p-8 h-full">
+              <div className="creative-card p-8 h-full hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-5 -left-5 h-10 w-10 rounded-full bg-creative-pink flex items-center justify-center text-white font-bold border-2 border-background">
                   3
                 </div>
@@ -292,7 +310,7 @@ const Index = () => {
             </div>
             
             <div className="relative">
-              <div className="creative-card p-8 h-full">
+              <div className="creative-card p-8 h-full hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-5 -left-5 h-10 w-10 rounded-full bg-creative-yellow flex items-center justify-center text-white font-bold border-2 border-background">
                   4
                 </div>
@@ -323,16 +341,21 @@ const Index = () => {
               Express emotions through colors in your artwork or poetry. How do different emotions look or feel to you? 
               Use this theme as inspiration for your submission.
             </p>
-            <RegistrationModal 
-              contestType="art" 
-              buttonText="Start Creating Today" 
-            />
+            <Button 
+              className="creative-btn group"
+              onClick={handleEnterCompetitions}
+            >
+              Start Creating Today <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
         </div>
       </section>
       
       {/* Prize Section */}
       <PrizeSection />
+      
+      {/* Certificate Section */}
+      <CertificateSection />
       
       {/* Gallery Section */}
       <GallerySection />
@@ -358,7 +381,7 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="creative-card p-6">
+            <div className="creative-card p-6 hover:scale-105 transition-all duration-300">
               <div className="flex items-start gap-4 mb-4">
                 <div className="h-10 w-10 rounded-full bg-creative-purple/20 flex items-center justify-center shrink-0">
                   <TrendingUp className="h-5 w-5 text-creative-purple" />
@@ -370,7 +393,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="creative-card p-6">
+            <div className="creative-card p-6 hover:scale-105 transition-all duration-300">
               <div className="flex items-start gap-4 mb-4">
                 <div className="h-10 w-10 rounded-full bg-creative-blue/20 flex items-center justify-center shrink-0">
                   <Clock className="h-5 w-5 text-creative-blue" />
@@ -382,7 +405,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="creative-card p-6">
+            <div className="creative-card p-6 hover:scale-105 transition-all duration-300">
               <div className="flex items-start gap-4 mb-4">
                 <div className="h-10 w-10 rounded-full bg-creative-pink/20 flex items-center justify-center shrink-0">
                   <BookOpen className="h-5 w-5 text-creative-pink" />
@@ -421,11 +444,12 @@ const Index = () => {
                     <span className="text-sm text-muted-foreground">Regular: ₹299</span>
                     <Badge className="bg-creative-yellow text-black">Early Bird: ₹199</Badge>
                   </div>
-                  <RegistrationModal 
-                    contestType="art" 
-                    buttonText="Enter Art Contest" 
-                    buttonClassName="w-full creative-btn" 
-                  />
+                  <Button 
+                    className="w-full creative-btn group"
+                    onClick={() => navigate("/competitions")}
+                  >
+                    Enter Art Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
                 
                 <div className="creative-card p-6 bg-gradient-to-br from-creative-pink/20 to-creative-orange/20 border-white/5 hover:border-white/20 transition-all duration-300 group">
@@ -438,11 +462,12 @@ const Index = () => {
                     <span className="text-sm text-muted-foreground">Regular: ₹299</span>
                     <Badge className="bg-creative-yellow text-black">Early Bird: ₹199</Badge>
                   </div>
-                  <RegistrationModal 
-                    contestType="poetry" 
-                    buttonText="Enter Poetry Contest" 
-                    buttonClassName="w-full creative-btn" 
-                  />
+                  <Button 
+                    className="w-full creative-btn group"
+                    onClick={() => navigate("/competitions")}
+                  >
+                    Enter Poetry Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
               </div>
             </div>

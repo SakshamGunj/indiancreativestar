@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface RegistrationModalProps {
   contestType: "art" | "poetry";
@@ -24,6 +25,7 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -44,16 +46,20 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
         description: `You've registered for the ${contestType === "art" ? "Art" : "Poetry"} competition.`,
       });
       
-      // Reset form after 2 seconds and close modal
+      // Reset form after 2 seconds and redirect to thank you page
       setTimeout(() => {
         setIsSuccess(false);
+        setIsOpen(false);
+        
+        // Navigate to thank you page with query params
+        navigate(`/thank-you?type=${contestType}&name=${encodeURIComponent(formState.name)}`);
+        
         setFormState({
           name: "",
           whatsapp: "",
           email: "",
           instagram: "",
         });
-        setIsOpen(false);
       }, 2000);
     }, 1500);
   };
@@ -61,8 +67,8 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className={buttonClassName || "creative-btn"}>
-          {buttonText} <ArrowRight className="ml-2 h-4 w-4" />
+        <Button className={buttonClassName || "creative-btn group"}>
+          {buttonText} <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] glassmorphism border-white/10">
@@ -124,6 +130,11 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
                 onChange={handleInputChange}
                 className="bg-white/5 border-white/10"
               />
+            </div>
+            
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+              <CheckCircle className="h-3 w-3 text-green-500" />
+              <span>100% Secure Payment</span>
             </div>
             
             <Button 
