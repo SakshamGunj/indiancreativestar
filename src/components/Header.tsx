@@ -105,8 +105,8 @@ export function Header() {
             <Twitter className="h-5 w-5" />
           </a>
           <Button
-            href="#register"
             className="creative-btn ml-4"
+            onClick={() => window.location.href = "#register"}
           >
             Enter Now
           </Button>

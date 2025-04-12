@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Award, Medal, BookOpen, Certificate, Star } from "lucide-react";
+import { Trophy, Award, Medal, BookOpen, Star } from "lucide-react";
 
 export function PrizeSection() {
   return (
@@ -40,7 +40,7 @@ export function PrizeSection() {
                   <span>Feature in eBook Anthology</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Certificate className="h-4 w-4 text-creative-yellow" />
+                  <Award className="h-4 w-4 text-creative-yellow" />
                   <span>Digital Certificate</span>
                 </li>
               </ul>
@@ -71,7 +71,7 @@ export function PrizeSection() {
                   <span>Feature in eBook Anthology</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Certificate className="h-4 w-4 text-creative-blue" />
+                  <Award className="h-4 w-4 text-creative-blue" />
                   <span>Digital Certificate</span>
                 </li>
               </ul>
@@ -102,7 +102,7 @@ export function PrizeSection() {
                   <span>Feature in eBook Anthology</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Certificate className="h-4 w-4 text-creative-pink" />
+                  <Award className="h-4 w-4 text-creative-pink" />
                   <span>Digital Certificate</span>
                 </li>
               </ul>
