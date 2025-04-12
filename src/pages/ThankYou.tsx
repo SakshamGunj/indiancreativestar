@@ -7,7 +7,7 @@ import {
   ArrowLeft, 
   Share2, 
   Download, 
-  WhatsappIcon, 
+  MessageSquare, 
   Calendar, 
   Users,
   ArrowRight
@@ -131,7 +131,7 @@ export default function ThankYou() {
               className="w-full creative-btn"
               onClick={() => window.open("https://whatsapp.com", "_blank")}
             >
-              <WhatsappIcon className="mr-2 h-5 w-5" />
+              <MessageSquare className="mr-2 h-5 w-5" />
               Join WhatsApp Group
             </Button>
           </div>
