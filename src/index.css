@@ -53,11 +53,23 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased font-poppins;
+    @apply bg-background text-foreground antialiased font-poppins touch-manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1, h2, h3, h4, h5 {
     @apply font-playfair;
+  }
+  
+  /* Optimize buttons for touch - increase touch target size */
+  button, a {
+    @apply touch-manipulation;
+  }
+  
+  /* Remove input zoom on iOS */
+  input, select, textarea {
+    @apply text-base;
+    font-size: 16px;
   }
 }
 
@@ -67,19 +79,19 @@
   }
 
   .creative-btn {
-    @apply bg-gradient-creative hover:opacity-90 text-white font-medium py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 ease-in-out;
+    @apply bg-gradient-creative hover:opacity-90 text-white font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 ease-in-out;
   }
 
   .creative-btn-secondary {
-    @apply bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
   }
 
   .prize-card {
-    @apply creative-card p-6 animate-float;
+    @apply creative-card p-4 sm:p-6 animate-float;
   }
 
   .testimonial-card {
-    @apply creative-card p-6 hover:scale-105 transition-all duration-300;
+    @apply creative-card p-4 sm:p-6 hover:scale-105 transition-all duration-300;
   }
 
   .gallery-item {
@@ -87,7 +99,7 @@
   }
 
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-12 sm:py-16 md:py-24;
   }
 
   .glassmorphism {
@@ -95,21 +107,81 @@
   }
 
   .hero-badge {
-    @apply bg-white/10 backdrop-blur-sm text-white px-4 py-1 rounded-full text-sm font-medium inline-flex items-center gap-2;
+    @apply bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium inline-flex items-center gap-1 sm:gap-2;
   }
 
   .floating-notification {
-    @apply fixed bottom-4 left-4 glassmorphism p-4 rounded-lg max-w-xs animate-bounce-in z-50;
+    @apply fixed bottom-4 left-4 glassmorphism p-3 sm:p-4 rounded-lg max-w-xs animate-bounce-in z-50;
   }
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-creative;
   }
+  
+  /* Mobile optimized containers */
+  .container {
+    @apply px-4 sm:px-6;
+  }
+  
+  /* Mobile optimized headings */
+  .heading-xl {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+  
+  .heading-lg {
+    @apply text-xl sm:text-2xl md:text-3xl font-bold;
+  }
+  
+  .heading-md {
+    @apply text-lg sm:text-xl md:text-2xl font-semibold;
+  }
+  
+  /* Mobile touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
 }
 
+/* Confetti animation */
 .confetti {
   position: absolute;
   width: 10px;
   height: 10px;
   animation: confetti 5s ease-out forwards;
+}
+
+/* Mobile optimized animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-float, .animate-bounce-in, .animate-fade-in {
+    animation: none !important;
+  }
+}
+
+/* Fix for fixed position elements on mobile */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent pull-to-refresh on mobile */
+html, body {
+  overscroll-behavior-y: contain;
+}
+
+/* Adjust for mobile notches and home indicators */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: min(0vmin, env(safe-area-inset-left));
+    padding-right: min(0vmin, env(safe-area-inset-right));
+    padding-top: min(0vmin, env(safe-area-inset-top));
+    padding-bottom: min(0vmin, env(safe-area-inset-bottom));
+  }
 }

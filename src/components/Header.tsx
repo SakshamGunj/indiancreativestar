@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -25,6 +26,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,19 +53,19 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-background/80 backdrop-blur-lg shadow-md py-2"
-          : "bg-transparent py-4"
+          : "bg-transparent py-3"
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container px-4 sm:px-6 flex items-center justify-between">
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
             <span className="sr-only">India Creative Star</span>
-            <div className="h-10 w-10 rounded-full bg-gradient-creative flex items-center justify-center">
-              <span className="font-bold text-white">ICS</span>
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-creative flex items-center justify-center">
+              <span className="font-bold text-white text-sm sm:text-base">ICS</span>
             </div>
             <div>
-              <span className="font-playfair font-bold text-gradient text-xl">
-                India Creative Star
+              <span className="font-playfair font-bold text-gradient text-base sm:text-xl">
+                {isMobile ? "ICS" : "India Creative Star"}
               </span>
             </div>
           </a>
@@ -120,20 +122,20 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu with improved UX for mobile */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 bg-background/90 backdrop-blur-lg transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed inset-0 z-50 bg-background/95 backdrop-blur-lg transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="container flex h-16 items-center justify-between">
           <div className="flex">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
-              <div className="h-10 w-10 rounded-full bg-gradient-creative flex items-center justify-center">
-                <span className="font-bold text-white">ICS</span>
+              <div className="h-8 w-8 rounded-full bg-gradient-creative flex items-center justify-center">
+                <span className="font-bold text-white text-sm">ICS</span>
               </div>
               <div>
-                <span className="font-playfair font-bold text-gradient text-xl">
+                <span className="font-playfair font-bold text-gradient text-base">
                   India Creative Star
                 </span>
               </div>
@@ -155,7 +157,7 @@ export function Header() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-white hover:bg-white/10"
+                  className="-mx-3 block rounded-lg px-3 py-3 text-base font-medium text-white hover:bg-white/10 active:bg-white/20 touch-manipulation"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -163,34 +165,34 @@ export function Header() {
               ))}
             </div>
             <div className="py-6">
-              <div className="flex gap-4 mb-4">
+              <div className="flex gap-4 mb-6 justify-center">
                 <a
                   href="#"
-                  className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
+                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a
                   href="#"
-                  className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
+                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
                 >
                   <Facebook className="h-5 w-5" />
                 </a>
                 <a
                   href="#"
-                  className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
+                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
                 >
                   <Twitter className="h-5 w-5" />
                 </a>
               </div>
               <Button
-                className="w-full creative-btn group"
+                className="w-full creative-btn group py-6 text-base"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   window.location.href = "#register";
                 }}
               >
-                Enter Now <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Enter Now <ArrowRight className="ml-1 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </div>
