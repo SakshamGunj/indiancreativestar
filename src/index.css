@@ -55,6 +55,7 @@
   body {
     @apply bg-background text-foreground antialiased font-poppins touch-manipulation;
     -webkit-tap-highlight-color: transparent;
+    background: linear-gradient(to bottom, #ffffff, #fcfcff);
   }
 
   h1, h2, h3, h4, h5 {
@@ -75,7 +76,7 @@
 
 @layer components {
   .creative-card {
-    @apply bg-white backdrop-blur-md border border-gray-200 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-white backdrop-blur-md border border-indigo-100/80 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
   }
 
   .creative-btn {
@@ -83,19 +84,19 @@
   }
 
   .creative-btn-secondary {
-    @apply bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-white border border-indigo-100 hover:bg-indigo-50/50 text-gray-800 font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-sm hover:shadow-md transition-all duration-300;
   }
 
   .prize-card {
-    @apply creative-card p-4 sm:p-6 animate-float;
+    @apply creative-card p-4 sm:p-6 animate-float bg-gradient-to-br from-white to-indigo-50/50;
   }
 
   .testimonial-card {
-    @apply creative-card p-4 sm:p-6 hover:scale-105 transition-all duration-300;
+    @apply creative-card p-4 sm:p-6 hover:scale-105 transition-all duration-300 bg-gradient-to-br from-white to-pink-50/50;
   }
 
   .gallery-item {
-    @apply creative-card overflow-hidden;
+    @apply creative-card overflow-hidden bg-white;
   }
 
   .section-padding {
@@ -103,11 +104,11 @@
   }
 
   .glassmorphism {
-    @apply bg-white/80 backdrop-blur-md border border-gray-200 rounded-xl;
+    @apply bg-white/90 backdrop-blur-md border border-indigo-100/40 rounded-xl;
   }
 
   .hero-badge {
-    @apply bg-gray-100 backdrop-blur-sm text-gray-800 px-3 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium inline-flex items-center gap-1 sm:gap-2;
+    @apply bg-white/80 backdrop-blur-sm text-indigo-600 border border-indigo-100/50 px-3 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium inline-flex items-center gap-1 sm:gap-2;
   }
 
   .floating-notification {
@@ -143,7 +144,7 @@
 
   /* Sticky CTA Banner */
   .sticky-cta-banner {
-    @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-white border-t border-gray-200 shadow-lg z-50 flex justify-center items-center gap-3 md:hidden;
+    @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-white border-t border-indigo-100 shadow-lg z-50 flex justify-center items-center gap-3 md:hidden;
     animation: slide-up 0.3s ease-out;
   }
 }
