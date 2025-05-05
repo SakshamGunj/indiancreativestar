@@ -7,43 +7,43 @@
 
 @layer base {
   :root {
-    --background: 260 25% 11%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
 
-    --card: 260 25% 16%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
 
-    --popover: 260 25% 11%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
 
     --primary: 260 84% 70%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 327 73% 60%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 260 73% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 260 25% 16%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
 
     --accent: 327 73% 60%;
-    --accent-foreground: 0 0% 98%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 260 25% 25%;
-    --input: 260 25% 25%;
-    --ring: 260 84% 70%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5% 64.9%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 260 25% 16%;
-    --sidebar-foreground: 0 0% 98%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 10% 3.9%;
     --sidebar-primary: 260 84% 70%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 260 25% 20%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 260 25% 25%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 10% 3.9%;
+    --sidebar-border: 240 5.9% 90%;
     --sidebar-ring: 260 84% 70%;
   }
 
@@ -75,7 +75,7 @@
 
 @layer components {
   .creative-card {
-    @apply bg-card backdrop-blur-md border border-white/10 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-white backdrop-blur-md border border-gray-200 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
   }
 
   .creative-btn {
@@ -83,7 +83,7 @@
   }
 
   .creative-btn-secondary {
-    @apply bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2.5 sm:py-3 px-6 sm:px-8 rounded-full shadow-md hover:shadow-lg transition-all duration-300;
   }
 
   .prize-card {
@@ -103,11 +103,11 @@
   }
 
   .glassmorphism {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl;
+    @apply bg-white/80 backdrop-blur-md border border-gray-200 rounded-xl;
   }
 
   .hero-badge {
-    @apply bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium inline-flex items-center gap-1 sm:gap-2;
+    @apply bg-gray-100 backdrop-blur-sm text-gray-800 px-3 py-1 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-medium inline-flex items-center gap-1 sm:gap-2;
   }
 
   .floating-notification {
@@ -139,6 +139,12 @@
   /* Mobile touch targets */
   .touch-target {
     @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  /* Sticky CTA Banner */
+  .sticky-cta-banner {
+    @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-white border-t border-gray-200 shadow-lg z-50 flex justify-center items-center gap-3 md:hidden;
+    animation: slide-up 0.3s ease-out;
   }
 }
 
@@ -182,6 +188,10 @@ html, body {
     padding-left: min(0vmin, env(safe-area-inset-left));
     padding-right: min(0vmin, env(safe-area-inset-right));
     padding-top: min(0vmin, env(safe-area-inset-top));
-    padding-bottom: min(0vmin, env(safe-area-inset-bottom));
+    padding-bottom: min(env(safe-area-inset-bottom), 24px);
+  }
+
+  .sticky-cta-banner {
+    padding-bottom: max(env(safe-area-inset-bottom), 12px);
   }
 }

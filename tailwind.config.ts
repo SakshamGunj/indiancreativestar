@@ -151,7 +151,7 @@ export default {
 				'gradient-warm': 'linear-gradient(to right, #F97316, #FCD34D)',
 				'gradient-cool': 'linear-gradient(to right, #3B82F6, #8B5CF6)',
 				'texture-dots': 'radial-gradient(#3B82F6 1px, transparent 1px)',
-				'hero-pattern': 'linear-gradient(to bottom, rgba(26, 32, 44, 0.8), rgba(45, 55, 72, 0.8)), url("/lovable-uploads/3b26f380-c74f-448d-a46c-6f0c07b063a6.png")',
+				'hero-pattern': 'linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8)), url("/lovable-uploads/3b26f380-c74f-448d-a46c-6f0c07b063a6.png")',
 			},
 			backgroundSize: {
 				'texture-size': '20px 20px',
