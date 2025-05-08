@@ -6,15 +6,15 @@ import { Award, CheckCircle, ArrowRight } from "lucide-react";
 
 export function CertificateSection() {
   return (
-    <section className="section-padding bg-gradient-to-br from-creative-purple/10 to-creative-blue/5">
+    <section className="section-padding bg-gradient-to-br from-creative-purple/20 to-black">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <Badge variant="outline" className="mb-2 bg-white border border-creative-purple/20 text-creative-purple">Official Recognition</Badge>
+            <Badge variant="outline" className="mb-2 bg-black/50 border border-creative-purple/20 text-creative-purple">Official Recognition</Badge>
             <h2 className="text-4xl font-bold text-gradient mb-6">
               All Participants Receive a Digital Certificate
             </h2>
-            <p className="text-xl text-creative-purple/80 mb-8">
+            <p className="text-xl text-white/80 mb-8">
               Our professionally designed digital certificate is perfect for:
             </p>
             
@@ -22,22 +22,22 @@ export function CertificateSection() {
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 shrink-0" />
                 <div>
-                  <h3 className="font-bold text-lg">Resume Enhancement</h3>
-                  <p className="text-creative-purple/70">Add creative credentials to your professional profile</p>
+                  <h3 className="font-bold text-lg text-white">Resume Enhancement</h3>
+                  <p className="text-white/70">Add creative credentials to your professional profile</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 shrink-0" />
                 <div>
-                  <h3 className="font-bold text-lg">Portfolio Building</h3>
-                  <p className="text-creative-purple/70">Demonstrate your commitment to your craft</p>
+                  <h3 className="font-bold text-lg text-white">Portfolio Building</h3>
+                  <p className="text-white/70">Demonstrate your commitment to your craft</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-6 w-6 text-green-500 mt-0.5 shrink-0" />
                 <div>
-                  <h3 className="font-bold text-lg">Social Media Sharing</h3>
-                  <p className="text-creative-purple/70">Share your achievement with friends and followers</p>
+                  <h3 className="font-bold text-lg text-white">Social Media Sharing</h3>
+                  <p className="text-white/70">Share your achievement with friends and followers</p>
                 </div>
               </li>
             </ul>
@@ -50,11 +50,11 @@ export function CertificateSection() {
             </Button>
           </div>
           
-          <div className="creative-card p-8 relative overflow-hidden group hover:scale-105 transition-all duration-500 bg-gradient-to-br from-white to-indigo-50/30">
+          <div className="creative-card p-8 relative overflow-hidden group hover:scale-105 transition-all duration-500 bg-gradient-to-br from-black/80 to-creative-purple/20">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-creative-blue/20 rounded-full blur-3xl group-hover:bg-creative-blue/30 transition-all duration-500" />
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-creative-purple/20 rounded-full blur-3xl group-hover:bg-creative-purple/30 transition-all duration-500" />
             
-            <div className="relative bg-white/90 backdrop-blur-sm border border-white/80 rounded-xl p-6 shadow-xl">
+            <div className="relative bg-black/70 backdrop-blur-sm border border-white/10 rounded-xl p-6 shadow-xl">
               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center gap-2">
                   <div className="h-10 w-10 rounded-full bg-gradient-creative flex items-center justify-center">
@@ -70,10 +70,10 @@ export function CertificateSection() {
               </div>
               
               <div className="text-center py-8">
-                <h3 className="text-2xl font-playfair font-bold mb-2">Certificate of Participation</h3>
-                <p className="text-creative-purple/70 mb-4">This certifies that</p>
-                <p className="text-xl font-bold border-b border-creative-purple/20 pb-1 mb-4">[Your Name]</p>
-                <p className="text-creative-purple/70 mb-6">
+                <h3 className="text-2xl font-playfair font-bold mb-2 text-white">Certificate of Participation</h3>
+                <p className="text-white/70 mb-4">This certifies that</p>
+                <p className="text-xl font-bold border-b border-white/20 pb-1 mb-4 text-white">[Your Name]</p>
+                <p className="text-white/70 mb-6">
                   has successfully participated in the India Creative Star Challenge
                   <br />in the category of [Art/Poetry] for the theme "Colors of Emotions"
                 </p>
@@ -84,7 +84,7 @@ export function CertificateSection() {
                 </div>
               </div>
               
-              <div className="flex justify-between items-center mt-4 text-xs text-creative-purple/60">
+              <div className="flex justify-between items-center mt-4 text-xs text-white/60">
                 <span>April 2025</span>
                 <span>Certificate ID: ICS-2025-XXXX</span>
               </div>
