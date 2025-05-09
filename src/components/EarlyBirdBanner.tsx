@@ -7,7 +7,11 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { RegistrationFlowModal } from "./RegistrationFlowModal";
 
-export function EarlyBirdBanner() {
+interface EarlyBirdBannerProps {
+  onRegisterClick?: () => void;
+}
+
+export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [placesLeft, setPlacesLeft] = useState(23);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
@@ -29,7 +33,11 @@ export function EarlyBirdBanner() {
   };
   
   const handleRegister = () => {
-    setShowRegistrationModal(true);
+    if (onRegisterClick) {
+      onRegisterClick();
+    } else {
+      setShowRegistrationModal(true);
+    }
   };
 
   if (!isVisible) return null;
@@ -67,10 +75,12 @@ export function EarlyBirdBanner() {
         </div>
       </Card>
       
-      <RegistrationFlowModal 
-        isOpen={showRegistrationModal}
-        onClose={() => setShowRegistrationModal(false)}
-      />
+      {!onRegisterClick && (
+        <RegistrationFlowModal 
+          isOpen={showRegistrationModal}
+          onClose={() => setShowRegistrationModal(false)}
+        />
+      )}
     </>
   );
 }
