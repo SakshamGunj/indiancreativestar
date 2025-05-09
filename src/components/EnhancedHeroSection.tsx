@@ -121,7 +121,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
             
             <div className="mt-8 flex items-center gap-2 justify-center lg:justify-start text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.6s" }}>
               <CheckCircle className="h-4 w-4 text-green-500" />
-              <span>Theme: Colors of Emotions</span>
+              <span>Theme: All</span>
               <div className="h-4 w-px bg-white/20 mx-2"></div>
               <CheckCircle className="h-4 w-4 text-green-500" />
               <span className="text-creative-yellow font-bold">Limited Time FREE!</span>

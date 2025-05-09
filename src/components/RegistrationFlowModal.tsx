@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,9 +14,10 @@ import { useForm } from "react-hook-form";
 interface RegistrationFlowModalProps {
   isOpen: boolean;
   onClose: () => void;
+  preselectedContest?: "art" | "poetry";
 }
 
-export function RegistrationFlowModal({ isOpen, onClose }: RegistrationFlowModalProps) {
+export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "art" }: RegistrationFlowModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
@@ -28,9 +29,14 @@ export function RegistrationFlowModal({ isOpen, onClose }: RegistrationFlowModal
       whatsapp: "",
       email: "",
       instagram: "",
-      contestType: "art" as "art" | "poetry"
+      contestType: preselectedContest
     }
   });
+
+  // Update form values when preselectedContest changes
+  useEffect(() => {
+    form.setValue("contestType", preselectedContest);
+  }, [preselectedContest, form]);
 
   const handleSubmit = (values: any) => {
     setIsSubmitting(true);

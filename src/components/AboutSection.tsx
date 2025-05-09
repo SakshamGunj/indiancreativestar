@@ -5,16 +5,32 @@ import { Sparkles, PenLine, Palette, Trophy, Award, Star } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-gradient-to-b from-background to-background/80" id="about">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <Badge variant="outline" className="mb-2">About The Event</Badge>
-          <h2 className="text-4xl font-bold text-gradient mb-4">What is India's Creative Star?</h2>
-          <p className="text-xl text-muted-foreground">
-            India's Creative Star is an exciting online competition platform featuring two main categories: 
-            Art and Poetry/Writing. We provide a stage for young talents across India to showcase their 
-            creativity, win prizes, and earn recognition!
+          <div className="inline-block mb-3">
+            <Badge className="bg-gradient-to-r from-creative-purple to-creative-pink text-white px-3 py-1">
+              About Us
+            </Badge>
+          </div>
+          <h2 className="text-4xl font-bold text-gradient mb-4">What is Indian Creative Star?</h2>
+          <p className="text-xl text-muted-foreground mb-8">
+            India's premier platform for discovering, recognizing and celebrating visual artists and poets from across the nation.
           </p>
+        </div>
+        
+        {/* YouTube video from AboutVideoSection moved here */}
+        <div className="creative-card p-4 md:p-6 bg-gradient-to-br from-black/80 to-creative-purple/20 border-creative-purple/30 mb-12 max-w-4xl mx-auto">
+          <div className="aspect-video w-full overflow-hidden rounded-lg">
+            <iframe 
+              className="w-full h-full" 
+              src="https://www.youtube.com/embed/OZjsl-Of4lg?si=t-BLmymsOQTwPq1Z&autoplay=1&mute=1&loop=1&playlist=OZjsl-Of4lg" 
+              title="Indian Creative Star - Season 1" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

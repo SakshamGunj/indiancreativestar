@@ -20,8 +20,8 @@ import { CertificateSection } from "@/components/CertificateSection";
 import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
-import { AboutVideoSection } from "@/components/AboutVideoSection";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 
 interface IndexProps {
   onRegistrationClick?: () => void;
@@ -30,6 +30,7 @@ interface IndexProps {
 const Index = ({ onRegistrationClick }: IndexProps) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [selectedContestType, setSelectedContestType] = useState<"art" | "poetry">("art");
 
   useEffect(() => {
     // Show confetti after 5 seconds
@@ -40,7 +41,11 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleRegisterClick = () => {
+  const handleRegisterClick = (contestType?: "art" | "poetry") => {
+    if (contestType) {
+      setSelectedContestType(contestType);
+    }
+    
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
@@ -50,31 +55,28 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
 
   return (
     <>
-      <Header onRegistrationClick={handleRegisterClick} />
+      <Header onRegistrationClick={() => handleRegisterClick()} />
       
       {showConfetti && <Confetti />}
       <FloatingNotification />
-      <StickyCTABanner onRegisterClick={handleRegisterClick} />
+      <StickyCTABanner onRegisterClick={() => handleRegisterClick()} />
       
       {/* Enhanced Hero Section */}
-      <EnhancedHeroSection onRegisterClick={handleRegisterClick} />
-
-      {/* About Video Section with YouTube Video */}
-      <AboutVideoSection />
+      <EnhancedHeroSection onRegisterClick={() => handleRegisterClick()} />
       
-      {/* About Section */}
+      {/* About Section - We'll move the YouTube video here */}
       <AboutSection />
       
       {/* Early Bird Banner - repositioned after About section */}
       <div className="container py-8">
-        <EarlyBirdBanner onRegisterClick={handleRegisterClick} />
+        <EarlyBirdBanner onRegisterClick={() => handleRegisterClick()} />
       </div>
+      
+      {/* Prize Section - moved right after Early Bird Banner */}
+      <PrizeSection />
       
       {/* How It Works Process */}
       <HowItWorksSection />
-      
-      {/* Prize Section */}
-      <PrizeSection />
       
       {/* Certificate Section */}
       <CertificateSection />
@@ -115,7 +117,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold"
-                    onClick={handleRegisterClick}
+                    onClick={() => handleRegisterClick("art")}
                   >
                     Enter Art Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -134,7 +136,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold"
-                    onClick={handleRegisterClick}
+                    onClick={() => handleRegisterClick("poetry")}
                   >
                     Enter Poetry Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -154,7 +156,16 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <FAQSection />
       
       {/* Footer */}
-      <Footer onRegisterClick={handleRegisterClick} />
+      <Footer onRegisterClick={() => handleRegisterClick()} />
+      
+      {/* Registration Modal */}
+      {!onRegistrationClick && (
+        <RegistrationFlowModal
+          isOpen={showRegistrationModal}
+          onClose={() => setShowRegistrationModal(false)}
+          preselectedContest={selectedContestType}
+        />
+      )}
     </>
   );
 };

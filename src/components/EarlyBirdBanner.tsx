@@ -79,6 +79,7 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
         <RegistrationFlowModal 
           isOpen={showRegistrationModal}
           onClose={() => setShowRegistrationModal(false)}
+          preselectedContest="art"
         />
       )}
     </>
