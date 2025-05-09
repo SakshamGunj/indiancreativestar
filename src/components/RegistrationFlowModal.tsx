@@ -10,6 +10,7 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface RegistrationFlowModalProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const form = useForm({
     defaultValues: {
@@ -35,7 +37,9 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
 
   // Update form values when preselectedContest changes
   useEffect(() => {
-    form.setValue("contestType", preselectedContest);
+    if (preselectedContest) {
+      form.setValue("contestType", preselectedContest);
+    }
   }, [preselectedContest, form]);
 
   const handleSubmit = (values: any) => {
@@ -64,31 +68,31 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] glassmorphism border-white/10">
+      <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-playfair text-center">
+          <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
             Join India Creative Star
           </DialogTitle>
         </DialogHeader>
         
         {!isSuccess ? (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 mt-4">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 mt-3">
               <div className="space-y-2">
-                <Label htmlFor="contestType" className="font-medium text-lg">Choose Your Competition</Label>
-                <div className="grid grid-cols-2 gap-4 mt-2">
+                <Label htmlFor="contestType" className="font-medium text-base sm:text-lg">Choose Your Competition</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                   <FormField
                     control={form.control}
                     name="contestType"
                     render={({ field }) => (
-                      <FormItem className="space-y-3">
+                      <FormItem className="space-y-2">
                         <FormControl>
                           <RadioGroup
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            className="flex flex-col space-y-1"
+                            className="flex flex-col space-y-2"
                           >
-                            <div className={`p-4 rounded-lg cursor-pointer transition-all ${
+                            <div className={`p-3 rounded-lg cursor-pointer transition-all touch-target ${
                               field.value === 'art' 
                                 ? 'bg-gradient-to-r from-creative-blue/30 to-creative-purple/20 border border-creative-blue' 
                                 : 'bg-black/20 border border-white/10 hover:border-white/30'
@@ -97,10 +101,10 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                                 <RadioGroupItem value="art" id="art" />
                                 <FormLabel htmlFor="art" className="font-medium cursor-pointer">Art Contest</FormLabel>
                               </div>
-                              <p className="text-sm text-white/70 mt-1 pl-6">Drawing, Painting, Digital Art</p>
+                              <p className="text-xs sm:text-sm text-white/70 mt-1 pl-6">Drawing, Painting, Digital Art</p>
                             </div>
                             
-                            <div className={`p-4 rounded-lg cursor-pointer transition-all ${
+                            <div className={`p-3 rounded-lg cursor-pointer transition-all touch-target ${
                               field.value === 'poetry' 
                                 ? 'bg-gradient-to-r from-creative-pink/30 to-creative-purple/20 border border-creative-pink' 
                                 : 'bg-black/20 border border-white/10 hover:border-white/30'
@@ -109,7 +113,7 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                                 <RadioGroupItem value="poetry" id="poetry" />
                                 <FormLabel htmlFor="poetry" className="font-medium cursor-pointer">Poetry Contest</FormLabel>
                               </div>
-                              <p className="text-sm text-white/70 mt-1 pl-6">Poems, Verses, Sonnets</p>
+                              <p className="text-xs sm:text-sm text-white/70 mt-1 pl-6">Poems, Verses, Sonnets</p>
                             </div>
                           </RadioGroup>
                         </FormControl>
@@ -119,55 +123,58 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                 </div>
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
                   id="name"
                   {...form.register("name", { required: true })}
                   placeholder="Your name"
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/5 border-white/10 h-10"
                 />
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="whatsapp">WhatsApp Number</Label>
                 <Input
                   id="whatsapp"
                   {...form.register("whatsapp", { required: true })}
                   placeholder="Your WhatsApp number"
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/5 border-white/10 h-10"
+                  type="tel"
+                  inputMode="tel"
                 />
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
+                  inputMode="email"
                   {...form.register("email", { required: true })}
                   placeholder="Your email address"
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/5 border-white/10 h-10"
                 />
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="instagram">Instagram ID (optional)</Label>
                 <Input
                   id="instagram"
                   {...form.register("instagram")}
                   placeholder="Your Instagram handle"
-                  className="bg-white/5 border-white/10"
+                  className="bg-white/5 border-white/10 h-10"
                 />
               </div>
               
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
                 <span>100% Free Registration</span>
               </div>
               
               <Button 
                 type="submit" 
-                className="w-full creative-btn py-3" 
+                className="w-full creative-btn py-2 sm:py-3 h-auto" 
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Registering..." : "Register Now"} 
@@ -176,10 +183,10 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
             </form>
           </Form>
         ) : (
-          <div className="py-8 text-center space-y-4">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
-            <h3 className="text-xl font-medium">Registration Successful!</h3>
-            <p className="text-muted-foreground">
+          <div className="py-6 text-center space-y-3">
+            <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-500 mx-auto" />
+            <h3 className="text-lg sm:text-xl font-medium">Registration Successful!</h3>
+            <p className="text-sm text-muted-foreground">
               You will receive a confirmation on your WhatsApp and Email soon.
             </p>
           </div>

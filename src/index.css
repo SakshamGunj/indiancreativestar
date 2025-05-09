@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -142,6 +141,22 @@
     @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
   }
 
+  /* Add padding-bottom for safe area inset on iOS devices */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 12px);
+  }
+  
+  /* Improved mobile form styles */
+  .mobile-input {
+    @apply h-10 text-base px-3 py-2;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Dialog content for mobile */
+  .mobile-dialog {
+    @apply p-4 max-w-[92%] max-h-[90vh] overflow-y-auto;
+  }
+
   /* Sticky CTA Banner */
   .sticky-cta-banner {
     @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-black/80 border-t border-white/10 shadow-lg z-40 flex justify-between items-center gap-3 md:hidden;
@@ -218,14 +233,24 @@ html, body {
     padding-left: min(0vmin, env(safe-area-inset-left));
     padding-right: min(0vmin, env(safe-area-inset-right));
     padding-top: min(0vmin, env(safe-area-inset-top));
-    padding-bottom: min(env(safe-area-inset-bottom), 24px);
+    padding-bottom: min(env(safe-area-inset-bottom), 12px);
   }
 
-  .sticky-cta-banner {
+  .sticky-cta-banner, .floating-notification {
     padding-bottom: max(env(safe-area-inset-bottom), 12px);
   }
-  
-  .floating-notification {
-    bottom: calc(70px + max(env(safe-area-inset-bottom), 12px));
-  }
+}
+
+/* Better input focus behavior on iOS */
+input, select, textarea {
+  font-size: 16px; /* Prevents zoom on focus in iOS */
+  -webkit-appearance: none; /* Removes default iOS styling */
+  border-radius: 4px; /* Consistent border radius */
+}
+
+/* Disable text selection on buttons for better mobile experience */
+button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

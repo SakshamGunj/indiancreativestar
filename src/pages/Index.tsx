@@ -64,11 +64,13 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection onRegisterClick={() => handleRegisterClick()} />
       
-      {/* About Section - We'll move the YouTube video here */}
-      <AboutSection />
+      {/* About Section with ID for scroll detection */}
+      <section id="about-section">
+        <AboutSection />
+      </section>
       
       {/* Early Bird Banner - repositioned after About section */}
-      <div className="container py-8">
+      <div className="container py-6 sm:py-8">
         <EarlyBirdBanner onRegisterClick={() => handleRegisterClick()} />
       </div>
       
@@ -95,47 +97,47 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
         <div className="container">
           <div className="text-center max-w-3xl mx-auto">
             <Badge variant="outline" className="mb-2 animate-pulse">🚀 Limited Free Registration</Badge>
-            <h2 className="text-5xl font-bold text-gradient mb-6">Your Art Deserves The Spotlight</h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-4 sm:mb-6">Your Art Deserves The Spotlight</h2>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8">
               Don't wait any longer. Join India's biggest art and poetry community today
               and take the first step toward becoming India's next Creative Star.
             </p>
             
-            <div className="creative-card p-8 mb-8 bg-gradient-to-br from-black/80 to-creative-purple/10 border-creative-purple/20">
-              <h3 className="text-2xl font-bold mb-4">Choose Your Competition</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="creative-card p-6 bg-gradient-to-br from-black/80 to-creative-blue/10 border-creative-blue/20 hover:border-creative-blue/40 transition-all duration-300 group">
-                  <div className="h-12 w-12 rounded-full bg-creative-blue/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="h-6 w-6 text-creative-blue">🖌️</div>
+            <div className="creative-card p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 bg-gradient-to-br from-black/80 to-creative-purple/10 border-creative-purple/20">
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Choose Your Competition</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="creative-card p-4 sm:p-6 bg-gradient-to-br from-black/80 to-creative-blue/10 border-creative-blue/20 hover:border-creative-blue/40 transition-all duration-300 group">
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-creative-blue/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="h-5 w-5 sm:h-6 sm:w-6 text-creative-blue">🖌️</div>
                   </div>
-                  <h4 className="text-xl font-bold mb-2">Art Contest</h4>
-                  <p className="text-muted-foreground mb-4">
+                  <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Art Contest</h4>
+                  <p className="text-sm text-muted-foreground mb-3 sm:mb-4">
                     Submit your drawings, paintings, digital art, or any visual medium.
                   </p>
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex justify-between items-center mb-4 sm:mb-6">
                     <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white">FREE Registration</Badge>
                   </div>
                   <Button 
-                    className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold"
+                    className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
                     onClick={() => handleRegisterClick("art")}
                   >
                     Enter Art Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
                 
-                <div className="creative-card p-6 bg-gradient-to-br from-black/80 to-creative-pink/10 border-creative-pink/20 hover:border-creative-pink/40 transition-all duration-300 group">
-                  <div className="h-12 w-12 rounded-full bg-creative-pink/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="h-6 w-6 text-creative-pink">✍️</div>
+                <div className="creative-card p-4 sm:p-6 bg-gradient-to-br from-black/80 to-creative-pink/10 border-creative-pink/20 hover:border-creative-pink/40 transition-all duration-300 group">
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-creative-pink/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <div className="h-5 w-5 sm:h-6 sm:w-6 text-creative-pink">✍️</div>
                   </div>
-                  <h4 className="text-xl font-bold mb-2">Poetry Contest</h4>
-                  <p className="text-muted-foreground mb-4">
+                  <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Poetry Contest</h4>
+                  <p className="text-sm text-muted-foreground mb-3 sm:mb-4">
                     Submit your poems, verses, sonnets, or any written expression.
                   </p>
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex justify-between items-center mb-4 sm:mb-6">
                     <Badge className="bg-gradient-to-r from-creative-pink to-creative-purple text-white">FREE Registration</Badge>
                   </div>
                   <Button 
-                    className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold"
+                    className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
                     onClick={() => handleRegisterClick("poetry")}
                   >
                     Enter Poetry Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -144,8 +146,8 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
               </div>
             </div>
             
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mt-4">
-              <CheckCircle className="h-4 w-4 text-green-500" />
+            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">
+              <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
               <span>100% safe. No spam. No hidden fees.</span>
             </div>
           </div>
