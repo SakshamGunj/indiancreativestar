@@ -27,7 +27,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
             <Route path="/competitions" element={<CompetitionSelect />} />
             <Route path="/thank-you" element={<ThankYou />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

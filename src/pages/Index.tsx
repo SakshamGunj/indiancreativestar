@@ -22,9 +22,12 @@ import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { AboutVideoSection } from "@/components/AboutVideoSection";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 
-const Index = () => {
+interface IndexProps {
+  onRegistrationClick?: () => void;
+}
+
+const Index = ({ onRegistrationClick }: IndexProps) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
 
@@ -38,7 +41,11 @@ const Index = () => {
   }, []);
 
   const handleRegisterClick = () => {
-    setShowRegistrationModal(true);
+    if (onRegistrationClick) {
+      onRegistrationClick();
+    } else {
+      setShowRegistrationModal(true);
+    }
   };
 
   return (
@@ -60,7 +67,7 @@ const Index = () => {
       
       {/* Early Bird Banner - repositioned after About section */}
       <div className="container py-8">
-        <EarlyBirdBanner />
+        <EarlyBirdBanner onRegisterClick={handleRegisterClick} />
       </div>
       
       {/* How It Works Process */}
@@ -148,12 +155,6 @@ const Index = () => {
       
       {/* Footer */}
       <Footer onRegisterClick={handleRegisterClick} />
-      
-      {/* Registration Modal */}
-      <RegistrationFlowModal
-        isOpen={showRegistrationModal}
-        onClose={() => setShowRegistrationModal(false)}
-      />
     </>
   );
 };
