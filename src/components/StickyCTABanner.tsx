@@ -1,36 +1,62 @@
 
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star, Award } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export function StickyCTABanner() {
-  const navigate = useNavigate();
+interface StickyCTABannerProps {
+  onRegisterClick?: () => void;
+}
+
+export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
+  const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
-  
-  // Only show on mobile devices
-  if (!isMobile) return null;
-  
-  const handleEnterCompetitions = () => {
-    navigate("/competitions");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show the banner after scrolling 400px
+      if (window.scrollY > 600) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleClick = () => {
+    if (onRegisterClick) {
+      onRegisterClick();
+    } else {
+      window.location.href = "#register";
+    }
   };
 
   return (
-    <div className="sticky-cta-banner bg-gradient-to-r from-black/90 via-creative-purple/50 to-black/90">
-      <div className="flex-1 text-sm font-medium flex items-center">
-        <div className="relative">
-          <Star className="text-creative-yellow h-4 w-4 mr-1.5 absolute animate-pulse" />
-          <Award className="text-creative-pink h-4 w-4 mr-1.5" />
+    <div
+      className={cn(
+        "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300",
+        isVisible ? "translate-y-0" : "translate-y-full"
+      )}
+    >
+      <div className="container py-2 px-4">
+        <div className="bg-gradient-to-r from-creative-purple to-creative-blue p-2 sm:p-3 rounded-t-lg shadow-xl border border-white/10 flex items-center justify-between">
+          <div>
+            <h3 className="text-xs sm:text-sm font-bold">Join India Creative Star - Season 1</h3>
+            <p className="text-xs text-white/70 hidden sm:block">Art & Poetry Competition</p>
+          </div>
+          <Button
+            size={isMobile ? "sm" : "default"}
+            className="creative-btn group whitespace-nowrap bg-white text-black"
+            onClick={handleClick}
+          >
+            Register Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
-        <span className="text-white">Registration is FREE!</span>
-        <span className="ml-1.5 text-white/80 hidden sm:inline-block">Limited spots left</span>
       </div>
-      <Button 
-        className="creative-btn group whitespace-nowrap bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold"
-        onClick={handleEnterCompetitions}
-      >
-        Enter Now <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-      </Button>
     </div>
   );
 }

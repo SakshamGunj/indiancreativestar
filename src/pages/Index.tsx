@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { RegistrationModal } from "@/components/RegistrationModal";
 import { FloatingNotification } from "@/components/FloatingNotification";
 import { GallerySection } from "@/components/GallerySection";
 import { PrizeSection } from "@/components/PrizeSection";
@@ -22,12 +21,12 @@ import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { AboutVideoSection } from "@/components/AboutVideoSection";
-import { useNavigate } from "react-router-dom";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 
 const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
-  const navigate = useNavigate();
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
 
   useEffect(() => {
     // Show confetti after 5 seconds
@@ -38,20 +37,20 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleEnterCompetitions = () => {
-    navigate("/competitions");
+  const handleRegisterClick = () => {
+    setShowRegistrationModal(true);
   };
 
   return (
     <>
-      <Header />
+      <Header onRegistrationClick={handleRegisterClick} />
       
       {showConfetti && <Confetti />}
       <FloatingNotification />
-      <StickyCTABanner />
+      <StickyCTABanner onRegisterClick={handleRegisterClick} />
       
       {/* Enhanced Hero Section */}
-      <EnhancedHeroSection />
+      <EnhancedHeroSection onRegisterClick={handleRegisterClick} />
 
       {/* About Video Section with YouTube Video */}
       <AboutVideoSection />
@@ -109,7 +108,7 @@ const Index = () => {
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold"
-                    onClick={() => navigate("/competitions")}
+                    onClick={handleRegisterClick}
                   >
                     Enter Art Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -128,7 +127,7 @@ const Index = () => {
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold"
-                    onClick={() => navigate("/competitions")}
+                    onClick={handleRegisterClick}
                   >
                     Enter Poetry Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -148,7 +147,13 @@ const Index = () => {
       <FAQSection />
       
       {/* Footer */}
-      <Footer />
+      <Footer onRegisterClick={handleRegisterClick} />
+      
+      {/* Registration Modal */}
+      <RegistrationFlowModal
+        isOpen={showRegistrationModal}
+        onClose={() => setShowRegistrationModal(false)}
+      />
     </>
   );
 };

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { 
@@ -22,7 +21,11 @@ const navigation = [
   { name: "FAQ", href: "#faq" },
 ];
 
-export function Header() {
+interface HeaderProps {
+  onRegistrationClick?: () => void;
+}
+
+export function Header({ onRegistrationClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -44,7 +47,11 @@ export function Header() {
   }, []);
 
   const handleEnterNowClick = () => {
-    window.location.href = "#register";
+    if (onRegistrationClick) {
+      onRegistrationClick();
+    } else {
+      window.location.href = "#register";
+    }
   };
 
   return (
@@ -189,7 +196,7 @@ export function Header() {
                 className="w-full creative-btn group py-6 text-base"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  window.location.href = "#register";
+                  handleEnterNowClick();
                 }}
               >
                 Enter Now <ArrowRight className="ml-1 h-5 w-5 group-hover:translate-x-1 transition-transform" />

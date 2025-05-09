@@ -6,14 +6,17 @@ import {
   CheckCircle, 
   ArrowLeft, 
   Share2, 
-  Download, 
+  Users,
   MessageSquare, 
   Calendar, 
-  Users,
-  ArrowRight
+  ArrowRight,
+  Mail
 } from "lucide-react";
 import { Confetti } from "@/components/Confetti";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ThankYou() {
   const [searchParams] = useSearchParams();
@@ -22,6 +25,11 @@ export default function ThankYou() {
   const [showConfetti, setShowConfetti] = useState(true);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+  
+  // Referral state
+  const [showReferralDialog, setShowReferralDialog] = useState(false);
+  const [referralEmails, setReferralEmails] = useState(["", ""]);
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,6 +41,29 @@ export default function ThankYou() {
   
   const handleBackHome = () => {
     navigate("/");
+  };
+  
+  const handleReferralEmailChange = (index: number, value: string) => {
+    const newEmails = [...referralEmails];
+    newEmails[index] = value;
+    setReferralEmails(newEmails);
+  };
+  
+  const handleSendReferrals = () => {
+    // Simulate sending referrals
+    toast({
+      title: "Referrals Sent!",
+      description: "Your friends have been invited to join India Creative Star!",
+    });
+    setShowReferralDialog(false);
+    
+    // Show bonus entry notification
+    setTimeout(() => {
+      toast({
+        title: "Bonus Entry Unlocked! 🎉",
+        description: "You've earned an additional submission for the competition!",
+      });
+    }, 1000);
   };
   
   return (
@@ -62,6 +93,40 @@ export default function ThankYou() {
             Check your email and WhatsApp for further details.
           </p>
           
+          {/* WhatsApp Group CTA - Emphasized */}
+          <div className="creative-card p-4 sm:p-6 mb-8 sm:mb-10 bg-gradient-to-r from-creative-purple/30 to-creative-pink/30 border-creative-purple/40 animate-pulse-slow">
+            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 flex items-center justify-center gap-2">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6 text-creative-yellow" />
+              Join Our {contestType === "art" ? "Art" : "Poetry"} Community
+            </h3>
+            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+              Connect with fellow participants, share tips, and stay updated with all important announcements.
+              <span className="block mt-2 text-white/90 font-medium">This is where you'll receive submission instructions!</span>
+            </p>
+            <Button 
+              className="w-full creative-btn py-3 sm:py-4 text-base"
+              onClick={() => window.open("https://whatsapp.com", "_blank")}
+            >
+              <MessageSquare className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              Join WhatsApp Group Now
+            </Button>
+          </div>
+          
+          {/* New Referral CTA */}
+          <div className="creative-card p-4 sm:p-6 mb-6 sm:mb-8 bg-gradient-to-r from-creative-yellow/20 to-creative-orange/20 border-creative-yellow/30">
+            <h3 className="text-base sm:text-lg font-bold mb-2">Unlock a Bonus Submission! 🎁</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+              Refer two friends to join the {contestType === "art" ? "Art" : "Poetry"} competition and get an additional submission opportunity!
+            </p>
+            <Button 
+              className="w-full bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold py-3"
+              onClick={() => setShowReferralDialog(true)}
+            >
+              <Share2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              Refer Friends & Get Bonus Entry
+            </Button>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div className="creative-card p-4 sm:p-6 text-left">
               <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">Next Steps:</h3>
@@ -76,7 +141,7 @@ export default function ThankYou() {
                   <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-creative-yellow/20 flex items-center justify-center mt-0.5 shrink-0">
                     <span className="text-xs font-bold text-creative-yellow">2</span>
                   </div>
-                  <span className="text-xs sm:text-sm text-muted-foreground">Join the WhatsApp community group below</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">Join the WhatsApp community group</span>
                 </li>
                 <li className="flex items-start gap-2 sm:gap-3">
                   <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-creative-yellow/20 flex items-center justify-center mt-0.5 shrink-0">
@@ -121,23 +186,6 @@ export default function ThankYou() {
             </div>
           </div>
           
-          <div className="creative-card p-4 sm:p-6 mb-6 sm:mb-8 bg-gradient-to-r from-creative-purple/20 to-creative-pink/20">
-            <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 flex items-center justify-center gap-2">
-              <Users className="h-4 w-4 sm:h-5 sm:w-5 text-creative-yellow" />
-              Join Our {contestType === "art" ? "Art" : "Poetry"} Community
-            </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-              Connect with fellow participants, share tips, and stay updated with the latest news.
-            </p>
-            <Button 
-              className="w-full creative-btn py-3 sm:py-4"
-              onClick={() => window.open("https://whatsapp.com", "_blank")}
-            >
-              <MessageSquare className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              Join WhatsApp Group
-            </Button>
-          </div>
-          
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <Button variant="outline" className="creative-btn-secondary py-2.5 sm:py-3 text-sm sm:text-base" onClick={() => window.open("#", "_blank")}>
               <Share2 className="mr-2 h-4 w-4" />
@@ -150,6 +198,53 @@ export default function ThankYou() {
           </div>
         </div>
       </div>
+      
+      {/* Referral Dialog */}
+      <AlertDialog open={showReferralDialog} onOpenChange={setShowReferralDialog}>
+        <AlertDialogContent className="glassmorphism border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-xl">Refer Friends & Get Bonus Entry</AlertDialogTitle>
+            <AlertDialogDescription>
+              Invite two friends to join the {contestType === "art" ? "Art" : "Poetry"} competition and unlock an additional submission!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Friend 1 Email</label>
+              <Input 
+                type="email" 
+                placeholder="friend1@example.com" 
+                value={referralEmails[0]} 
+                onChange={(e) => handleReferralEmailChange(0, e.target.value)}
+                className="bg-white/5 border-white/10"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Friend 2 Email</label>
+              <Input 
+                type="email" 
+                placeholder="friend2@example.com" 
+                value={referralEmails[1]} 
+                onChange={(e) => handleReferralEmailChange(1, e.target.value)}
+                className="bg-white/5 border-white/10"
+              />
+            </div>
+          </div>
+          
+          <AlertDialogFooter>
+            <Button variant="outline" onClick={() => setShowReferralDialog(false)}>Cancel</Button>
+            <Button 
+              className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold"
+              onClick={handleSendReferrals}
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              Send Invitations
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

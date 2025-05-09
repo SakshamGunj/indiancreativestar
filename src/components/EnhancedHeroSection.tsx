@@ -14,11 +14,26 @@ import {
 import { useNavigate } from "react-router-dom";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
-export function EnhancedHeroSection() {
+interface EnhancedHeroSectionProps {
+  onRegisterClick?: () => void;
+}
+
+export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProps) {
   const navigate = useNavigate();
   
   const handleEnterCompetitions = () => {
-    navigate("/competitions");
+    if (onRegisterClick) {
+      onRegisterClick();
+    } else {
+      navigate("/competitions");
+    }
+  };
+
+  const scrollToLearnMore = () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -52,14 +67,14 @@ export function EnhancedHeroSection() {
               </Badge>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold mb-3 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 animate-fade-in">
               <span className="text-white">Indian Creative Star</span>
-              <span className="block text-gradient text-5xl md:text-7xl mt-1">Season 1</span>
+              <span className="block text-gradient text-5xl md:text-6xl lg:text-7xl mt-1">Season 1</span>
               <span className="block text-2xl md:text-3xl mt-2 text-white/90">Art & Poetry Competition</span>
             </h1>
             
             <div 
-              className="creative-card p-4 mb-6 border-creative-yellow/30 bg-black/60 animate-fade-in transition-all duration-300"
+              className="creative-card p-3 sm:p-4 mb-6 border-creative-yellow/30 bg-black/60 animate-fade-in transition-all duration-300"
               style={{ animationDelay: "0.2s" }}
             >
               <div className="mb-1">
@@ -99,7 +114,7 @@ export function EnhancedHeroSection() {
                 Register FREE <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               
-              <Button variant="outline" className="creative-btn-secondary">
+              <Button variant="outline" className="creative-btn-secondary" onClick={scrollToLearnMore}>
                 Learn More <ArrowDown className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -157,7 +172,7 @@ export function EnhancedHeroSection() {
                   <h3 className="font-medium">Art Contest</h3>
                   <Button 
                     className="text-sm py-1.5 px-4 mt-2 bg-gradient-to-r from-creative-blue to-creative-purple text-white"
-                    onClick={() => navigate("/competitions")}
+                    onClick={handleEnterCompetitions}
                   >
                     Join Free
                   </Button>
@@ -169,7 +184,7 @@ export function EnhancedHeroSection() {
                   <h3 className="font-medium">Poetry Contest</h3>
                   <Button 
                     className="text-sm py-1.5 px-4 mt-2 bg-gradient-to-r from-creative-pink to-creative-purple text-white"
-                    onClick={() => navigate("/competitions")}
+                    onClick={handleEnterCompetitions}
                   >
                     Join Free
                   </Button>

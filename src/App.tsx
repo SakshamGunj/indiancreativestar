@@ -8,27 +8,40 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CompetitionSelect from "./pages/CompetitionSelect";
 import ThankYou from "./pages/ThankYou";
-import { StickyCTABanner } from "./components/StickyCTABanner";
+import { useState } from "react";
+import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/competitions" element={<CompetitionSelect />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <StickyCTABanner />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
+  const handleOpenRegistration = () => {
+    setShowRegistrationModal(true);
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/competitions" element={<CompetitionSelect />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          
+          <RegistrationFlowModal 
+            isOpen={showRegistrationModal}
+            onClose={() => setShowRegistrationModal(false)}
+          />
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
