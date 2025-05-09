@@ -21,6 +21,7 @@ import { CertificateSection } from "@/components/CertificateSection";
 import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
+import { AboutVideoSection } from "@/components/AboutVideoSection";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
@@ -47,14 +48,21 @@ const Index = () => {
       
       {showConfetti && <Confetti />}
       <FloatingNotification />
-      <EarlyBirdBanner />
       <StickyCTABanner />
       
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
 
+      {/* About Video Section with YouTube Video */}
+      <AboutVideoSection />
+      
       {/* About Section */}
       <AboutSection />
+      
+      {/* Early Bird Banner - repositioned after About section */}
+      <div className="container py-8">
+        <EarlyBirdBanner />
+      </div>
       
       {/* How It Works Process */}
       <HowItWorksSection />

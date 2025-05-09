@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
+import { Star, Trophy, Award } from "lucide-react";
 
 // Sample testimonials
 const testimonials = [
@@ -18,6 +18,15 @@ const stats = [
   { label: "Cities Reached", value: "250+", color: "creative-blue" },
   { label: "Cash Prizes", value: "₹1,00,000", color: "creative-yellow" },
   { label: "Success Stories", value: "500+", color: "creative-pink" },
+];
+
+// Campus ambassadors
+const ambassadors = [
+  { name: "Rajiv Kumar", college: "Delhi University", region: "North India" },
+  { name: "Ananya Devi", college: "University of Hyderabad", region: "South India" },
+  { name: "Deepak Patel", college: "NIT Bhopal", region: "Central India" },
+  { name: "Meera Joshi", college: "Jadavpur University", region: "East India" },
+  { name: "Farhan Ahmed", college: "Mumbai University", region: "West India" },
 ];
 
 export function SocialProofSection() {
@@ -54,6 +63,12 @@ export function SocialProofSection() {
           <p className="text-muted-foreground text-xl">
             Don't just take our word for it - hear from the artists and poets who've been part of ICS
           </p>
+          
+          <div className="mt-6 creative-card py-2 px-4 inline-flex items-center gap-2 bg-gradient-to-r from-creative-yellow/20 to-creative-orange/20">
+            <Star className="h-5 w-5 text-creative-yellow" />
+            <span className="font-bold">4.5/5</span>
+            <span className="text-sm">Rated by 10,000+ artists</span>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
@@ -98,14 +113,92 @@ export function SocialProofSection() {
         </div>
         
         {/* Brands / Partner logos */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold mb-2">Our Partners & Sponsors</h3>
+            <p className="text-sm text-white/40 uppercase tracking-wider mb-6">As featured in</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+              <span className="font-bold text-lg">Times Now</span>
+            </div>
+            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+              <span className="font-bold text-lg">YourStory</span>
+            </div>
+            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+              <span className="font-bold text-lg">India Today</span>
+            </div>
+            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+              <span className="font-bold text-lg">Outlook</span>
+            </div>
+            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+              <span className="font-bold text-lg">Mid-Day</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Campus Ambassadors */}
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold mb-2">Our Campus Ambassadors</h3>
+            <p className="text-sm text-white/60 mb-6">
+              Student representatives from top institutions across India
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {ambassadors.map((ambassador, index) => (
+              <div 
+                key={index} 
+                className="creative-card p-4 bg-gradient-to-br from-black/60 to-creative-purple/10 text-center hover:scale-105 transition-all duration-300"
+              >
+                <div className="h-12 w-12 rounded-full bg-creative-purple/20 mx-auto mb-2 flex items-center justify-center">
+                  <span className="font-bold">{ambassador.name[0]}</span>
+                </div>
+                <p className="font-semibold text-sm">{ambassador.name}</p>
+                <p className="text-xs text-white/60">{ambassador.college}</p>
+                <p className="text-xs text-creative-purple mt-1">{ambassador.region}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Trust Badges */}
         <div className="text-center mb-8">
-          <p className="text-sm text-white/40 uppercase tracking-wider mb-6">As featured in</p>
-          <div className="flex flex-wrap justify-center gap-8 opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-            <div className="h-10 bg-white/10 w-24 rounded flex items-center justify-center">Times Now</div>
-            <div className="h-10 bg-white/10 w-24 rounded flex items-center justify-center">YourStory</div>
-            <div className="h-10 bg-white/10 w-24 rounded flex items-center justify-center">India Today</div>
-            <div className="h-10 bg-white/10 w-24 rounded flex items-center justify-center">Outlook</div>
-            <div className="h-10 bg-white/10 w-24 rounded flex items-center justify-center">Mid-Day</div>
+          <h3 className="text-2xl font-bold mb-6">Why Artists Trust Us</h3>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <div className="creative-card p-4 text-center">
+            <div className="h-12 w-12 rounded-full bg-creative-yellow/20 mx-auto mb-3 flex items-center justify-center">
+              <Trophy className="h-6 w-6 text-creative-yellow" />
+            </div>
+            <h4 className="font-bold">Transparent Process</h4>
+            <p className="text-xs text-white/60 mt-1">Clear judging criteria and fair competition</p>
+          </div>
+          
+          <div className="creative-card p-4 text-center">
+            <div className="h-12 w-12 rounded-full bg-creative-blue/20 mx-auto mb-3 flex items-center justify-center">
+              <Award className="h-6 w-6 text-creative-blue" />
+            </div>
+            <h4 className="font-bold">Expert Jury</h4>
+            <p className="text-xs text-white/60 mt-1">Recognized industry experts evaluate your work</p>
+          </div>
+          
+          <div className="creative-card p-4 text-center">
+            <div className="h-12 w-12 rounded-full bg-creative-pink/20 mx-auto mb-3 flex items-center justify-center">
+              <Star className="h-6 w-6 text-creative-pink" />
+            </div>
+            <h4 className="font-bold">Nationwide Platform</h4>
+            <p className="text-xs text-white/60 mt-1">Connect with artists across all of India</p>
+          </div>
+          
+          <div className="creative-card p-4 text-center">
+            <div className="h-12 w-12 rounded-full bg-creative-purple/20 mx-auto mb-3 flex items-center justify-center">
+              <Star className="h-6 w-6 text-creative-purple" />
+            </div>
+            <h4 className="font-bold">Real Opportunities</h4>
+            <p className="text-xs text-white/60 mt-1">Career-building exposure and connections</p>
           </div>
         </div>
         
@@ -117,7 +210,7 @@ export function SocialProofSection() {
           </div>
           <div className="social-proof-badge bg-black/40 border border-creative-blue/30 text-white">
             <Star className="h-3 w-3 text-creative-blue" />
-            <span>4.9/5 Participant Rating</span>
+            <span>4.5/5 Participant Rating</span>
           </div>
           <div className="social-proof-badge bg-black/40 border border-creative-pink/30 text-white">
             <Star className="h-3 w-3 text-creative-pink" />

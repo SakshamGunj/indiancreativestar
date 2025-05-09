@@ -35,7 +35,7 @@ export function EarlyBirdBanner() {
   if (!isVisible) return null;
 
   return (
-    <Card className={`fixed bottom-16 sm:bottom-4 ${isMobile ? 'left-4 right-4' : 'right-4'} z-40 w-full ${isMobile ? 'max-w-full' : 'max-w-md'} bg-gradient-to-br from-black/90 to-creative-purple/30 border border-creative-purple/30 shadow-lg shadow-creative-purple/20 p-3 sm:p-4 animate-bounce-in`}>
+    <Card className={`w-full bg-gradient-to-br from-black/90 to-creative-purple/30 border border-creative-purple/30 shadow-lg shadow-creative-purple/20 p-3 sm:p-4 animate-fade-in mx-auto`}>
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-1.5 sm:gap-2">
           <Star className="h-4 w-4 sm:h-5 sm:w-5 text-creative-yellow" />

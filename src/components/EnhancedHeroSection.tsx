@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,6 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 
 export function EnhancedHeroSection() {
   const navigate = useNavigate();
-  const [showPoem, setShowPoem] = useState(false);
   
   const handleEnterCompetitions = () => {
     navigate("/competitions");
@@ -54,22 +54,20 @@ export function EnhancedHeroSection() {
             
             <h1 className="text-4xl md:text-6xl font-bold mb-3 animate-fade-in">
               <span className="text-white">Indian Creative Star</span>
-              <span className="block text-gradient">Season 1</span>
+              <span className="block text-gradient text-5xl md:text-7xl mt-1">Season 1</span>
               <span className="block text-2xl md:text-3xl mt-2 text-white/90">Art & Poetry Competition</span>
             </h1>
             
             <div 
-              className={`creative-card p-4 mb-6 border-creative-yellow/30 bg-black/60 animate-fade-in transition-all duration-300 cursor-pointer hover:border-creative-yellow/60`}
-              onClick={() => setShowPoem(!showPoem)}
+              className="creative-card p-4 mb-6 border-creative-yellow/30 bg-black/60 animate-fade-in transition-all duration-300"
               style={{ animationDelay: "0.2s" }}
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="mb-1">
                 <span className="text-xs uppercase tracking-wider text-creative-yellow">OUR CREATIVE MANIFESTO</span>
-                <span className="text-xs text-white/60">{showPoem ? "Click to hide" : "Click to read"}</span>
               </div>
               
-              <div className={`overflow-hidden transition-all duration-300 ${showPoem ? "max-h-96" : "max-h-6"}`}>
-                <p className="text-base sm:text-lg font-playfair italic text-white/90 leading-relaxed">
+              <div>
+                <p className="text-sm sm:text-base font-playfair italic text-white/90 leading-relaxed">
                   "They told your dreams don't pay, <br />
                   but your brush and pen had more to say. <br />
                   What you create alone — the nation will now celebrate. <br />
@@ -128,10 +126,27 @@ export function EnhancedHeroSection() {
                 <div className="flex justify-center">
                   <div className="text-center">
                     <h3 className="text-xl font-bold text-white mb-1">Prize Pool</h3>
-                    <p className="prize-highlight text-3xl md:text-4xl font-bold mb-3">₹1,00,000</p>
+                    <p className="prize-highlight text-3xl md:text-4xl font-bold mb-1">₹1,00,000</p>
                     <p className="text-white/70 text-sm">In Cash & Recognition</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-4 creative-card p-4 bg-gradient-to-br from-black/60 to-creative-yellow/20 border-creative-yellow/30">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
+                    <span className="text-sm">Featured in "India's Creative Star 2025" Official eMagazine (Top 100)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
+                    <span className="text-sm">Featured in a Pan-India Digital Gallery (Lifetime)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
+                    <span className="text-sm">ICS Artist ID Card with your name & quote</span>
+                  </li>
+                </ul>
               </div>
               
               <div className="mt-4 grid grid-cols-2 gap-4">
@@ -159,23 +174,6 @@ export function EnhancedHeroSection() {
                     Join Free
                   </Button>
                 </div>
-              </div>
-              
-              <div className="mt-4 creative-card p-4 bg-gradient-to-br from-black/60 to-creative-yellow/20 border-creative-yellow/30">
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
-                    <span className="text-sm">Featured in "India's Creative Star 2025" Official eMagazine (Top 100)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
-                    <span className="text-sm">Featured in a Pan-India Digital Gallery (Lifetime)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-creative-yellow mt-1 shrink-0" />
-                    <span className="text-sm">ICS Artist ID Card with your name & quote</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
