@@ -2,13 +2,16 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, AlertTriangle } from "lucide-react";
+import { Clock, Star, Award } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function EarlyBirdBanner() {
   const [isVisible, setIsVisible] = useState(true);
   const [placesLeft, setPlacesLeft] = useState(23);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulate decreasing spots randomly
@@ -24,15 +27,19 @@ export function EarlyBirdBanner() {
   const handleClose = () => {
     setIsVisible(false);
   };
+  
+  const handleEnterCompetitions = () => {
+    navigate("/competitions");
+  };
 
   if (!isVisible) return null;
 
   return (
-    <Card className={`fixed bottom-4 ${isMobile ? 'left-4 right-4' : 'right-4'} z-40 w-full ${isMobile ? 'max-w-full' : 'max-w-md'} bg-black/80 border border-white/10 shadow-lg p-3 sm:p-4 animate-bounce-in bg-gradient-to-br from-black/80 to-creative-purple/20`}>
+    <Card className={`fixed bottom-16 sm:bottom-4 ${isMobile ? 'left-4 right-4' : 'right-4'} z-40 w-full ${isMobile ? 'max-w-full' : 'max-w-md'} bg-gradient-to-br from-black/90 to-creative-purple/30 border border-creative-purple/30 shadow-lg shadow-creative-purple/20 p-3 sm:p-4 animate-bounce-in`}>
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-creative-yellow" />
-          <Badge className="bg-creative-yellow text-black text-xs sm:text-sm px-2 py-0.5">Limited Offer</Badge>
+          <Star className="h-4 w-4 sm:h-5 sm:w-5 text-creative-yellow" />
+          <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black text-xs sm:text-sm px-2 py-0.5 font-bold">FREE Registration!</Badge>
         </div>
         <button 
           onClick={handleClose}
@@ -41,13 +48,21 @@ export function EarlyBirdBanner() {
           &times;
         </button>
       </div>
-      <h3 className="text-base sm:text-lg font-bold mt-2 text-white">Early Bird Discount Ending Soon!</h3>
+      <h3 className="text-base sm:text-lg font-bold mt-2 text-white">ICS Season 1 - Limited Time Offer!</h3>
       <p className="text-xs sm:text-sm text-white/80 mt-1">
-        Only <span className="text-white font-bold">{placesLeft}</span> spots left at ₹199 (reg. ₹299)
+        Only <span className="text-creative-yellow font-bold">{placesLeft}</span> free spots left. Register now to secure your place!
       </p>
-      <div className="flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3">
-        <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white/60" />
-        <p className="text-xs text-white/60">Offer expires in 24 hours</p>
+      <div className="flex items-center justify-between mt-2 sm:mt-3">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white/60" />
+          <p className="text-xs text-white/60">Offer ends soon</p>
+        </div>
+        <Button 
+          className="creative-btn group whitespace-nowrap bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold text-xs py-1 px-2 sm:text-sm"
+          onClick={handleEnterCompetitions}
+        >
+          Register Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+        </Button>
       </div>
     </Card>
   );

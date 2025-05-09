@@ -112,7 +112,7 @@
   }
 
   .floating-notification {
-    @apply fixed bottom-4 left-4 glassmorphism p-3 sm:p-4 rounded-lg max-w-xs animate-bounce-in z-50;
+    @apply fixed bottom-20 sm:bottom-4 left-4 glassmorphism p-3 sm:p-4 rounded-lg max-w-xs animate-bounce-in z-50;
   }
 
   .text-gradient {
@@ -144,8 +144,37 @@
 
   /* Sticky CTA Banner */
   .sticky-cta-banner {
-    @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-black/80 border-t border-white/10 shadow-lg z-50 flex justify-center items-center gap-3 md:hidden;
+    @apply fixed bottom-0 left-0 right-0 py-3 px-4 bg-black/80 border-t border-white/10 shadow-lg z-40 flex justify-between items-center gap-3 md:hidden;
     animation: slide-up 0.3s ease-out;
+  }
+  
+  /* New colorful gradients */
+  .gradient-purple-pink {
+    @apply bg-gradient-to-r from-creative-purple to-creative-pink;
+  }
+  
+  .gradient-blue-purple {
+    @apply bg-gradient-to-r from-creative-blue to-creative-purple;
+  }
+  
+  .gradient-pink-orange {
+    @apply bg-gradient-to-r from-creative-pink to-creative-orange;
+  }
+  
+  .gradient-yellow-orange {
+    @apply bg-gradient-to-r from-creative-yellow to-creative-orange;
+  }
+  
+  .social-proof-badge {
+    @apply px-3 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center gap-1.5 animate-pulse;
+  }
+  
+  .prize-highlight {
+    @apply text-xl sm:text-3xl font-bold bg-gradient-to-r from-creative-yellow to-creative-orange bg-clip-text text-transparent animate-pulse;
+  }
+  
+  .feature-icon {
+    @apply h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110;
   }
 }
 
@@ -194,5 +223,9 @@ html, body {
 
   .sticky-cta-banner {
     padding-bottom: max(env(safe-area-inset-bottom), 12px);
+  }
+  
+  .floating-notification {
+    bottom: calc(70px + max(env(safe-area-inset-bottom), 12px));
   }
 }
