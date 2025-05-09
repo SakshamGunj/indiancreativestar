@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,6 @@ import {
   Star,
   Award,
   CheckCircle,
-  Certificate,
   Trophy,
   Medal
 } from "lucide-react";
@@ -82,7 +80,7 @@ export function EnhancedHeroSection() {
             
             <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-6">
               <Badge className="bg-black/40 border border-creative-purple/40 text-white px-3 py-1.5 flex items-center gap-1">
-                <Certificate className="h-3.5 w-3.5 text-creative-purple" />
+                <Award className="h-3.5 w-3.5 text-creative-purple" />
                 <span>Get Certificate</span>
               </Badge>
               <Badge className="bg-black/40 border border-creative-pink/40 text-white px-3 py-1.5 flex items-center gap-1">
