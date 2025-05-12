@@ -63,7 +63,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
               </Badge>
               <Badge className="hero-badge bg-gradient-to-r from-creative-pink/30 to-creative-pink/10">
                 <Award className="h-4 w-4 text-creative-pink" />
-                <span>Registration is FREE!</span>
+                <span>Only ₹99 Registration</span>
               </Badge>
             </div>
             
@@ -111,7 +111,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
                 onClick={handleEnterCompetitions}
               >
-                Register FREE <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Only ₹99 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button variant="outline" className="creative-btn-secondary" onClick={scrollToLearnMore}>
@@ -124,7 +124,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
               <span>Theme: All</span>
               <div className="h-4 w-px bg-white/20 mx-2"></div>
               <CheckCircle className="h-4 w-4 text-green-500" />
-              <span className="text-creative-yellow font-bold">Limited Time FREE!</span>
+              <span className="text-creative-yellow font-bold">Limited Time Offer!</span>
             </div>
           </div>
           
@@ -174,7 +174,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                     className="text-sm py-1.5 px-4 mt-2 bg-gradient-to-r from-creative-blue to-creative-purple text-white"
                     onClick={handleEnterCompetitions}
                   >
-                    Join Free
+                    ₹99 Only
                   </Button>
                 </div>
                 <div className="flex flex-col items-center creative-card p-4 bg-gradient-to-br from-black/60 to-creative-pink/20 border-creative-pink/30 animate-float" style={{ animationDelay: "0.5s" }}>
@@ -186,7 +186,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                     className="text-sm py-1.5 px-4 mt-2 bg-gradient-to-r from-creative-pink to-creative-purple text-white"
                     onClick={handleEnterCompetitions}
                   >
-                    Join Free
+                    ₹99 Only
                   </Button>
                 </div>
               </div>

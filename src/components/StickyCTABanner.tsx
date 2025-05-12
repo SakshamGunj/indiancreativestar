@@ -62,7 +62,7 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
         <div className="bg-gradient-to-r from-creative-purple to-creative-blue p-2 sm:p-3 rounded-t-lg shadow-xl border border-white/10 flex items-center justify-between">
           <div>
             <h3 className="text-xs sm:text-sm font-bold">Join India Creative Star - Season 1</h3>
-            <p className="text-[10px] sm:text-xs text-white/70 hidden sm:block">Just ₹99 Entry Fee</p>
+            <p className="text-[10px] sm:text-xs text-white/70 hidden sm:block">Only ₹99 Registration</p>
           </div>
           <Button
             size={isMobile ? "sm" : "default"}

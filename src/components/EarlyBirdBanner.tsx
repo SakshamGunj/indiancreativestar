@@ -48,7 +48,7 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1 sm:gap-2">
             <Star className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-creative-yellow" />
-            <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black text-xs px-1.5 py-0.5 sm:px-2 sm:py-0.5 font-bold">Just ₹99 Entry!</Badge>
+            <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black text-xs px-1.5 py-0.5 sm:px-2 sm:py-0.5 font-bold">Only ₹99 Entry!</Badge>
           </div>
           <button 
             onClick={handleClose}

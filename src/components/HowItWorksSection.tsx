@@ -31,7 +31,7 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-purple to-creative-pink flex items-center justify-center text-white font-bold">1</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Register for Free</span>
+                <span className="text-gradient">Registration (₹99)</span>
               </h3>
               <p className="text-white/70 mb-4">
                 Choose your competition: 🖌️ Art or ✍️ Poetry. Fill the short form to join your exclusive WhatsApp group for updates and support.
@@ -39,7 +39,7 @@ export function HowItWorksSection() {
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
-                  <span className="text-sm text-white/80">100% free initial registration</span>
+                  <span className="text-sm text-white/80">Just ₹99 registration fee</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
@@ -176,7 +176,7 @@ export function HowItWorksSection() {
             className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
             onClick={handleEnterCompetitions}
           >
-            Submit Now – Just ₹99! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            Register Now – Only ₹99! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
         
