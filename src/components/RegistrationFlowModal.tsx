@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowRight, CheckCircle, IndianRupee } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -68,7 +68,7 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh] will-change-transform`}>
+      <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
             Join India Creative Star
@@ -167,20 +167,14 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                 />
               </div>
               
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <CheckCircle className="h-3 w-3 text-green-500" />
-                  <span>Free Registration + ₹99 Entry Fee</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <IndianRupee className="h-3 w-3 text-creative-yellow" />
-                  <span>Pay after joining WhatsApp group</span>
-                </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                <CheckCircle className="h-3 w-3 text-green-500" />
+                <span>100% Free Registration</span>
               </div>
               
               <Button 
                 type="submit" 
-                className="w-full creative-btn py-2 sm:py-3 h-auto will-change-transform" 
+                className="w-full creative-btn py-2 sm:py-3 h-auto" 
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Registering..." : "Register Now"} 
@@ -194,9 +188,6 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
             <h3 className="text-lg sm:text-xl font-medium">Registration Successful!</h3>
             <p className="text-sm text-muted-foreground">
               You will receive a confirmation on your WhatsApp and Email soon.
-            </p>
-            <p className="text-xs text-creative-yellow">
-              Pay the entry fee of ₹99 through the link you'll receive in WhatsApp.
             </p>
           </div>
         )}

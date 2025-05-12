@@ -1,7 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, Star, IndianRupee } from "lucide-react";
+import { ArrowRight, CheckCircle, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export function HowItWorksSection() {
@@ -31,15 +31,15 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-purple to-creative-pink flex items-center justify-center text-white font-bold">1</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Registration (₹99)</span>
+                <span className="text-gradient">Register for Free</span>
               </h3>
               <p className="text-white/70 mb-4">
-                Choose your competition: 🖌️ Art or ✍️ Poetry. Fill the short form to join your exclusive WhatsApp group for updates and support.
+                Choose your competition: 🖌️ Art or ✍️ Poetry. Fill the short form and join your exclusive WhatsApp group for updates and support.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
-                  <span className="text-sm text-white/80">Just ₹99 registration fee</span>
+                  <span className="text-sm text-white/80">No entry fee required</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
@@ -53,20 +53,20 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-blue to-creative-purple flex items-center justify-center text-white font-bold">2</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Pay Entry Fee</span>
-                <Badge className="ml-2 bg-creative-yellow/20 text-creative-yellow border-creative-yellow/30 text-xs">Only ₹99</Badge>
+                <span className="text-gradient">Submit Your Work</span>
+                <Badge className="ml-2 bg-creative-yellow/20 text-creative-yellow border-creative-yellow/30 text-xs">Silver Tier</Badge>
               </h3>
               <p className="text-white/70 mb-4">
-                After joining the WhatsApp group, you'll pay the entry fee of just ₹99 to confirm your participation and unlock all benefits.
+                Once registered, you'll get a portal link to upload your best creation. This is your moment to shine!
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-blue" />
-                  <span className="text-sm text-white/80">Secure online payment</span>
+                  <span className="text-sm text-white/80">Art as image or photo</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-blue" />
-                  <span className="text-sm text-white/80">Simple payment process</span>
+                  <span className="text-sm text-white/80">Poetry as text or PDF</span>
                 </div>
               </div>
             </div>
@@ -76,19 +76,19 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-pink to-creative-purple flex items-center justify-center text-white font-bold">3</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Submit Your Work</span>
+                <span className="text-gradient">Jury Review</span>
               </h3>
               <p className="text-white/70 mb-4">
-                Once registered, you'll get a portal link to upload your best creation. This is your moment to shine!
+                Our expert panel of judges will review every submission looking for creativity, originality, and emotion to select the top entries.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-pink" />
-                  <span className="text-sm text-white/80">Art as image or photo</span>
+                  <span className="text-sm text-white/80">Fair evaluation process</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-pink" />
-                  <span className="text-sm text-white/80">Poetry as text or PDF</span>
+                  <span className="text-sm text-white/80">Professional jury</span>
                 </div>
               </div>
             </div>
@@ -98,19 +98,20 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-yellow to-creative-orange flex items-center justify-center text-white font-bold">4</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Jury Review</span>
+                <span className="text-gradient">Get Shortlisted</span>
+                <Badge className="ml-2 bg-creative-yellow/20 text-creative-yellow border-creative-yellow/30 text-xs">Gold Tier</Badge>
               </h3>
               <p className="text-white/70 mb-4">
-                Our expert panel of judges will review every submission looking for creativity, originality, and emotion to select the top entries.
+                If selected, you'll join the Gold Tier Showcase. Confirm your place with ₹499 entry fee to unlock premium benefits.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-yellow" />
-                  <span className="text-sm text-white/80">Fair evaluation process</span>
+                  <span className="text-sm text-white/80">Certificate of Excellence</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-yellow" />
-                  <span className="text-sm text-white/80">Professional jury</span>
+                  <span className="text-sm text-white/80">Chance to win ₹25,000+</span>
                 </div>
               </div>
             </div>
@@ -123,7 +124,7 @@ export function HowItWorksSection() {
                 <span className="text-gradient">Voting & Audience Love</span>
               </h3>
               <p className="text-white/70 mb-4">
-                All entries go live on our voting portal with a "Vote for Me" link to share. Top voted entries become People's Choice Finalists!
+                All Gold Tier entries go live on our voting portal with a "Vote for Me" link to share. Top voted entries become People's Choice Finalists!
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -176,7 +177,7 @@ export function HowItWorksSection() {
             className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
             onClick={handleEnterCompetitions}
           >
-            Register Now – Only ₹99! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            Submit Now – It's Free! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
         
@@ -186,8 +187,8 @@ export function HowItWorksSection() {
               <Star className="h-5 w-5 text-creative-purple" />
             </div>
             <div>
-              <h4 className="font-medium">Just ₹99 Entry</h4>
-              <p className="text-xs text-white/60">Affordable for everyone</p>
+              <h4 className="font-medium">Free Registration</h4>
+              <p className="text-xs text-white/60">No upfront cost to join</p>
             </div>
           </div>
           
