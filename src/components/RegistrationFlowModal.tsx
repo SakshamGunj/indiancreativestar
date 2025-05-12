@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -70,6 +69,11 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
         <DialogHeader>
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-12 w-12 rounded-full overflow-hidden">
+              <img src="/company-logo.jpeg" alt="ICS Logo" className="w-full h-full object-cover" />
+            </div>
+          </div>
           <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
             Join India Creative Star
           </DialogTitle>
@@ -169,7 +173,7 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
               
               <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
-                <span>100% Free Registration</span>
+                <span>Registration fee: only ₹99</span>
               </div>
               
               <Button 

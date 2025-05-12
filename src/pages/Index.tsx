@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -78,7 +77,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <PrizeSection />
       
       {/* How It Works Process */}
-      <HowItWorksSection />
+      <HowItWorksSection onRegistrationClick={() => handleRegisterClick()} />
       
       {/* Certificate Section */}
       <CertificateSection />
@@ -96,7 +95,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <section className="section-padding bg-gradient-to-r from-creative-purple/30 to-creative-pink/30" id="register">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto">
-            <Badge variant="outline" className="mb-2 animate-pulse">🚀 Limited Free Registration</Badge>
+            <Badge variant="outline" className="mb-2 animate-pulse">🚀 Limited Time Offer - Only ₹99</Badge>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-4 sm:mb-6">Your Art Deserves The Spotlight</h2>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8">
               Don't wait any longer. Join India's biggest art and poetry community today
@@ -115,7 +114,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
                     Submit your drawings, paintings, digital art, or any visual medium.
                   </p>
                   <div className="flex justify-between items-center mb-4 sm:mb-6">
-                    <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white">FREE Registration</Badge>
+                    <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white">Only ₹99</Badge>
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
@@ -134,7 +133,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
                     Submit your poems, verses, sonnets, or any written expression.
                   </p>
                   <div className="flex justify-between items-center mb-4 sm:mb-6">
-                    <Badge className="bg-gradient-to-r from-creative-pink to-creative-purple text-white">FREE Registration</Badge>
+                    <Badge className="bg-gradient-to-r from-creative-pink to-creative-purple text-white">Only ₹99</Badge>
                   </div>
                   <Button 
                     className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
@@ -148,7 +147,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
             
             <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">
               <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
-              <span>100% safe. No spam. No hidden fees.</span>
+              <span>100% safe. No hidden fees beyond ₹99 entry.</span>
             </div>
           </div>
         </div>

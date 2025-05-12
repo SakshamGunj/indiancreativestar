@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,43 +49,18 @@ export function CertificateSection() {
             </Button>
           </div>
           
-          <div className="creative-card p-8 relative overflow-hidden group hover:scale-105 transition-all duration-500 bg-gradient-to-br from-black/80 to-creative-purple/20">
+          <div className="creative-card p-4 sm:p-6 relative overflow-hidden group hover:scale-105 transition-all duration-500 bg-gradient-to-br from-black/80 to-creative-purple/20">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-creative-blue/20 rounded-full blur-3xl group-hover:bg-creative-blue/30 transition-all duration-500" />
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-creative-purple/20 rounded-full blur-3xl group-hover:bg-creative-purple/30 transition-all duration-500" />
             
-            <div className="relative bg-black/70 backdrop-blur-sm border border-white/10 rounded-xl p-6 shadow-xl">
-              <div className="flex justify-between items-start mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="h-10 w-10 rounded-full bg-gradient-creative flex items-center justify-center">
-                    <span className="font-bold text-white">ICS</span>
-                  </div>
-                  <div>
-                    <span className="font-playfair font-bold text-gradient text-xl">
-                      India Creative Star
-                    </span>
-                  </div>
-                </div>
-                <Award className="h-12 w-12 text-creative-yellow" />
-              </div>
-              
-              <div className="text-center py-8">
-                <h3 className="text-2xl font-playfair font-bold mb-2 text-white">Certificate of Participation</h3>
-                <p className="text-white/70 mb-4">This certifies that</p>
-                <p className="text-xl font-bold border-b border-white/20 pb-1 mb-4 text-white">[Your Name]</p>
-                <p className="text-white/70 mb-6">
-                  has successfully participated in the India Creative Star Challenge
-                  <br />in the category of [Art/Poetry] for the theme "Colors of Emotions"
-                </p>
-                <div className="flex justify-center">
-                  <div className="border-2 border-creative-yellow px-4 py-2 rounded-full text-creative-yellow text-xs font-bold">
-                    OFFICIALLY VERIFIED
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex justify-between items-center mt-4 text-xs text-white/60">
-                <span>April 2025</span>
-                <span>Certificate ID: ICS-2025-XXXX</span>
+            <div className="relative rounded-lg overflow-hidden shadow-2xl">
+              <img 
+                src="/certificate-template.png" 
+                alt="India Creative Star Certificate" 
+                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
+                <span className="text-white font-bold text-lg px-4 py-2 bg-creative-purple/80 rounded-full">Your Certificate Awaits</span>
               </div>
             </div>
           </div>

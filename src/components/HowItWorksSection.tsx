@@ -1,14 +1,21 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export function HowItWorksSection() {
+interface HowItWorksSectionProps {
+  onRegistrationClick?: () => void;
+}
+
+export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProps) {
   const navigate = useNavigate();
   
   const handleEnterCompetitions = () => {
-    navigate("/competitions");
+    if (onRegistrationClick) {
+      onRegistrationClick();
+    } else {
+      navigate("/competitions");
+    }
   };
   
   return (
@@ -31,15 +38,15 @@ export function HowItWorksSection() {
             <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-gradient-to-br from-creative-purple to-creative-pink flex items-center justify-center text-white font-bold">1</div>
             <div className="mt-4">
               <h3 className="text-xl font-bold mb-3 flex items-center">
-                <span className="text-gradient">Register for Free</span>
+                <span className="text-gradient">Register Now</span>
               </h3>
               <p className="text-white/70 mb-4">
-                Choose your competition: 🖌️ Art or ✍️ Poetry. Fill the short form and join your exclusive WhatsApp group for updates and support.
+                Choose your competition: 🖌️ Art or ✍️ Poetry. Fill the form, pay ₹99 to confirm entry, and join your exclusive WhatsApp group for updates and support.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
-                  <span className="text-sm text-white/80">No entry fee required</span>
+                  <span className="text-sm text-white/80">Entry fee: only ₹99</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-purple" />
@@ -175,9 +182,9 @@ export function HowItWorksSection() {
           </p>
           <Button 
             className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
-            onClick={handleEnterCompetitions}
+            onClick={onRegistrationClick || (() => navigate("/competitions"))}
           >
-            Submit Now – It's Free! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            Submit Now – Only ₹99! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
         
@@ -187,8 +194,8 @@ export function HowItWorksSection() {
               <Star className="h-5 w-5 text-creative-purple" />
             </div>
             <div>
-              <h4 className="font-medium">Free Registration</h4>
-              <p className="text-xs text-white/60">No upfront cost to join</p>
+              <h4 className="font-medium">Affordable Entry</h4>
+              <p className="text-xs text-white/60">Just ₹99 to join</p>
             </div>
           </div>
           

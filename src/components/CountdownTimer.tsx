@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 
-// Set the end date to 30 days from now
-const endDate = new Date();
-endDate.setDate(endDate.getDate() + 30);
+// Set the end date to May 30th, 2025
+const endDate = new Date("2025-05-30T23:59:59");
 
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({
@@ -15,23 +13,26 @@ export function CountdownTimer() {
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const calculateTimeLeft = () => {
       const now = new Date();
       const difference = endDate.getTime() - now.getTime();
-
+      
       if (difference <= 0) {
-        clearInterval(timer);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
-
+      
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
+      
       setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
+    };
+
+    // Calculate immediately and then set interval
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
   }, []);

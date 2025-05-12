@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trophy, Award } from "lucide-react";
+import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine, Certificate } from "lucide-react";
 
 // Sample testimonials
 const testimonials = [
@@ -119,20 +118,53 @@ export function SocialProofSection() {
             <p className="text-sm text-white/40 uppercase tracking-wider mb-6">As featured in</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+              <Trophy className="h-6 w-6 mb-1 text-creative-yellow" />
+              <span className="font-bold text-lg">DOM</span>
+            </div>
+            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+              <Bookmark className="h-6 w-6 mb-1 text-creative-blue" />
+              <span className="font-bold text-lg">Classmate</span>
+            </div>
+            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+              <Star className="h-6 w-6 mb-1 text-creative-orange" />
               <span className="font-bold text-lg">Times Now</span>
             </div>
-            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+              <Star className="h-6 w-6 mb-1 text-creative-purple" />
               <span className="font-bold text-lg">YourStory</span>
             </div>
-            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+              <Star className="h-6 w-6 mb-1 text-creative-red" />
               <span className="font-bold text-lg">India Today</span>
             </div>
-            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-              <span className="font-bold text-lg">Outlook</span>
+          </div>
+          
+          {/* Certificate Partner */}
+          <div className="mt-10 text-center">
+            <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Certificate Partner</p>
+            <div className="creative-card h-24 max-w-md mx-auto flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 p-3">
+              <Certificate className="h-8 w-8 mr-3 text-creative-yellow" />
+              <span className="font-bold text-xl">Indian Creative Media Design Co.</span>
             </div>
-            <div className="creative-card h-20 flex items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-              <span className="font-bold text-lg">Mid-Day</span>
+          </div>
+          
+          {/* Poetry Partners */}
+          <div className="mt-10 text-center">
+            <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Poetry Partners</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+                <PenLine className="h-6 w-6 mb-1 text-creative-pink" />
+                <span className="font-bold text-lg">Poetry Society of India</span>
+              </div>
+              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+                <BookOpen className="h-6 w-6 mb-1 text-creative-blue" />
+                <span className="font-bold text-lg">Kavya Connect</span>
+              </div>
+              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
+                <Palette className="h-6 w-6 mb-1 text-creative-purple" />
+                <span className="font-bold text-lg">Poets' Collective</span>
+              </div>
             </div>
           </div>
         </div>

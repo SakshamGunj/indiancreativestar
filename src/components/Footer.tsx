@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Instagram, Facebook, Twitter, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
 
@@ -15,8 +14,8 @@ export function Footer({ onRegisterClick }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-full bg-gradient-creative flex items-center justify-center">
-                <span className="font-bold text-white text-lg">ICS</span>
+              <div className="h-10 w-10 rounded-full overflow-hidden">
+                <img src="/company-logo.jpeg" alt="ICS Logo" className="w-full h-full object-cover" />
               </div>
               <span className="font-playfair font-bold text-gradient text-xl">India Creative Star</span>
             </div>
