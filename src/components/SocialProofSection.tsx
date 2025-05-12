@@ -114,6 +114,11 @@ export function SocialProofSection() {
         {/* Brands / Partner logos */}
         <div className="mb-16">
           <div className="text-center mb-8">
+            <div className="inline-block mb-3">
+              <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white px-3 py-1">
+                Our Supporters
+              </Badge>
+            </div>
             <h3 className="text-2xl font-bold mb-2">Our Partners & Sponsors</h3>
             <p className="text-sm text-white/40 uppercase tracking-wider mb-6">As featured in</p>
           </div>
