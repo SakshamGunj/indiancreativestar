@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -65,7 +64,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <EnhancedHeroSection onRegisterClick={() => handleRegisterClick()} />
       
       {/* About Section with ID for scroll detection */}
-      <section id="about-section">
+      <section id="about-section" className="will-change-transform">
         <AboutSection />
       </section>
       

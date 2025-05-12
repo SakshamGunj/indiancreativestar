@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Star, Award, ArrowRight, IndianRupee } from "lucide-react";
+import { Clock, Star, ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { RegistrationFlowModal } from "./RegistrationFlowModal";
