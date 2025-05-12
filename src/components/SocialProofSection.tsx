@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine, Certificate } from "lucide-react";
+import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine } from "lucide-react";
 
 // Sample testimonials
 const testimonials = [
@@ -149,7 +149,7 @@ export function SocialProofSection() {
           <div className="mt-10 text-center">
             <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Certificate Partner</p>
             <div className="creative-card h-24 max-w-md mx-auto flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 p-3">
-              <Certificate className="h-8 w-8 mr-3 text-creative-yellow" />
+              <Award className="h-8 w-8 mr-3 text-creative-yellow" />
               <span className="font-bold text-xl">Indian Creative Media Design Co.</span>
             </div>
           </div>
