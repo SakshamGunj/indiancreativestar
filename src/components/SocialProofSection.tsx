@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine } from "lucide-react";
+import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine, Ribbon } from "lucide-react";
 
 // Sample testimonials
 const testimonials = [
@@ -21,11 +21,9 @@ const stats = [
 
 // Campus ambassadors
 const ambassadors = [
-  { name: "Rajiv Kumar", college: "Delhi University", region: "North India" },
-  { name: "Ananya Devi", college: "University of Hyderabad", region: "South India" },
-  { name: "Deepak Patel", college: "NIT Bhopal", region: "Central India" },
   { name: "Meera Joshi", college: "Jadavpur University", region: "East India" },
-  { name: "Farhan Ahmed", college: "Mumbai University", region: "West India" },
+  { name: "Shashank Saha", college: "Sikkim Manipal Institute of Technology", region: "Northeast India" },
+  { name: "Sukriti Verma", college: "Medhavi University", region: "Northeast India" },
 ];
 
 export function SocialProofSection() {
@@ -149,7 +147,7 @@ export function SocialProofSection() {
           <div className="mt-10 text-center">
             <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Certificate Partner</p>
             <div className="creative-card h-24 max-w-md mx-auto flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 p-3">
-              <Award className="h-8 w-8 mr-3 text-creative-yellow" />
+              <Ribbon className="h-8 w-8 mr-3 text-creative-yellow" />
               <span className="font-bold text-xl">Indian Creative Media Design Co.</span>
             </div>
           </div>
@@ -164,7 +162,7 @@ export function SocialProofSection() {
               </div>
               <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
                 <BookOpen className="h-6 w-6 mb-1 text-creative-blue" />
-                <span className="font-bold text-lg">Kavya Connect</span>
+                <span className="font-bold text-lg">Classmate</span>
               </div>
               <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
                 <Palette className="h-6 w-6 mb-1 text-creative-purple" />

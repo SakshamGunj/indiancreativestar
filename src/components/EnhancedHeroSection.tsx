@@ -40,7 +40,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-background/90 to-background z-10" />
         <img 
-          src="/hero-bg.jpeg" 
+          src="https://i.postimg.cc/3d02RYzF/pexels-pixabay-161154-11zon-1.jpg" 
           alt="Creative Star Background" 
           className="w-full h-full object-cover"
         />

@@ -52,15 +52,11 @@ export function Footer({ onRegisterClick }: FooterProps) {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-creative-purple mt-0.5" />
-                <span className="text-white/70">support@indiacreativestar.com</span>
+                <span className="text-white/70">indiancreativestar@gmail.com</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-creative-purple mt-0.5" />
-                <span className="text-white/70">Mumbai, Maharashtra, India</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <PhoneCall className="h-5 w-5 text-creative-purple mt-0.5" />
-                <span className="text-white/70">+91 98765 43210</span>
+                <span className="text-white/70">Sikkim, India</span>
               </li>
             </ul>
           </div>
