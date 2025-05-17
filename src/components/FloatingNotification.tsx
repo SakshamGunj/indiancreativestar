@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { animate, motion } from "framer-motion";
 import { Award, User } from "lucide-react";
@@ -59,21 +58,21 @@ export function FloatingNotification({ delay = 5000 }: FloatingNotificationProps
   if (!isVisible) return null;
 
   return (
-    <div className="floating-notification max-w-[85vw] sm:max-w-xs">
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+    <div className={`floating-notification ${isMobile ? 'max-w-[240px] p-2' : 'sm:max-w-xs sm:p-4'}`}>
+      <div className={`flex items-center ${isMobile ? 'gap-1.5' : 'sm:gap-3'}`}>
+        <div className={`${isMobile ? 'h-6 w-6' : 'sm:h-8 sm:w-8'} rounded-full bg-primary/20 flex items-center justify-center shrink-0`}>
           {notification.type === "writing" ? (
-            <Award className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-creative-pink" />
+            <Award className={`${isMobile ? 'h-3 w-3' : 'sm:h-4 sm:w-4'} text-creative-pink`} />
           ) : (
-            <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-creative-blue" />
+            <User className={`${isMobile ? 'h-3 w-3' : 'sm:h-4 sm:w-4'} text-creative-blue`} />
           )}
         </div>
         <div>
-          <p className={`${isMobile ? "text-xs" : "text-sm"} font-medium line-clamp-2`}>
+          <p className={`${isMobile ? 'text-[11px]' : 'sm:text-sm'} font-medium line-clamp-2`}>
             {notification.name} from {notification.location} just registered for the {" "}
             {notification.type === "writing" ? "Poetry" : "Art"} Contest!
           </p>
-          <p className="text-xs text-muted-foreground mt-0.5">just now</p>
+          <p className={`${isMobile ? 'text-[10px]' : 'text-xs'} text-muted-foreground mt-0.5`}>just now</p>
         </div>
       </div>
     </div>

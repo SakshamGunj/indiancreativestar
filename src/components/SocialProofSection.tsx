@@ -83,30 +83,7 @@ export function SocialProofSection() {
           </div>
           
           {/* Featured testimonial */}
-          <div className="creative-card p-6 bg-gradient-to-br from-black/80 to-creative-yellow/10 border-creative-yellow/20 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 opacity-10 text-9xl font-serif group-hover:scale-110 transition-all duration-500">"</div>
-            <div className="mb-4 flex justify-between">
-              <div>
-                <p className="font-semibold text-white">{testimonials[currentIndex].name}</p>
-                <p className="text-sm text-white/60">{testimonials[currentIndex].location}</p>
-              </div>
-              <div className="flex">
-                {renderStars(testimonials[currentIndex].rating)}
-              </div>
-            </div>
-            
-            <p className="text-lg italic text-white/90 mb-4">"{testimonials[currentIndex].quote}"</p>
-            
-            <div className="flex justify-center mt-4 space-x-1">
-              {testimonials.map((_, index) => (
-                <button 
-                  key={index} 
-                  className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white w-4' : 'bg-white/30'}`}
-                  onClick={() => setCurrentIndex(index)}
-                />
-              ))}
-            </div>
-          </div>
+          
         </div>
         
         {/* Brands / Partner logos */}

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -66,10 +65,10 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
           </div>
           <Button
             size={isMobile ? "sm" : "default"}
-            className="creative-btn group whitespace-nowrap bg-white text-black py-1 px-2 h-auto min-h-8"
+            className="group whitespace-nowrap bg-creative-yellow text-black hover:bg-creative-yellow/90 font-semibold py-1 px-2 h-auto min-h-8 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 ease-in-out"
             onClick={handleClick}
           >
-            Register Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+            Register Now <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>

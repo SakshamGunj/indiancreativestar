@@ -9,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Re-using the same testimonial data structure and data for now
 // In a real app, this might come from props or a shared data source
@@ -65,7 +66,43 @@ const testimonials = [
   },
 ];
 
+const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => {
+  const isMobile = useIsMobile();
+
+  return (
+    <Card className={`h-full flex flex-col testimonial-card-alt group border-border/50 hover:border-primary/70 transition-all duration-300 shadow-lg hover:shadow-primary/20 ${isMobile ? 'p-3' : 'p-4 sm:p-6'}`}>
+      <CardContent className="pt-0 flex flex-col flex-grow">
+        <div className={`flex ${isMobile ? 'flex-col items-start' : 'justify-between items-start'} mb-3`}>
+          <div className={`${isMobile ? 'mb-1' : ''}`}>
+            <h4 className={`font-semibold text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>{testimonial.name}</h4>
+            <p className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>{testimonial.role}</p>
+          </div>
+          <div className={`flex items-center gap-2 ${isMobile ? 'mt-1' : ''}`}>
+            <Badge variant="secondary" className={`group-hover:bg-primary/20 group-hover:text-primary transition-colors ${isMobile ? 'text-[10px] px-1.5 py-0.5' : 'text-xs'}`}>
+              {testimonial.category}
+            </Badge>
+            <Quote className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'} text-primary/30 group-hover:text-primary/50 transition-colors`} />
+          </div>
+        </div>
+        <p className={`mb-4 text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'} leading-relaxed flex-grow`}>"{testimonial.content}"</p>
+        <div className="mt-auto">
+          <div className="flex">
+            {Array(5).fill(0).map((_, i) => (
+              <Star 
+                key={i} 
+                className={` ${isMobile ? 'h-3.5 w-3.5' : 'h-4 w-4'} ${i < testimonial.rating ? 'text-creative-yellow fill-creative-yellow' : 'text-muted/70'}`} 
+              />
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 export function TestimonialCarouselSection() {
+  const isMobile = useIsMobile();
+
   return (
     <section className="section-padding bg-gradient-to-b from-background to-muted/30" id="testimonial-carousel">
       <div className="container">
@@ -77,55 +114,31 @@ export function TestimonialCarouselSection() {
           </p>
         </div>
         
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto"
-        >
-          <CarouselContent>
+        {isMobile ? (
+          <div className="grid grid-cols-2 gap-4">
             {testimonials.map((testimonial) => (
-              <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3 p-2 sm:p-4">
-                <Card className="h-full flex flex-col testimonial-card-alt group border-border/50 hover:border-primary/70 transition-all duration-300 shadow-lg hover:shadow-primary/20">
-                  <CardContent className="pt-6 flex flex-col flex-grow">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-12 w-12 border-2 border-primary group-hover:scale-110 transition-transform duration-300">
-                          <AvatarImage src={testimonial.imageUrl} alt={testimonial.name} />
-                          <AvatarFallback className="bg-gradient-to-br from-creative-purple to-creative-pink text-white font-semibold">
-                            {testimonial.avatar}
-                          </AvatarFallback>
-                        </Avatar>
-                        <Badge variant="secondary" className="group-hover:bg-primary/20 group-hover:text-primary transition-colors">
-                          {testimonial.category}
-                        </Badge>
-                      </div>
-                      <Quote className="h-8 w-8 text-primary/30 group-hover:text-primary/50 transition-colors" />
-                    </div>
-                    
-                    <p className="mb-6 text-muted-foreground text-sm leading-relaxed flex-grow">"{testimonial.content}"</p>
-                    
-                    <div className="mt-auto">
-                      <div className="flex mb-2">
-                        {Array(5).fill(0).map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className={`h-4 w-4 ${i < testimonial.rating ? 'text-creative-yellow fill-creative-yellow' : 'text-muted/70'}`} 
-                          />
-                        ))}
-                      </div>
-                      <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                      <p className="text-xs text-muted-foreground">{testimonial.role}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex -left-4 md:-left-8 lg:-left-12 text-primary hover:bg-primary/10 hover:text-primary" />
-          <CarouselNext className="hidden sm:flex -right-4 md:-right-8 lg:-right-12 text-primary hover:bg-primary/10 hover:text-primary" />
-        </Carousel>
+          </div>
+        ) : (
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {testimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3 p-2">
+                  <TestimonialCard testimonial={testimonial} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex -left-4 md:-left-8 lg:-left-12 text-primary hover:bg-primary/10 hover:text-primary" />
+            <CarouselNext className="hidden sm:flex -right-4 md:-right-8 lg:-right-12 text-primary hover:bg-primary/10 hover:text-primary" />
+          </Carousel>
+        )}
       </div>
     </section>
   );

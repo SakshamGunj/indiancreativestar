@@ -69,11 +69,6 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
         <DialogHeader>
-          <div className="flex items-center justify-center mb-4">
-            <div className="h-12 w-12 rounded-full overflow-hidden">
-              <img src="/company-logo.jpeg" alt="ICS Logo" className="w-full h-full object-cover" />
-            </div>
-          </div>
           <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
             Join India Creative Star
           </DialogTitle>
@@ -84,18 +79,18 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 mt-3">
               <div className="space-y-2">
                 <Label htmlFor="contestType" className="font-medium text-base sm:text-lg">Choose Your Competition</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-                  <FormField
-                    control={form.control}
-                    name="contestType"
-                    render={({ field }) => (
-                      <FormItem className="space-y-2">
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex flex-col space-y-2"
-                          >
+                <FormField
+                  control={form.control}
+                  name="contestType"
+                  render={({ field }) => (
+                    <FormItem className="space-y-2 mt-2">
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex flex-row space-x-3"
+                        >
+                          <div className="flex-1">
                             <div className={`p-3 rounded-lg cursor-pointer transition-all touch-target ${
                               field.value === 'art' 
                                 ? 'bg-gradient-to-r from-creative-blue/30 to-creative-purple/20 border border-creative-blue' 
@@ -107,7 +102,9 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                               </div>
                               <p className="text-xs sm:text-sm text-white/70 mt-1 pl-6">Drawing, Painting, Digital Art</p>
                             </div>
-                            
+                          </div>
+                          
+                          <div className="flex-1">
                             <div className={`p-3 rounded-lg cursor-pointer transition-all touch-target ${
                               field.value === 'poetry' 
                                 ? 'bg-gradient-to-r from-creative-pink/30 to-creative-purple/20 border border-creative-pink' 
@@ -119,12 +116,12 @@ export function RegistrationFlowModal({ isOpen, onClose, preselectedContest = "a
                               </div>
                               <p className="text-xs sm:text-sm text-white/70 mt-1 pl-6">Poems, Verses, Sonnets</p>
                             </div>
-                          </RadioGroup>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               
               <div className="space-y-1.5">
