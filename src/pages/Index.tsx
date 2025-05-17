@@ -18,6 +18,8 @@ import { AboutSection } from "@/components/AboutSection";
 import { CertificateSection } from "@/components/CertificateSection";
 import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
+import { TestimonialCarouselSection } from "@/components/TestimonialCarouselSection";
+import { ImageShowcaseSection } from "@/components/ImageShowcaseSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
@@ -78,6 +80,12 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       
       {/* How It Works Process */}
       <HowItWorksSection onRegistrationClick={() => handleRegisterClick()} />
+      
+      {/* New Testimonial Carousel Section */}
+      <TestimonialCarouselSection />
+
+      {/* New Image Showcase Section */}
+      <ImageShowcaseSection />
       
       {/* Certificate Section */}
       <CertificateSection />

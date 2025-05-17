@@ -43,6 +43,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
           src="https://i.postimg.cc/3d02RYzF/pexels-pixabay-161154-11zon-1.jpg" 
           alt="Creative Star Background" 
           className="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
       
