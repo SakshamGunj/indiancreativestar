@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Award, CheckCircle, ArrowRight } from "lucide-react";
 
-export function CertificateSection() {
+interface CertificateSectionProps {
+  onRegistrationClick?: () => void;
+}
+
+export function CertificateSection({ onRegistrationClick }: CertificateSectionProps) {
   return (
     <section className="section-padding bg-gradient-to-br from-creative-purple/20 to-black">
       <div className="container">
@@ -43,7 +47,7 @@ export function CertificateSection() {
             
             <Button 
               className="creative-btn"
-              onClick={() => window.location.href = "#register"}
+              onClick={onRegistrationClick}
             >
               Get Your Certificate <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

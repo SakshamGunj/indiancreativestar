@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { animate, motion } from "framer-motion";
-import { Award, User } from "lucide-react";
+import { Palette, User } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 // Sample data for notifications
 const notifications = [
-  { name: "Riya", location: "Delhi", type: "writing" },
-  { name: "Arjun", location: "Mumbai", type: "art" },
-  { name: "Priya", location: "Bangalore", type: "writing" },
-  { name: "Rajiv", location: "Kolkata", type: "art" },
-  { name: "Ananya", location: "Chennai", type: "writing" },
-  { name: "Vikram", location: "Hyderabad", type: "art" },
-  { name: "Neha", location: "Pune", type: "writing" },
-  { name: "Siddharth", location: "Jaipur", type: "art" },
+  { name: "Riya", location: "Delhi" },
+  { name: "Arjun", location: "Mumbai" },
+  { name: "Priya", location: "Bangalore" },
+  { name: "Rajiv", location: "Kolkata" },
+  { name: "Ananya", location: "Chennai" },
+  { name: "Vikram", location: "Hyderabad" },
+  { name: "Neha", location: "Pune" },
+  { name: "Siddharth", location: "Jaipur" },
 ];
 
 interface FloatingNotificationProps {
@@ -61,16 +61,11 @@ export function FloatingNotification({ delay = 5000 }: FloatingNotificationProps
     <div className={`floating-notification ${isMobile ? 'max-w-[240px] p-2' : 'sm:max-w-xs sm:p-4'}`}>
       <div className={`flex items-center ${isMobile ? 'gap-1.5' : 'sm:gap-3'}`}>
         <div className={`${isMobile ? 'h-6 w-6' : 'sm:h-8 sm:w-8'} rounded-full bg-primary/20 flex items-center justify-center shrink-0`}>
-          {notification.type === "writing" ? (
-            <Award className={`${isMobile ? 'h-3 w-3' : 'sm:h-4 sm:w-4'} text-creative-pink`} />
-          ) : (
-            <User className={`${isMobile ? 'h-3 w-3' : 'sm:h-4 sm:w-4'} text-creative-blue`} />
-          )}
+          <Palette className={`${isMobile ? 'h-3 w-3' : 'sm:h-4 sm:w-4'} text-creative-blue`} />
         </div>
         <div>
           <p className={`${isMobile ? 'text-[11px]' : 'sm:text-sm'} font-medium line-clamp-2`}>
-            {notification.name} from {notification.location} just registered for the {" "}
-            {notification.type === "writing" ? "Poetry" : "Art"} Contest!
+            {notification.name} from {notification.location} just registered for the Art Competition!
           </p>
           <p className={`${isMobile ? 'text-[10px]' : 'text-xs'} text-muted-foreground mt-0.5`}>just now</p>
         </div>

@@ -1,4 +1,3 @@
-
 import { 
   Accordion, 
   AccordionContent, 
@@ -10,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 const faqs = [
   {
     question: "What format do I submit in?",
-    answer: "For artwork, you can submit a high-quality photo or scan of your work in JPG, PNG, or PDF format. For poetry, please submit your work as a typed PDF document."
+    answer: "For artwork, you can submit a high-quality photo or scan of your work in JPG, PNG, or PDF format. Make sure the image clearly shows all details of your artwork."
   },
   {
     question: "Can kids join?",
@@ -21,12 +20,12 @@ const faqs = [
     answer: "Every participant receives a digital certificate of participation. Additionally, there's still a chance for your work to be featured in our online gallery or social media channels."
   },
   {
-    question: "Can I submit both art and poetry?",
-    answer: "Absolutely! You can participate in both categories, but each submission requires a separate entry form and fee."
+    question: "Can I submit multiple artworks?",
+    answer: "You can submit up to 3 artworks in a single registration. Each additional artwork requires a separate entry fee."
   },
   {
     question: "How are the winners selected?",
-    answer: "Entries are judged by a panel of professional artists, poets, and educators based on creativity, originality, technique, and interpretation of the theme."
+    answer: "Entries are judged by a panel of professional artists and educators based on creativity, originality, technique, and interpretation of the theme."
   },
   {
     question: "When will the results be announced?",
@@ -42,7 +41,7 @@ export function FAQSection() {
           <Badge variant="outline" className="mb-2">FAQ</Badge>
           <h2 className="text-4xl font-bold text-gradient mb-4">Frequently Asked Questions</h2>
           <p className="text-muted-foreground">
-            Get answers to common questions about the India Creative Star challenge.
+            Get answers to common questions about the India Creative Star art challenge.
           </p>
         </div>
         

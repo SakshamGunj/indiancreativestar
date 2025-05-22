@@ -68,15 +68,11 @@ export function AboutSection() {
         <div className="flex flex-wrap justify-center gap-4 mt-10">
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
             <Star className="h-5 w-5 text-creative-yellow" />
-            <span className="text-sm font-medium">Trusted by 10,000+ participants</span>
+            <span className="text-sm font-medium">Trusted by 1,000+ participants</span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
             <Palette className="h-5 w-5 text-creative-blue" />
             <span className="text-sm font-medium">Art Competition</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-            <PenLine className="h-5 w-5 text-creative-pink" />
-            <span className="text-sm font-medium">Poetry Competition</span>
           </div>
         </div>
       </div>

@@ -1,29 +1,58 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trophy, Award, Bookmark, BookOpen, Palette, PenLine, Ribbon } from "lucide-react";
+import { Star, Trophy, Award, Bookmark, Palette, Ribbon, Users, Medal, Check } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 // Sample testimonials
 const testimonials = [
   { name: "Arjun Kapoor", location: "Mumbai", quote: "Participating in ICS gave my artwork the platform I've been dreaming of for years!", rating: 5 },
-  { name: "Priya Sharma", location: "Delhi", quote: "The feedback from professional judges transformed how I approach my poetry. Worth every minute!", rating: 5 },
   { name: "Rahul Mehra", location: "Bangalore", quote: "From a hobby artist to getting nationally recognized - ICS made it possible!", rating: 4 },
   { name: "Sneha Patel", location: "Ahmedabad", quote: "The community of artists I met through this contest has become my support system.", rating: 5 },
   { name: "Vikram Singh", location: "Jaipur", quote: "Getting featured in the eMagazine opened doors to art galleries I couldn't access before.", rating: 5 },
+  { name: "Ayesha Khan", location: "Lucknow", quote: "The professional feedback on my artwork helped me improve my technique tremendously!", rating: 5 },
 ];
 
 // Sample stats
 const stats = [
-  { label: "Participants", value: "10,000+", color: "creative-purple" },
-  { label: "Cities Reached", value: "250+", color: "creative-blue" },
-  { label: "Cash Prizes", value: "₹1,00,000", color: "creative-yellow" },
-  { label: "Success Stories", value: "500+", color: "creative-pink" },
+  { label: "Participants", value: "1,000+", color: "creative-purple", icon: Users },
+  { label: "Cities Reached", value: "250+", color: "creative-blue", icon: Bookmark },
+  { label: "Cash Prizes", value: "₹30,000", color: "creative-yellow", icon: Trophy },
+  { label: "Success Stories", value: "500+", color: "creative-pink", icon: Medal },
 ];
 
 // Campus ambassadors
 const ambassadors = [
-  { name: "Meera Joshi", college: "Jadavpur University", region: "East India" },
+  
   { name: "Shashank Saha", college: "Sikkim Manipal Institute of Technology", region: "Northeast India" },
-  { name: "Sukriti Verma", college: "Medhavi University", region: "Northeast India" },
+  
+];
+
+// Trust reasons
+const trustReasons = [
+  { 
+    title: "Transparent Process", 
+    description: "Clear judging criteria and fair competition",
+    icon: Check,
+    color: "creative-yellow" 
+  },
+  { 
+    title: "Expert Jury", 
+    description: "Recognized industry experts evaluate your work",
+    icon: Award,
+    color: "creative-blue" 
+  },
+  { 
+    title: "Artistic Showcase", 
+    description: "Your art gets the visibility it deserves",
+    icon: Palette,
+    color: "creative-purple" 
+  },
+  { 
+    title: "Community Support", 
+    description: "Join a network of like-minded artists",
+    icon: Users,
+    color: "creative-pink" 
+  },
 ];
 
 export function SocialProofSection() {
@@ -50,122 +79,111 @@ export function SocialProofSection() {
   return (
     <section className="section-padding bg-gradient-to-b from-background/95 to-black/95">
       <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-block mb-3">
-            <Badge className="bg-gradient-to-r from-creative-purple to-creative-pink text-white px-3 py-1">
-              Real Results
+        <div className="mb-16">
+          <div className="text-center mb-8">
+            <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black px-3 py-1 mb-2">
+              Our Supporters
             </Badge>
-          </div>
-          <h2 className="text-4xl font-bold text-gradient mb-4">Join Thousands of Rising Artists</h2>
-          <p className="text-muted-foreground text-xl">
-            Don't just take our word for it - hear from the artists and poets who've been part of ICS
-          </p>
-          
-          <div className="mt-6 creative-card py-2 px-4 inline-flex items-center gap-2 bg-gradient-to-r from-creative-yellow/20 to-creative-orange/20">
-            <Star className="h-5 w-5 text-creative-yellow" />
-            <span className="font-bold">4.5/5</span>
-            <span className="text-sm">Rated by 10,000+ artists</span>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-4">
-            {stats.map((stat, index) => (
-              <div 
-                key={index} 
-                className={`creative-card p-6 text-center bg-gradient-to-br from-black/80 to-${stat.color}/10 border-${stat.color}/20 hover:scale-105 transition-all duration-300`}
-              >
-                <h3 className={`text-3xl sm:text-4xl font-bold text-${stat.color} mb-2`}>{stat.value}</h3>
-                <p className="text-white/70">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-          
-          {/* Featured testimonial */}
-          
-        </div>
-        
-        {/* Brands / Partner logos */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <div className="inline-block mb-3">
-              <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white px-3 py-1">
-                Our Supporters
-              </Badge>
-            </div>
             <h3 className="text-2xl font-bold mb-2">Our Partners & Sponsors</h3>
-            <p className="text-sm text-white/40 uppercase tracking-wider mb-6">As featured in</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-              <Trophy className="h-6 w-6 mb-1 text-creative-yellow" />
-              <span className="font-bold text-lg">DOM</span>
-            </div>
-            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-              <Bookmark className="h-6 w-6 mb-1 text-creative-blue" />
-              <span className="font-bold text-lg">Classmate</span>
-            </div>
-            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-              <Star className="h-6 w-6 mb-1 text-creative-orange" />
-              <span className="font-bold text-lg">Times Now</span>
-            </div>
-            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-              <Star className="h-6 w-6 mb-1 text-creative-purple" />
-              <span className="font-bold text-lg">YourStory</span>
-            </div>
-            <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-              <Star className="h-6 w-6 mb-1 text-creative-red" />
-              <span className="font-bold text-lg">India Today</span>
-            </div>
           </div>
           
-          {/* Certificate Partner */}
-          <div className="mt-10 text-center">
-            <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Certificate Partner</p>
-            <div className="creative-card h-24 max-w-md mx-auto flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 p-3">
-              <Ribbon className="h-8 w-8 mr-3 text-creative-yellow" />
-              <span className="font-bold text-xl">Indian Creative Media Design Co.</span>
+          {/* Featured Partners */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 max-w-5xl mx-auto mb-10">
+            <div className="creative-card p-5 min-h-[160px] flex flex-col items-center justify-center bg-gradient-to-br from-black/70 to-creative-yellow/10 border-creative-yellow/40 hover:border-creative-yellow/70 hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 rounded-full bg-white/5 p-1 flex items-center justify-center mb-3 overflow-hidden">
+                <img 
+                  src="/funkymonkey.jpeg" 
+                  alt="Funky Monkey" 
+                  className="w-full h-full object-cover rounded-full" 
+                />
+              </div>
+              <span className="font-bold text-base sm:text-lg">Funky Monkey</span>
+              <span className="text-xs text-white/70 mt-1">Sponsor</span>
             </div>
+            
+            <div className="creative-card p-5 min-h-[160px] flex flex-col items-center justify-center bg-gradient-to-br from-black/70 to-creative-blue/10 border-creative-blue/40 hover:border-creative-blue/70 hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 rounded-full bg-white/5 p-1 flex items-center justify-center mb-3 overflow-hidden">
+                <img 
+                  src="/images/491464951_17845907094465695_1813363270352732276_n.jpg" 
+                  alt="Daami Event" 
+                  className="w-full h-full object-cover rounded-full" 
+                />
+              </div>
+              <span className="font-bold text-base sm:text-lg">Daami Event</span>
+              <span className="text-xs text-white/70 mt-1">Event Management Partner</span>
+            </div>
+            
+            <div className="creative-card p-5 min-h-[160px] flex flex-col items-center justify-center bg-gradient-to-br from-black/70 to-creative-orange/10 border-creative-orange/40 hover:border-creative-orange/70 hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 rounded-full bg-white/5 p-1 flex items-center justify-center mb-3 overflow-hidden">
+                <img 
+                  src="/tenversemedia.jpeg" 
+                  alt="Tenverse Media" 
+                  className="w-full h-full object-cover rounded-full" 
+                />
+              </div>
+              <span className="font-bold text-base sm:text-lg">Tenverse Media</span>
+              <span className="text-xs text-white/70 mt-1">Sponsor</span>
+            </div>
+            
+            <div className="creative-card p-5 min-h-[160px] flex flex-col items-center justify-center bg-gradient-to-br from-black/70 to-creative-purple/10 border-creative-purple/40 hover:border-creative-purple/70 hover:scale-105 transition-all duration-300">
+              <div className="w-16 h-16 rounded-full bg-white/5 p-1 flex items-center justify-center mb-3 overflow-hidden">
+                <img 
+                  src="/images/370551319_670765108420844_4119394780844068712_n__1_-removebg-preview.png" 
+                  alt="Sikkim Daily News" 
+                  className="w-full h-full object-contain" 
+                />
+              </div>
+              <span className="font-bold text-base sm:text-lg">Sikkim Daily News</span>
+              <span className="text-xs text-white/70 mt-1">Media News Agency Partner</span>
+            </div>
+            
+           
           </div>
           
-          {/* Poetry Partners */}
-          <div className="mt-10 text-center">
-            <p className="text-sm text-white/40 uppercase tracking-wider mb-4">Poetry Partners</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-                <PenLine className="h-6 w-6 mb-1 text-creative-pink" />
-                <span className="font-bold text-lg">Poetry Society of India</span>
+          {/* Certificate and Art Partners */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div>
+              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Certificate Partner</p>
+              <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-yellow/10 border-creative-yellow/40 hover:border-creative-yellow/70 hover:scale-105 transition-all duration-300">
+                <div className="bg-black/30 rounded-full p-3 mr-4">
+                  <Ribbon className="h-8 w-8 text-creative-yellow" />
+                </div>
+                <span className="font-bold text-lg">Indian Creative Media Design Co.</span>
               </div>
-              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-                <BookOpen className="h-6 w-6 mb-1 text-creative-blue" />
-                <span className="font-bold text-lg">Classmate</span>
-              </div>
-              <div className="creative-card h-20 flex flex-col items-center justify-center opacity-70 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 p-2">
-                <Palette className="h-6 w-6 mb-1 text-creative-purple" />
-                <span className="font-bold text-lg">Poets' Collective</span>
+            </div>
+            
+            <div>
+              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Art Partners</p>
+              <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-purple/10 border-creative-purple/40 hover:border-creative-purple/70 hover:scale-105 transition-all duration-300">
+                <div className="bg-black/30 rounded-full p-3 mr-4">
+                  <Palette className="h-8 w-8 text-creative-purple" />
+                </div>
+                <span className="font-bold text-lg">Art Society of Sikkim</span>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Campus Ambassadors */}
+        {/* Campus Ambassadors - Enhanced */}
         <div className="mb-16">
           <div className="text-center mb-8">
+            <Badge className="bg-gradient-to-r from-creative-purple to-creative-blue text-white px-3 py-1 mb-2">
+              Campus Network
+            </Badge>
             <h3 className="text-2xl font-bold mb-2">Our Campus Ambassadors</h3>
-            <p className="text-sm text-white/60 mb-6">
-              Student representatives from top institutions across India
+            <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto">
+              Student representatives from top institutions across India helping us discover emerging artistic talent
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
             {ambassadors.map((ambassador, index) => (
               <div 
                 key={index} 
-                className="creative-card p-4 bg-gradient-to-br from-black/60 to-creative-purple/10 text-center hover:scale-105 transition-all duration-300"
+                className="creative-card p-4 bg-gradient-to-br from-black/60 to-creative-purple/10 border-creative-purple/20 text-center hover:scale-105 transition-all duration-300"
               >
-                <div className="h-12 w-12 rounded-full bg-creative-purple/20 mx-auto mb-2 flex items-center justify-center">
-                  <span className="font-bold">{ambassador.name[0]}</span>
+                <div className="h-14 w-14 rounded-full bg-creative-purple/20 mx-auto mb-3 flex items-center justify-center">
+                  <span className="font-bold text-lg">{ambassador.name[0]}</span>
                 </div>
                 <p className="font-semibold text-sm">{ambassador.name}</p>
                 <p className="text-xs text-white/60">{ambassador.college}</p>
@@ -175,64 +193,6 @@ export function SocialProofSection() {
           </div>
         </div>
         
-        {/* Trust Badges */}
-        <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold mb-6">Why Artists Trust Us</h3>
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <div className="creative-card p-4 text-center">
-            <div className="h-12 w-12 rounded-full bg-creative-yellow/20 mx-auto mb-3 flex items-center justify-center">
-              <Trophy className="h-6 w-6 text-creative-yellow" />
-            </div>
-            <h4 className="font-bold">Transparent Process</h4>
-            <p className="text-xs text-white/60 mt-1">Clear judging criteria and fair competition</p>
-          </div>
-          
-          <div className="creative-card p-4 text-center">
-            <div className="h-12 w-12 rounded-full bg-creative-blue/20 mx-auto mb-3 flex items-center justify-center">
-              <Award className="h-6 w-6 text-creative-blue" />
-            </div>
-            <h4 className="font-bold">Expert Jury</h4>
-            <p className="text-xs text-white/60 mt-1">Recognized industry experts evaluate your work</p>
-          </div>
-          
-          <div className="creative-card p-4 text-center">
-            <div className="h-12 w-12 rounded-full bg-creative-pink/20 mx-auto mb-3 flex items-center justify-center">
-              <Star className="h-6 w-6 text-creative-pink" />
-            </div>
-            <h4 className="font-bold">Nationwide Platform</h4>
-            <p className="text-xs text-white/60 mt-1">Connect with artists across all of India</p>
-          </div>
-          
-          <div className="creative-card p-4 text-center">
-            <div className="h-12 w-12 rounded-full bg-creative-purple/20 mx-auto mb-3 flex items-center justify-center">
-              <Star className="h-6 w-6 text-creative-purple" />
-            </div>
-            <h4 className="font-bold">Real Opportunities</h4>
-            <p className="text-xs text-white/60 mt-1">Career-building exposure and connections</p>
-          </div>
-        </div>
-        
-        {/* Social proof badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
-          <div className="social-proof-badge bg-black/40 border border-creative-purple/30 text-white">
-            <Star className="h-3 w-3 text-creative-purple" />
-            <span>10K+ Registrations</span>
-          </div>
-          <div className="social-proof-badge bg-black/40 border border-creative-blue/30 text-white">
-            <Star className="h-3 w-3 text-creative-blue" />
-            <span>4.5/5 Participant Rating</span>
-          </div>
-          <div className="social-proof-badge bg-black/40 border border-creative-pink/30 text-white">
-            <Star className="h-3 w-3 text-creative-pink" />
-            <span>500+ Success Stories</span>
-          </div>
-          <div className="social-proof-badge bg-black/40 border border-creative-yellow/30 text-white">
-            <Star className="h-3 w-3 text-creative-yellow" />
-            <span>National Recognition</span>
-          </div>
-        </div>
       </div>
     </section>
   );

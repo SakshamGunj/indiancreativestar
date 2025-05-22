@@ -20,7 +20,7 @@ export function Footer({ onRegisterClick }: FooterProps) {
               <span className="font-playfair font-bold text-gradient text-xl">India Creative Star</span>
             </div>
             <p className="text-white/70 mb-4">
-              Celebrating India's emerging art and poetry talent through national competitions and recognition.
+              Celebrating India's emerging art talent through national competitions and recognition.
             </p>
             <div className="flex gap-3">
               <a href="#" className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-purple/40 transition-colors">

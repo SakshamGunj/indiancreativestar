@@ -21,7 +21,7 @@ import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { TestimonialCarouselSection } from "@/components/TestimonialCarouselSection";
 import { ImageShowcaseSection } from "@/components/ImageShowcaseSection";
 import { SocialProofSection } from "@/components/SocialProofSection";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Palette, Users } from "lucide-react";
 import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 
 interface IndexProps {
@@ -31,7 +31,6 @@ interface IndexProps {
 const Index = ({ onRegistrationClick }: IndexProps) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-  const [selectedContestType, setSelectedContestType] = useState<"art" | "poetry">("art");
 
   useEffect(() => {
     // Show confetti after 5 seconds
@@ -42,11 +41,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleRegisterClick = (contestType?: "art" | "poetry") => {
-    if (contestType) {
-      setSelectedContestType(contestType);
-    }
-    
+  const handleRegisterClick = () => {    
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
@@ -64,6 +59,73 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection onRegisterClick={() => handleRegisterClick()} />
+      
+      {/* New section for artists and parents */}
+      <section className="py-10 bg-gradient-to-b from-black/95 to-background/95">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="creative-card p-6 bg-gradient-to-br from-black/80 to-creative-blue/10 border-creative-blue/20 hover:border-creative-blue/40 transition-all duration-300">
+              <div className="mb-4 h-16 w-16 rounded-full bg-creative-blue/20 flex items-center justify-center">
+                <Palette className="h-8 w-8 text-creative-blue" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">For Artists</h3>
+              <p className="text-white/80 mb-4">
+                Looking to showcase your artistic talent on a national platform? This competition is your gateway to recognition, exposure, and the opportunity to win from a ₹30,000 prize pool.
+              </p>
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-blue mt-1 shrink-0" />
+                  <span className="text-sm">Connect with a community of like-minded artists</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-blue mt-1 shrink-0" />
+                  <span className="text-sm">Get professional feedback on your artwork</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-blue mt-1 shrink-0" />
+                  <span className="text-sm">Add national recognition to your portfolio</span>
+                </li>
+              </ul>
+              <Button 
+                className="bg-gradient-to-r from-creative-blue to-creative-purple text-white w-full"
+                onClick={() => handleRegisterClick()}
+              >
+                Register as an Artist <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div className="creative-card p-6 bg-gradient-to-br from-black/80 to-creative-pink/10 border-creative-pink/20 hover:border-creative-pink/40 transition-all duration-300">
+              <div className="mb-4 h-16 w-16 rounded-full bg-creative-pink/20 flex items-center justify-center">
+                <Users className="h-8 w-8 text-creative-pink" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">For Parents</h3>
+              <p className="text-white/80 mb-4">
+                Want to nurture your child's creativity and give them a platform to shine? This competition provides valuable exposure and confidence-building experience for young artists.
+              </p>
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-pink mt-1 shrink-0" />
+                  <span className="text-sm">Boost your child's confidence in their artistic abilities</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-pink mt-1 shrink-0" />
+                  <span className="text-sm">Help them earn recognition beyond school achievements</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-creative-pink mt-1 shrink-0" />
+                  <span className="text-sm">Give them something special for their education portfolio</span>
+                </li>
+              </ul>
+              <Button 
+                className="bg-gradient-to-r from-creative-pink to-creative-purple text-white w-full"
+                onClick={() => handleRegisterClick()}
+              >
+                Register Your Child <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* About Section with ID for scroll detection */}
       <section id="about-section">
@@ -84,11 +146,9 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       {/* New Testimonial Carousel Section */}
       <TestimonialCarouselSection />
 
-      {/* New Image Showcase Section */}
-      <ImageShowcaseSection />
       
       {/* Certificate Section */}
-      <CertificateSection />
+      <CertificateSection onRegistrationClick={() => handleRegisterClick()} />
       
       {/* Social Proof Section */}
       <SocialProofSection />
@@ -100,66 +160,7 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <MagazineSection />
       
       {/* Call To Action */}
-      <section className="section-padding bg-gradient-to-r from-creative-purple/30 to-creative-pink/30" id="register">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto">
-            <Badge variant="outline" className="mb-2 animate-pulse">🚀 Limited Time Offer - Only ₹99</Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-4 sm:mb-6">Your Art Deserves The Spotlight</h2>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8">
-              Don't wait any longer. Join India's biggest art and poetry community today
-              and take the first step toward becoming India's next Creative Star.
-            </p>
-            
-            <div className="creative-card p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 bg-gradient-to-br from-black/80 to-creative-purple/10 border-creative-purple/20">
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Choose Your Competition</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                <div className="creative-card p-4 sm:p-6 bg-gradient-to-br from-black/80 to-creative-blue/10 border-creative-blue/20 hover:border-creative-blue/40 transition-all duration-300 group">
-                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-creative-blue/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="h-5 w-5 sm:h-6 sm:w-6 text-creative-blue">🖌️</div>
-                  </div>
-                  <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Art Contest</h4>
-                  <p className="text-sm text-muted-foreground mb-3 sm:mb-4">
-                    Submit your drawings, paintings, digital art, or any visual medium.
-                  </p>
-                  <div className="flex justify-between items-center mb-4 sm:mb-6">
-                    <Badge className="bg-gradient-to-r from-creative-blue to-creative-purple text-white">Only ₹99</Badge>
-                  </div>
-                  <Button 
-                    className="w-full bg-gradient-to-r from-creative-blue to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
-                    onClick={() => handleRegisterClick("art")}
-                  >
-                    Enter Art Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-                
-                <div className="creative-card p-4 sm:p-6 bg-gradient-to-br from-black/80 to-creative-pink/10 border-creative-pink/20 hover:border-creative-pink/40 transition-all duration-300 group">
-                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-creative-pink/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="h-5 w-5 sm:h-6 sm:w-6 text-creative-pink">✍️</div>
-                  </div>
-                  <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Poetry Contest</h4>
-                  <p className="text-sm text-muted-foreground mb-3 sm:mb-4">
-                    Submit your poems, verses, sonnets, or any written expression.
-                  </p>
-                  <div className="flex justify-between items-center mb-4 sm:mb-6">
-                    <Badge className="bg-gradient-to-r from-creative-pink to-creative-purple text-white">Only ₹99</Badge>
-                  </div>
-                  <Button 
-                    className="w-full bg-gradient-to-r from-creative-pink to-creative-purple text-white group font-bold py-1.5 sm:py-2 h-auto"
-                    onClick={() => handleRegisterClick("poetry")}
-                  >
-                    Enter Poetry Contest <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">
-              <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
-              <span>100% safe. No hidden fees beyond ₹99 entry.</span>
-            </div>
-          </div>
-        </div>
-      </section>
+
       
       {/* FAQ Section */}
       <FAQSection />
@@ -172,7 +173,6 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
         <RegistrationFlowModal
           isOpen={showRegistrationModal}
           onClose={() => setShowRegistrationModal(false)}
-          preselectedContest={selectedContestType}
         />
       )}
     </>
