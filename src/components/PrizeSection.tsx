@@ -7,33 +7,16 @@ export function PrizeSection() {
   return (
     <section className="section-padding bg-muted/20" id="prizes">
       <div className="container">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 max-w-5xl mx-auto mb-10 sm:mb-16">
-          <div className="text-center md:text-left md:flex-1 order-2 md:order-1">
-            <Badge variant="outline" className="mb-2">Get Rewarded</Badge>
-            <h2 className="text-4xl sm:text-5xl font-bold text-gradient mb-4">What's in it for YOU?</h2>
-            <p className="text-muted-foreground text-lg sm:text-xl">
-              We believe in recognizing and rewarding creativity. Here are the exciting prizes available in our Art competition.
-            </p>
-            <div className="mt-6 inline-block">
-              <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold px-4 py-2 text-lg animate-pulse">
-                Total Prize Pool: ₹30,000
-              </Badge>
-            </div>
-          </div>
-          
-          <div className="order-1 md:order-2 md:flex-1 max-w-md mx-auto">
-            <div className="creative-card p-2 bg-gradient-to-br from-black/80 to-creative-purple/20 border-creative-purple/30 overflow-hidden rounded-lg">
-              <div className="aspect-video w-full relative">
-                <video 
-                  className="w-full h-full rounded-md absolute top-0 left-0 object-cover"
-                  src="/shine-young-woman-painting-on-canvas-1.mov" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                ></video>
-              </div>
-            </div>
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+          <Badge variant="outline" className="mb-2">Get Rewarded</Badge>
+          <h2 className="text-4xl sm:text-5xl font-bold text-gradient mb-4">What's in it for YOU?</h2>
+          <p className="text-muted-foreground text-lg sm:text-xl">
+            We believe in recognizing and rewarding creativity. Here are the exciting prizes available in our Art competition.
+          </p>
+          <div className="mt-6 inline-block">
+            <Badge className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold px-4 py-2 text-lg animate-pulse">
+              Total Prize Pool: ₹30,000
+            </Badge>
           </div>
         </div>
         

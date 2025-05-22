@@ -103,19 +103,17 @@ export function Header({ onRegistrationClick }: HeaderProps) {
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
           <a
-            href="#"
+            href="https://www.instagram.com/indiancreativestar/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
           >
             <Instagram className="h-5 w-5" />
           </a>
           <a
-            href="#"
-            className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
-          >
-            <Facebook className="h-5 w-5" />
-          </a>
-          <a
-            href="#"
+            href="https://x.com/IndianS48385"
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
           >
             <Twitter className="h-5 w-5" />
@@ -174,19 +172,17 @@ export function Header({ onRegistrationClick }: HeaderProps) {
             <div className="py-6">
               <div className="flex gap-4 mb-6 justify-center">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/indiancreativestar/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a
-                  href="#"
-                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a
-                  href="#"
+                  href="https://x.com/IndianS48385"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
                 >
                   <Twitter className="h-5 w-5" />

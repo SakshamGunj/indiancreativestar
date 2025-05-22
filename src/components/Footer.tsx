@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Instagram, Facebook, Twitter, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
+import { Instagram, Twitter, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
 
 interface FooterProps {
   onRegisterClick?: () => void;
@@ -23,13 +23,20 @@ export function Footer({ onRegisterClick }: FooterProps) {
               Celebrating India's emerging art talent through national competitions and recognition.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-purple/40 transition-colors">
+              <a 
+                href="https://www.instagram.com/indiancreativestar/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-purple/40 transition-colors"
+              >
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-blue/40 transition-colors">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="#" className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-pink/40 transition-colors">
+              <a 
+                href="https://x.com/IndianS48385" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-pink/40 transition-colors"
+              >
                 <Twitter className="h-4 w-4" />
               </a>
             </div>
