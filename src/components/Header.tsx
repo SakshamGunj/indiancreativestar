@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { 
-  Menu, 
-  X, 
-  ChevronDown,
   Instagram,
-  Facebook,
   Twitter,
   ArrowRight
 } from "lucide-react";
@@ -27,7 +23,6 @@ interface HeaderProps {
 
 export function Header({ onRegistrationClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
@@ -67,8 +62,8 @@ export function Header({ onRegistrationClick }: HeaderProps) {
         backfaceVisibility: "hidden"
       }}
     >
-      <div className="container px-4 sm:px-6 flex items-center justify-between">
-        <div className="flex lg:flex-1">
+      <div className="container px-4 sm:px-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-0">
+        <div className="flex">
           <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
             <span className="sr-only">Sikkim Creative Star</span>
             <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full overflow-hidden">
@@ -82,131 +77,33 @@ export function Header({ onRegistrationClick }: HeaderProps) {
           </a>
         </div>
 
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <Menu className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="hidden lg:flex lg:gap-x-8">
+        <div className="flex justify-center flex-1 overflow-x-auto py-2 sm:py-0 gap-3 sm:gap-6 px-2 text-center no-scrollbar">
           {navigation.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-white hover:text-primary transition-colors"
+              className="text-xs sm:text-sm font-medium text-white whitespace-nowrap hover:text-primary transition-colors"
             >
               {item.name}
             </a>
           ))}
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
+        <div className="flex gap-3 sm:gap-4">
           <a
             href="https://www.instagram.com/indiancreativestar/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
+            className="rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition"
           >
-            <Instagram className="h-5 w-5" />
-          </a>
-          <a
-            href="https://x.com/IndianS48385"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition"
-          >
-            <Twitter className="h-5 w-5" />
+            <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
           <Button
-            className="creative-btn ml-4 group"
+            className="creative-btn group text-xs sm:text-sm py-1 sm:py-2 px-3 sm:px-4 h-auto"
             onClick={handleEnterNowClick}
           >
-            Enter Now <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            Enter Now <ArrowRight className="ml-1 h-3 w-3 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
-        </div>
-      </div>
-
-      {/* Mobile menu with improved UX for mobile */}
-      <div
-        className={`lg:hidden fixed inset-0 z-50 bg-gradient-to-b from-black/98 to-background/95 backdrop-blur-md transition-transform duration-300 ease-in-out ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        style={{ 
-          willChange: "transform",
-          backfaceVisibility: "hidden"
-        }}
-      >
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex">
-            <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full overflow-hidden">
-                <img src="/company-logo.jpeg" alt="SCS Logo" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <span className="font-playfair font-bold text-gradient text-base">
-                  Sikkim Creative Star
-                </span>
-              </div>
-            </a>
-          </div>
-          <button
-            type="button"
-            className="-m-2.5 rounded-md p-2.5 text-white"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <span className="sr-only">Close menu</span>
-            <X className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="container mt-6 flow-root">
-          <div className="-my-6 divide-y divide-white/10">
-            <div className="space-y-2 py-6">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="-mx-3 block rounded-lg px-3 py-3 text-base font-medium text-white hover:bg-white/10 active:bg-white/20 touch-manipulation"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-            <div className="py-6">
-              <div className="flex gap-4 mb-6 justify-center">
-                <a
-                  href="https://www.instagram.com/indiancreativestar/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://x.com/IndianS48385"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-white/10 p-3 text-white hover:bg-white/20 transition"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
-              </div>
-              <Button
-                className="w-full creative-btn group py-6 text-base"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  handleEnterNowClick();
-                }}
-              >
-                Enter Now <ArrowRight className="ml-1 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
     </header>
