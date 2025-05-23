@@ -53,9 +53,14 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
   return (
     <div
       className={cn(
-        "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300 pb-safe",
-        isVisible ? "translate-y-0" : "translate-y-full"
+        "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300 pb-safe bg-black/70 backdrop-blur-md",
+        isVisible ? "translate-y-0" : "translate-y-full opacity-0"
       )}
+      style={{
+        willChange: "transform, opacity",
+        transform: isVisible ? "translateY(0)" : "translateY(100%)",
+        backfaceVisibility: "hidden"
+      }}
     >
       <div className="container py-2 px-3 sm:px-4">
         <div className="bg-gradient-to-r from-creative-purple to-creative-blue p-2 sm:p-3 rounded-t-lg shadow-xl border border-white/10 flex items-center justify-between">

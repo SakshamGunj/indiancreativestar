@@ -62,6 +62,10 @@ export function Header({ onRegistrationClick }: HeaderProps) {
           ? "bg-background/80 backdrop-blur-lg shadow-md py-2"
           : "bg-transparent py-3"
       )}
+      style={{ 
+        willChange: "transform, background",
+        backfaceVisibility: "hidden"
+      }}
     >
       <div className="container px-4 sm:px-6 flex items-center justify-between">
         <div className="flex lg:flex-1">
@@ -129,9 +133,13 @@ export function Header({ onRegistrationClick }: HeaderProps) {
 
       {/* Mobile menu with improved UX for mobile */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 bg-background transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed inset-0 z-50 bg-gradient-to-b from-black/98 to-background/95 backdrop-blur-md transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ 
+          willChange: "transform",
+          backfaceVisibility: "hidden"
+        }}
       >
         <div className="container flex h-16 items-center justify-between">
           <div className="flex">

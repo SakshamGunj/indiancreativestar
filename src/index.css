@@ -51,10 +51,37 @@
     scroll-behavior: smooth;
   }
 
+  html {
+    background: linear-gradient(to bottom, #121212, #1a1a2e);
+    height: 100%;
+    overflow: auto;
+  }
+
   body {
     @apply bg-background text-foreground antialiased font-poppins touch-manipulation;
     -webkit-tap-highlight-color: transparent;
     background: linear-gradient(to bottom, #121212, #1a1a2e);
+    background-attachment: fixed;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Mobile-specific fixes to prevent white flash */
+  @media (max-width: 768px) {
+    html, body {
+      background-color: #121212; /* Fallback dark color */
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, #121212, #1a1a2e);
+      z-index: -1;
+    }
   }
 
   h1, h2, h3, h4, h5 {
