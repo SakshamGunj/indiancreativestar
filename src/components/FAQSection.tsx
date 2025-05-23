@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     question: "Can I submit multiple artworks?",
-    answer: "You can submit up to 3 artworks in a single registration. Each additional artwork requires a separate entry fee."
+    answer: "You can submit up to 3 artworks in a single registration. Additional artworks also have free entry."
   },
   {
     question: "How are the winners selected?",
@@ -41,7 +41,7 @@ export function FAQSection() {
           <Badge variant="outline" className="mb-2">FAQ</Badge>
           <h2 className="text-4xl font-bold text-gradient mb-4">Frequently Asked Questions</h2>
           <p className="text-muted-foreground">
-            Get answers to common questions about the India Creative Star art challenge.
+            Get answers to common questions about the Sikkim Creative Star art challenge.
           </p>
         </div>
         

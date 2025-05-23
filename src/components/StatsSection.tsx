@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "./AnimatedCounter";
@@ -11,7 +10,7 @@ export function StatsSection() {
           <Badge variant="outline" className="mb-2">Our Impact</Badge>
           <h2 className="text-4xl font-bold text-gradient mb-4">Making a Creative Difference</h2>
           <p className="text-muted-foreground">
-            India's Creative Star is more than just a contest. We're building a community of talented artists and poets across the nation.
+            Sikkim Creative Star is more than just a contest. We're building a community of talented artists and poets across the nation.
           </p>
         </div>
         

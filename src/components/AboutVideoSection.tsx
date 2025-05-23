@@ -17,9 +17,9 @@ export function AboutVideoSection() {
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <div className="text-center md:text-left flex-1 order-2 md:order-1">
-              <h2 className="text-4xl font-bold text-gradient mb-4">What is Indian Creative Star?</h2>
+              <h2 className="text-4xl font-bold text-gradient mb-4">What is Sikkim Creative Star?</h2>
               <p className="text-muted-foreground text-xl">
-                India's premier platform for discovering, recognizing and celebrating visual artists from across the nation.
+                Sikkim's premier platform for discovering, recognizing and celebrating visual artists from across the nation.
               </p>
             </div>
             
@@ -38,7 +38,7 @@ export function AboutVideoSection() {
             <iframe 
               className="w-full h-full" 
               src="https://www.youtube.com/embed/OZjsl-Of4lg?si=t-BLmymsOQTwPq1Z&autoplay=1&mute=1&loop=1&playlist=OZjsl-Of4lg" 
-              title="Indian Creative Star - Season 1" 
+              title="Sikkim Creative Star - Season 1" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowFullScreen
@@ -50,7 +50,7 @@ export function AboutVideoSection() {
           <div className="creative-card p-6 hover:scale-105 transition-all duration-300 bg-gradient-to-br from-black/80 to-creative-blue/10 text-center">
             <h3 className="text-xl font-bold mb-3">Discover Your Potential</h3>
             <p className="text-muted-foreground">
-              Indian Creative Star provides a platform for both emerging and established artists and poets to showcase their talent on a national stage.
+              Sikkim Creative Star provides a platform for both emerging and established artists and poets to showcase their talent on a national stage.
             </p>
           </div>
           
@@ -77,7 +77,7 @@ export function AboutVideoSection() {
                 <div className="text-left mb-6">
                   <h3 className="text-3xl font-bold text-gradient mb-3">Get Published in Our Hall of Fame</h3>
                   <p className="text-lg text-white/80">
-                    Top entries will be featured in our exclusive India's Creative Star Magazine Volume 1, 
+                    Top entries will be featured in our exclusive Sikkim Creative Star Magazine Volume 1, 
                     showcasing exceptional artwork to thousands across the country.
                   </p>
                 </div>
@@ -119,7 +119,7 @@ export function AboutVideoSection() {
                 <div className="relative w-full max-w-[280px] mx-auto">
                   <img 
                     src="/images/Indiancreativestarmagazine.png" 
-                    alt="India's Creative Star Magazine Volume 1" 
+                    alt="Sikkim Creative Star Magazine Volume 1" 
                     className="w-full h-auto object-cover rounded-lg shadow-xl" 
                   />
                   <div className="absolute -top-4 -right-4 bg-creative-yellow text-black font-bold px-3 py-1 rounded-full text-sm shadow-lg">

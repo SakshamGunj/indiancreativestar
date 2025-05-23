@@ -27,7 +27,7 @@ export default function CompetitionSelect() {
         
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            India Creative <span className="text-gradient">Art Competition</span>
+            Sikkim Creative <span className="text-gradient">Art Competition</span>
           </h1>
           <p className="text-creative-purple/80 text-lg max-w-2xl mx-auto">
             Showcase your artistic talent and win from a prize pool of ₹30,000
@@ -71,9 +71,8 @@ export default function CompetitionSelect() {
             
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-xs text-creative-purple/60 line-through">₹99</span>
-                <span className="text-lg font-bold ml-2 text-creative-purple">₹50</span>
-                <Badge variant="outline" className="ml-2 text-creative-yellow border-creative-yellow/30">Early Bird</Badge>
+                <span className="text-lg font-bold text-creative-purple">Free Entry</span>
+                <Badge variant="outline" className="ml-2 text-creative-yellow border-creative-yellow/30">Limited Time</Badge>
               </div>
               
               <Dialog>
@@ -91,7 +90,7 @@ export default function CompetitionSelect() {
                   
                   <div className="py-6">
                     <p className="mb-4 text-creative-purple/90">You're about to enter the Art Competition with the theme "Colors of Emotions".</p>
-                    <p className="mb-6 text-sm text-creative-purple/70">Entry fee: ₹50 (Early Bird)</p>
+                    <p className="mb-6 text-sm text-creative-purple/70">Entry fee: Free</p>
                     
                     <RegistrationModal 
                       contestType="art" 
@@ -108,7 +107,7 @@ export default function CompetitionSelect() {
         <div className="mt-12 text-center">
           <div className="flex items-center justify-center gap-2 bg-white/70 border border-indigo-100/60 backdrop-blur-sm px-4 py-2 rounded-full inline-flex">
             <Clock className="h-4 w-4 text-creative-yellow animate-pulse" />
-            <span className="text-sm text-creative-purple/90">Early bird pricing ends soon!</span>
+            <span className="text-sm text-creative-purple/90">Free entry for a limited time!</span>
           </div>
         </div>
       </div>

@@ -1,8 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Star, Award, ArrowRight } from "lucide-react";
+import { Clock, Star, Award, ArrowRight, Flag, Gift } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { RegistrationFlowModal } from "./RegistrationFlowModal";
@@ -44,26 +43,38 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
 
   return (
     <>
-      <Card className="w-full bg-gradient-to-br from-black/90 to-creative-purple/30 border border-creative-purple/30 shadow-lg shadow-creative-purple/20 p-2.5 sm:p-4 animate-fade-in mx-auto">
-        <div className="flex justify-between items-start">
+      <Card className="w-full bg-gradient-to-r from-creative-yellow/30 via-creative-purple/30 to-creative-blue/30 border border-white/20 shadow-lg shadow-creative-purple/20 p-3 sm:p-5 animate-fade-in mx-auto relative overflow-hidden">
+        {/* Celebration elements */}
+        <div className="absolute -top-6 -left-6 w-12 h-12 rotate-12 opacity-30 bg-creative-yellow rounded-full blur-xl" />
+        <div className="absolute -bottom-6 -right-6 w-12 h-12 -rotate-12 opacity-30 bg-creative-blue rounded-full blur-xl" />
         
-       
-        </div>
-        <h3 className="text-sm sm:text-lg font-bold mt-1.5 sm:mt-2 text-white">ICS Season 1 - Limited Time Offer!</h3>
-        <p className="text-xs sm:text-sm text-white/80 mt-0.5 sm:mt-1">
-          <span className="text-creative-yellow font-bold">Spots are filling fast</span> 
-        </p>
-        <div className="flex items-center justify-between mt-1.5 sm:mt-3">
-          <div className="flex items-center gap-1 sm:gap-2">
-            <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-white/60" />
-            <p className="text-[10px] sm:text-xs text-white/60">Offer ends soon</p>
+        <div className="relative">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Badge className="bg-creative-yellow text-black px-3 py-1 animate-pulse">
+              <Flag className="h-3 w-3 mr-1" /> 50 Years Celebration
+            </Badge>
           </div>
-          <Button 
-            className="creative-btn group whitespace-nowrap bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold text-xs py-1 px-2 h-auto min-h-7"
-            onClick={handleRegister}
-          >
-            Register for 50rs <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          
+          <h3 className="text-sm sm:text-xl font-bold text-center text-white">
+            Celebrating Sikkim's 50 Years of Statehood!
+          </h3>
+          
+          <p className="text-xs sm:text-sm text-white/90 mt-1.5 text-center">
+            <span className="text-creative-yellow font-bold">Registration is completely FREE</span> as our gift to the people of Sikkim
+          </p>
+          
+          <div className="flex items-center justify-between mt-3 sm:mt-4 flex-col sm:flex-row gap-2 sm:gap-0">
+            <div className="flex items-center gap-2">
+              <Gift className="h-4 w-4 sm:h-5 sm:w-5 text-creative-yellow animate-bounce" />
+              <p className="text-xs sm:text-sm text-white/80">Limited time celebration offer</p>
+            </div>
+            <Button 
+              className="creative-btn group whitespace-nowrap bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold text-xs sm:text-sm py-1.5 px-3 h-auto min-h-7 w-full sm:w-auto"
+              onClick={handleRegister}
+            >
+              Register For Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
         </div>
       </Card>
       
@@ -71,7 +82,7 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
         <RegistrationFlowModal 
           isOpen={showRegistrationModal}
           onClose={() => setShowRegistrationModal(false)}
-          preselectedContest="art"
+          contestType="art"
         />
       )}
     </>

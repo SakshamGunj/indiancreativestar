@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, PenLine, Palette, Trophy, Award, Star } from "lucide-react";
@@ -13,9 +12,9 @@ export function AboutSection() {
               About Us
             </Badge>
           </div>
-          <h2 className="text-4xl font-bold text-gradient mb-4">What is Indian Creative Star?</h2>
+          <h2 className="text-4xl font-bold text-gradient mb-4">What is Sikkim Creative Star?</h2>
           <p className="text-xl text-muted-foreground mb-8">
-            India's premier platform for discovering, recognizing and celebrating visual artists and poets from across the nation.
+            Sikkim's premier platform for discovering, recognizing and celebrating visual artists and poets from across the nation.
           </p>
         </div>
         
@@ -25,7 +24,7 @@ export function AboutSection() {
             <iframe 
               className="w-full h-full" 
               src="https://www.youtube.com/embed/OZjsl-Of4lg?si=t-BLmymsOQTwPq1Z&autoplay=1&mute=1&loop=1&playlist=OZjsl-Of4lg" 
-              title="Indian Creative Star - Season 1" 
+              title="Sikkim Creative Star - Season 1" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowFullScreen
@@ -38,9 +37,9 @@ export function AboutSection() {
             <div className="h-16 w-16 rounded-full bg-creative-yellow/20 flex items-center justify-center mb-4">
               <Sparkles className="h-8 w-8 text-creative-yellow" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Nationwide Platform</h3>
+            <h3 className="text-xl font-bold mb-3">Statewide Platform</h3>
             <p className="text-muted-foreground">
-              Connect with creatives from across India and showcase your talent on a national stage.
+              Connect with creatives from across Sikkim and showcase your talent on a national stage.
             </p>
           </Card>
           
@@ -50,7 +49,7 @@ export function AboutSection() {
             </div>
             <h3 className="text-xl font-bold mb-3">Exciting Prizes</h3>
             <p className="text-muted-foreground">
-              Win cash prizes, get featured in our eBook, and receive recognition across India.
+              Win cash prizes, get featured in our eBook, and receive recognition across Sikkim.
             </p>
           </Card>
           

@@ -5,8 +5,8 @@ import { Card } from "@/components/ui/card";
 
 // Sample testimonials
 const testimonials = [
-  { name: "Arjun Kapoor", location: "Mumbai", quote: "Participating in ICS gave my artwork the platform I've been dreaming of for years!", rating: 5 },
-  { name: "Rahul Mehra", location: "Bangalore", quote: "From a hobby artist to getting nationally recognized - ICS made it possible!", rating: 4 },
+  { name: "Arjun Kapoor", location: "Mumbai", quote: "Participating in SCS gave my artwork the platform I've been dreaming of for years!", rating: 5 },
+  { name: "Rahul Mehra", location: "Bangalore", quote: "From a hobby artist to getting nationally recognized - SCS made it possible!", rating: 4 },
   { name: "Sneha Patel", location: "Ahmedabad", quote: "The community of artists I met through this contest has become my support system.", rating: 5 },
   { name: "Vikram Singh", location: "Jaipur", quote: "Getting featured in the eMagazine opened doors to art galleries I couldn't access before.", rating: 5 },
   { name: "Ayesha Khan", location: "Lucknow", quote: "The professional feedback on my artwork helped me improve my technique tremendously!", rating: 5 },
@@ -148,7 +148,7 @@ export function SocialProofSection() {
                 <div className="bg-black/30 rounded-full p-3 mr-4">
                   <Ribbon className="h-8 w-8 text-creative-yellow" />
                 </div>
-                <span className="font-bold text-lg">Indian Creative Media Design Co.</span>
+                <span className="font-bold text-lg">Sikkim Creative Media Design Co.</span>
               </div>
             </div>
             
@@ -172,7 +172,7 @@ export function SocialProofSection() {
             </Badge>
             <h3 className="text-2xl font-bold mb-2">Our Campus Ambassadors</h3>
             <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto">
-              Student representatives from top institutions across India helping us discover emerging artistic talent
+              Student representatives from top institutions across Sikkim helping us discover emerging artistic talent
             </p>
           </div>
           

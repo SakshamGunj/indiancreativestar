@@ -52,6 +52,20 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
       <div className="container relative z-10 px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="text-center lg:text-left">
+            {/* Sikkim 50 Years Statehood Celebration Banner */}
+            <div className="bg-gradient-to-r from-creative-yellow/30 via-creative-purple/20 to-creative-blue/30 p-3 rounded-lg border border-white/20 mb-5 shadow-lg animate-pulse-slow relative overflow-hidden">
+              <div className="absolute -top-10 -left-10 w-20 h-20 rotate-12 opacity-20 bg-creative-yellow rounded-full blur-xl" />
+              <div className="absolute -bottom-10 -right-10 w-20 h-20 -rotate-12 opacity-20 bg-creative-blue rounded-full blur-xl" />
+              <div className="relative text-center">
+                <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">
+                  🎉 Celebrating 50 Years of Sikkim Statehood 🎉
+                </h3>
+                <p className="text-xs md:text-sm text-white/90">
+                  As a tribute to this historic milestone, we're making registration <span className="text-creative-yellow font-bold">completely FREE</span> for all artists!
+                </p>
+              </div>
+            </div>
+            
             <div className="mb-3">
               <Badge className="bg-gradient-to-r from-creative-purple to-creative-pink text-white px-3 py-1 text-sm font-medium">
                 Limited Time Opportunity
@@ -62,7 +76,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
               <span className="text-white text-xl md:text-2xl lg:text-3xl opacity-90">Transform Your Art Into</span>
               <span className="block text-gradient text-xl md:text-2xl lg:text-3xl mt-1 mb-3 opacity-90">National Recognition</span>
               <span className="block text-4xl md:text-6xl lg:text-8xl mt-2 mb-3 bg-gradient-to-r from-creative-yellow to-creative-orange bg-clip-text text-transparent font-extrabold drop-shadow-sm relative">
-                India's Prestigious Art Competition
+                Sikkim's Prestigious Art Competition
                 <span className="absolute -inset-1 -z-10 blur-sm bg-gradient-to-r from-creative-yellow/10 to-creative-orange/10 rounded-lg"></span>
               </span>
             </h1>
@@ -96,7 +110,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                   "They told your dreams don't pay, <br />
                   but your brush had more to say. <br />
                   What you create alone — the nation will now celebrate. <br />
-                  India has millions of stories. Let yours rise today."
+                  Sikkim has millions of stories. Let yours rise today."
                 </p>
               </div>
             </div>
@@ -106,7 +120,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8 w-full sm:w-auto text-base sm:text-lg relative overflow-hidden"
                 onClick={handleEnterCompetitions}
               >
-                <span className="relative z-10">Enter Now - Only ₹50</span>
+                <span className="relative z-10">Enter Now - Free</span>
                 <span className="absolute right-4 top-1/2 transform -translate-y-1/2 group-hover:translate-x-1 transition-transform">
                   <ArrowRight className="h-5 w-5" />
                 </span>
@@ -163,7 +177,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                     <Palette className="h-6 w-6 sm:h-7 sm:w-7 text-creative-purple" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white">India's Creative Art Competition</h3>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">Sikkim's Creative Art Competition</h3>
                     <p className="text-sm text-white/70">Theme: Colors of Emotions</p>
                   </div>
                 </div>
@@ -175,7 +189,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                   </div>
                   <div className="creative-card p-3 bg-black/60 border-creative-blue/30 text-center">
                     <p className="text-xs text-white/70">Entry Fee</p>
-                    <p className="text-xl sm:text-2xl font-bold text-creative-blue">₹50</p>
+                    <p className="text-xl sm:text-2xl font-bold text-creative-blue">Free</p>
                   </div>
                 </div>
               </div>
@@ -185,7 +199,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-creative-yellow mt-0.5 shrink-0" />
-                    <span className="text-sm">Featured in "India's Creative Star 2025" Official eMagazine</span>
+                    <span className="text-sm">Featured in "Sikkim's Creative Star 2025" Official eMagazine</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-creative-yellow mt-0.5 shrink-0" />

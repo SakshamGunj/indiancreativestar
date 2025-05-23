@@ -93,7 +93,7 @@ export function TestimonialSection() {
           <Badge variant="outline" className="mb-2">Testimonials</Badge>
           <h2 className="text-4xl font-bold text-gradient mb-4">What People Are Saying</h2>
           <p className="text-muted-foreground">
-            Hear from our past participants and winners about their experience with the India Creative Star challenge.
+            Hear from our past participants and winners about their experience with the Sikkim Creative Star challenge.
           </p>
         </div>
         

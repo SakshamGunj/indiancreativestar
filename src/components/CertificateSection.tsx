@@ -60,7 +60,7 @@ export function CertificateSection({ onRegistrationClick }: CertificateSectionPr
             <div className="relative rounded-lg overflow-hidden shadow-2xl">
               <img 
                 src="/certificate-template.png" 
-                alt="India Creative Star Certificate" 
+                alt="Sikkim Creative Star Certificate" 
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">

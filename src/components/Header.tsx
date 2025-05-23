@@ -66,13 +66,13 @@ export function Header({ onRegistrationClick }: HeaderProps) {
       <div className="container px-4 sm:px-6 flex items-center justify-between">
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
-            <span className="sr-only">India Creative Star</span>
+            <span className="sr-only">Sikkim Creative Star</span>
             <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full overflow-hidden">
-              <img src="/company-logo.jpeg" alt="ICS Logo" className="w-full h-full object-cover" />
+              <img src="/company-logo.jpeg" alt="SCS Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <span className="font-playfair font-bold text-gradient text-base sm:text-xl">
-                {isMobile ? "ICS" : "India Creative Star"}
+                {isMobile ? "SCS" : "Sikkim Creative Star"}
               </span>
             </div>
           </a>
@@ -137,11 +137,11 @@ export function Header({ onRegistrationClick }: HeaderProps) {
           <div className="flex">
             <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
               <div className="h-8 w-8 rounded-full overflow-hidden">
-                <img src="/company-logo.jpeg" alt="ICS Logo" className="w-full h-full object-cover" />
+                <img src="/company-logo.jpeg" alt="SCS Logo" className="w-full h-full object-cover" />
               </div>
               <div>
                 <span className="font-playfair font-bold text-gradient text-base">
-                  India Creative Star
+                  Sikkim Creative Star
                 </span>
               </div>
             </a>

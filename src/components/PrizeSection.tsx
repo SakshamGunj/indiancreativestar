@@ -105,7 +105,7 @@ export function PrizeSection() {
             </div>
             <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center">eMagazine Feature</h3>
             <p className="text-muted-foreground text-center text-sm sm:text-base">
-              Featured in "India's Creative Star 2025" Official eMagazine (Top 100 entries) - distributed nationwide to art communities.
+              Featured in "Sikkim's Creative Star 2025" Official eMagazine (Top 100 entries) - distributed nationwide to art communities.
             </p>
           </Card>
           
@@ -115,7 +115,7 @@ export function PrizeSection() {
             </div>
             <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center">Digital Gallery</h3>
             <p className="text-muted-foreground text-center text-sm sm:text-base">
-              Featured in a Pan-India Digital Gallery with lifetime listing - your work will be showcased to thousands of art enthusiasts.
+              Featured in a Statewide Digital Gallery with lifetime listing - your work will be showcased to thousands of art enthusiasts.
             </p>
           </Card>
           
@@ -125,7 +125,7 @@ export function PrizeSection() {
             </div>
             <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-center">Artist ID Card</h3>
             <p className="text-muted-foreground text-center text-sm sm:text-base">
-              Receive a custom ICS Artist ID Card featuring your name, title & personal artist quote - perfect for networking.
+              Receive a custom SCS Artist ID Card featuring your name, title & personal artist quote - perfect for networking.
             </p>
           </Card>
         </div>
@@ -139,7 +139,7 @@ export function PrizeSection() {
             <div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">Digital Excellence Certificate</h3>
               <p className="text-white/80 max-w-2xl text-sm sm:text-base">
-                Every participant receives a beautifully designed digital certificate recognizing their creativity and participation in India's premier art competition.
+                Every participant receives a beautifully designed digital certificate recognizing their creativity and participation in Sikkim's premier art competition.
               </p>
             </div>
           </div>
@@ -186,14 +186,14 @@ export function PrizeSection() {
         <div className="text-center">
           <div className="mx-auto mb-4 sm:mb-6 p-2 sm:p-3 rounded-full inline-flex items-center gap-2 bg-white/5 border border-white/10">
             <div className="h-3 sm:h-4 w-3 sm:w-4 rounded-full bg-green-500/20 border border-green-500 animate-pulse"></div>
-            <span className="text-xs text-white/70">Limited Time: Early Registration for only ₹50</span>
+            <span className="text-xs text-white/70">Limited Time: Free Registration</span>
           </div>
           <p className="text-muted-foreground mb-4 text-sm sm:text-base">
             Ready to showcase your artistic talents to the nation? Enter now
             and take your art to the next level.
           </p>
           <Button className="creative-btn group text-base font-bold py-2 sm:py-3 px-6 sm:px-8 h-auto">
-            Register for ₹50 Only
+            Register For Free
           </Button>
         </div>
       </div>

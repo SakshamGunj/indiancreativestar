@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -53,7 +52,7 @@ export default function ThankYou() {
     // Simulate sending referrals
     toast({
       title: "Referrals Sent!",
-      description: "Your friends have been invited to join India Creative Star!",
+      description: "Your friends have been invited to join Sikkim Creative Star!",
     });
     setShowReferralDialog(false);
     

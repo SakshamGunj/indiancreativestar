@@ -61,7 +61,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
       <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
-            Join India Creative Art Competition
+            Join Sikkim Creative Art Competition
           </DialogTitle>
         </DialogHeader>
         
@@ -125,7 +125,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
               
               <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
-                <span>Registration fee: only ₹50</span>
+                <span>Registration fee: Free</span>
               </div>
               
               <Button 

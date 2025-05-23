@@ -29,7 +29,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
           </div>
           <h2 className="text-4xl font-bold text-gradient mb-4">Simple Step-by-Step Journey</h2>
           <p className="text-muted-foreground text-xl">
-            From registration to winning - your path to nationwide recognition
+            From registration to winning - your path to statewide recognition
           </p>
         </div>
         
@@ -41,7 +41,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
                 <span className="text-gradient">Register & Join</span>
               </h3>
               <p className="text-white/70 mb-4">
-                Complete the simple registration form, pay ₹50, and you'll be added to our WhatsApp group for all competition updates and guidance.
+                Complete the simple registration form for free, and you'll be added to our WhatsApp group for all competition updates and guidance.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-creative-pink" />
-                  <span className="text-sm text-white/80">National recognition & exposure</span>
+                  <span className="text-sm text-white/80">Statewide recognition & exposure</span>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
             className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
             onClick={onRegistrationClick || (() => navigate("/competitions"))}
           >
-            Submit Now – Only ₹50! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            Submit Now – Free! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
         
@@ -149,7 +149,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
             </div>
             <div>
               <h4 className="font-medium">Affordable Entry</h4>
-              <p className="text-xs text-white/60">Just ₹50 to join</p>
+              <p className="text-xs text-white/60">Free to join</p>
             </div>
           </div>
           
@@ -158,8 +158,8 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
               <Star className="h-5 w-5 text-creative-blue" />
             </div>
             <div>
-              <h4 className="font-medium">National Visibility</h4>
-              <p className="text-xs text-white/60">Share your art across India</p>
+              <h4 className="font-medium">Statewide Visibility</h4>
+              <p className="text-xs text-white/60">Share your art across Sikkim</p>
             </div>
           </div>
           

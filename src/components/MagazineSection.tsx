@@ -15,7 +15,7 @@ export function MagazineSection() {
               Get Published in Our Hall of Fame
             </h2>
             <p className="text-xl mb-6 text-muted-foreground">
-              Top entries will be featured in our exclusive India's Creative Star Magazine Volume 1, 
+              Top entries will be featured in our exclusive Sikkim Creative Star Magazine Volume 1, 
               showcasing exceptional artwork to thousands across the country.
             </p>
             <ul className="space-y-4 mb-8">
@@ -60,20 +60,20 @@ export function MagazineSection() {
               <div className="relative">
                 <img 
                   src="/images/Indiancreativestarmagazine.png" 
-                  alt="India's Creative Star Magazine" 
+                  alt="Sikkim Creative Star Magazine" 
                   className="w-full h-auto rounded-lg shadow-lg mb-6"
                 />
                 <div className="absolute -top-4 -right-4 bg-creative-yellow text-black font-bold px-3 py-1 rounded-full text-sm shadow-lg">
                   Volume 1
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2">India's Creative Star Magazine</h3>
+              <h3 className="text-2xl font-bold mb-2">Sikkim Creative Star Magazine</h3>
               <p className="text-muted-foreground mb-4">
-                The Hall of Fame for India's Best Artists
+                The Hall of Fame for Sikkim's Best Artists
               </p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-muted-foreground">
-                  Featuring selected artists from across India
+                  Featuring selected artists from across Sikkim
                 </p>
                 <Badge>Limited Edition</Badge>
               </div>
