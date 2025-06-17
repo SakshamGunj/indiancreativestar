@@ -59,7 +59,7 @@ export function CertificateSection({ onRegistrationClick }: CertificateSectionPr
             
             <div className="relative rounded-lg overflow-hidden shadow-2xl">
               <img 
-                src="/certificate-template.png" 
+                src="/Add a heading_20250512_160245_0000.png" 
                 alt="Sikkim Creative Star Certificate" 
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
               />

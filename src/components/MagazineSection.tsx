@@ -59,7 +59,7 @@ export function MagazineSection() {
             <div className="relative bg-card rounded-2xl p-6 shadow-xl border border-white/10 rotate-2">
               <div className="relative">
                 <img 
-                  src="/images/Indiancreativestarmagazine.png" 
+                  src="/magazine-cover.png" 
                   alt="Sikkim Creative Star Magazine" 
                   className="w-full h-auto rounded-lg shadow-lg mb-6"
                 />
