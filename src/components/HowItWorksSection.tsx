@@ -107,7 +107,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
                 <span className="text-gradient">Winners Announced</span>
               </h3>
               <p className="text-white/70 mb-4">
-                The top 3 winners will be announced and awarded from our ₹30,000 prize pool, with additional recognition through our digital platforms.
+                Winners will be announced and awarded from our ₹50,000 prize pool across adult and kids categories, with additional recognition through our digital platforms.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -168,8 +168,8 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
               <Star className="h-5 w-5 text-creative-pink" />
             </div>
             <div>
-              <h4 className="font-medium">₹30,000 Prize Pool</h4>
-              <p className="text-xs text-white/60">Cash prizes for winners</p>
+              <h4 className="font-medium">₹50,000 Prize Pool</h4>
+              <p className="text-xs text-white/60">Cash prizes across age categories</p>
             </div>
           </div>
         </div>

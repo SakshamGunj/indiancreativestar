@@ -30,7 +30,7 @@ export default function CompetitionSelect() {
             Sikkim Creative <span className="text-gradient">Art Competition</span>
           </h1>
           <p className="text-creative-purple/80 text-lg max-w-2xl mx-auto">
-            Showcase your artistic talent and win from a prize pool of ₹30,000
+            Showcase your artistic talent and win from a prize pool of ₹50,000
           </p>
         </div>
         
@@ -62,7 +62,7 @@ export default function CompetitionSelect() {
             <div className="bg-blue-50/50 backdrop-blur-sm rounded-lg p-4 mb-6 border border-blue-100/30">
               <h3 className="font-medium mb-2 text-creative-blue">Includes:</h3>
               <ul className="text-sm space-y-2 text-creative-purple/80">
-                <li>• Cash prizes from ₹30,000 prize pool</li>
+                <li>• Cash prizes from ₹50,000 prize pool</li>
                 <li>• Digital certificate for all participants</li>
                 <li>• eBook anthology feature</li>
                 <li>• Digital gallery showcase</li>

@@ -88,7 +88,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
               </Badge>
               <Badge className="hero-badge bg-gradient-to-r from-creative-blue/30 to-creative-blue/10 text-xs sm:text-sm">
                 <Award className="h-3 w-3 sm:h-4 sm:w-4 text-creative-blue" />
-                <span>₹30,000 Prize Pool</span>
+                <span>₹50,000 Prize Pool</span>
               </Badge>
               <Badge className="hero-badge bg-gradient-to-r from-creative-yellow/30 to-creative-yellow/10 text-xs sm:text-sm">
                 <Trophy className="h-3 w-3 sm:h-4 sm:w-4 text-creative-yellow" />
@@ -185,7 +185,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <div className="creative-card p-3 bg-black/60 border-creative-yellow/30 text-center">
                     <p className="text-xs text-white/70">Prize Pool</p>
-                    <p className="text-xl sm:text-2xl font-bold text-creative-yellow">₹30,000</p>
+                    <p className="text-xl sm:text-2xl font-bold text-creative-yellow">₹50,000</p>
                   </div>
                   <div className="creative-card p-3 bg-black/60 border-creative-blue/30 text-center">
                     <p className="text-xs text-white/70">Entry Fee</p>

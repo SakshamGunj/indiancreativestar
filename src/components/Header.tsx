@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   Instagram,
-  Twitter,
   ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -23,15 +22,30 @@ interface HeaderProps {
 
 export function Header({ onRegistrationClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
+      const scrollY = window.scrollY;
+      
+      if (isMobile) {
+        // Mobile: Start appearing after 100px scroll, fully visible at 200px
+        const startScroll = 100;
+        const endScroll = 200;
+        const progress = Math.min(Math.max((scrollY - startScroll) / (endScroll - startScroll), 0), 1);
+        setScrollProgress(progress);
+        setIsScrolled(scrollY > startScroll);
       } else {
-        setIsScrolled(false);
+        // Desktop: Original behavior
+        if (scrollY > 50) {
+          setIsScrolled(true);
+          setScrollProgress(1);
+        } else {
+          setIsScrolled(false);
+          setScrollProgress(0);
+        }
       }
     };
 
@@ -39,7 +53,7 @@ export function Header({ onRegistrationClick }: HeaderProps) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   const handleEnterNowClick = () => {
     if (onRegistrationClick) {
@@ -49,20 +63,39 @@ export function Header({ onRegistrationClick }: HeaderProps) {
     }
   };
 
+  // Calculate opacity and background for mobile
+  const mobileOpacity = isMobile ? scrollProgress : 1;
+  const mobileBackgroundOpacity = isMobile ? scrollProgress * 0.8 : isScrolled ? 0.8 : 0;
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
+        !isMobile && isScrolled
           ? "bg-background/80 backdrop-blur-lg shadow-md py-2"
-          : "bg-transparent py-3"
+          : !isMobile 
+          ? "bg-transparent py-3"
+          : "py-2"
       )}
       style={{ 
-        willChange: "transform, background",
-        backfaceVisibility: "hidden"
+        willChange: "transform, background, opacity",
+        backfaceVisibility: "hidden",
+        ...(isMobile && {
+          backgroundColor: `rgba(0, 0, 0, ${mobileBackgroundOpacity})`,
+          backdropFilter: scrollProgress > 0.3 ? 'blur(8px)' : 'none',
+          opacity: mobileOpacity,
+          transform: `translateY(${(1 - scrollProgress) * -10}px)`,
+        })
       }}
     >
-      <div className="container px-4 sm:px-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-0">
+      <div 
+        className="container flex items-center justify-between gap-2 sm:gap-4"
+        style={{
+          ...(isMobile && {
+            opacity: mobileOpacity,
+          })
+        }}
+      >
         <div className="flex">
           <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
             <span className="sr-only">Sikkim Creative Star</span>
@@ -91,7 +124,7 @@ export function Header({ onRegistrationClick }: HeaderProps) {
 
         <div className="flex gap-3 sm:gap-4">
           <a
-            href="https://www.instagram.com/indiancreativestar/"
+            href="https://www.instagram.com/daamievent"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition"

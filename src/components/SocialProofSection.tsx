@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Star, Trophy, Award, Bookmark, Palette, Ribbon, Users, Medal, Check } from "lucide-react";
+import { Star, Trophy, Award, Bookmark, Palette, Ribbon, Users, Medal, Check, BookOpen } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-// Sample testimonials
+// Sample testimonials with Sikkim names and places
 const testimonials = [
-  { name: "Arjun Kapoor", location: "Mumbai", quote: "Participating in SCS gave my artwork the platform I've been dreaming of for years!", rating: 5 },
-  { name: "Rahul Mehra", location: "Bangalore", quote: "From a hobby artist to getting nationally recognized - SCS made it possible!", rating: 4 },
-  { name: "Sneha Patel", location: "Ahmedabad", quote: "The community of artists I met through this contest has become my support system.", rating: 5 },
-  { name: "Vikram Singh", location: "Jaipur", quote: "Getting featured in the eMagazine opened doors to art galleries I couldn't access before.", rating: 5 },
-  { name: "Ayesha Khan", location: "Lucknow", quote: "The professional feedback on my artwork helped me improve my technique tremendously!", rating: 5 },
+  { name: "Tenzin Norbu", location: "Gangtok", quote: "Participating in SCS gave my artwork the platform I've been dreaming of for years!", rating: 5 },
+  { name: "Pema Dolkar", location: "Namchi", quote: "From a hobby artist to getting nationally recognized - SCS made it possible!", rating: 4 },
+  { name: "Karma Bhutia", location: "Pelling", quote: "The community of artists I met through this contest has become my support system.", rating: 5 },
+  { name: "Sangay Lepcha", location: "Mangan", quote: "Getting featured in the eMagazine opened doors to art galleries I couldn't access before.", rating: 5 },
+  { name: "Choden Sherpa", location: "Ravangla", quote: "The professional feedback on my artwork helped me improve my technique tremendously!", rating: 5 },
 ];
 
 // Sample stats
 const stats = [
   { label: "Participants", value: "1,000+", color: "creative-purple", icon: Users },
   { label: "Cities Reached", value: "250+", color: "creative-blue", icon: Bookmark },
-  { label: "Cash Prizes", value: "₹30,000", color: "creative-yellow", icon: Trophy },
+  { label: "Cash Prizes", value: "₹50,000", color: "creative-yellow", icon: Trophy },
   { label: "Success Stories", value: "500+", color: "creative-pink", icon: Medal },
 ];
 
@@ -140,26 +140,37 @@ export function SocialProofSection() {
            
           </div>
           
-          {/* Certificate and Art Partners */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* Government Partners */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
             <div>
-              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Certificate Partner</p>
-              <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-yellow/10 border-creative-yellow/40 hover:border-creative-yellow/70 hover:scale-105 transition-all duration-300">
+              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Government Partner</p>
+              <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-blue/10 border-creative-blue/40 hover:border-creative-blue/70 hover:scale-105 transition-all duration-300">
                 <div className="bg-black/30 rounded-full p-3 mr-4">
-                  <Ribbon className="h-8 w-8 text-creative-yellow" />
+                  <Award className="h-8 w-8 text-creative-blue" />
                 </div>
-                <span className="font-bold text-lg">Sikkim Creative Media Design Co.</span>
+                <span className="font-bold text-lg text-center">Cultural Department of Sikkim</span>
               </div>
             </div>
             
             <div>
-              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Art Partners</p>
+              <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Educational Partner</p>
               <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-purple/10 border-creative-purple/40 hover:border-creative-purple/70 hover:scale-105 transition-all duration-300">
                 <div className="bg-black/30 rounded-full p-3 mr-4">
-                  <Palette className="h-8 w-8 text-creative-purple" />
+                  <BookOpen className="h-8 w-8 text-creative-purple" />
                 </div>
-                <span className="font-bold text-lg">Art Society of Sikkim</span>
+                <span className="font-bold text-lg text-center">Education Department of Sikkim</span>
               </div>
+            </div>
+          </div>
+          
+          {/* Certificate Partner */}
+          <div className="max-w-2xl mx-auto">
+            <p className="text-sm text-white/70 uppercase tracking-wider mb-4 text-center font-semibold">Certificate Partner</p>
+            <div className="creative-card p-6 min-h-[120px] flex items-center justify-center bg-gradient-to-br from-black/70 to-creative-yellow/10 border-creative-yellow/40 hover:border-creative-yellow/70 hover:scale-105 transition-all duration-300">
+              <div className="bg-black/30 rounded-full p-3 mr-4">
+                <Ribbon className="h-8 w-8 text-creative-yellow" />
+              </div>
+              <span className="font-bold text-lg text-center">Cultural Department of Sikkim</span>
             </div>
           </div>
         </div>

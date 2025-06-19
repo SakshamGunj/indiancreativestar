@@ -23,7 +23,7 @@ export function AboutSection() {
           <div className="aspect-video w-full overflow-hidden rounded-lg">
             <iframe 
               className="w-full h-full" 
-              src="https://www.youtube.com/embed/OZjsl-Of4lg?si=t-BLmymsOQTwPq1Z&autoplay=1&mute=1&loop=1&playlist=OZjsl-Of4lg" 
+              src="https://www.youtube.com/embed/60uw_A4c_jA?si=jGHO0hFI0BqCZPtQ&autoplay=1&mute=1&loop=1&playlist=60uw_A4c_jA" 
               title="Sikkim Creative Star - Season 1" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

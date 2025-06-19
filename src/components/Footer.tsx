@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Instagram, Twitter, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
+import { Instagram, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
 
 interface FooterProps {
   onRegisterClick?: () => void;
@@ -24,20 +24,12 @@ export function Footer({ onRegisterClick }: FooterProps) {
             </p>
             <div className="flex gap-3">
               <a 
-                href="https://www.instagram.com/indiancreativestar/" 
+                href="https://www.instagram.com/daamievent" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-purple/40 transition-colors"
               >
                 <Instagram className="h-4 w-4" />
-              </a>
-              <a 
-                href="https://x.com/IndianS48385" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="h-9 w-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-creative-pink/40 transition-colors"
-              >
-                <Twitter className="h-4 w-4" />
               </a>
             </div>
           </div>
@@ -59,7 +51,11 @@ export function Footer({ onRegisterClick }: FooterProps) {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-creative-purple mt-0.5" />
-                <span className="text-white/70">sikkimcreativestar@gmail.com</span>
+                <span className="text-white/70">daamievent@gmail.com</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <PhoneCall className="h-5 w-5 text-creative-purple mt-0.5" />
+                <span className="text-white/70">+91 9800452188</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-creative-purple mt-0.5" />

@@ -3,16 +3,20 @@ import { animate, motion } from "framer-motion";
 import { Palette, User } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Sample data for notifications
+// Sample data for notifications - Updated with Sikkim names and places
 const notifications = [
-  { name: "Riya", location: "Delhi" },
-  { name: "Arjun", location: "Mumbai" },
-  { name: "Priya", location: "Bangalore" },
-  { name: "Rajiv", location: "Kolkata" },
-  { name: "Ananya", location: "Chennai" },
-  { name: "Vikram", location: "Hyderabad" },
-  { name: "Neha", location: "Pune" },
-  { name: "Siddharth", location: "Jaipur" },
+  { name: "Tenzin", location: "Gangtok" },
+  { name: "Pema", location: "Namchi" },
+  { name: "Karma", location: "Pelling" },
+  { name: "Dolma", location: "Yuksom" },
+  { name: "Norbu", location: "Mangan" },
+  { name: "Sangay", location: "Ravangla" },
+  { name: "Choden", location: "Singtam" },
+  { name: "Phurba", location: "Gyalshing" },
+  { name: "Lhamu", location: "Rangpo" },
+  { name: "Tenzing", location: "Jorethang" },
+  { name: "Pemba", location: "Nayabazar" },
+  { name: "Yangchen", location: "Rhenock" },
 ];
 
 interface FloatingNotificationProps {
