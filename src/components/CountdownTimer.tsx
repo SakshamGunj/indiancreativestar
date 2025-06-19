@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 
-// Set the end date to May 30th, 2025
-const endDate = new Date("2025-05-30T23:59:59");
+// Set the end date to July 15th, 2025
+const endDate = new Date("2025-07-15T23:59:59");
 
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({

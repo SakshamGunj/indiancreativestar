@@ -164,7 +164,7 @@ export default function ThankYou() {
                   <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-creative-purple shrink-0 mt-0.5" />
                   <div>
                     <span className="text-xs sm:text-sm font-medium block">Submission Deadline</span>
-                    <span className="text-xs text-muted-foreground">April 30th, 2025</span>
+                    <span className="text-xs text-muted-foreground">July 15th, 2025</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-2 sm:gap-3">

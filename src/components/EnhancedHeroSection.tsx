@@ -166,7 +166,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
             <div className="bg-black/40 border border-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-xl sm:text-2xl font-bold">Registration Closes In:</h2>
-                <Badge variant="outline" className="font-mono text-xs sm:text-sm">30 May 2025</Badge>
+                <Badge variant="outline" className="font-mono text-xs sm:text-sm">15 July 2025</Badge>
               </div>
               
               <CountdownTimer />

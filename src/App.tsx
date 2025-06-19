@@ -9,14 +9,36 @@ import CompetitionSelect from "./pages/CompetitionSelect";
 import ThankYou from "./pages/ThankYou";
 import { useState, useEffect } from "react";
 import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
+import { LaunchScreen } from "./components/LaunchScreen";
+import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [showLaunchScreen, setShowLaunchScreen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isCheckingLaunchStatus, setIsCheckingLaunchStatus] = useState(true);
 
   useEffect(() => {
+    // Check Firebase for global launch screen setting only
+    const checkLaunchSetting = async () => {
+      try {
+        setIsCheckingLaunchStatus(true);
+        const shouldShowLaunch = await checkLaunchScreenStatus();
+        setShowLaunchScreen(shouldShowLaunch);
+      } catch (error) {
+        console.error('Error checking launch screen status:', error);
+        // On error, default to not showing launch screen
+        setShowLaunchScreen(false);
+      } finally {
+        setIsCheckingLaunchStatus(false);
+      }
+    };
+
+    checkLaunchSetting();
+
     // Set page as loaded after a small delay to ensure smooth transitions
     const timer = setTimeout(() => {
       setIsPageLoaded(true);
@@ -29,34 +51,78 @@ const App = () => {
     setShowRegistrationModal(true);
   };
 
+  const handleLaunch = async () => {
+    setIsTransitioning(true);
+    
+    // Disable launch screen globally for everyone
+    await disableLaunchScreenGlobally();
+    
+    // Start hiding launch screen immediately
+    setTimeout(() => {
+      setShowLaunchScreen(false);
+    }, 200);
+    // Complete transition
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1200);
+  };
+
+  // Show loading state while checking Firebase
+  if (isCheckingLaunchStatus) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-creative-purple border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-white/70">Loading Sikkim Creative Star...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e]">
+        <div className="app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative overflow-hidden">
           <Toaster />
           <Sonner />
-          <BrowserRouter>
-            <div 
-              className="page-transition-wrapper"
-              style={{
-                opacity: isPageLoaded ? 1 : 0,
-                transition: "opacity 0.3s ease-in-out"
-              }}
-            >
-              <Routes>
-                <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
-                <Route path="/competitions" element={<CompetitionSelect />} />
-                <Route path="/thank-you" element={<ThankYou />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-            
-            <RegistrationFlowModal 
-              isOpen={showRegistrationModal}
-              onClose={() => setShowRegistrationModal(false)}
-            />
-          </BrowserRouter>
+          
+          {/* Main Website Content - Always rendered but controlled by visibility */}
+          <div className={`main-content absolute inset-0 transition-all duration-1200 ease-out transform-gpu ${
+            showLaunchScreen 
+              ? 'opacity-0 scale-95 blur-lg pointer-events-none' 
+              : 'opacity-100 scale-100 blur-0 pointer-events-auto'
+          }`}>
+            <BrowserRouter>
+              <div 
+                className="page-transition-wrapper h-full"
+                style={{
+                  opacity: isPageLoaded ? 1 : 0,
+                  transition: "opacity 0.3s ease-in-out"
+                }}
+              >
+                <Routes>
+                  <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
+                  <Route path="/competitions" element={<CompetitionSelect />} />
+                  <Route path="/thank-you" element={<ThankYou />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+              
+              <RegistrationFlowModal 
+                isOpen={showRegistrationModal}
+                onClose={() => setShowRegistrationModal(false)}
+              />
+            </BrowserRouter>
+          </div>
+
+          {/* Launch Screen - Overlays everything */}
+          {showLaunchScreen && <LaunchScreen onLaunch={handleLaunch} />}
+          
+          {/* Transition overlay to ensure smooth handoff */}
+          {isTransitioning && (
+            <div className="fixed inset-0 bg-gradient-to-b from-black to-[#1a1a2e] z-40 opacity-50 transition-opacity duration-800" />
+          )}
         </div>
       </TooltipProvider>
     </QueryClientProvider>

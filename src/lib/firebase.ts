@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
+import { getFirestore, collection, addDoc, Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,6 +30,37 @@ export const COLLECTIONS = {
 
 // Webhook URL for n8n automation
 const WEBHOOK_URL = "https://sikkimcreativestar.app.n8n.cloud/webhook/447a6c04-15e5-4bb4-8e0e-be9c17c84f63";
+
+// Check if launch screen should be shown globally
+export const checkLaunchScreenStatus = async (): Promise<boolean> => {
+  try {
+    const launchDoc = doc(db, 'settings', 'launchScreen');
+    const docSnap = await getDoc(launchDoc);
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return data.reveal === true;
+    } else {
+      // If document doesn't exist, default to showing launch screen
+      return true;
+    }
+  } catch (error) {
+    console.error('Error checking launch screen status:', error);
+    // On error, default to showing launch screen
+    return true;
+  }
+};
+
+// Disable launch screen globally when someone clicks launch
+export const disableLaunchScreenGlobally = async (): Promise<void> => {
+  try {
+    const launchDoc = doc(db, 'settings', 'launchScreen');
+    await setDoc(launchDoc, { reveal: false }, { merge: true });
+    console.log('Launch screen disabled globally');
+  } catch (error) {
+    console.error('Error disabling launch screen:', error);
+  }
+};
 
 // Function to send data to n8n webhook
 const sendToWebhook = async (participantData: any, registrationId: string) => {
@@ -70,7 +101,7 @@ const sendToWebhook = async (participantData: any, registrationId: string) => {
         contact_email: "daamievent@gmail.com",
         contact_phone: "+91 9800452188",
         instagram_handle: "@daamievent",
-        submission_deadline: "April 30th, 2025",
+        submission_deadline: "July 15th, 2025",
         results_announcement: "May 15th, 2025",
         certificate_distribution: "May 20th, 2025"
       }
