@@ -104,7 +104,7 @@ export default function ThankYou() {
             </p>
             <Button 
               className="w-full creative-btn py-3 sm:py-4 text-base"
-              onClick={() => window.open("https://whatsapp.com", "_blank")}
+              onClick={() => window.open("https://chat.whatsapp.com/G8JA8VYNvXR2KsW1Depn1j", "_blank")}
             >
               <MessageSquare className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
               Join WhatsApp Group Now

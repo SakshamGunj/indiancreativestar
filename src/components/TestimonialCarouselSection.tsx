@@ -7,6 +7,7 @@ import { Star, Quote, Send, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { addReview } from "@/lib/firebase";
 
 export function TestimonialCarouselSection() {
   const isMobile = useIsMobile();
@@ -23,22 +24,41 @@ export function TestimonialCarouselSection() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      toast({
-        title: "Review Submitted!",
-        description: "Thank you for sharing your experience. Your review will be featured soon!",
+    try {
+      // Submit review to Firebase
+      const result = await addReview({
+        name: formData.name,
+        location: formData.location,
+        message: formData.message,
+        rating: formData.rating
       });
       
-      // Reset form
-      setFormData({
-        name: "",
-        location: "",
-        message: "",
-        rating: 5
+      if (result.success) {
+        toast({
+          title: "Review Submitted!",
+          description: "Thank you for sharing your experience. Your review will be reviewed and featured soon!",
+        });
+        
+        // Reset form
+        setFormData({
+          name: "",
+          location: "",
+          message: "",
+          rating: 5
+        });
+      } else {
+        throw new Error("Failed to submit review");
+      }
+    } catch (error) {
+      console.error("Review submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your review. Please try again.",
+        variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

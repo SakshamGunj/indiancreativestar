@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { addParticipant } from "@/lib/firebase";
 
 interface RegistrationFlowModalProps {
   isOpen: boolean;
@@ -29,31 +30,69 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
       age: "",
       whatsapp: "",
       email: "",
+      instagram: "",
     }
   });
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Determine category based on age
+      let category = "Adult";
+      const age = parseInt(values.age);
+      if (age >= 5 && age <= 8) {
+        category = "Group A (5-8 years)";
+      } else if (age >= 9 && age <= 12) {
+        category = "Group B (9-12 years)";
+      } else if (age >= 13 && age <= 17) {
+        category = "Group C (13-17 years)";
+      }
+
+      // Prepare participant data for Firebase
+      const participantData = {
+        name: values.name,
+        age: parseInt(values.age),
+        whatsapp: values.whatsapp,
+        email: values.email,
+        instagram: values.instagram || "",
+        contestType: contestType,
+        category: category
+      };
+
+      // Save to Firebase
+      const result = await addParticipant(participantData);
+      
+      if (result.success) {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        
+        toast({
+          title: "Registration Successful!",
+          description: `You've registered for the ${contestType} competition. Your registration ID: ${result.id}`,
+        });
+        
+        // Reset form after 1 second and redirect to thank you page
+        setTimeout(() => {
+          setIsSuccess(false);
+          onClose();
+          
+          // Navigate to thank you page with query params
+          navigate(`/thank-you?name=${encodeURIComponent(values.name)}&type=${contestType}&id=${result.id}`);
+        }, 1000);
+      } else {
+        throw new Error("Registration failed");
+      }
+    } catch (error) {
       setIsSubmitting(false);
-      setIsSuccess(true);
+      console.error("Registration error:", error);
       
       toast({
-        title: "Registration Successful!",
-        description: "You've registered for the Art competition.",
+        title: "Registration Failed",
+        description: "There was an error processing your registration. Please try again.",
+        variant: "destructive",
       });
-      
-      // Reset form after 1 second and redirect to thank you page
-      setTimeout(() => {
-        setIsSuccess(false);
-        onClose();
-        
-        // Navigate to thank you page with query params
-        navigate(`/thank-you?name=${encodeURIComponent(values.name)}`);
-      }, 1000);
-    }, 1500);
+    }
   };
 
   return (
@@ -119,6 +158,16 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
                   inputMode="email"
                   {...form.register("email", { required: true })}
                   placeholder="Your email address"
+                  className="bg-white/5 border-white/10 h-10"
+                />
+              </div>
+              
+              <div className="space-y-1.5">
+                <Label htmlFor="instagram">Instagram ID (Optional)</Label>
+                <Input
+                  id="instagram"
+                  {...form.register("instagram")}
+                  placeholder="@your_instagram_handle"
                   className="bg-white/5 border-white/10 h-10"
                 />
               </div>
