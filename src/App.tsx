@@ -82,7 +82,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative overflow-hidden">
+        <div className={`app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative ${showLaunchScreen ? 'overflow-hidden' : 'overflow-auto'}`}>
           <Toaster />
           <Sonner />
           
