@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { FloatingNotification } from "@/components/FloatingNotification";
+
 import { GallerySection } from "@/components/GallerySection";
 import { PrizeSection } from "@/components/PrizeSection";
 import { TestimonialSection } from "@/components/TestimonialSection";
@@ -54,7 +54,6 @@ const Index = ({ onRegistrationClick }: IndexProps) => {
       <Header onRegistrationClick={() => handleRegisterClick()} />
       
       {showConfetti && <Confetti />}
-      <FloatingNotification />
       <StickyCTABanner onRegisterClick={() => handleRegisterClick()} />
       
       {/* Enhanced Hero Section */}
