@@ -102,7 +102,7 @@ export function LaunchScreen({ onLaunch }: LaunchScreenProps) {
           <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed px-4">
             Celebrating 50 Years of Sikkim Statehood
             <br />
-            <span className="text-creative-yellow font-medium">₹50,000 Prize Pool</span>
+            <span className="text-creative-yellow font-medium">₹50,000 Prize Pool <br> Launched by Hon'ble Minister <br> G.T Dhungel (Cultural department Goverment of Sikkim)</span>
           </p>
         </div>
 
