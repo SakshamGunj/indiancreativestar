@@ -98,13 +98,22 @@ export function LaunchScreen({ onLaunch }: LaunchScreenProps) {
         </div>
 
         {/* Subtitle */}
-        <div className="mb-8 sm:mb-12 md:mb-16">
-          <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed px-4">
-            Celebrating 50 Years of Sikkim Statehood
-            <br />
-            <span className="text-creative-yellow font-medium">₹50,000 Prize Pool, Launched by Hon'ble Minister <br /> Sir G.T Dhungel - Cultural department Goverment of Sikkim</span>
-          </p>
-        </div>
+      <div className="mb-8 sm:mb-12 md:mb-16">
+  <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed px-4">
+    Celebrating 50 Years of Sikkim Statehood
+    <br />
+    <span className="text-creative-yellow font-medium">
+      ₹50,000 Prize Pool, Launched by Hon'ble Minister
+      <br />
+      <span className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-yellow-300 via-pink-400 to-red-400 bg-clip-text text-transparent">
+        Sir G.T Dhungel
+      </span>
+      <br />
+      Cultural department Government of Sikkim
+    </span>
+  </p>
+</div>
+
 
         {/* Launch Button */}
         <div className="relative">
