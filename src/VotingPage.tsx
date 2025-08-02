@@ -143,9 +143,9 @@ const VotingPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-2 pt-20"> {/* Increased padding-top for larger navbar */}
+    <div className="container mx-auto p-2 pt-20"> {/* Adjusted padding-top for navbar */}
       {/* Black Navbar with Animation */}
-      <div className="fixed top-0 left-0 right-0 backdrop-blur-md bg-black/90 z-40 transition-all duration-500 animate-fadeIn px-4 py-3">
+      <div className="sticky top-0 left-0 right-0 backdrop-blur-md bg-black/90 z-40 transition-all duration-500 animate-fadeIn px-4 py-3">
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
           <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-pulse">Art Gallery</h1>
           <div className="flex items-center space-x-2 sm:space-x-4">
