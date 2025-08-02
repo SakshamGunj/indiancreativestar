@@ -84,35 +84,15 @@ export function LaunchScreen({ onLaunch }: LaunchScreenProps) {
         <div className="mb-6 sm:mb-8 md:mb-12">
           <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-2 sm:mb-4 md:mb-6">
             <span className="bg-gradient-to-r from-creative-purple via-creative-blue to-creative-yellow bg-clip-text text-transparent animate-gradient">
-              SIKKIM
+              Welcome
             </span>
           </h1>
           <h2 className="text-lg sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-1 sm:mb-2 md:mb-4">
             <span className="bg-gradient-to-r from-creative-yellow via-creative-pink to-creative-purple bg-clip-text text-transparent animate-gradient" style={{ animationDelay: '0.5s' }}>
-              Creative Star
+              Art Gallery
             </span>
           </h2>
-          <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-white/80 font-light">
-            Art Competition 2025
-          </p>
         </div>
-
-        {/* Subtitle */}
-   <div className="mb-8 sm:mb-12 md:mb-16">
-  <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed px-4">
-    Celebrating 50 Years of Sikkim Statehood
-    <br />
-    <span className="text-creative-yellow font-medium">
-      ₹50,000 Prize Pool, Launched by Hon'ble Minister
-      <br />
-      <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-yellow-300 via-pink-400 to-red-400 bg-clip-text text-transparent">
-        Sir G.T Dhungel
-      </span>
-      <br />
-      Cultural department Government of Sikkim
-    </span>
-  </p>
-</div>
 
 
 
@@ -147,7 +127,7 @@ export function LaunchScreen({ onLaunch }: LaunchScreenProps) {
               ) : (
                 <>
                   <Star className="h-4 w-4 sm:h-6 sm:w-6 md:h-7 md:w-7 group-hover:rotate-180 transition-transform duration-500" />
-                  <span className="text-xs sm:text-base md:text-lg lg:text-xl whitespace-nowrap">Launch Sikkim Creative Star</span>
+                  <span className="text-xs sm:text-base md:text-lg lg:text-xl whitespace-nowrap">Enter Gallery</span>
                   <Star className="h-4 w-4 sm:h-6 sm:w-6 md:h-7 md:w-7 group-hover:rotate-180 transition-transform duration-500" />
                 </>
               )}

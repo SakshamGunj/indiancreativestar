@@ -7,10 +7,13 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CompetitionSelect from "./pages/CompetitionSelect";
 import ThankYou from "./pages/ThankYou";
-import { useState, useEffect } from "react";
-import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
+import VotingPage from "./VotingPage";
+import AdminPage from "./pages/voting/admin";
+import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
+import { useEffect, useState } from "react";
+import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
 
 const queryClient = new QueryClient();
 
@@ -43,7 +46,6 @@ const App = () => {
     const timer = setTimeout(() => {
       setIsPageLoaded(true);
     }, 100);
-    
     return () => clearTimeout(timer);
   }, []);
 
@@ -104,6 +106,9 @@ const App = () => {
                   <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
                   <Route path="/competitions" element={<CompetitionSelect />} />
                   <Route path="/thank-you" element={<ThankYou />} />
+                  <Route path="/voting" element={<VotingPage />} />
+                  <Route path="/voting/admin" element={<AdminPage />} />
+                  <Route path="/gallery" element={<GalleryPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
