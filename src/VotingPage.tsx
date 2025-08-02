@@ -19,14 +19,25 @@ const VotingPage: React.FC = () => {
   const [votingCompleted, setVotingCompleted] = useState<boolean>(false);
 
   useEffect(() => {
-    // Load images from image.json
-    fetch('/image.json')
-      .then(response => response.json())
+    // Load images from image.json with cache busting
+    fetch(`/image.json?v=${Date.now()}`)
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('content-type'));
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data: string[]) => {
+        console.log('Loaded images:', data.length);
         const formattedImages = data.map((url, index) => ({ url, id: index }));
         setImages(formattedImages);
       })
-      .catch(error => console.error('Error loading images:', error));
+      .catch(error => {
+        console.error('Error loading images:', error);
+        console.error('Error details:', error.message);
+      });
 
     // Load votes from local storage
     const storedVotes = localStorage.getItem('userVotes');
