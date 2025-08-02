@@ -1,9 +1,16 @@
-import { useState } from 'react';
-import imageUrls from '../../image.json'; // Import the JSON file
+import { useState, useEffect } from 'react';
 
 export function GalleryPage() {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch('/image.json')
+      .then(response => response.json())
+      .then((data) => setImageUrls(data))
+      .catch(error => console.error('Error loading image URLs:', error));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] text-white p-4 sm:p-8">

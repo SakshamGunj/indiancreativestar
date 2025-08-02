@@ -145,23 +145,11 @@ const VotingPage: React.FC = () => {
   return (
     <div className="container mx-auto p-2 pt-20"> {/* Increased padding-top for larger navbar */}
       {/* Black Navbar with Animation */}
-      <div className="fixed top-0 left-0 right-0 backdrop-blur-md bg-black/90 z-40 flex justify-between items-center transition-all duration-500 animate-fadeIn px-6 py-4">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-pulse">Art Gallery</h1>
-        <div className="flex items-center space-x-4">
-          {!votingCompleted && (
-            <button
-              className="px-3 py-1.5 bg-red-600/80 text-white text-xs font-medium rounded hover:bg-red-700/80 transition-all duration-300 flex items-center"
-              onClick={clearAllVotes}
-              title="Reset all your votes"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              Reset Votes
-            </button>
-          )}
-          
-          {votingCompleted ? (
+      <div className="fixed top-0 left-0 right-0 backdrop-blur-md bg-black/90 z-40 transition-all duration-500 animate-fadeIn px-4 py-3">
+        <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-pulse">Art Gallery</h1>
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            {votingCompleted ? (
             <div className="font-medium px-4 py-2 bg-green-600/80 text-white rounded-lg text-sm flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -195,6 +183,7 @@ const VotingPage: React.FC = () => {
               </button>
             </>
           )}
+          </div>
         </div>
       </div>
       
