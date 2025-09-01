@@ -67,7 +67,7 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
           <div>
             <h3 className="text-xs sm:text-sm font-bold">Join Sikkim Creative Star - Season 1</h3>
             <p className="text-[10px] sm:text-xs text-white/70 hidden sm:block">
-              <span className="text-creative-yellow font-semibold">FREE Registration</span> • 50 Years of Sikkim Statehood
+              <span className="text-creative-yellow font-semibold">Artist ID Card & Certificate</span> • 50 Years of Sikkim Statehood
             </p>
           </div>
           <Button

@@ -14,6 +14,7 @@ const navigation = [
   { name: "Gallery", href: "#gallery" },
   { name: "Testimonials", href: "#testimonials" },
   { name: "FAQ", href: "#faq" },
+          { name: "Artist ID Card", href: "/sikkimcreativestar" },
 ];
 
 interface HeaderProps {
@@ -112,13 +113,23 @@ export function Header({ onRegistrationClick }: HeaderProps) {
 
         <div className="flex justify-center flex-1 overflow-x-auto py-2 sm:py-0 gap-3 sm:gap-6 px-2 text-center no-scrollbar">
           {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-xs sm:text-sm font-medium text-white whitespace-nowrap hover:text-primary transition-colors"
-            >
-              {item.name}
-            </a>
+            item.href.startsWith('/') ? (
+              <button
+                key={item.name}
+                onClick={() => navigate(item.href)}
+                className="text-xs sm:text-sm font-medium text-white whitespace-nowrap hover:text-primary transition-colors bg-transparent border-none cursor-pointer"
+              >
+                {item.name}
+              </button>
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-xs sm:text-sm font-medium text-white whitespace-nowrap hover:text-primary transition-colors"
+              >
+                {item.name}
+              </a>
+            )
           ))}
         </div>
 

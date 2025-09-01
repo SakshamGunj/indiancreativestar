@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, addDoc, Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +22,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 // Collection names
 export const COLLECTIONS = {
@@ -200,5 +203,5 @@ export const addReview = async (reviewData: {
   }
 };
 
-export { db, analytics };
+export { db, analytics, auth, googleProvider };
 export default app; 

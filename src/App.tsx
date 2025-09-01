@@ -10,6 +10,7 @@ import ThankYou from "./pages/ThankYou";
 import VotingPage from "./VotingPage";
 import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
+import SikkimCreativeStar from "./pages/SikkimCreativeStar";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
 import { useEffect, useState } from "react";
@@ -109,6 +110,7 @@ const App = () => {
                   <Route path="/voting" element={<VotingPage />} />
                   <Route path="/voting/admin" element={<AdminPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
