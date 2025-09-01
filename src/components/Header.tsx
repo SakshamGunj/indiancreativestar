@@ -132,6 +132,13 @@ export function Header({ onRegistrationClick }: HeaderProps) {
             <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
           <Button
+            variant="outline"
+            className="border-white/20 text-white hover:bg-white/10 text-xs sm:text-sm py-1 sm:py-2 px-3 sm:px-4 h-auto"
+            onClick={() => navigate("/sikkimcreativestar")}
+          >
+            Join SCS
+          </Button>
+          <Button
             className="creative-btn group text-xs sm:text-sm py-1 sm:py-2 px-3 sm:px-4 h-auto"
             onClick={handleEnterNowClick}
           >
