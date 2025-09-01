@@ -84,6 +84,7 @@ export default function SikkimCreativeStar() {
 
   const googleProfileForm = useForm({
     defaultValues: {
+      name: "",
       phone: "",
       address: "",
     }
@@ -233,19 +234,36 @@ export default function SikkimCreativeStar() {
       const userDoc = await getDoc(doc(db, "participantdetailspersonal", user.uid));
       
       if (!userDoc.exists()) {
-        // New Google user - check if we have complete data
-        const hasPhone = user.phoneNumber && user.phoneNumber.trim() !== '';
-        const hasPhoto = user.photoURL && user.photoURL.trim() !== '';
+        // New Google user - ALWAYS show profile completion form to ensure all data is collected
+        setGoogleUserData({
+          uid: user.uid,
+          name: user.displayName || '',
+          email: user.email || '',
+          phone: user.phoneNumber || '',
+          address: '',
+          profileImage: user.photoURL || '',
+          authProvider: 'google'
+        });
+        setShowGoogleProfileCompletion(true);
+        setIsGoogleSigningIn(false);
+        return;
+      } else {
+        // Existing user - check if profile is complete
+        const existingData = userDoc.data();
+        const hasCompleteProfile = existingData.name && 
+                                 existingData.phone && 
+                                 existingData.address && 
+                                 existingData.profileImage;
         
-        if (!hasPhone || !hasPhoto) {
-          // Show profile completion form
+        if (!hasCompleteProfile) {
+          // Incomplete profile - show completion form
           setGoogleUserData({
             uid: user.uid,
-            name: user.displayName || 'Google User',
-            email: user.email || '',
-            phone: user.phoneNumber || '',
-            address: '',
-            profileImage: user.photoURL || '',
+            name: existingData.name || user.displayName || '',
+            email: existingData.email || user.email || '',
+            phone: existingData.phone || user.phoneNumber || '',
+            address: existingData.address || '',
+            profileImage: existingData.profileImage || user.photoURL || '',
             authProvider: 'google'
           });
           setShowGoogleProfileCompletion(true);
@@ -253,26 +271,7 @@ export default function SikkimCreativeStar() {
           return;
         }
         
-        // Complete data - create profile directly
-        await setDoc(doc(db, "participantdetailspersonal", user.uid), {
-          name: user.displayName || 'Google User',
-          email: user.email || '',
-          phone: user.phoneNumber || '',
-          address: '',
-          profileImage: user.photoURL || '',
-          registrationDate: new Date(),
-          status: 'registered',
-          deviceId: await getDeviceId(),
-          authProvider: 'google'
-        });
-        
-        setHasRegistered(true);
-        toast({
-          title: "Welcome to Sikkim Creative Star!",
-          description: "Your Google account has been successfully linked.",
-        });
-      } else {
-        // Existing user
+        // Complete profile - show dashboard
         setHasRegistered(true);
         toast({
           title: "Welcome back!",
@@ -293,8 +292,28 @@ export default function SikkimCreativeStar() {
   };
 
   // Handle Google Profile Completion
-  const handleGoogleProfileCompletion = async (data: { phone: string; address: string }) => {
+  const handleGoogleProfileCompletion = async (data: { name: string; phone: string; address: string }) => {
     if (!googleUserData) return;
+    
+    // Validate all required fields
+    if (!data.name.trim() || !data.phone.trim() || !data.address.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields: Name, Phone, and Address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate image
+    if (!selectedImage && !googleUserData.profileImage) {
+      toast({
+        title: "Profile Image Required",
+        description: "Please upload a profile image to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     try {
       // Upload image if selected
@@ -305,10 +324,10 @@ export default function SikkimCreativeStar() {
       
       // Update user profile with complete data
       await setDoc(doc(db, "participantdetailspersonal", googleUserData.uid), {
-        name: googleUserData.name,
+        name: data.name.trim(),
         email: googleUserData.email,
-        phone: data.phone || googleUserData.phone,
-        address: data.address,
+        phone: data.phone.trim(),
+        address: data.address.trim(),
         profileImage: imageUrl,
         registrationDate: new Date(),
         status: 'registered',
@@ -420,11 +439,11 @@ export default function SikkimCreativeStar() {
             </div>
             
             <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-              Almost There! Complete Your Profile
+              Complete Your Profile to Join SCS
             </h1>
             
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Great! You've signed in with Google. Let's complete your profile to join Sikkim Creative Star.
+              Great! You've signed in with Google. To ensure a complete profile, please provide all required information below.
             </p>
           </div>
 
@@ -447,16 +466,30 @@ export default function SikkimCreativeStar() {
                 Complete Your Profile
               </CardTitle>
               <CardDescription className="text-white/60">
-                Please provide the missing information to complete your registration
+                All fields marked with * are required. Please complete your profile to join Sikkim Creative Star.
               </CardDescription>
             </CardHeader>
             
             <CardContent>
               <Form {...googleProfileForm}>
                 <form onSubmit={googleProfileForm.handleSubmit(handleGoogleProfileCompletion)} className="space-y-6">
+                  {/* Name Field */}
+                  <div className="space-y-2">
+                    <Label className="text-white text-base">Full Name *</Label>
+                    <Input 
+                      {...googleProfileForm.register("name", { 
+                        required: true,
+                        minLength: { value: 2, message: "Name must be at least 2 characters" }
+                      })} 
+                      placeholder="Enter your full name"
+                      defaultValue={googleUserData.name}
+                      className="bg-white/5 border-white/20 text-white h-12 text-base"
+                    />
+                  </div>
+
                   {/* Image Upload Section */}
                   <div className="space-y-3">
-                    <Label className="text-white text-base">Profile Image</Label>
+                    <Label className="text-white text-base">Profile Image *</Label>
                     <div className="border-2 border-dashed border-white/30 rounded-xl p-6 text-center hover:border-creative-blue/50 transition-colors bg-gradient-to-br from-white/5 to-white/10">
                       <input
                         type="file"
@@ -493,14 +526,21 @@ export default function SikkimCreativeStar() {
                         )}
                       </label>
                     </div>
+                    {!selectedImage && !googleUserData.profileImage && (
+                      <p className="text-red-400 text-sm">Profile image is required</p>
+                    )}
                   </div>
 
                   {/* Phone Number */}
                   <div className="space-y-2">
                     <Label className="text-white text-base">Phone Number *</Label>
                     <Input 
-                      {...googleProfileForm.register("phone", { required: true })} 
+                      {...googleProfileForm.register("phone", { 
+                        required: true,
+                        minLength: { value: 10, message: "Phone number must be at least 10 digits" }
+                      })} 
                       placeholder="Enter your phone number"
+                      defaultValue={googleUserData.phone}
                       className="bg-white/5 border-white/20 text-white h-12 text-base"
                     />
                   </div>
@@ -509,8 +549,12 @@ export default function SikkimCreativeStar() {
                   <div className="space-y-2">
                     <Label className="text-white text-base">Complete Address *</Label>
                     <Textarea 
-                      {...googleProfileForm.register("address", { required: true })} 
+                      {...googleProfileForm.register("address", { 
+                        required: true,
+                        minLength: { value: 10, message: "Address must be at least 10 characters" }
+                      })} 
                       placeholder="Enter your complete address"
+                      defaultValue={googleUserData.address}
                       className="bg-white/5 border-white/20 text-white min-h-[100px] text-base"
                     />
                   </div>
@@ -643,7 +687,7 @@ export default function SikkimCreativeStar() {
               </svg>
             </div>
             <h3 className="text-white font-semibold text-xl mb-2">Quick Start with Google</h3>
-            <p className="text-white/70 mb-4 text-base">Sign in with your Google account for instant access</p>
+            <p className="text-white/70 mb-4 text-base">Sign in with Google and complete your profile to join SCS</p>
             <Button 
               onClick={handleGoogleSignIn}
               disabled={isGoogleSigningIn}
@@ -667,7 +711,7 @@ export default function SikkimCreativeStar() {
               )}
             </Button>
             <div className="mt-4 p-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg border border-green-500/30">
-              <p className="text-green-400 text-sm font-medium">✨ No password required • Instant access • Secure authentication</p>
+              <p className="text-green-400 text-sm font-medium">✨ No password required • Secure authentication • Profile completion required</p>
             </div>
           </div>
         </div>
