@@ -66,9 +66,20 @@ export default function SikkimCreativeStar() {
   const [isGoogleSigningIn, setIsGoogleSigningIn] = useState(false);
   const [showGoogleProfileCompletion, setShowGoogleProfileCompletion] = useState(false);
   const [googleUserData, setGoogleUserData] = useState<any>(null);
+  const [isLoginMode, setIsLoginMode] = useState(() => {
+    // Check localStorage for saved preference
+    const savedMode = localStorage.getItem('sikkim-creative-star-mode');
+    return savedMode === 'login';
+  });
   
   const { toast } = useToast();
   const navigate = useNavigate();
+  
+  // Handle mode toggle and save to localStorage
+  const handleModeToggle = (mode: boolean) => {
+    setIsLoginMode(mode);
+    localStorage.setItem('sikkim-creative-star-mode', mode ? 'login' : 'signup');
+  };
 
   const registrationForm = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
@@ -153,14 +164,7 @@ export default function SikkimCreativeStar() {
 
   // Handle registration
   const handleRegistration = async (data: RegistrationFormData) => {
-    if (!selectedImage) {
-      toast({
-        title: "Image required",
-        description: "Please upload your profile image",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Image is optional, so no validation needed here
 
     setIsRegistering(true);
     setIsUploading(true);
@@ -173,8 +177,11 @@ export default function SikkimCreativeStar() {
         data.password
       );
 
-      // Upload image to Cloudinary
-      const imageUrl = await uploadToCloudinary(selectedImage);
+      // Upload image to Cloudinary if selected, otherwise use empty string
+      let imageUrl = '';
+      if (selectedImage) {
+        imageUrl = await uploadToCloudinary(selectedImage);
+      }
 
       // Save user details to Firestore
       await setDoc(doc(db, "participantdetailspersonal", userCredential.user.uid), {
@@ -252,8 +259,7 @@ export default function SikkimCreativeStar() {
         const existingData = userDoc.data();
         const hasCompleteProfile = existingData.name && 
                                  existingData.phone && 
-                                 existingData.address && 
-                                 existingData.profileImage;
+                                 existingData.address;
         
         if (!hasCompleteProfile) {
           // Incomplete profile - show completion form
@@ -305,15 +311,7 @@ export default function SikkimCreativeStar() {
       return;
     }
     
-    // Validate image
-    if (!selectedImage && !googleUserData.profileImage) {
-      toast({
-        title: "Profile Image Required",
-        description: "Please upload a profile image to continue.",
-        variant: "destructive",
-      });
-      return;
-    }
+
     
     try {
       // Upload image if selected
@@ -466,7 +464,7 @@ export default function SikkimCreativeStar() {
                 Complete Your Profile
               </CardTitle>
               <CardDescription className="text-white/60">
-                All fields marked with * are required. Please complete your profile to join Sikkim Creative Star.
+                Fields marked with * are required. Profile image is optional. Please complete your profile to join Sikkim Creative Star.
               </CardDescription>
             </CardHeader>
             
@@ -489,7 +487,7 @@ export default function SikkimCreativeStar() {
 
                   {/* Image Upload Section */}
                   <div className="space-y-3">
-                    <Label className="text-white text-base">Profile Image *</Label>
+                    <Label className="text-white text-base">Profile Image (Optional)</Label>
                     <div className="border-2 border-dashed border-white/30 rounded-xl p-6 text-center hover:border-creative-blue/50 transition-colors bg-gradient-to-br from-white/5 to-white/10">
                       <input
                         type="file"
@@ -520,15 +518,12 @@ export default function SikkimCreativeStar() {
                         ) : (
                           <div className="space-y-3">
                             <Camera className="h-12 w-12 text-white/40 mx-auto" />
-                            <p className="text-white/70">Click to upload your photo</p>
+                            <p className="text-white/70">Click to upload your photo (optional)</p>
                             <p className="text-xs text-white/50">Max 10MB • JPG, PNG, GIF</p>
                           </div>
                         )}
                       </label>
                     </div>
-                    {!selectedImage && !googleUserData.profileImage && (
-                      <p className="text-red-400 text-sm">Profile image is required</p>
-                    )}
                   </div>
 
                   {/* Phone Number */}
@@ -716,294 +711,324 @@ export default function SikkimCreativeStar() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Registration Form */}
-          <Card className="glassmorphism border-white/10 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-xl text-white flex items-center gap-2">
-                <User className="h-5 w-5 text-creative-blue" />
-                Create Account
-              </CardTitle>
-              <CardDescription className="text-white/60">
-                Join Sikkim Creative Star and start your creative journey
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...registrationForm}>
-                <form onSubmit={registrationForm.handleSubmit(handleRegistration)} className="space-y-4">
-                  {/* Image Upload */}
-                  <div className="space-y-2">
-                    <Label className="text-white">Profile Image *</Label>
-                    <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-creative-blue/50 transition-colors">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageSelect}
-                        className="hidden"
-                        id="image-upload"
-                      />
-                      <label htmlFor="image-upload" className="cursor-pointer">
-                        {imagePreview ? (
-                          <div className="space-y-2">
-                            <img 
-                              src={imagePreview} 
-                              alt="Preview" 
-                              className="w-24 h-24 object-cover rounded-full mx-auto"
-                            />
-                            <p className="text-sm text-white/60">Click to change image</p>
-                          </div>
-                        ) : (
-                          <div className="space-y-2">
-                            <Camera className="h-12 w-12 text-white/40 mx-auto" />
-                            <p className="text-white/70">Click to upload your photo</p>
-                            <p className="text-xs text-white/50">Max 10MB • JPG, PNG, GIF</p>
-                          </div>
+        {/* Toggle System for Sign Up and Login */}
+        <div className="max-w-md mx-auto">
+          {/* Toggle Buttons */}
+          <div className="flex bg-white/10 rounded-xl p-1 mb-6 backdrop-blur-sm">
+            <button
+              onClick={() => handleModeToggle(false)}
+              className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+                !isLoginMode 
+                  ? 'bg-gradient-to-r from-creative-blue to-creative-purple text-white shadow-lg' 
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              Sign Up
+            </button>
+            <button
+              onClick={() => handleModeToggle(true)}
+              className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
+                isLoginMode 
+                  ? 'bg-gradient-to-r from-creative-purple to-creative-blue text-white shadow-lg' 
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              Sign In
+            </button>
+          </div>
+
+          {/* Form Container */}
+          <Card className="glassmorphism border-white/20 backdrop-blur-sm">
+            {!isLoginMode ? (
+              /* Registration Form */
+              <>
+                <CardHeader>
+                  <CardTitle className="text-xl text-white flex items-center gap-2">
+                    <User className="h-5 w-5 text-creative-blue" />
+                    Create Account
+                  </CardTitle>
+                  <CardDescription className="text-white/60">
+                    Join Sikkim Creative Star and start your creative journey
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...registrationForm}>
+                    <form onSubmit={registrationForm.handleSubmit(handleRegistration)} className="space-y-4">
+                      {/* Image Upload */}
+                      <div className="space-y-2">
+                        <Label className="text-white">Profile Image (Optional)</Label>
+                        <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-creative-blue/50 transition-colors">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageSelect}
+                            className="hidden"
+                            id="image-upload"
+                          />
+                          <label htmlFor="image-upload" className="cursor-pointer">
+                            {imagePreview ? (
+                              <div className="space-y-2">
+                                <img 
+                                  src={imagePreview} 
+                                  alt="Preview" 
+                                  className="w-24 h-24 object-cover rounded-full mx-auto"
+                                />
+                                <p className="text-sm text-white/60">Click to change image</p>
+                              </div>
+                            ) : (
+                              <div className="space-y-2">
+                                <Camera className="h-12 w-12 text-white/40 mx-auto" />
+                                <p className="text-white/70">Click to upload your photo (optional)</p>
+                                <p className="text-xs text-white/50">Max 10MB • JPG, PNG, GIF</p>
+                              </div>
+                            )}
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Name */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Full Name *</FormLabel>
+                            <FormControl>
+                              <Input 
+                                {...field} 
+                                placeholder="Enter your full name"
+                                className="bg-white/5 border-white/20 text-white h-12"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
                         )}
-                      </label>
-                    </div>
-                  </div>
+                      />
 
-                  {/* Name */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Full Name</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            placeholder="Enter your full name"
-                            className="bg-white/5 border-white/10 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      {/* Email */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Email *</FormLabel>
+                            <FormControl>
+                              <Input 
+                                {...field} 
+                                type="email"
+                                placeholder="Enter your email"
+                                className="bg-white/5 border-white/20 text-white h-12"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  {/* Email */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            type="email"
-                            placeholder="Enter your email"
-                            className="bg-white/5 border-white/10 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      {/* Phone */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Phone Number *</FormLabel>
+                            <FormControl>
+                              <Input 
+                                {...field} 
+                                type="tel"
+                                placeholder="Enter your phone number"
+                                className="bg-white/5 border-white/20 text-white h-12"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  {/* Phone */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Phone Number</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            type="tel"
-                            placeholder="Enter your phone number"
-                            className="bg-white/5 border-white/10 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      {/* Address */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="address"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Address *</FormLabel>
+                            <FormControl>
+                              <Textarea 
+                                {...field} 
+                                placeholder="Enter your complete address"
+                                className="bg-white/5 border-white/20 text-white min-h-[80px]"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  {/* Address */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Address</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            {...field} 
-                            placeholder="Enter your complete address"
-                            className="bg-white/5 border-white/10 text-white min-h-[80px]"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      {/* Password */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Password *</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Input 
+                                  {...field} 
+                                  type={showPassword ? "text" : "password"}
+                                  placeholder="Create a password"
+                                  className="bg-white/5 border-white/20 text-white pr-10 h-12"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
+                                >
+                                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  {/* Password */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Password</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input 
-                              {...field} 
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Create a password"
-                              className="bg-white/5 border-white/10 text-white pr-10"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
-                            >
-                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      {/* Confirm Password */}
+                      <FormField
+                        control={registrationForm.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Confirm Password *</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Input 
+                                  {...field} 
+                                  type={showConfirmPassword ? "text" : "password"}
+                                  placeholder="Confirm your password"
+                                  className="bg-white/5 border-white/20 text-white pr-10 h-12"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
+                                >
+                                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  {/* Confirm Password */}
-                  <FormField
-                    control={registrationForm.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Confirm Password</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input 
-                              {...field} 
-                              type={showConfirmPassword ? "text" : "password"}
-                              placeholder="Confirm your password"
-                              className="bg-white/5 border-white/10 text-white pr-10"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
-                            >
-                              {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                      <Button 
+                        type="submit" 
+                        className="w-full creative-btn h-12 text-lg font-semibold" 
+                        disabled={isRegistering || isUploading}
+                      >
+                        {isUploading ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            Uploading Image...
+                          </>
+                        ) : isRegistering ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            Creating Account...
+                          </>
+                        ) : (
+                          <>
+                            Create Account
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </>
+            ) : (
+              /* Login Form */
+              <>
+                <CardHeader>
+                  <CardTitle className="text-xl text-white flex items-center gap-2">
+                    <Mail className="h-5 w-5 text-creative-purple" />
+                    Sign In
+                  </CardTitle>
+                  <CardDescription className="text-white/60">
+                    Welcome back! Sign in to your account
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...loginForm}>
+                    <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
+                      <FormField
+                        control={loginForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Email *</FormLabel>
+                            <FormControl>
+                              <Input 
+                                {...field} 
+                                type="email"
+                                placeholder="Enter your email"
+                                className="bg-white/5 border-white/20 text-white h-12"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                  <Button 
-                    type="submit" 
-                    className="w-full creative-btn" 
-                    disabled={isRegistering || isUploading}
-                  >
-                    {isUploading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Uploading Image...
-                      </>
-                    ) : isRegistering ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating Account...
-                      </>
-                    ) : (
-                      <>
-                        Create Account
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
+                      <FormField
+                        control={loginForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Password *</FormLabel>
+                            <FormControl>
+                              <div className="relative">
+                                <Input 
+                                  {...field} 
+                                  type={showPassword ? "text" : "password"}
+                                  placeholder="Enter your password"
+                                  className="bg-white/5 border-white/20 text-white pr-10 h-12"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
+                                >
+                                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </button>
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-          {/* Login Form */}
-          <Card className="glassmorphism border-white/10 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-xl text-white flex items-center gap-2">
-                <Mail className="h-5 w-5 text-creative-purple" />
-                Sign In
-              </CardTitle>
-              <CardDescription className="text-white/60">
-                Already have an account? Sign in here
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...loginForm}>
-                <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
-                  <FormField
-                    control={loginForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            type="email"
-                            placeholder="Enter your email"
-                            className="bg-white/5 border-white/10 text-white"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={loginForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Password</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Input 
-                              {...field} 
-                              type={showPassword ? "text" : "password"}
-                              placeholder="Enter your password"
-                              className="bg-white/5 border-white/10 text-white pr-10"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
-                            >
-                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-gradient-to-r from-creative-purple to-creative-blue" 
-                    disabled={isLoggingIn}
-                  >
-                    {isLoggingIn ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Signing In...
-                      </>
-                    ) : (
-                      "Sign In"
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-gradient-to-r from-creative-purple to-creative-blue h-12 text-lg font-semibold" 
+                        disabled={isLoggingIn}
+                      >
+                        {isLoggingIn ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            Signing In...
+                          </>
+                        ) : (
+                          "Sign In"
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+              </>
+            )}
           </Card>
         </div>
 
