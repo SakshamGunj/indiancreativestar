@@ -10,10 +10,14 @@ import ThankYou from "./pages/ThankYou";
 import VotingPage from "./VotingPage";
 import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
+import SikkimCreativeStar from "./pages/SikkimCreativeStar";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
 import { useEffect, useState } from "react";
 import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -83,18 +87,19 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className={`app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative ${showLaunchScreen ? 'overflow-hidden' : 'overflow-auto'}`}>
-          <Toaster />
-          <Sonner />
-          
-          {/* Main Website Content - Always rendered but controlled by visibility */}
-          <div className={`main-content absolute inset-0 transition-all duration-1200 ease-out transform-gpu ${
-            showLaunchScreen 
-              ? 'opacity-0 scale-95 blur-lg pointer-events-none' 
-              : 'opacity-100 scale-100 blur-0 pointer-events-auto'
-          }`}>
-            <BrowserRouter>
+      <AuthProvider>
+        <TooltipProvider>
+          <div className={`app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative ${showLaunchScreen ? 'overflow-hidden' : 'overflow-auto'}`}>
+            <Toaster />
+            <Sonner />
+            
+            {/* Main Website Content - Always rendered but controlled by visibility */}
+            <div className={`main-content absolute inset-0 transition-all duration-1200 ease-out transform-gpu ${
+              showLaunchScreen 
+                ? 'opacity-0 scale-95 blur-lg pointer-events-none' 
+                : 'opacity-100 scale-100 blur-0 pointer-events-auto'
+            }`}>
+              <BrowserRouter>
               <div 
                 className="page-transition-wrapper h-full"
                 style={{
@@ -109,6 +114,9 @@ const App = () => {
                   <Route path="/voting" element={<VotingPage />} />
                   <Route path="/voting/admin" element={<AdminPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -129,7 +137,8 @@ const App = () => {
             <div className="fixed inset-0 bg-gradient-to-b from-black to-[#1a1a2e] z-40 opacity-50 transition-opacity duration-800" />
           )}
         </div>
-      </TooltipProvider>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
