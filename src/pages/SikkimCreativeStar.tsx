@@ -596,7 +596,7 @@ export default function SikkimCreativeStar() {
                       </>
                     ) : (
                       <>
-                        Complete Profile & Join SCS
+                        Complete Profile & Get ID Card
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </>
                     )}
@@ -712,7 +712,7 @@ export default function SikkimCreativeStar() {
               </svg>
             </div>
             <h3 className="text-white font-semibold text-xl mb-2">Quick Start with Google</h3>
-            <p className="text-white/70 mb-4 text-base">Sign in with Google and complete your profile to join SCS</p>
+            <p className="text-white/70 mb-4 text-base">Sign in with Google and complete your profile to get your artist ID card</p>
             <Button 
               onClick={handleGoogleSignIn}
               disabled={isGoogleSigningIn}
@@ -1068,8 +1068,8 @@ export default function SikkimCreativeStar() {
             <div className="w-16 h-16 bg-gradient-to-br from-creative-blue to-creative-indigo rounded-2xl flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-white font-bold text-xl mb-3">Free Registration</h3>
-            <p className="text-white/70 text-base">Join our prestigious creative community at absolutely no cost</p>
+            <h3 className="text-white font-bold text-xl mb-3">Artist ID Card & Certificate</h3>
+            <p className="text-white/70 text-base">Get your official artist ID card and participation certificate</p>
           </div>
           
           <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-creative-purple/20 to-transparent border border-creative-purple/30 backdrop-blur-sm hover:border-creative-purple/50 transition-all duration-300 transform hover:scale-105">

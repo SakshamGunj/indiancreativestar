@@ -14,7 +14,7 @@ const navigation = [
   { name: "Gallery", href: "#gallery" },
   { name: "Testimonials", href: "#testimonials" },
   { name: "FAQ", href: "#faq" },
-  { name: "Join SCS", href: "/sikkimcreativestar" },
+          { name: "Artist ID Card", href: "/sikkimcreativestar" },
 ];
 
 interface HeaderProps {
