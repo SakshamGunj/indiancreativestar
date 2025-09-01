@@ -116,9 +116,36 @@ export default function SikkimCreativeStar() {
       setIsLoading(false);
       
       if (user) {
-        // Check if user has already registered
-        const userDoc = await getDoc(doc(db, "participantdetailspersonal", user.uid));
-        setHasRegistered(userDoc.exists());
+        // Check if user has already registered with complete profile
+        try {
+          const userDoc = await getDoc(doc(db, "participantdetailspersonal", user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            
+            // Check if all required fields are filled
+            const hasCompleteProfile = userData.name && 
+                                     userData.phone && 
+                                     userData.address;
+            
+            if (hasCompleteProfile) {
+              setHasRegistered(true);
+            } else {
+              // Incomplete profile - show completion form
+              setGoogleUserData({
+                uid: user.uid,
+                name: userData.name || user.displayName || '',
+                email: userData.email || user.email || '',
+                phone: userData.phone || user.phoneNumber || '',
+                address: userData.address || '',
+                profileImage: userData.profileImage || user.photoURL || '',
+                authProvider: userData.authProvider || 'email'
+              });
+              setShowGoogleProfileCompletion(true);
+            }
+          }
+        } catch (error) {
+          console.error("Error checking user registration:", error);
+        }
       }
     });
 
@@ -327,10 +354,10 @@ export default function SikkimCreativeStar() {
         phone: data.phone.trim(),
         address: data.address.trim(),
         profileImage: imageUrl,
-        registrationDate: new Date(),
+        registrationDate: googleUserData.authProvider === 'google' ? new Date() : undefined,
         status: 'registered',
         deviceId: await getDeviceId(),
-        authProvider: 'google'
+        authProvider: googleUserData.authProvider
       });
       
       setHasRegistered(true);
@@ -437,11 +464,14 @@ export default function SikkimCreativeStar() {
             </div>
             
             <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-              Complete Your Profile to Join SCS
+              Complete Your Profile
             </h1>
             
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Great! You've signed in with Google. To ensure a complete profile, please provide all required information below.
+              {googleUserData?.authProvider === 'google' 
+                ? "Great! You've signed in with Google. To ensure a complete profile, please provide all required information below."
+                : "Please complete your profile with all required information to access your dashboard."
+              }
             </p>
           </div>
 
@@ -464,7 +494,7 @@ export default function SikkimCreativeStar() {
                 Complete Your Profile
               </CardTitle>
               <CardDescription className="text-white/60">
-                Fields marked with * are required. Profile image is optional. Please complete your profile to join Sikkim Creative Star.
+                Fields marked with * are required. Profile image is optional. Please complete your profile to access your dashboard.
               </CardDescription>
             </CardHeader>
             
@@ -608,7 +638,7 @@ export default function SikkimCreativeStar() {
               </div>
               <div className="flex items-center gap-3 justify-center">
                 <CheckCircle className="h-5 w-5 text-green-400" />
-                <span>Profile image uploaded</span>
+                <span>Profile information completed</span>
               </div>
               <div className="flex items-center gap-3 justify-center">
                 <CheckCircle className="h-5 w-5 text-green-400" />
@@ -630,8 +660,8 @@ export default function SikkimCreativeStar() {
     );
   }
 
-  // Show dashboard if user is logged in and has registered
-  if (currentUser && hasRegistered) {
+  // Show dashboard if user is logged in and has registered with complete profile
+  if (currentUser && hasRegistered && !showGoogleProfileCompletion) {
     return <UserDashboard user={currentUser} />;
   }
 
