@@ -767,7 +767,7 @@ export default function SikkimCreativeStar() {
           {/* Form Container */}
           <Card className="glassmorphism border-white/20 backdrop-blur-sm">
             {!isLoginMode ? (
-              /* Registration Form */
+              /* Registration Form - Simplified */
               <>
                 <CardHeader className="pb-4 sm:pb-6">
                   <CardTitle className="text-lg sm:text-xl text-white flex items-center gap-2">
@@ -779,200 +779,37 @@ export default function SikkimCreativeStar() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="px-4 sm:px-6 pb-6">
-                  <Form {...registrationForm}>
-                    <form onSubmit={registrationForm.handleSubmit(handleRegistration)} className="space-y-3 sm:space-y-4">
-                      {/* Image Upload */}
-                      <div className="space-y-2">
-                        <Label className="text-white text-sm sm:text-base">Profile Image (Optional)</Label>
-                        <div className="border-2 border-dashed border-white/20 rounded-lg p-4 sm:p-6 text-center hover:border-creative-blue/50 transition-colors">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageSelect}
-                            className="hidden"
-                            id="image-upload"
-                          />
-                          <label htmlFor="image-upload" className="cursor-pointer">
-                            {imagePreview ? (
-                              <div className="space-y-2">
-                                <img 
-                                  src={imagePreview} 
-                                  alt="Preview" 
-                                  className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full mx-auto"
-                                />
-                                <p className="text-xs sm:text-sm text-white/60">Click to change image</p>
-                              </div>
-                            ) : (
-                              <div className="space-y-2">
-                                <Camera className="h-10 w-10 sm:h-12 sm:w-12 text-white/40 mx-auto" />
-                                <p className="text-white/70 text-sm sm:text-base">Click to upload your photo (optional)</p>
-                                <p className="text-xs text-white/50">Max 10MB • JPG, PNG, GIF</p>
-                              </div>
-                            )}
-                          </label>
-                        </div>
-                      </div>
-
-                      {/* Name */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Full Name *</FormLabel>
-                            <FormControl>
-                              <Input 
-                                {...field} 
-                                placeholder="Enter your full name"
-                                className="bg-white/5 border-white/20 text-white h-10 sm:h-12 text-sm sm:text-base"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Email */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Email *</FormLabel>
-                            <FormControl>
-                              <Input 
-                                {...field} 
-                                type="email"
-                                placeholder="Enter your email"
-                                className="bg-white/5 border-white/20 text-white h-10 sm:h-12 text-sm sm:text-base"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Phone */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Phone Number *</FormLabel>
-                            <FormControl>
-                              <Input 
-                                {...field} 
-                                type="tel"
-                                placeholder="Enter your phone number"
-                                className="bg-white/5 border-white/20 text-white h-10 sm:h-12 text-sm sm:text-base"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Address */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="address"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Address *</FormLabel>
-                            <FormControl>
-                              <Textarea 
-                                {...field} 
-                                placeholder="Enter your complete address"
-                                className="bg-white/5 border-white/20 text-white min-h-[60px] sm:min-h-[80px] text-sm sm:text-base"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Password */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="password"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Password *</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input 
-                                  {...field} 
-                                  type={showPassword ? "text" : "password"}
-                                  placeholder="Create a password"
-                                  className="bg-white/5 border-white/20 text-white pr-10 h-10 sm:h-12 text-sm sm:text-base"
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() => setShowPassword(!showPassword)}
-                                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
-                                >
-                                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      {/* Confirm Password */}
-                      <FormField
-                        control={registrationForm.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white text-sm sm:text-base">Confirm Password *</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input 
-                                  {...field} 
-                                  type={showConfirmPassword ? "text" : "password"}
-                                  placeholder="Confirm your password"
-                                  className="bg-white/5 border-white/20 text-white pr-10 h-10 sm:h-12 text-sm sm:text-base"
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white"
-                                >
-                                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                </button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <Button 
-                        type="submit" 
-                        className="w-full creative-btn h-10 sm:h-12 text-base sm:text-lg font-semibold" 
-                        disabled={isRegistering || isUploading}
-                      >
-                        {isUploading ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-                            Uploading Image...
-                          </>
-                        ) : isRegistering ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-                            Creating Account...
-                          </>
-                        ) : (
-                          <>
-                            Create Account
-                            <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                          </>
-                        )}
-                      </Button>
-                    </form>
-                  </Form>
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 bg-gradient-to-r from-creative-blue/20 to-creative-purple/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <User className="h-8 w-8 text-creative-blue" />
+                    </div>
+                    <h3 className="text-white font-semibold text-lg mb-2">Use Google Sign-In</h3>
+                    <p className="text-white/70 text-sm mb-4">
+                      For the best experience, please use the Google Sign-In option above
+                    </p>
+                    <Button 
+                      onClick={handleGoogleSignIn}
+                      disabled={isGoogleSigningIn}
+                      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2.5 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      {isGoogleSigningIn ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Signing In...
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                          </svg>
+                          Continue with Google
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </>
             ) : (
