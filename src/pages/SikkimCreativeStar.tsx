@@ -25,7 +25,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db, googleProvider } from "@/lib/firebase";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { UserDashboard } from "@/components/UserDashboard";
@@ -341,34 +341,57 @@ export default function SikkimCreativeStar() {
 
     
     try {
-      // Upload image if selected
-      let imageUrl = googleUserData.profileImage;
-      if (selectedImage) {
-        imageUrl = await uploadToCloudinary(selectedImage);
-      }
-      
-      // Update user profile with complete data
-      await setDoc(doc(db, "participantdetailspersonal", googleUserData.uid), {
+      // Save profile immediately without waiting for image upload
+      const userRef = doc(db, "participantdetailspersonal", googleUserData.uid);
+      await setDoc(userRef, {
         name: data.name.trim(),
         email: googleUserData.email,
         phone: data.phone.trim(),
         address: data.address.trim(),
-        profileImage: imageUrl,
+        profileImage: googleUserData.profileImage || '',
         registrationDate: googleUserData.authProvider === 'google' ? new Date() : undefined,
         status: 'registered',
         deviceId: await getDeviceId(),
         authProvider: googleUserData.authProvider
       });
-      
+
+      // Kick off background upload if an image was selected
+      if (selectedImage) {
+        toast({
+          title: "Uploading profile photo...",
+          description: "You can continue. This runs in the background.",
+        });
+        uploadToCloudinary(selectedImage)
+          .then(async (url) => {
+            try {
+              await updateDoc(userRef, { profileImage: url });
+              toast({
+                title: "Profile photo uploaded",
+                description: "Your profile image has been updated.",
+              });
+            } catch (e) {
+              console.error("Failed to update profile image URL:", e);
+            }
+          })
+          .catch((e) => {
+            console.error("Background image upload failed:", e);
+          });
+      }
+
       setHasRegistered(true);
       setShowGoogleProfileCompletion(false);
       setGoogleUserData(null);
-      
+
+      setShowSuccessMessage(true);
       toast({
         title: "Profile Completed!",
         description: "Welcome to Sikkim Creative Star!",
       });
-      
+
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+
     } catch (error: any) {
       console.error("Profile completion error:", error);
       toast({
