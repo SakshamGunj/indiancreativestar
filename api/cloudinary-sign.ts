@@ -25,18 +25,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const apiSecret = 'jwe-J4gocdB4VMayA5Cq9x7cGFM';
 
   try {
-    const { uploadPreset, folder, publicId } = (req.body || {}) as {
-      uploadPreset?: string;
-      folder?: string;
-      publicId?: string;
-    };
-
+    // Use fixed preset and optional folder/public_id if needed in future
+    const fixedUploadPreset = 'profilephoto';
     const timestamp = Math.floor(Date.now() / 1000).toString();
 
-    const signParams: Record<string, string> = { timestamp };
-    if (uploadPreset) signParams.upload_preset = uploadPreset;
-    if (folder) signParams.folder = folder;
-    if (publicId) signParams.public_id = publicId;
+    const signParams: Record<string, string> = {
+      timestamp,
+      upload_preset: fixedUploadPreset
+    };
 
     const toSign = buildToSign(signParams) + apiSecret;
     const signature = crypto.createHash('sha1').update(toSign).digest('hex');
@@ -46,6 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       apiKey,
       timestamp,
       signature,
+      uploadPreset: fixedUploadPreset
     });
   } catch (err) {
     return res.status(500).json({ error: 'Failed to generate signature' });
