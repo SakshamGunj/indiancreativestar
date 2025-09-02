@@ -191,56 +191,56 @@ export default function SikkimCreativeStar() {
     <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e]">
       <Header onRegistrationClick={() => {}} />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="max-w-2xl mx-auto">
           {/* Header Section */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-creative-blue to-creative-purple bg-clip-text text-transparent mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-creative-blue to-creative-purple bg-clip-text text-transparent mb-3 sm:mb-4">
               Sikkim Creative Star
             </h1>
-            <p className="text-xl text-white/80 mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-white/80 mb-4 sm:mb-6 px-2">
               Join the creative community and showcase your talent
             </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-white/60">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-white/60 px-4">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
                 <span>Free Registration</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
                 <span>National Recognition</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-green-500" />
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
                 <span>Certificate & ID Card</span>
               </div>
             </div>
           </div>
 
           {/* Registration Form */}
-          <div className="glassmorphism border-white/10 p-6 md:p-8 rounded-2xl">
+          <div className="glassmorphism border-white/10 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl">
             {!isSuccess ? (
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 sm:space-y-6">
                   {/* Profile Image Upload */}
-                  <div className="space-y-3">
-                    <Label className="text-base font-medium">Profile Image</Label>
+                  <div className="space-y-2 sm:space-y-3">
+                    <Label className="text-sm sm:text-base font-medium">Profile Image</Label>
                     <div className="flex flex-col items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <label className="flex flex-col items-center justify-center w-full h-24 sm:h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
+                        <div className="flex flex-col items-center justify-center pt-3 sm:pt-5 pb-4 sm:pb-6 px-2">
                           {imagePreview ? (
                             <img 
                               src={imagePreview} 
                               alt="Preview" 
-                              className="w-20 h-20 rounded-full object-cover mb-2"
+                              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover mb-2"
                             />
                           ) : (
-                            <Camera className="w-8 h-8 mb-2 text-white/60" />
+                            <Camera className="w-6 h-6 sm:w-8 sm:h-8 mb-2 text-white/60" />
                           )}
-                          <p className="mb-2 text-sm text-white/60">
+                          <p className="mb-2 text-xs sm:text-sm text-white/60 text-center">
                             <span className="font-semibold">Click to upload</span> or drag and drop
                           </p>
-                          <p className="text-xs text-white/40">PNG, JPG, JPEG up to 10MB</p>
+                          <p className="text-xs text-white/40 text-center">PNG, JPG, JPEG up to 10MB</p>
                         </div>
                         <input 
                           type="file" 
@@ -253,22 +253,22 @@ export default function SikkimCreativeStar() {
                   </div>
 
                   {/* Personal Information */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <FormField
                       control={form.control}
                       name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="name" className="flex items-center gap-2">
-                                <User className="h-4 w-4" />
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="name" className="flex items-center gap-2 text-sm sm:text-base">
+                                <User className="h-3 w-3 sm:h-4 sm:w-4" />
                                 Full Name
                               </Label>
                               <Input
                                 {...field}
                                 placeholder="Enter your full name"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -283,8 +283,8 @@ export default function SikkimCreativeStar() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="email" className="flex items-center gap-2">
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="email" className="flex items-center gap-2 text-sm sm:text-base">
                                 <Mail className="h-4 w-4" />
                                 Email Address
                               </Label>
@@ -292,7 +292,7 @@ export default function SikkimCreativeStar() {
                                 {...field}
                                 type="email"
                                 placeholder="Enter your email"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -307,16 +307,16 @@ export default function SikkimCreativeStar() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="phone" className="flex items-center gap-2">
-                                <Phone className="h-4 w-4" />
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="phone" className="flex items-center gap-2 text-sm sm:text-base">
+                                <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
                                 Phone Number
                               </Label>
                               <Input
                                 {...field}
                                 type="tel"
                                 placeholder="Enter your phone number"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -331,15 +331,15 @@ export default function SikkimCreativeStar() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="address" className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4" />
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="address" className="flex items-center gap-2 text-sm sm:text-base">
+                                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                                 Complete Address
                               </Label>
                               <Input
                                 {...field}
                                 placeholder="Enter your complete address"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -350,20 +350,20 @@ export default function SikkimCreativeStar() {
                   </div>
 
                   {/* Password Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                     <FormField
                       control={form.control}
                       name="password"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="password">Password</Label>
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="password" className="text-sm sm:text-base">Password</Label>
                               <Input
                                 {...field}
                                 type="password"
                                 placeholder="Create a password"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -378,13 +378,13 @@ export default function SikkimCreativeStar() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="space-y-2">
-                              <Label htmlFor="confirmPassword">Confirm Password</Label>
+                            <div className="space-y-1.5 sm:space-y-2">
+                              <Label htmlFor="confirmPassword" className="text-sm sm:text-base">Confirm Password</Label>
                               <Input
                                 {...field}
                                 type="password"
                                 placeholder="Confirm your password"
-                                className="bg-white/5 border-white/10 h-12"
+                                className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                               />
                             </div>
                           </FormControl>
@@ -397,13 +397,13 @@ export default function SikkimCreativeStar() {
                   {/* Progress Bar */}
                   {isSubmitting && (
                     <div className="space-y-2">
-                      <div className="flex justify-between text-sm text-white/60">
+                      <div className="flex justify-between text-xs sm:text-sm text-white/60">
                         <span>Creating your account...</span>
                         <span>{uploadProgress}%</span>
                       </div>
-                      <div className="w-full bg-white/10 rounded-full h-2">
+                      <div className="w-full bg-white/10 rounded-full h-1.5 sm:h-2">
                         <div 
-                          className="bg-gradient-to-r from-creative-blue to-creative-purple h-2 rounded-full transition-all duration-300"
+                          className="bg-gradient-to-r from-creative-blue to-creative-purple h-1.5 sm:h-2 rounded-full transition-all duration-300"
                           style={{ width: `${uploadProgress}%` }}
                         />
                       </div>
@@ -413,18 +413,18 @@ export default function SikkimCreativeStar() {
                   {/* Submit Button */}
                   <Button 
                     type="submit" 
-                    className="w-full creative-btn py-3 h-14 text-lg font-medium" 
+                    className="w-full creative-btn py-2.5 sm:py-3 h-12 sm:h-14 text-base sm:text-lg font-medium" 
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                         Creating Account...
                       </>
                     ) : (
                       <>
                         Create Account
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </>
                     )}
                   </Button>
@@ -437,23 +437,23 @@ export default function SikkimCreativeStar() {
               </Form>
             ) : (
               /* Success Message */
-              <div className="text-center py-12 space-y-6">
+              <div className="text-center py-8 sm:py-12 space-y-4 sm:space-y-6">
                 <div className="relative">
-                  <CheckCircle className="h-20 w-20 text-green-500 mx-auto mb-4" />
+                  <CheckCircle className="h-16 w-16 sm:h-20 sm:w-20 text-green-500 mx-auto mb-3 sm:mb-4" />
                   <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl"></div>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Welcome to Sikkim Creative Star!</h3>
-                <p className="text-white/80 max-w-md mx-auto">
+                <h3 className="text-xl sm:text-2xl font-bold text-white px-2">Welcome to Sikkim Creative Star!</h3>
+                <p className="text-white/80 max-w-md mx-auto text-sm sm:text-base px-4">
                   Your account has been created successfully. Admin is reviewing your request. 
                   Your certificate and ID card will appear here soon.
                 </p>
-                <div className="flex items-center justify-center gap-4 text-sm text-white/60">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-white/60 px-4">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
                     <span>Account Created</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
                     <span>Under Review</span>
                   </div>
                 </div>
@@ -462,8 +462,8 @@ export default function SikkimCreativeStar() {
           </div>
 
           {/* Additional Information */}
-          <div className="mt-8 text-center">
-            <p className="text-white/60 text-sm">
+          <div className="mt-6 sm:mt-8 text-center px-4">
+            <p className="text-white/60 text-xs sm:text-sm">
               Already have an account?{" "}
               <button 
                 className="text-creative-blue hover:text-creative-purple transition-colors"

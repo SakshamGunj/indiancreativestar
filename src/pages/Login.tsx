@@ -98,38 +98,38 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e]">
       <Header onRegistrationClick={() => {}} />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="max-w-md mx-auto">
           {/* Header Section */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-creative-blue to-creative-purple bg-clip-text text-transparent mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-creative-blue to-creative-purple bg-clip-text text-transparent mb-3 sm:mb-4">
               Welcome Back
             </h1>
-            <p className="text-lg text-white/80">
+            <p className="text-base sm:text-lg text-white/80 px-2">
               Sign in to your Sikkim Creative Star account
             </p>
           </div>
 
           {/* Login Form */}
-          <div className="glassmorphism border-white/10 p-6 md:p-8 rounded-2xl">
+          <div className="glassmorphism border-white/10 p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 sm:space-y-6">
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div className="space-y-2">
-                          <Label htmlFor="email" className="flex items-center gap-2">
-                            <Mail className="h-4 w-4" />
+                        <div className="space-y-1.5 sm:space-y-2">
+                          <Label htmlFor="email" className="flex items-center gap-2 text-sm sm:text-base">
+                            <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
                             Email Address
                           </Label>
                           <Input
                             {...field}
                             type="email"
                             placeholder="Enter your email"
-                            className="bg-white/5 border-white/10 h-12"
+                            className="bg-white/5 border-white/10 h-10 sm:h-12 text-sm sm:text-base"
                           />
                         </div>
                       </FormControl>
@@ -144,9 +144,9 @@ export default function Login() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <div className="space-y-2">
-                          <Label htmlFor="password" className="flex items-center gap-2">
-                            <Lock className="h-4 w-4" />
+                        <div className="space-y-1.5 sm:space-y-2">
+                          <Label htmlFor="password" className="flex items-center gap-2 text-sm sm:text-base">
+                            <Lock className="h-3 w-3 sm:h-4 sm:w-4" />
                             Password
                           </Label>
                           <div className="relative">
@@ -154,17 +154,17 @@ export default function Login() {
                               {...field}
                               type={showPassword ? "text" : "password"}
                               placeholder="Enter your password"
-                              className="bg-white/5 border-white/10 h-12 pr-12"
+                              className="bg-white/5 border-white/10 h-10 sm:h-12 pr-10 sm:pr-12 text-sm sm:text-base"
                             />
                             <button
                               type="button"
                               onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/80 transition-colors"
+                              className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white/80 transition-colors"
                             >
                               {showPassword ? (
-                                <EyeOff className="h-4 w-4" />
+                                <EyeOff className="h-3 w-3 sm:h-4 sm:w-4" />
                               ) : (
-                                <Eye className="h-4 w-4" />
+                                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                               )}
                             </button>
                           </div>
@@ -175,56 +175,56 @@ export default function Login() {
                   )}
                 />
 
-                {/* Submit Button */}
-                <Button 
-                  type="submit" 
-                  className="w-full creative-btn py-3 h-14 text-lg font-medium" 
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Signing In...
-                    </>
-                  ) : (
-                    <>
-                      Sign In
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-
-                {/* Forgot Password Link */}
-                <div className="text-center">
-                  <button 
-                    type="button"
-                    className="text-creative-blue hover:text-creative-purple transition-colors text-sm"
-                    onClick={() => {
-                      toast({
-                        title: "Contact Support",
-                        description: "Please contact support at daamievent@gmail.com to reset your password.",
-                      });
-                    }}
+                                  {/* Submit Button */}
+                  <Button 
+                    type="submit" 
+                    className="w-full creative-btn py-2.5 sm:py-3 h-12 sm:h-14 text-base sm:text-lg font-medium" 
+                    disabled={isSubmitting}
                   >
-                    Forgot your password?
-                  </button>
-                </div>
-              </form>
-            </Form>
-          </div>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                        Signing In...
+                      </>
+                    ) : (
+                      <>
+                        Sign In
+                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      </>
+                    )}
+                  </Button>
 
-          {/* Additional Information */}
-          <div className="mt-8 text-center">
-            <p className="text-white/60 text-sm">
-              Don't have an account?{" "}
-              <Link 
-                to="/sikkimcreativestar"
-                className="text-creative-blue hover:text-creative-purple transition-colors"
-              >
-                Create one here
-              </Link>
-            </p>
-          </div>
+                                  {/* Forgot Password Link */}
+                  <div className="text-center">
+                    <button 
+                      type="button"
+                      className="text-creative-blue hover:text-creative-purple transition-colors text-xs sm:text-sm"
+                      onClick={() => {
+                        toast({
+                          title: "Contact Support",
+                          description: "Please contact support at daamievent@gmail.com to reset your password.",
+                        });
+                      }}
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
+                </form>
+              </Form>
+            </div>
+
+            {/* Additional Information */}
+            <div className="mt-6 sm:mt-8 text-center px-4">
+              <p className="text-white/60 text-xs sm:text-sm">
+                Don't have an account?{" "}
+                <Link 
+                  to="/sikkimcreativestar"
+                  className="text-creative-blue hover:text-creative-purple transition-colors"
+                >
+                  Create one here
+                </Link>
+              </p>
+            </div>
         </div>
       </div>
 
