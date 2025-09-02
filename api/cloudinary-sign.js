@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 function buildToSign(params) {
 	const sortedKeys = Object.keys(params).sort();
@@ -12,7 +12,10 @@ function buildToSign(params) {
 	return parts.join('&');
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+	if (req.method === 'GET') {
+		return res.status(200).json({ ok: true });
+	}
 	if (req.method !== 'POST') {
 		return res.status(405).json({ error: 'Method not allowed' });
 	}
@@ -44,4 +47,4 @@ module.exports = async function handler(req, res) {
 	} catch (err) {
 		return res.status(500).json({ error: 'Failed to generate signature' });
 	}
-};
+}
