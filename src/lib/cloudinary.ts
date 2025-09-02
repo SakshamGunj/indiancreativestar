@@ -1,17 +1,40 @@
-// Cloudinary configuration
+// Cloudinary configuration (hardcoded per user request)
 export const CLOUDINARY_CONFIG = {
-  cloudName: 'your_cloud_name', // Replace with your actual cloud name
+  cloudName: 'dhvzfbhbe',
+  uploadPreset: 'profilephoto',
   apiKey: '775374399753362',
-  apiSecret: 'jwe-J4gocdB4VMayA5Cq9x7cGFM',
-  uploadPreset: 'sikkim_creative_star' // You'll need to create this preset in your Cloudinary dashboard
+  apiSecret: 'jwe-J4gocdB4VMayA5Cq9x7cGFM'
 };
 
 // Function to upload image to Cloudinary
+// Compute SHA-1 hex in the browser
+async function computeSha1Hex(input: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 export const uploadToCloudinary = async (file: File): Promise<string> => {
+  if (!CLOUDINARY_CONFIG.cloudName || !CLOUDINARY_CONFIG.uploadPreset) {
+    throw new Error('Image upload not configured.');
+  }
+
+  // Build signed params entirely on client (per request)
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const signParams = new URLSearchParams();
+  signParams.set('timestamp', timestamp);
+  signParams.set('upload_preset', CLOUDINARY_CONFIG.uploadPreset);
+  const toSign = `${Array.from(signParams.keys()).sort().map(k => `${k}=${signParams.get(k)}`).join('&')}${CLOUDINARY_CONFIG.apiSecret}`;
+  const signature = await computeSha1Hex(toSign);
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', CLOUDINARY_CONFIG.uploadPreset);
-  formData.append('cloud_name', CLOUDINARY_CONFIG.cloudName);
+  formData.append('api_key', CLOUDINARY_CONFIG.apiKey);
+  formData.append('timestamp', timestamp);
+  formData.append('signature', signature);
 
   try {
     const response = await fetch(
@@ -23,7 +46,14 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
     );
 
     if (!response.ok) {
-      throw new Error('Failed to upload image to Cloudinary');
+      // Try to extract Cloudinary error details if available
+      try {
+        const errorJson = await response.json();
+        const message = errorJson?.error?.message || `Cloudinary error ${response.status}`;
+        throw new Error(message);
+      } catch {
+        throw new Error('Failed to upload image to Cloudinary');
+      }
     }
 
     const data = await response.json();
@@ -34,9 +64,4 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
   }
 };
 
-// Function to generate signature for secure uploads (if needed)
-export const generateSignature = (params: any): string => {
-  // This would be implemented on the server side for security
-  // For now, we'll use unsigned uploads with upload preset
-  return '';
-};
+// Signed uploads should be implemented server-side. No client secret here.

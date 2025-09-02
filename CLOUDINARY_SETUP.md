@@ -27,17 +27,15 @@ This guide will help you set up Cloudinary for image uploads in the Sikkim Creat
    - **Folder**: `sikkim-creative-star` (optional)
 5. Save the preset
 
-## Step 4: Update Configuration
-Update the Cloudinary configuration in `src/lib/cloudinary.ts`:
+## Step 4: Configure Environment Variables
+Create a `.env` file based on `.env.example`:
 
-```typescript
-export const CLOUDINARY_CONFIG = {
-  cloudName: 'your_actual_cloud_name', // Replace with your cloud name
-  apiKey: '775374399753362', // Your API key
-  apiSecret: 'jwe-J4gocdB4VMayA5Cq9x7cGFM', // Your API secret
-  uploadPreset: 'sikkim_creative_star' // The preset you created
-};
 ```
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+VITE_CLOUDINARY_UPLOAD_PRESET=sikkim_creative_star
+```
+
+The app now reads these values in `src/lib/cloudinary.ts`. Do not put API secrets in the client.
 
 ## Step 5: Test the Setup
 1. Start the development server: `npm run dev`
@@ -46,12 +44,12 @@ export const CLOUDINARY_CONFIG = {
 4. Check your Cloudinary dashboard to see if the image was uploaded
 
 ## Security Notes
-- The API secret should never be exposed in client-side code in production
-- For production, consider using signed uploads with server-side signature generation
-- The current implementation uses unsigned uploads with a preset for simplicity
+- Never expose your API secret in client-side code
+- For production, prefer signed uploads with a server-side signature endpoint
+- Current implementation uses unsigned uploads with a preset
 
 ## Troubleshooting
-- **Upload fails**: Check that your cloud name and upload preset are correct
+- **401 Unauthorized**: Ensure `VITE_CLOUDINARY_CLOUD_NAME` and `VITE_CLOUDINARY_UPLOAD_PRESET` are set and the preset is Unsigned
 - **CORS errors**: Ensure your Cloudinary account allows uploads from your domain
 - **File size errors**: The system limits uploads to 10MB
 
