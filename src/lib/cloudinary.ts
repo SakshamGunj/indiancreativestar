@@ -1,13 +1,18 @@
 // Cloudinary configuration
+// Values are read from Vite environment variables.
+// Ensure you set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET
 export const CLOUDINARY_CONFIG = {
-  cloudName: 'your_cloud_name', // Replace with your actual cloud name
-  apiKey: '775374399753362',
-  apiSecret: 'jwe-J4gocdB4VMayA5Cq9x7cGFM',
-  uploadPreset: 'sikkim_creative_star' // You'll need to create this preset in your Cloudinary dashboard
+  cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string,
+  uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string
 };
 
 // Function to upload image to Cloudinary
 export const uploadToCloudinary = async (file: File): Promise<string> => {
+  if (!CLOUDINARY_CONFIG.cloudName || !CLOUDINARY_CONFIG.uploadPreset) {
+    console.error('Cloudinary configuration missing. Expected VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET.');
+    throw new Error('Image upload not configured. Please contact support.');
+  }
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', CLOUDINARY_CONFIG.uploadPreset);
@@ -23,7 +28,14 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
     );
 
     if (!response.ok) {
-      throw new Error('Failed to upload image to Cloudinary');
+      // Try to extract Cloudinary error details if available
+      try {
+        const errorJson = await response.json();
+        const message = errorJson?.error?.message || `Cloudinary error ${response.status}`;
+        throw new Error(message);
+      } catch {
+        throw new Error('Failed to upload image to Cloudinary');
+      }
     }
 
     const data = await response.json();
@@ -34,9 +46,4 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
   }
 };
 
-// Function to generate signature for secure uploads (if needed)
-export const generateSignature = (params: any): string => {
-  // This would be implemented on the server side for security
-  // For now, we'll use unsigned uploads with upload preset
-  return '';
-};
+// Signed uploads should be implemented server-side. No client secret here.
