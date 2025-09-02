@@ -1,9 +1,7 @@
-// Cloudinary configuration
-// Values are read from Vite environment variables.
-// Ensure you set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET
+// Cloudinary configuration (hardcoded per user request)
 export const CLOUDINARY_CONFIG = {
-  cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string,
-  uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string
+  cloudName: 'dhvzfbhbe',
+  uploadPreset: 'profilephoto'
 };
 
 // Function to upload image to Cloudinary

@@ -19,13 +19,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME as string;
-  const apiKey = process.env.CLOUDINARY_API_KEY as string;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET as string;
-
-  if (!cloudName || !apiKey || !apiSecret) {
-    return res.status(500).json({ error: 'Cloudinary server configuration missing' });
-  }
+  // Hardcoded credentials per user request
+  const cloudName = 'dhvzfbhbe';
+  const apiKey = '775374399753362';
+  const apiSecret = 'jwe-J4gocdB4VMayA5Cq9x7cGFM';
 
   try {
     const { uploadPreset, folder, publicId } = (req.body || {}) as {
