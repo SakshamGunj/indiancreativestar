@@ -13,14 +13,27 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
     throw new Error('Image upload not configured. Please contact support.');
   }
 
+  // Obtain a signed payload from our serverless function so we can upload to a signed preset
+  const signResponse = await fetch('/api/cloudinary-sign', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ uploadPreset: CLOUDINARY_CONFIG.uploadPreset })
+  });
+  if (!signResponse.ok) {
+    throw new Error('Failed to obtain upload signature');
+  }
+  const { cloudName, apiKey, timestamp, signature } = await signResponse.json();
+
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', CLOUDINARY_CONFIG.uploadPreset);
-  formData.append('cloud_name', CLOUDINARY_CONFIG.cloudName);
+  formData.append('api_key', apiKey);
+  formData.append('timestamp', timestamp);
+  formData.append('signature', signature);
 
   try {
     const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.cloudName}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
       {
         method: 'POST',
         body: formData,
