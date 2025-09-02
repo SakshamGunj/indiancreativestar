@@ -694,9 +694,7 @@ export default function SikkimCreativeStar() {
             Sikkim Creative Star Season 1
           </h3>
           
-          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto px-2">
-            Join the most prestigious creative competition in Sikkim and showcase your artistic brilliance to the world
-          </p>
+
         </div>
 
         {/* Google Sign-In Section */}
