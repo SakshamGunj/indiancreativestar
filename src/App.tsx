@@ -11,6 +11,7 @@ import VotingPage from "./VotingPage";
 import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
+import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
 import { useEffect, useState } from "react";
@@ -96,6 +97,7 @@ const App = () => {
               : 'opacity-100 scale-100 blur-0 pointer-events-auto'
           }`}>
             <BrowserRouter>
+              <BrandingProvider>
               <div 
                 className="page-transition-wrapper h-full"
                 style={{
@@ -105,6 +107,7 @@ const App = () => {
               >
                 <Routes>
                   <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
+                  <Route path="/Indiancreativestar" element={<Index onRegistrationClick={handleOpenRegistration} />} />
                   <Route path="/competitions" element={<CompetitionSelect />} />
                   <Route path="/thank-you" element={<ThankYou />} />
                   <Route path="/voting" element={<VotingPage />} />
@@ -120,6 +123,7 @@ const App = () => {
                 isOpen={showRegistrationModal}
                 onClose={() => setShowRegistrationModal(false)}
               />
+              </BrandingProvider>
             </BrowserRouter>
           </div>
 

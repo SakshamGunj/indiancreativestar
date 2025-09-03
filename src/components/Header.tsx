@@ -7,6 +7,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useBranding } from "@/lib/branding";
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -26,6 +27,7 @@ export function Header({ onRegistrationClick }: HeaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { brandName } = useBranding();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,13 +101,13 @@ export function Header({ onRegistrationClick }: HeaderProps) {
       >
         <div className="flex">
           <a href="#" className="-m-1.5 p-1.5 flex items-center gap-2">
-            <span className="sr-only">Sikkim Creative Star</span>
+            <span className="sr-only">{brandName}</span>
             <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full overflow-hidden">
               <img src="/company-logo.jpeg" alt="SCS Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <span className="font-playfair font-bold text-gradient text-base sm:text-xl">
-                {isMobile ? "SCS" : "Sikkim Creative Star"}
+                {isMobile ? brandName.split(" ").map(w => w[0]).join("") : brandName}
               </span>
             </div>
           </a>
