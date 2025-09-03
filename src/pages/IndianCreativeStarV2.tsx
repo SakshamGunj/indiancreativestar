@@ -2,6 +2,12 @@ import { useState } from "react";
 import { ArrowRight, Instagram, Star, Award, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
+import { StickyCTABanner } from "@/components/StickyCTABanner";
+import { EarlyBirdBanner } from "@/components/EarlyBirdBanner";
+import { TestimonialCarouselSection } from "@/components/TestimonialCarouselSection";
+import { SocialProofSection } from "@/components/SocialProofSection";
+import { MagazineSection } from "@/components/MagazineSection";
+import { Footer } from "@/components/Footer";
 
 // Premium white-theme, glassmorphism variant of the Indian Creative Star landing page
 // Route: /Indiancreativestar/v2
@@ -13,6 +19,8 @@ export default function IndianCreativeStarV2() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      {/* Sticky CTA from original page */}
+      <StickyCTABanner onRegisterClick={handleRegisterClick} />
       {/* Colorful soft gradient overlays for an artsy white theme */}
       <div className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute -top-28 -left-24 h-96 w-96 rounded-full bg-[#ffd1dc]/60 blur-3xl" />
@@ -97,6 +105,11 @@ export default function IndianCreativeStarV2() {
         </div>
       </section>
 
+      {/* Early bird banner for parity */}
+      <div className="container py-6 sm:py-8">
+        <EarlyBirdBanner onRegisterClick={handleRegisterClick} />
+      </div>
+
       {/* Prizes */}
       <section id="prizes" className="py-10 sm:py-16">
         <div className="container">
@@ -155,6 +168,11 @@ export default function IndianCreativeStarV2() {
         </div>
       </section>
 
+      {/* Testimonials + Social Proof + Magazine */}
+      <TestimonialCarouselSection />
+      <SocialProofSection />
+      <MagazineSection />
+
       {/* FAQ - simple light accordions (static) */}
       <section id="faq" className="py-10 sm:py-16">
         <div className="container max-w-3xl">
@@ -181,6 +199,9 @@ export default function IndianCreativeStarV2() {
           <p className="text-xs text-gray-500 mt-6">© {new Date().getFullYear()} Indiancreativestar. All rights reserved.</p>
         </div>
       </section>
+
+      {/* Standard footer from original for links and consistency */}
+      <Footer onRegisterClick={handleRegisterClick} />
 
       <RegistrationFlowModal isOpen={showRegistrationModal} onClose={() => setShowRegistrationModal(false)} />
     </div>
