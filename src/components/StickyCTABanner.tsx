@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useBranding } from "@/lib/branding";
 
 interface StickyCTABannerProps {
   onRegisterClick?: () => void;
@@ -11,6 +12,7 @@ interface StickyCTABannerProps {
 export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
+  const { brandName, regionName } = useBranding();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,9 +67,9 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
       <div className="container py-2 px-3 sm:px-4">
         <div className="bg-gradient-to-r from-creative-purple to-creative-blue p-2 sm:p-3 rounded-t-lg shadow-xl border border-white/10 flex items-center justify-between">
           <div>
-            <h3 className="text-xs sm:text-sm font-bold">Join Sikkim Creative Star - Season 1</h3>
+            <h3 className="text-xs sm:text-sm font-bold">Join {brandName} - Season 1</h3>
             <p className="text-[10px] sm:text-xs text-white/70 hidden sm:block">
-              <span className="text-creative-yellow font-semibold">Artist ID Card & Certificate</span> • 50 Years of Sikkim Statehood
+              <span className="text-creative-yellow font-semibold">Artist ID Card & Certificate</span>{regionName === 'Sikkim' ? ' • 50 Years of Sikkim Statehood' : ''}
             </p>
           </div>
           <Button

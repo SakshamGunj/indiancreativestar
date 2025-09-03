@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CountdownTimer } from "@/components/CountdownTimer";
+import { useBranding } from "@/lib/branding";
 
 interface EnhancedHeroSectionProps {
   onRegisterClick?: () => void;
@@ -21,6 +22,7 @@ interface EnhancedHeroSectionProps {
 
 export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProps) {
   const navigate = useNavigate();
+  const { brandName, regionName } = useBranding();
   
   const handleEnterCompetitions = () => {
     if (onRegisterClick) {
@@ -52,17 +54,22 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
       <div className="container relative z-10 px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="text-center lg:text-left">
-            {/* Sikkim 50 Years Statehood Celebration Banner */}
+            {/* Region-specific celebration/banner */}
             <div className="bg-gradient-to-r from-creative-yellow/30 via-creative-purple/20 to-creative-blue/30 p-3 rounded-lg border border-white/20 mb-5 shadow-lg animate-pulse-slow relative overflow-hidden">
               <div className="absolute -top-10 -left-10 w-20 h-20 rotate-12 opacity-20 bg-creative-yellow rounded-full blur-xl" />
               <div className="absolute -bottom-10 -right-10 w-20 h-20 -rotate-12 opacity-20 bg-creative-blue rounded-full blur-xl" />
               <div className="relative text-center">
-                <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">
-                  🎉 Celebrating 50 Years of Sikkim Statehood 🎉
-                </h3>
-                <p className="text-xs md:text-sm text-white/90">
-                  As a tribute to this historic milestone, we're making registration <span className="text-creative-yellow font-bold">completely FREE</span> for all artists!
-                </p>
+                {regionName === 'Sikkim' ? (
+                  <>
+                    <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">🎉 Celebrating 50 Years of Sikkim Statehood 🎉</h3>
+                    <p className="text-xs md:text-sm text-white/90">As a tribute to this historic milestone, we're making registration <span className="text-creative-yellow font-bold">completely FREE</span> for all artists!</p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">Nationwide Art Movement</h3>
+                    <p className="text-xs md:text-sm text-white/90">Join thousands of artists across India. Registration is <span className="text-creative-yellow font-bold">FREE</span> for a limited time.</p>
+                  </>
+                )}
               </div>
             </div>
             
@@ -76,7 +83,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
               <span className="text-white text-xl md:text-2xl lg:text-3xl opacity-90">Transform Your Art Into</span>
               <span className="block text-gradient text-xl md:text-2xl lg:text-3xl mt-1 mb-3 opacity-90">National Recognition</span>
               <span className="block text-4xl md:text-6xl lg:text-8xl mt-2 mb-3 bg-gradient-to-r from-creative-yellow to-creative-orange bg-clip-text text-transparent font-extrabold drop-shadow-sm relative">
-                Sikkim's Prestigious Art Competition
+                {regionName}'s Prestigious Art Competition
                 <span className="absolute -inset-1 -z-10 blur-sm bg-gradient-to-r from-creative-yellow/10 to-creative-orange/10 rounded-lg"></span>
               </span>
             </h1>
@@ -110,7 +117,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                   "They told your dreams don't pay, <br />
                   but your brush had more to say. <br />
                   What you create alone — the nation will now celebrate. <br />
-                  Sikkim has millions of stories. Let yours rise today."
+                  {regionName} has millions of stories. Let yours rise today."
                 </p>
               </div>
             </div>
@@ -177,7 +184,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                     <Palette className="h-6 w-6 sm:h-7 sm:w-7 text-creative-purple" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white">Sikkim's Creative Art Competition</h3>
+                    <h3 className="text-lg sm:text-xl font-bold text-white">{regionName}'s Creative Art Competition</h3>
                     <p className="text-sm text-white/70">Theme: Colors of Emotions</p>
                   </div>
                 </div>
@@ -199,7 +206,7 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-creative-yellow mt-0.5 shrink-0" />
-                    <span className="text-sm">Featured in "Sikkim's Creative Star 2025" Official eMagazine</span>
+                    <span className="text-sm">Featured in "{regionName}'s Creative Star 2025" Official eMagazine</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-creative-yellow mt-0.5 shrink-0" />

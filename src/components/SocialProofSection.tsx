@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Star, Trophy, Award, Bookmark, Palette, Ribbon, Users, Medal, Check, BookOpen } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useBranding } from "@/lib/branding";
 
 // Sample testimonials with Sikkim names and places
 const testimonials = [
@@ -57,6 +58,7 @@ const trustReasons = [
 
 export function SocialProofSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { regionName } = useBranding();
   
   // Auto rotate testimonials
   useEffect(() => {
@@ -148,7 +150,7 @@ export function SocialProofSection() {
                 <div className="bg-black/30 rounded-full p-3 mr-4">
                   <Award className="h-8 w-8 text-creative-blue" />
                 </div>
-                <span className="font-bold text-lg text-center">Cultural Department of Sikkim</span>
+                <span className="font-bold text-lg text-center">Cultural Department of {regionName}</span>
               </div>
             </div>
             
@@ -158,7 +160,7 @@ export function SocialProofSection() {
                 <div className="bg-black/30 rounded-full p-3 mr-4">
                   <BookOpen className="h-8 w-8 text-creative-purple" />
                 </div>
-                <span className="font-bold text-lg text-center">Education Department of Sikkim</span>
+                <span className="font-bold text-lg text-center">Education Department of {regionName}</span>
               </div>
             </div>
           </div>
@@ -170,7 +172,7 @@ export function SocialProofSection() {
               <div className="bg-black/30 rounded-full p-3 mr-4">
                 <Ribbon className="h-8 w-8 text-creative-yellow" />
               </div>
-              <span className="font-bold text-lg text-center">Cultural Department of Sikkim</span>
+              <span className="font-bold text-lg text-center">Cultural Department of {regionName}</span>
             </div>
           </div>
         </div>
@@ -183,7 +185,7 @@ export function SocialProofSection() {
             </Badge>
             <h3 className="text-2xl font-bold mb-2">Our Campus Ambassadors</h3>
             <p className="text-sm text-white/60 mb-6 max-w-2xl mx-auto">
-              Student representatives from top institutions across Sikkim helping us discover emerging artistic talent
+              Student representatives from top institutions across {regionName} helping us discover emerging artistic talent
             </p>
           </div>
           
