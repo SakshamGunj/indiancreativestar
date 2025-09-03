@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import IndianCreativeStarV2 from "./pages/IndianCreativeStarV2";
 import NotFound from "./pages/NotFound";
 import CompetitionSelect from "./pages/CompetitionSelect";
 import ThankYou from "./pages/ThankYou";
@@ -108,6 +109,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
                   <Route path="/Indiancreativestar" element={<Index onRegistrationClick={handleOpenRegistration} />} />
+                  <Route path="/Indiancreativestar/v2" element={<IndianCreativeStarV2 />} />
                   <Route path="/competitions" element={<CompetitionSelect />} />
                   <Route path="/thank-you" element={<ThankYou />} />
                   <Route path="/voting" element={<VotingPage />} />
