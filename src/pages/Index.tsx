@@ -67,7 +67,7 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-3xl blur-xl"></div>
             <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
               <img
-                src="/Daami Presents (1920 x 1080 px).jpg"
+                src="/public/Daami Presents (1920 x 1080 px).jpg"
                 alt="Daami Presents Banner"
                 className="w-full h-48 sm:h-56 lg:h-80 xl:h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
               />
@@ -142,68 +142,6 @@ const Index = () => {
         </div>
       </main>
 
-      {/* About Daami Event Section */}
-      <section className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 bg-black/20 backdrop-blur-sm border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-2xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-white/10 mb-4 sm:mb-6">
-              <span className="text-white font-medium text-xs sm:text-sm tracking-wide">ABOUT DAAMI EVENT</span>
-            </div>
-            <h3 className="text-2xl sm:text-4xl font-bold text-white mb-2 sm:mb-4">
-              Our Story: Discover What Makes Us Special
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-4 text-white/80 text-lg">
-              <p>We are <span className="font-bold text-white">Daami Event</span>, an emerging event firm, and proud organizers of <span className="font-bold text-white">Indian Creative Star (Art Competition) – Season 2</span>.</p>
-              <p>Our journey began with <span className="font-bold text-white">Sikkim Creative Star (Art Competition) – Season 1</span>, where 300+ artists registered and we discovered 6 Creative Stars.</p>
-              <p>Our mission: <span className="italic">discover and celebrate Creative Stars across India.</span></p>
-            </div>
-            <div className="flex flex-col items-center justify-center bg-white/5 backdrop-blur-2xl rounded-2xl p-8 border border-white/10">
-              <img src="/sikkim-logo.svg" alt="Government of Sikkim Logo" className="h-24 mb-4" />
-              <p className="text-white/80 text-center font-semibold">Officially Supported by</p>
-              <p className="text-white/60 text-center">Culture Department, Government of Sikkim</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership Section */}
-      <section className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 bg-black/30 backdrop-blur-sm border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 sm:mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-2xl rounded-full px-4 py-2 sm:px-6 sm:py-3 border border-white/10 mb-4 sm:mb-6">
-              <span className="text-white font-medium text-xs sm:text-sm tracking-wide">PARTNER WITH US</span>
-            </div>
-            <h3 className="text-2xl sm:text-4xl font-bold text-white mb-2 sm:mb-4">
-              Unlock Exclusive Partnership Benefits
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white/80">
-            <div className="bg-white/5 backdrop-blur-2xl rounded-2xl p-8 border border-white/10">
-              <h4 className="text-xl font-bold text-white mb-4">25% Commission</h4>
-              <p>Earn a generous 25% commission on the entry fee for every artist you refer to the competition. A direct reward for your promotional efforts.</p>
-            </div>
-            <div className="bg-white/5 backdrop-blur-2xl rounded-2xl p-8 border border-white/10">
-              <h4 className="text-xl font-bold text-white mb-4">Magazine Feature</h4>
-              <p>Get featured in our exclusive digital magazine, showcasing your brand and story to a wide audience of art enthusiasts and creators.</p>
-            </div>
-            <div className="bg-white/5 backdrop-blur-2xl rounded-2xl p-8 border border-white/10">
-              <h4 className="text-xl font-bold text-white mb-4">Creative Star Influencers</h4>
-              <p>Collaborate with our 'Creative Star' influencers, expanding your reach and connecting with a passionate and engaged community.</p>
-            </div>
-          </div>
-           <div className="text-center mt-12">
-            <Button
-              onClick={() => navigate("/partnership-indiancreativestar")}
-              className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              Learn More About Partnership
-              <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Features Strip */}
       <div className="relative z-10 py-8 px-4 sm:px-6 bg-black/30 backdrop-blur-sm border-t border-white/5">

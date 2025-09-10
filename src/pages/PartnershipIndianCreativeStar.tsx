@@ -129,7 +129,7 @@ const PartnershipIndianCreativeStar = () => {
                 <div className="relative max-w-5xl mx-auto">
                   <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
                     <img
-                      src="/Daami Presents (1920 x 1080 px).jpg"
+                      src="/public/Daami Presents (1920 x 1080 px).jpg"
                       alt="Daami Event presents Indian Creative Star"
                       className="w-full h-auto object-cover"
                     />
