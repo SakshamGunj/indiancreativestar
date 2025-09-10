@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     question: "Can I submit multiple artworks?",
-    answer: "You can submit up to 3 artworks in a single registration. Additional artworks also have free entry."
+    answer: "You can submit up to 3 artworks in a single registration. Additional artworks can also be submitted."
   },
   {
     question: "How are the winners selected?",

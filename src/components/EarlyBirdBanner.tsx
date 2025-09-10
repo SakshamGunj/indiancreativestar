@@ -60,7 +60,7 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
           </h3>
           
           <p className="text-xs sm:text-sm text-white/90 mt-1.5 text-center">
-            <span className="text-creative-yellow font-bold">Registration is completely FREE</span> as our gift to the people of Sikkim
+            <span className="text-creative-yellow font-bold">Registration is open</span> as our gift to the people of Sikkim
           </p>
           
           <div className="flex items-center justify-between mt-3 sm:mt-4 flex-col sm:flex-row gap-2 sm:gap-0">
@@ -72,7 +72,7 @@ export function EarlyBirdBanner({ onRegisterClick }: EarlyBirdBannerProps) {
               className="creative-btn group whitespace-nowrap bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold text-xs sm:text-sm py-1.5 px-3 h-auto min-h-7 w-full sm:w-auto"
               onClick={handleRegister}
             >
-              Register For Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+              Register <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>

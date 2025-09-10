@@ -41,7 +41,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
                 <span className="text-gradient">Register & Join</span>
               </h3>
               <p className="text-white/70 mb-4">
-                Complete the simple registration form for free, and you'll be added to our WhatsApp group for all competition updates and guidance.
+                Complete the simple registration form, and you'll be added to our WhatsApp group for all competition updates and guidance.
               </p>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">

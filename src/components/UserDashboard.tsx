@@ -3,19 +3,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Calendar, 
-  Award, 
-  FileText, 
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  Award,
+  FileText,
   Download,
   LogOut,
   Edit,
   CheckCircle,
-  Clock
+  Clock,
+  Eye
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
@@ -32,6 +33,7 @@ interface UserData {
   registrationDate: Date;
   status: string;
   deviceId: string;
+  certificateUrl?: string;
 }
 
 interface UserDashboardProps {
@@ -146,12 +148,11 @@ export function UserDashboard({ user }: UserDashboardProps) {
             Welcome back, {userData.name}! Your creative journey continues here.
           </p>
           
-          <Button 
+          <Button
             onClick={handleSignOut}
-            variant="outline"
-            className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg font-semibold rounded-xl backdrop-blur-sm"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
           >
-            <LogOut className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+            <LogOut className="h-5 w-5 mr-2" />
             Sign Out
           </Button>
         </div>
@@ -159,7 +160,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Profile Card */}
           <div className="lg:col-span-1">
-            <Card className="glassmorphism border-white/20 backdrop-blur-sm">
+            <Card className="bg-black border border-gray-700">
               <CardHeader className="text-center pb-4 sm:pb-6">
                 <Avatar className="w-20 h-20 sm:w-28 sm:h-28 mx-auto mb-4 sm:mb-6 border-2 sm:border-4 border-white/20">
                   <AvatarImage src={userData.profileImage} alt={userData.name} />
@@ -173,19 +174,19 @@ export function UserDashboard({ user }: UserDashboardProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6 pb-6">
-                <div className="flex items-center gap-3 text-white/80 p-2.5 sm:p-3 rounded-lg bg-white/5">
+                <div className="flex items-center gap-3 text-white p-2.5 sm:p-3 rounded-lg bg-gray-900">
                   <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-creative-blue flex-shrink-0" />
                   <span className="text-xs sm:text-sm break-words">{userData.email}</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/80 p-2.5 sm:p-3 rounded-lg bg-white/5">
+                <div className="flex items-center gap-3 text-white p-2.5 sm:p-3 rounded-lg bg-gray-900">
                   <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-creative-blue flex-shrink-0" />
                   <span className="text-xs sm:text-sm">{userData.phone}</span>
                 </div>
-                <div className="flex items-start gap-3 text-white/80 p-2.5 sm:p-3 rounded-lg bg-white/5">
+                <div className="flex items-start gap-3 text-white p-2.5 sm:p-3 rounded-lg bg-gray-900">
                   <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-creative-blue mt-0.5 flex-shrink-0" />
                   <span className="text-xs sm:text-sm break-words">{userData.address}</span>
                 </div>
-                <div className="flex items-center gap-3 text-white/80 p-2.5 sm:p-3 rounded-lg bg-white/5">
+                <div className="flex items-center gap-3 text-white p-2.5 sm:p-3 rounded-lg bg-gray-900">
                   <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-creative-blue flex-shrink-0" />
                   <span className="text-xs sm:text-sm">
                     Joined {userData.registrationDate.toLocaleDateString()}
@@ -198,7 +199,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Status Updates */}
-            <Card className="glassmorphism border-white/20 backdrop-blur-sm">
+            <Card className="bg-black border border-gray-700">
               <CardHeader className="pb-4 sm:pb-6">
                 <CardTitle className="text-white flex items-center gap-2 text-lg sm:text-xl">
                   <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
@@ -207,7 +208,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-6">
                 <div className="space-y-3 sm:space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 backdrop-blur-sm gap-3 sm:gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                         <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
@@ -220,7 +221,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
                     <Badge className="bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Completed</Badge>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-500/30 backdrop-blur-sm gap-3 sm:gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                         <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
@@ -233,24 +234,24 @@ export function UserDashboard({ user }: UserDashboardProps) {
                     <Badge className="bg-blue-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Completed</Badge>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 backdrop-blur-sm gap-3 sm:gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
                     <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
                       </div>
                       <div>
                         <p className="text-white font-semibold text-base sm:text-lg">Admin Review</p>
-                        <p className="text-white/70 text-xs sm:text-sm">Your application is being reviewed by our team</p>
+                        <p className="text-white/70 text-xs sm:text-sm">Your application has been approved</p>
                       </div>
                     </div>
-                    <Badge className="bg-yellow-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Pending</Badge>
+                    <Badge className="bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Approved</Badge>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Certificates & ID Cards */}
-            <Card className="glassmorphism border-white/20 backdrop-blur-sm">
+            <Card className="bg-black border border-gray-700">
               <CardHeader className="pb-4 sm:pb-6">
                 <CardTitle className="text-white flex items-center gap-2 text-lg sm:text-xl">
                   <Award className="h-5 w-5 sm:h-6 sm:w-6 text-creative-purple" />
@@ -261,79 +262,69 @@ export function UserDashboard({ user }: UserDashboardProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  {/* Certificate Placeholder */}
-                  <div className="p-4 sm:p-8 rounded-2xl border-2 border-dashed border-white/30 text-center bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-creative-purple/20 to-creative-pink/20 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-creative-purple" />
+                <div className="grid grid-cols-1 gap-6 sm:gap-8">
+                  {/* Certificate Section */}
+                  <div className={`p-4 sm:p-6 rounded-2xl bg-black text-center ${
+                    userData.certificateUrl ? 'border-2 border-green-500/30' : 'border-2 border-dashed border-gray-700'
+                  }`}>
+                    <div className="flex justify-center items-center gap-3 mb-4">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                            userData.certificateUrl ? 'bg-green-500/20' : 'bg-creative-purple/20'
+                        }`}>
+                            {userData.certificateUrl ? (
+                                <CheckCircle className="h-6 w-6 text-green-500" />
+                            ) : (
+                                <FileText className="h-6 w-6 text-creative-purple" />
+                            )}
+                        </div>
+                        <h3 className="text-white font-semibold text-lg sm:text-xl">Participation Certificate</h3>
                     </div>
-                    <h3 className="text-white font-semibold text-base sm:text-lg mb-2 sm:mb-3">Participation Certificate</h3>
-                    <p className="text-white/70 text-xs sm:text-sm mb-4 sm:mb-6">
-                      Your certificate will be available here after admin approval
+                    <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+                        {userData.certificateUrl
+                            ? "Your certificate is ready for download! You can preview it or download it directly."
+                            : "Your certificate is not yet available. It will appear here once your application is approved by the admin."
+                        }
                     </p>
-                    <Button disabled variant="outline" className="border-white/30 text-white/50 px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm">
-                      <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                      Not Available Yet
-                    </Button>
+
+                    {userData.certificateUrl ? (
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-full max-w-lg h-auto bg-gray-900/50 rounded-xl overflow-hidden flex items-center justify-center border border-green-500/30 mb-4">
+                                <img
+                                    src={userData.certificateUrl}
+                                    alt="Certificate Preview"
+                                    className="w-full h-auto object-contain rounded-lg"
+                                />
+                            </div>
+                            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-3 mt-4">
+                                <Button
+                                    onClick={() => window.open(userData.certificateUrl, '_blank')}
+                                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+                                >
+                                    <Download className="h-5 w-5 mr-2" />
+                                    Download
+                                </Button>
+                                <Button
+                                    onClick={() => window.open(userData.certificateUrl, '_blank')}
+                                    className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-all"
+                                >
+                                    <Eye className="h-5 w-5 mr-2" />
+                                    Preview
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <Button disabled variant="outline" className="border-gray-600 text-gray-400 px-6 py-3 rounded-lg text-sm">
+                            <Clock className="h-4 w-4 mr-2" />
+                            Not Available Yet
+                        </Button>
+                    )}
                   </div>
 
                   {/* ID Card Placeholder */}
-                  <div className="p-4 sm:p-8 rounded-2xl border-2 border-dashed border-white/30 text-center bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-creative-blue/20 to-creative-indigo/20 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <User className="h-6 w-6 sm:h-8 sm:w-8 text-creative-blue" />
-                    </div>
-                    <h3 className="text-white font-semibold text-base sm:text-lg mb-2 sm:mb-3">Participant ID Card</h3>
-                    <p className="text-white/70 text-xs sm:text-sm mb-4 sm:mb-6">
-                      Your ID card will be generated here after admin approval
-                    </p>
-                    <Button disabled variant="outline" className="border-white/30 text-white/50 px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm">
-                      <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                      Not Available Yet
-                    </Button>
-                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Next Steps */}
-            <Card className="glassmorphism border-white/20 backdrop-blur-sm">
-              <CardHeader className="pb-4 sm:pb-6">
-                <CardTitle className="text-white text-lg sm:text-xl">What's Next?</CardTitle>
-              </CardHeader>
-              <CardContent className="px-4 sm:px-6 pb-6">
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-creative-blue/20 to-indigo-500/20 border border-creative-blue/30">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-creative-blue to-indigo-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <span className="text-white text-xs sm:text-sm font-bold">1</span>
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">Admin Review</p>
-                      <p className="text-white/70 text-sm sm:text-base">Our team will review your application within 24-48 hours</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-creative-purple/20 to-pink-500/20 border border-creative-purple/30">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-creative-purple to-pink-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <span className="text-white text-xs sm:text-sm font-bold">2</span>
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">Certificate Generation</p>
-                      <p className="text-white/70 text-sm sm:text-base">Once approved, your certificate and ID card will be generated</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-creative-pink/20 to-orange-500/20 border border-creative-pink/30">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-creative-pink to-orange-500 flex items-center justify-center mt-0.5 flex-shrink-0">
-                      <span className="text-xs sm:text-sm font-bold text-white">3</span>
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold text-base sm:text-lg">Download & Share</p>
-                      <p className="text-white/70 text-sm sm:text-base">Download your certificate and ID card to share with others</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

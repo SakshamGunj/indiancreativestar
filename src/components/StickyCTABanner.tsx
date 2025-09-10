@@ -68,16 +68,14 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
         <div className="bg-gradient-to-r from-creative-purple to-creative-blue p-2 sm:p-3 rounded-t-lg shadow-xl border border-white/10 flex items-center justify-between">
           <div>
             <h3 className="text-xs sm:text-sm font-bold">Join {brandName} - Season 1</h3>
-            <p className="text-[10px] sm:text-xs text-white/70 hidden sm:block">
-              <span className="text-creative-yellow font-semibold">Artist ID Card & Certificate</span>{regionName === 'Sikkim' ? ' • 50 Years of Sikkim Statehood' : ''}
-            </p>
+
           </div>
           <Button
             size={isMobile ? "sm" : "default"}
             className="group whitespace-nowrap bg-creative-yellow text-black hover:bg-creative-yellow/90 font-semibold py-1 px-2 h-auto min-h-8 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 ease-in-out"
             onClick={handleClick}
           >
-            Register Free <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+            Register <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>

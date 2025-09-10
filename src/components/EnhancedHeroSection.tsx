@@ -62,12 +62,12 @@ export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProp
                 {regionName === 'Sikkim' ? (
                   <>
                     <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">🎉 Celebrating 50 Years of Sikkim Statehood 🎉</h3>
-                    <p className="text-xs md:text-sm text-white/90">As a tribute to this historic milestone, we're making registration <span className="text-creative-yellow font-bold">completely FREE</span> for all artists!</p>
+                    <p className="text-xs md:text-sm text-white/90">As a tribute to this historic milestone, we're opening registration for all artists!</p>
                   </>
                 ) : (
                   <>
                     <h3 className="text-sm md:text-base lg:text-lg font-bold text-white mb-1">Nationwide Art Movement</h3>
-                    <p className="text-xs md:text-sm text-white/90">Join thousands of artists across India. Registration is <span className="text-creative-yellow font-bold">FREE</span> for a limited time.</p>
+                    <p className="text-xs md:text-sm text-white/90">Join thousands of artists across India. Registration is <span className="text-creative-yellow font-bold">open</span> for a limited time.</p>
                   </>
                 )}
               </div>

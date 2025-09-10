@@ -174,7 +174,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
               
               <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
-                <span>Registration fee: Free</span>
+                <span>Registration is open</span>
               </div>
               
               <Button 

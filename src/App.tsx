@@ -11,6 +11,11 @@ import VotingPage from "./VotingPage";
 import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
+import IndexV2 from "./pages/v2/IndexV2";
+import AdminExport from "./pages/AdminExport";
+import AdminCertificates from "./pages/AdminCertificates";
+import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
+
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
@@ -106,14 +111,19 @@ const App = () => {
                 }}
               >
                 <Routes>
-                  <Route path="/" element={<Index onRegistrationClick={handleOpenRegistration} />} />
-                  <Route path="/Indiancreativestar" element={<Index onRegistrationClick={handleOpenRegistration} />} />
+                  <Route path="/" element={<Index />} />
+                  <Route path="/Indiancreativestar" element={<Index />} />
                   <Route path="/competitions" element={<CompetitionSelect />} />
                   <Route path="/thank-you" element={<ThankYou />} />
                   <Route path="/voting" element={<VotingPage />} />
                   <Route path="/voting/admin" element={<AdminPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
+                  <Route path="/indiancreativestar/v2" element={<IndexV2 />} />
+                  <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
+                  <Route path="/admin/export" element={<AdminExport />} />
+                  <Route path="/admin/certificates" element={<AdminCertificates />} />
+
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
