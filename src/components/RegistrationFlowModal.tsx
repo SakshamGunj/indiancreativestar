@@ -66,19 +66,50 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art" }: 
       if (result.success) {
         setIsSubmitting(false);
         setIsSuccess(true);
-        
+
         toast({
           title: "Registration Successful!",
           description: `You've registered for the ${contestType} competition. Your registration ID: ${result.id}`,
         });
-        
+
+
         // Reset form after 1 second and redirect to thank you page
         setTimeout(() => {
           setIsSuccess(false);
           onClose();
-          
-          // Navigate to thank you page with query params
-          navigate(`/thank-you?name=${encodeURIComponent(values.name)}&type=${contestType}&id=${result.id}`);
+
+          // Navigate to thank you page with full details via query params
+          const qp = new URLSearchParams({
+            name: values.name,
+            type: contestType,
+            id: result.id,
+            age: String(values.age ?? ""),
+            whatsapp: values.whatsapp ?? "",
+            email: values.email ?? "",
+            instagram: values.instagram ?? "",
+            category
+          });
+
+
+          // Persist locally as fallback for Thank You page
+          try {
+            sessionStorage.setItem(
+              "ics_last_registration",
+              JSON.stringify({
+                id: result.id,
+                name: values.name,
+                type: contestType,
+                age: String(values.age ?? ""),
+                whatsapp: values.whatsapp ?? "",
+                email: values.email ?? "",
+                instagram: values.instagram ?? "",
+                category
+              })
+            );
+          } catch (e) {
+            // ignore
+          }
+          navigate(`/thank-you?${queryString}`);
         }, 1000);
       } else {
         throw new Error("Registration failed");

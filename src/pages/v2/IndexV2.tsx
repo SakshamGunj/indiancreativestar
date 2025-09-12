@@ -16,7 +16,7 @@ import { Footer } from "@/components/Footer";
 import { AboutSectionV2 } from "@/components/AboutSectionV2";
 import { HowItWorksSectionV2 } from "@/components/HowItWorksSectionV2";
 import LazyImage from "@/components/LazyImage";
-import { ArrowRight, CheckCircle, Palette, Users, Star, Award, Trophy, BookOpen, Heart, Camera, Brush, Music, Lightbulb, Clock, Calendar, Gift, Globe, Zap, Target, X, Shield } from "lucide-react";
+import { ArrowRight, CheckCircle, Palette, Users, Star, Award, Trophy, BookOpen, Heart, Camera, Brush, Music, Lightbulb, Clock, Calendar, Gift, Globe, Zap, Target, X, Shield, Loader2 } from "lucide-react";
 import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -30,7 +30,8 @@ interface IndexV2Props {
 const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showRegistrationDrawer, setShowRegistrationDrawer] = useState(false);
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const navigate = useNavigate();
   
   // Animation refs for Success Stories section
@@ -282,10 +283,82 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     setShowRegistrationDrawer(false);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setShowRegistrationDrawer(false);
-    navigate(`/thank-you?name=${encodeURIComponent(formData.name)}&type=art`);
+    setIsSubmitting(true);
+
+    try {
+      // Determine category based on age
+      let category = "Adult";
+      const age = parseInt(formData.age);
+      if (age >= 5 && age <= 8) {
+        category = "Group A (5-8 years)";
+      } else if (age >= 9 && age <= 12) {
+        category = "Group B (9-12 years)";
+      } else if (age >= 13 && age <= 17) {
+        category = "Group C (13-17 years)";
+      }
+
+      // Prepare participant data for Firebase
+      const participantData = {
+        name: formData.name,
+        age: parseInt(formData.age),
+        whatsapp: formData.phone, // Using phone field as whatsapp in v2 form
+        email: formData.email,
+        instagram: "",
+        contestType: "art",
+        category: category
+      };
+
+      // Save to Firebase
+      const { addParticipant } = await import("@/lib/firebase");
+      const result = await addParticipant(participantData);
+
+      if (result.success) {
+
+        setShowRegistrationDrawer(false);
+
+        // Navigate to thank you page with full details via query params
+        const qp = new URLSearchParams({
+          name: formData.name,
+          type: "art",
+          id: result.id,
+          age: String(formData.age ?? ""),
+          whatsapp: formData.phone ?? "",
+          email: formData.email ?? "",
+          instagram: "",
+          category
+        });
+
+        // Persist locally as fallback for Thank You page
+        try {
+          sessionStorage.setItem(
+            "ics_last_registration",
+            JSON.stringify({
+              id: result.id,
+              name: formData.name,
+              type: "art",
+              age: String(formData.age ?? ""),
+              whatsapp: formData.phone ?? "",
+              email: formData.email ?? "",
+              instagram: "",
+              category
+            })
+          );
+        } catch (e) {
+          // ignore
+        }
+
+        navigate(`/thank-you?${qp.toString()}`);
+      } else {
+        console.error("Registration failed:", result);
+        alert("Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      setIsSubmitting(false);
+      alert("Registration failed. Please try again.");
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -297,9 +370,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   // Artwork images for Netflix-style background
   const baseArtworkImages = [
-    "https://i.ibb.co/zW2ZJr53/287326c1587c.jpg",
+    "https://i.ibb.co/WvDdnrrp/ba50688142d1.jpg",
     "https://i.ibb.co/kgs0nvH0/b663bb4fcdd5.jpg",
-    "https://i.ibb.co/cSGgqcw0/9c02b0fe24bb.jpg",
+    "https://i.ibb.co/1tfb4qTq/1753870691007.jpg",
     "https://i.ibb.co/hRF9fSgq/IMG-20250710-133728.jpg",
     "https://i.ibb.co/5g7k8VTJ/4ae89184da7e.jpg",
     "https://i.ibb.co/tM7Z9mXc/4ee7930e6f86.jpg",
@@ -389,7 +462,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               {artworkImages.map((image, index) => (
                 <div key={`row1-${index}`} className="flex-shrink-0 h-full">
                   <LazyImage
-                    src={image}
+                    src={image} 
                     alt={`Artwork ${index + 1}`}
                     className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 shadow-2xl opacity-60 hover:opacity-80 transition-opacity duration-300"
                   />
@@ -397,14 +470,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               ))}
             </div>
           </div>
-
+          
           {/* Large Square Artwork Grid - Row 2 (Right to Left) */}
           <div className="absolute top-1/3 left-0 w-full h-1/3 animate-flow-left-slow">
             <div className="flex space-x-0 h-full">
               {artworkImages.slice().reverse().map((image, index) => (
                 <div key={`row2-${index}`} className="flex-shrink-0 h-full">
                   <LazyImage
-                    src={image}
+                    src={image} 
                     alt={`Artwork ${index + 1}`}
                     className="h-full w-48 md:w-64 shadow-2xl opacity-50 hover:opacity-70 transition-opacity duration-300"
                   />
@@ -412,14 +485,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               ))}
             </div>
           </div>
-
+          
           {/* Large Square Artwork Grid - Row 3 (Left to Right) */}
           <div className="absolute top-2/3 left-0 w-full h-1/3 animate-flow-right-slow">
             <div className="flex space-x-0 h-full">
               {artworkImages.map((image, index) => (
                 <div key={`row3-${index}`} className="flex-shrink-0 h-full">
                   <LazyImage
-                    src={image}
+                    src={image} 
                     alt={`Artwork ${index + 1}`}
                     className="h-full w-48 md:w-64 shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
                   />
@@ -444,9 +517,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <span className="block text-white font-light">Indian Creative Star Season 1</span>
                 <span className="block bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent font-bold">
                   India's Prestigious Art Competition
-                </span>
-              </h1>
-              
+              </span>
+            </h1>
+            
               <div className="space-y-2">
                 <p className="text-lg sm:text-xl text-white/90 font-light">Transform Your Art Into</p>
                 <p className="text-base text-white/70">National Recognition</p>
@@ -467,8 +540,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <span className="text-sm text-white/90 font-medium block">1,000+ artists</span>
                   <span className="text-xs text-white/70">Verified by Google Reviews</span>
                 </div>
-              </div>
-              
+          </div>
+
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <div className="flex items-center gap-1">
                   <div className="flex items-center">
@@ -477,20 +550,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                  </div>
+                </div>
                   <span className="text-sm text-white/90 font-medium ml-1">4.9 rating</span>
                 </div>
               </div>
               
               <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <span className="text-sm text-white/90 font-medium">Nationwide</span>
+                </div>
               </div>
-            </div>
-
+              
             {/* Theme Badge */}
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl border border-white/20">
               <span className="text-white font-medium">Open Theme</span>
-            </div>
+                </div>
 
             {/* Description */}
             <div className="max-w-2xl">
@@ -498,8 +571,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Join thousands of artists across India in this nationwide art movement.
                 Become a Creative Star and showcase your talent nationwide.
               </p>
-            </div>
-
+              </div>
+              
             {/* Key Stats */}
             <div className="grid grid-cols-2 gap-3 sm:gap-6 w-full max-w-4xl">
               <div className="relative bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
@@ -529,8 +602,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
                 <div className="text-sm sm:text-lg font-bold text-purple-300 mb-1 sm:mb-2 text-center">500 Slots</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Available</div>
-              </div>
             </div>
+          </div>
 
             {/* Creative Manifesto */}
             <div className="max-w-3xl">
@@ -544,7 +617,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </blockquote>
               </div>
             </div>
-
+            
             {/* CTA Buttons */}
             <div className="flex justify-center w-full max-w-md">
               <Button
@@ -554,9 +627,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6 sm:h-5 sm:w-5" />
               </Button>
-            </div>
+              </div>
 
-          </div>
+            </div>
         </div>
       </section>
 
@@ -567,14 +640,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-white/50 shadow-lg mb-6">
               <span className="text-sm font-medium text-gray-800">Who Can Join</span>
-            </div>
+              </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Your <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Creative Journey</span> Starts Here
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Whether you're an artist or a parent supporting young talent, this is your gateway to national recognition
-            </p>
-          </div>
+              </p>
+            </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
@@ -585,8 +658,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <Palette className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Artists</h3>
-              </div>
-              
+          </div>
+
               <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Showcase your artistic talent on a national platform and win from a <span className="font-semibold text-orange-600">₹50,000 prize pool</span>.
               </p>
@@ -597,11 +670,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Connect with like-minded artists nationwide</p>
-                </div>
+                  </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
+                </div>
                   <p className="text-sm sm:text-base text-gray-700">Get professional feedback on your artwork</p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -609,8 +682,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Add national recognition to your portfolio</p>
+                  </div>
                 </div>
-              </div>
               
               <Button
                 onClick={handleRegisterClick}
@@ -619,8 +692,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <Palette className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Artist
               </Button>
-            </div>
-
+              </div>
+              
             {/* For Parents */}
             <div className="bg-white/40 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-4 mb-6">
@@ -640,11 +713,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Boost your child's artistic confidence</p>
-                </div>
+                  </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
+                </div>
                   <p className="text-sm sm:text-base text-gray-700">Recognition beyond school achievements</p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -689,15 +762,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
                 <Award className="h-8 w-8 text-white" />
-              </div>
-              <div>
+                  </div>
+                  <div>
                 <h3 className="text-base md:text-2xl font-bold text-white mb-1" style={{
                   animation: 'colorGlow 3s ease-in-out infinite alternate'
                 }}>
                   Every participant will get Official Certificate & Artist ID Card
                 </h3>
-              </div>
-            </div>
+                  </div>
+                </div>
 
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -710,9 +783,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </div>
             </div>
             
+            </div>
           </div>
-        </div>
-        
+
         <style>{`
           @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -759,13 +832,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
                 We believe in recognizing and rewarding creativity. Here are the exciting prizes available in our competitions.
               </p>
-              <Button
-                onClick={handleRegisterClick}
+            <Button 
+              onClick={handleRegisterClick}
                 className="animated-gradient text-white font-semibold py-4 px-12 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-fit text-lg"
-              >
+            >
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6" />
-              </Button>
+            </Button>
             </div>
             <div className="space-y-8 order-2 flex flex-col justify-start">
               {/* This will be shown on mobile only, below the categories */}
@@ -847,7 +920,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   </div>
                 </div>
               </div>
-            </div>
+          </div>
 
             {/* Kids Competition */}
             <div className="relative group">
@@ -857,7 +930,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                       <Heart className="h-8 w-8 text-white" />
-                    </div>
+              </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-1">Kids Art Competition</h3>
                       <p className="text-blue-100 font-medium">5-17 Years | Prize Pool: ₹20,000</p>
@@ -942,10 +1015,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+            
 
-
-        </div>
+              </div>
       </section>
 
       {/* Artist Benefits Sliding Section */}
@@ -967,8 +1040,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
               ))}
             </div>
-          </div>
-          
+            </div>
+            
           {/* Artwork Grid Background - Row 2 */}
           <div className="absolute top-1/3 left-0 w-full h-1/3 animate-flow-left-slow">
             <div className="flex space-x-0 h-full">
@@ -979,11 +1052,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     alt={`Artwork ${index + 1}`}
                     className="h-full w-48 md:w-64 object-cover shadow-2xl opacity-30 hover:opacity-50 transition-opacity duration-300"
                   />
-                </div>
+              </div>
               ))}
             </div>
-          </div>
-          
+            </div>
+            
           {/* Artwork Grid Background - Row 3 */}
           <div className="absolute top-2/3 left-0 w-full h-1/3 animate-flow-right-slow">
             <div className="flex space-x-0 h-full">
@@ -994,18 +1067,18 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     alt={`Artwork ${index + 1}`}
                     className="h-full w-48 md:w-64 shadow-2xl opacity-20 hover:opacity-40 transition-opacity duration-300"
                   />
-                </div>
+              </div>
               ))}
             </div>
+            </div>
           </div>
-        </div>
 
         {/* Header Section */}
         <div className="relative z-20 text-center mb-6 pt-2">
           <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 mb-6">
             <Lightbulb className="h-4 w-4 mr-2 text-orange-300" />
             <span className="text-sm font-medium text-white/90">Your Creative Journey</span>
-          </div>
+                </div>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
             Every Artist <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Wins Something</span>
           </h2>
@@ -1037,9 +1110,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                             </p>
                          </div>
                        </div>
-                     </div>
-                   </div>
-
+                </div>
+              </div>
+              
                    {/* Official Creative Badge */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
@@ -1048,16 +1121,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </div>
+                </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Official Creative Badge</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               Digital certificate + Artist ID that you can proudly display on <span className="font-bold text-blue-600">LinkedIn & social media</span>
                             </p>
-                         </div>
+                </div>
                        </div>
-                     </div>
-                   </div>
-
+                </div>
+              </div>
+              
                    {/* Exclusive Artist Circle */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
@@ -1074,8 +1147,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          </div>
                        </div>
                      </div>
-                   </div>
-
+            </div>
+            
                    {/* VIP Early Access */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
@@ -1084,19 +1157,19 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </div>
+                </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">VIP Early Access</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               First to know about <span className="font-bold text-purple-600">exhibitions, contests & art opportunities</span> before anyone else
                             </p>
                          </div>
                        </div>
-                     </div>
-                   </div>
-                 
+                </div>
+              </div>
+              
                  </React.Fragment>
                ))}
-            </div>
+                </div>
           </div>
         </div>
         
@@ -1239,7 +1312,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
                     style={{ animationDelay: stat.delay }}
                   >
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                       <motion.div 
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
@@ -1250,7 +1323,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                      </div>
+                </div>
                     </div>
                   </motion.div>
                 ))}
@@ -1283,7 +1356,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
                     style={{ animationDelay: stat.delay }}
                   >
-                    <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                       <motion.div 
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
@@ -1294,8 +1367,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                      </div>
-                    </div>
+                </div>
+              </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1440,8 +1513,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </motion.div>
               </motion.div>
             </motion.div>
+            </div>
           </div>
-        </div>
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
         <motion.div 
@@ -1523,7 +1596,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                                   <Star className="h-2 w-2 md:h-3 md:w-3 text-yellow-400 fill-current" />
                                 </motion.div>
                               ))}
-                            </div>
+        </div>
                           </div>
                         </div>
                         <p className="text-xs md:text-sm text-gray-700 italic leading-tight">"{testimonial.quote}"</p>
@@ -1678,7 +1751,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">1</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-blue-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-blue-500" />
-                  </div>
+              </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Register & Join</h3>
@@ -1693,14 +1766,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-                </div>
+            </div>
 
                 {/* Step 2 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">2</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-purple-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-purple-500" />
-                  </div>
+              </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Submit Your Artwork</h3>
@@ -1715,14 +1788,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-                </div>
+            </div>
 
                 {/* Step 3 - Right Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">3</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-orange-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-orange-500" />
-                  </div>
+              </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Judging & Voting</h3>
@@ -1737,14 +1810,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-                </div>
+            </div>
 
                 {/* Step 4 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">4</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-green-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-green-500" />
-                  </div>
+              </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Winners Announced</h3>
@@ -1936,7 +2009,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
       </section>
-
+      
       {/* Our Supporters Section */}
       <section className="py-12 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 overflow-hidden">
         <div className="container mx-auto max-w-6xl px-4">
@@ -1948,8 +2021,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </h2>
             <p className="text-lg text-gray-600">Our Partners & Sponsors</p>
           </div>
-        </div>
-
+      </div>
+      
         {/* Full Width Sliding Partners */}
         <div className="overflow-hidden mb-8">
           <div className="flex animate-slide-left-continuous space-x-6">
@@ -2064,7 +2137,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           }
         `}</style>
       </section>
-
+      
       {/* FAQ Section */}
       <div id="faq">
         <FAQSectionV2 />
@@ -2170,12 +2243,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
                   <Button
                     type="submit"
-                    className="w-full animated-gradient text-white font-bold py-2.5 sm:py-5 rounded-lg sm:rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-sm sm:text-lg"
+                    disabled={isSubmitting}
+                    className="w-full animated-gradient text-white font-bold py-2.5 sm:py-5 rounded-lg sm:rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-sm sm:text-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <Star className="h-4 w-4 sm:h-6 sm:w-6" />
-                      Register Now
-                      <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6" />
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="h-4 w-4 sm:h-6 sm:w-6 animate-spin" />
+                          Registering...
+                        </>
+                      ) : (
+                        <>
+                          <Star className="h-4 w-4 sm:h-6 sm:w-6" />
+                          Register Now
+                          <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6" />
+                        </>
+                      )}
                     </div>
                   </Button>
                 </form>
