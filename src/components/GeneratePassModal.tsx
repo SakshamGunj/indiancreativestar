@@ -157,19 +157,21 @@ export function GeneratePassModal({
 
         // Add pass details with styling
         doc.setTextColor(255, 255, 255); // White text
-        doc.setFontSize(8);
+        doc.setFontSize(7);
         doc.setFont("helvetica", "bold");
         doc.text("PASS HOLDER:", 8, 25);
         
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(7);
-        doc.text(`${pass.name}`, 8, 28);
+        doc.setFontSize(6);
+        doc.text(`${pass.name}`, 8, 27);
         
         if (pass.phone) {
           doc.setFont("helvetica", "bold");
-          doc.text("PHONE:", 8, 32);
+          doc.setFontSize(7);
+          doc.text("PHONE:", 8, 30);
           doc.setFont("helvetica", "normal");
-          doc.text(`${pass.phone}`, 8, 35);
+          doc.setFontSize(6);
+          doc.text(`${pass.phone}`, 8, 32);
         }
 
         // Add decorative elements
@@ -188,21 +190,23 @@ export function GeneratePassModal({
 
         // Add QR label
         doc.setTextColor(255, 255, 255);
-        doc.setFontSize(6);
+        doc.setFontSize(5);
         doc.setFont("helvetica", "normal");
-        doc.text("SCAN QR CODE", 67.5, 50, { align: "center" });
+        doc.text("SCAN QR CODE", 67.5, 49, { align: "center" });
 
-        // Add event date (you can customize this)
+        // Add event details
         doc.setTextColor(251, 191, 36); // Yellow
-        doc.setFontSize(6);
+        doc.setFontSize(5);
         doc.setFont("helvetica", "bold");
-        doc.text("Event Date: TBA", 8, 50);
+        doc.text("Event Date: 14th September 2025", 8, 36);
+        doc.text("Time: 11:00 AM", 8, 38);
+        doc.text("Venue: Sundar Resort, Majitar, Sikkim - 737136", 8, 40);
         
         // Add footer
         doc.setTextColor(200, 200, 200);
-        doc.setFontSize(5);
+        doc.setFontSize(4);
         doc.setFont("helvetica", "normal");
-        doc.text("Valid for Prize Distribution Ceremony Only", 42.8, 52, { align: "center" });
+        doc.text("Valid for Prize Distribution Ceremony Only", 42.8, 51, { align: "center" });
       }
       doc.save("event-passes.pdf");
 
@@ -263,7 +267,7 @@ export function GeneratePassModal({
                   key={index}
                   passNumber={index + 2}
                   passData={pass}
-                  onUpdate={handleGuestDataChange}
+                  onUpdate={(passIndex, field, value) => handleGuestDataChange(index, field, value)}
                 />
               ))}
             </div>

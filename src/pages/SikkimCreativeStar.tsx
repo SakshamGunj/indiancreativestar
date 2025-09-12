@@ -498,7 +498,7 @@ export default function SikkimCreativeStar() {
           </div>
 
           {/* Profile Completion Form */}
-          <Card className="glassmorphism border-white/20 backdrop-blur-sm">
+          <Card className="bg-black/80 border-white/20 backdrop-blur-sm">
             <CardHeader className="text-center pb-4 sm:pb-6">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                 <Avatar className="w-12 h-12 sm:w-16 sm:h-16 border-2 sm:border-4 border-white/20">
@@ -533,7 +533,7 @@ export default function SikkimCreativeStar() {
                       })} 
                       placeholder="Enter your full name"
                       defaultValue={googleUserData.name}
-                      className="bg-white/5 border-white/20 text-white h-10 sm:h-12 text-sm sm:text-base"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-white/50 h-10 sm:h-12 text-sm sm:text-base"
                     />
                   </div>
 
@@ -588,7 +588,7 @@ export default function SikkimCreativeStar() {
                       })} 
                       placeholder="Enter your phone number"
                       defaultValue={googleUserData.phone}
-                      className="bg-white/5 border-white/20 text-white h-10 sm:h-12 text-sm sm:text-base"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-white/50 h-10 sm:h-12 text-sm sm:text-base"
                     />
                   </div>
 
@@ -602,7 +602,7 @@ export default function SikkimCreativeStar() {
                       })} 
                       placeholder="Enter your complete address"
                       defaultValue={googleUserData.address}
-                      className="bg-white/5 border-white/20 text-white min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-white/50 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base resize-none"
                     />
                   </div>
 
@@ -642,7 +642,7 @@ export default function SikkimCreativeStar() {
           <div className="absolute -bottom-20 sm:-bottom-40 -left-20 sm:-left-40 w-40 sm:w-80 h-40 sm:h-80 bg-gradient-to-br from-blue-500/30 to-purple-500/30 rounded-full blur-3xl"></div>
         </div>
         
-        <Card className="w-full max-w-lg glassmorphism border-white/20 backdrop-blur-sm relative z-10 mx-2">
+        <Card className="w-full max-w-lg bg-black/80 border-white/20 backdrop-blur-sm relative z-10 mx-2">
           <CardContent className="p-6 sm:p-10 text-center">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
               <CheckCircle className="h-8 w-8 sm:h-12 sm:w-12 text-white" />

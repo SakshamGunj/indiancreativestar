@@ -18,13 +18,14 @@ import {
   Clock,
   Eye
 } from "lucide-react";
+import jsPDF from "jspdf";
+import QRCode from "qrcode";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { doc as firestoreDoc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { User as FirebaseUser } from "firebase/auth";
 import { GeneratePassModal } from "@/components/GeneratePassModal";
-import QRCode from "qrcode";
 
 interface UserData {
   name: string;
@@ -53,7 +54,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const userDoc = await getDoc(doc(db, "participantdetailspersonal", user.uid));
+        const userDoc = await getDoc(firestoreDoc(db, "participantdetailspersonal", user.uid));
         if (userDoc.exists()) {
           const data = userDoc.data();
           setUserData({
@@ -94,6 +95,118 @@ export function UserDashboard({ user }: UserDashboardProps) {
       navigate('/sikkimcreativestar');
     } catch (error) {
       console.error("Error signing out:", error);
+    }
+  };
+
+  const downloadPasses = async () => {
+    try {
+      const pdfDoc = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: [85.6, 54],
+      });
+
+      for (let i = 0; i < generatedPasses.length; i++) {
+        const pass = generatedPasses[i];
+        const qrCodeData = await QRCode.toDataURL(pass.token);
+
+        if (i > 0) {
+          pdfDoc.addPage();
+        }
+
+        // Add gradient background
+        pdfDoc.setFillColor(30, 30, 30); // Dark background
+        pdfDoc.rect(0, 0, 85.6, 54, "F");
+
+        // Add colorful header background
+        pdfDoc.setFillColor(139, 92, 246); // Purple
+        pdfDoc.rect(0, 0, 85.6, 12, "F");
+
+        // Add secondary color stripe
+        pdfDoc.setFillColor(236, 72, 153); // Pink
+        pdfDoc.rect(0, 10, 85.6, 2, "F");
+
+        // Add main title - Sikkim Creative Star
+        pdfDoc.setTextColor(255, 255, 255); // White text
+        pdfDoc.setFontSize(10);
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.text("SIKKIM CREATIVE STAR", 42.8, 7, { align: "center" });
+
+        // Add subtitle - Art Competition
+        pdfDoc.setFontSize(8);
+        pdfDoc.setFont("helvetica", "normal");
+        pdfDoc.text("Art Competition", 42.8, 9.5, { align: "center" });
+
+        // Add event title with background
+        pdfDoc.setFillColor(251, 191, 36); // Yellow background
+        pdfDoc.rect(5, 14, 75.6, 6, "F");
+        
+        pdfDoc.setTextColor(0, 0, 0); // Black text
+        pdfDoc.setFontSize(9);
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.text("INVITE ONLY - PRIZE DISTRIBUTION CEREMONY", 42.8, 17.5, { align: "center" });
+
+        // Add decorative border
+        pdfDoc.setDrawColor(139, 92, 246); // Purple border
+        pdfDoc.setLineWidth(0.5);
+        pdfDoc.rect(2, 2, 81.6, 50);
+
+        // Add pass details with styling
+        pdfDoc.setTextColor(255, 255, 255); // White text
+        pdfDoc.setFontSize(7);
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.text("PASS HOLDER:", 8, 25);
+        
+        pdfDoc.setFont("helvetica", "normal");
+        pdfDoc.setFontSize(6);
+        pdfDoc.text(`${pass.name}`, 8, 27);
+        
+        if (pass.phone) {
+          pdfDoc.setFont("helvetica", "bold");
+          pdfDoc.setFontSize(7);
+          pdfDoc.text("PHONE:", 8, 30);
+          pdfDoc.setFont("helvetica", "normal");
+          pdfDoc.setFontSize(6);
+          pdfDoc.text(`${pass.phone}`, 8, 32);
+        }
+
+        // Add decorative elements
+        pdfDoc.setFillColor(236, 72, 153); // Pink
+        pdfDoc.circle(75, 8, 1.5, "F");
+        pdfDoc.circle(10, 8, 1.5, "F");
+        
+        pdfDoc.setFillColor(251, 191, 36); // Yellow
+        pdfDoc.circle(75, 6, 1, "F");
+        pdfDoc.circle(10, 6, 1, "F");
+
+        // Add QR code with border
+        pdfDoc.setFillColor(255, 255, 255); // White background for QR
+        pdfDoc.rect(55, 22, 25, 25, "F");
+        pdfDoc.addImage(qrCodeData, "JPEG", 56, 23, 23, 23);
+
+        // Add QR label
+        pdfDoc.setTextColor(255, 255, 255);
+        pdfDoc.setFontSize(5);
+        pdfDoc.setFont("helvetica", "normal");
+        pdfDoc.text("SCAN QR CODE", 67.5, 49, { align: "center" });
+
+        // Add event details
+        pdfDoc.setTextColor(251, 191, 36); // Yellow
+        pdfDoc.setFontSize(5);
+        pdfDoc.setFont("helvetica", "bold");
+        pdfDoc.text("Event Date: 14th September 2025", 8, 36);
+        pdfDoc.text("Time: 11:00 AM", 8, 38);
+        pdfDoc.text("Venue: Sundar Resort, Majitar, Sikkim - 737136", 8, 40);
+        
+        // Add footer
+        pdfDoc.setTextColor(200, 200, 200);
+        pdfDoc.setFontSize(4);
+        pdfDoc.setFont("helvetica", "normal");
+        pdfDoc.text("Valid for Prize Distribution Ceremony Only", 42.8, 51, { align: "center" });
+      }
+      pdfDoc.save("event-passes.pdf");
+    } catch (error) {
+      console.error("Error downloading passes:", error);
     }
   };
 
@@ -228,8 +341,30 @@ export function UserDashboard({ user }: UserDashboardProps) {
                   <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-creative-yellow" />
                   Event Pass
                 </CardTitle>
+                <CardDescription className="text-white/60 text-sm">
+                  Prize Distribution Ceremony - Sikkim Creative Star
+                </CardDescription>
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-6">
+                {/* Event Details */}
+                <div className="bg-gradient-to-r from-creative-yellow/10 to-creative-orange/10 rounded-xl p-4 mb-6 border border-creative-yellow/20">
+                  <h4 className="text-white font-semibold text-lg mb-3 text-center">Event Details</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div className="bg-black/50 rounded-lg p-3">
+                      <p className="text-creative-yellow font-semibold text-sm mb-1">Event Date</p>
+                      <p className="text-white text-sm">14th September 2025</p>
+                    </div>
+                    <div className="bg-black/50 rounded-lg p-3">
+                      <p className="text-creative-yellow font-semibold text-sm mb-1">Time</p>
+                      <p className="text-white text-sm">11:00 AM</p>
+                    </div>
+                    <div className="bg-black/50 rounded-lg p-3">
+                      <p className="text-creative-yellow font-semibold text-sm mb-1">Venue</p>
+                      <p className="text-white text-sm">Sundar Resort, Majitar, Sikkim - 737136</p>
+                    </div>
+                  </div>
+                </div>
+
                 {generatedPasses.length === 0 ? (
                   <div className="text-center">
                     <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
@@ -248,6 +383,13 @@ export function UserDashboard({ user }: UserDashboardProps) {
                     <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
                       Your passes have been generated successfully! You can download them below.
                     </p>
+                    <Button
+                      onClick={downloadPasses}
+                      className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+                    >
+                      <Download className="h-5 w-5 mr-2" />
+                      Download Passes
+                    </Button>
                   </div>
                 )}
                 {generatedPasses.length > 0 && (
