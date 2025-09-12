@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { GallerySectionV2 } from "@/components/GallerySectionV2";
@@ -10,9 +11,11 @@ import { Confetti } from "@/components/Confetti";
 import { HeaderV2 } from "@/components/HeaderV2";
 import { EarlyBirdBanner } from "@/components/EarlyBirdBanner";
 import { StickyCTABanner } from "@/components/StickyCTABanner";
+import { CountdownSection } from "@/components/CountdownSection";
 import { Footer } from "@/components/Footer";
 import { AboutSectionV2 } from "@/components/AboutSectionV2";
 import { HowItWorksSectionV2 } from "@/components/HowItWorksSectionV2";
+import LazyImage from "@/components/LazyImage";
 import { ArrowRight, CheckCircle, Palette, Users, Star, Award, Trophy, BookOpen, Heart, Camera, Brush, Music, Lightbulb, Clock, Calendar, Gift, Globe, Zap, Target, X, Shield } from "lucide-react";
 import { RegistrationFlowModal } from "@/components/RegistrationFlowModal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -29,6 +32,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   const [showRegistrationDrawer, setShowRegistrationDrawer] = useState(false);
   
   const navigate = useNavigate();
+  
+  // Animation refs for Success Stories section
+  const successStoriesRef = useRef(null);
+  const successHeaderRef = useRef(null);
+  const successStatsRef = useRef(null);
+  const successPodiumRef = useRef(null);
+  const successTestimonialsRef = useRef(null);
+  const successGalleryRef = useRef(null);
+  
+  // Animation visibility hooks
+  const isSuccessStoriesInView = useInView(successStoriesRef, { once: true, margin: "-50px" });
+  const isSuccessHeaderInView = useInView(successHeaderRef, { once: true, margin: "-20px" });
+  const isSuccessStatsInView = useInView(successStatsRef, { once: true, margin: "-50px" });
+  const isSuccessPodiumInView = useInView(successPodiumRef, { once: true, margin: "-50px" });
+  const isSuccessTestimonialsInView = useInView(successTestimonialsRef, { once: true, margin: "-50px" });
+  const isSuccessGalleryInView = useInView(successGalleryRef, { once: true, margin: "-50px" });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,11 +56,119 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     category: 'adult'
   });
 
+  // Animation variants for Success Stories section
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 100, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 1, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1
+      } 
+    },
+  };
+
+  const slideInLeft = {
+    hidden: { opacity: 0, x: -150, rotateY: -30 },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      rotateY: 0,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.2
+      } 
+    },
+  };
+
+  const slideInRight = {
+    hidden: { opacity: 0, x: 150, rotateY: 30 },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      rotateY: 0,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.3
+      } 
+    },
+  };
+
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.5, rotateX: -45 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      rotateX: 0,
+      transition: { 
+        duration: 1, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.1
+      } 
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 80, scale: 0.7, rotateX: -20 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      rotateX: 0,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.25, 0.46, 0.45, 0.94]
+      } 
+    },
+  };
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: { 
+        duration: 0.8, 
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1
+      } 
+    },
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6 }
+    },
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowConfetti(true);
     }, 5000);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Fix mobile white flash during scrolling
+  useEffect(() => {
+    // Set body background to black to prevent white flash
+    document.body.style.backgroundColor = 'black';
+    document.documentElement.style.backgroundColor = 'black';
+    
+    return () => {
+      // Reset on unmount
+      document.body.style.backgroundColor = '';
+      document.documentElement.style.backgroundColor = '';
+    };
   }, []);
 
   useEffect(() => {
@@ -71,7 +198,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       banner.innerHTML = `
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
-            <img src="/public/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" />
+            <img src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" />
           </div>
           <div>
             <h3 style="color: white; font-weight: bold; font-size: 14px; margin: 0; line-height: 1.2;">Indian Creative Star</h3>
@@ -82,12 +209,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           background: white !important;
           color: #9333ea !important;
           font-weight: bold !important;
-          padding: 8px 16px !important;
-          border-radius: 20px !important;
+          padding: 10px 20px !important;
+          border-radius: 25px !important;
           border: none !important;
           font-size: 14px !important;
           cursor: pointer !important;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+          transition: all 0.3s ease !important;
         ">Register Now</button>
       `;
       
@@ -96,18 +224,51 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       const registerBtn = document.getElementById('mobile-register-btn');
       if (registerBtn) {
         registerBtn.onclick = () => handleRegisterClick();
+        
+        // Add hover effects
+        registerBtn.addEventListener('mouseenter', () => {
+          registerBtn.style.transform = 'scale(1.05)';
+          registerBtn.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+        });
+        
+        registerBtn.addEventListener('mouseleave', () => {
+          registerBtn.style.transform = 'scale(1)';
+          registerBtn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+        });
       }
     };
     
+    // Debounced resize handler for better performance
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(createMobileBanner, 100);
+    };
+    
     createMobileBanner();
-    window.addEventListener('resize', createMobileBanner);
+    window.addEventListener('resize', handleResize);
     
     return () => {
+      clearTimeout(resizeTimeout);
       const banner = document.getElementById('mobile-sticky-banner');
       if (banner) banner.remove();
-      window.removeEventListener('resize', createMobileBanner);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  // Hide sticky banner when modal is open
+  useEffect(() => {
+    const banner = document.getElementById('mobile-sticky-banner');
+    if (banner) {
+      if (showRegistrationDrawer) {
+        banner.style.transform = 'translateY(100%)';
+        banner.style.transition = 'transform 0.3s ease';
+      } else {
+        banner.style.transform = 'translateY(0)';
+        banner.style.transition = 'transform 0.3s ease';
+      }
+    }
+  }, [showRegistrationDrawer]);
 
   const handleRegisterClick = () => {    
     if (onRegistrationClick) {
@@ -154,16 +315,59 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   ];
 
   // Create continuous flow by duplicating images multiple times for seamless animation
-  const artworkImages = [
-    ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages,
-    ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages,
-    ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages,
-    ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages,
-    ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages, ...baseArtworkImages
-  ];
+  // Optimized: Use only base images instead of massive duplication
+  const artworkImages = baseArtworkImages;
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ scrollBehavior: 'smooth' }}>
+    <div className="min-h-screen overflow-x-hidden bg-black" style={{ scrollBehavior: 'smooth' }}>
+      {/* Fix mobile white flash */}
+      <style>{`
+        body {
+          background-color: black !important;
+          overflow-x: hidden;
+        }
+        html {
+          background-color: black !important;
+        }
+        @media (max-width: 768px) {
+          body {
+            background-color: black !important;
+            -webkit-overflow-scrolling: touch;
+          }
+        }
+        
+        /* Optimized gradient animation - only runs when visible */
+        @keyframes gradient-shift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        
+        .animated-gradient {
+          background: linear-gradient(-45deg, #ff6b6b, #ffa500, #ff4757, #ff6348, #ff7675, #fd79a8);
+          background-size: 400% 400%;
+          animation: gradient-shift 4s ease infinite;
+        }
+        
+        .animated-gradient:hover {
+          animation-duration: 2s;
+        }
+        
+        /* Pause animations when not visible to save battery */
+        @media (prefers-reduced-motion: reduce) {
+          .animated-gradient {
+            animation: none !important;
+            background: linear-gradient(-45deg, #ff6b6b, #ffa500) !important;
+          }
+        }
+      `}</style>
+      
       {/* Header */}
       <HeaderV2 onRegistrationClick={() => handleRegisterClick()} />
       
@@ -184,10 +388,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex space-x-0 h-full">
               {artworkImages.map((image, index) => (
                 <div key={`row1-${index}`} className="flex-shrink-0 h-full">
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`Artwork ${index + 1}`}
-                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 object-cover shadow-2xl opacity-60 hover:opacity-80 transition-opacity duration-300"
+                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 shadow-2xl opacity-60 hover:opacity-80 transition-opacity duration-300"
                   />
                 </div>
               ))}
@@ -199,10 +403,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex space-x-0 h-full">
               {artworkImages.slice().reverse().map((image, index) => (
                 <div key={`row2-${index}`} className="flex-shrink-0 h-full">
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 object-cover shadow-2xl opacity-50 hover:opacity-70 transition-opacity duration-300"
+                    className="h-full w-48 md:w-64 shadow-2xl opacity-50 hover:opacity-70 transition-opacity duration-300"
                   />
                 </div>
               ))}
@@ -214,10 +418,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex space-x-0 h-full">
               {artworkImages.map((image, index) => (
                 <div key={`row3-${index}`} className="flex-shrink-0 h-full">
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 object-cover shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
+                    className="h-full w-48 md:w-64 shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
                   />
                 </div>
               ))}
@@ -253,11 +457,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <div className="flex -space-x-2">
-                  <img src="/WhatsApp Image 2025-09-08 at 17.20.43.jpeg" alt="Artist 1" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
-                  <img src="/WhatsApp Image 2025-09-08 at 17.41.27.jpeg" alt="Artist 2" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
-                  <img src="/WhatsApp Image 2025-09-08 at 20.31.58.jpeg" alt="Artist 3" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
-                  <img src="/WhatsApp Image 2025-09-08 at 21.35.50.jpeg" alt="Artist 4" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
-                   <img src="/image.dslr2.jpg" alt="Artist 5" className="w-8 h-8 rounded-full border-2 border-white object-cover" />
+                  <LazyImage src="/WhatsApp Image 2025-09-08 at 17.20.43.jpeg" alt="Artist 1" className="w-8 h-8 rounded-full border-2 border-white" />
+                  <LazyImage src="/WhatsApp Image 2025-09-08 at 17.41.27.jpeg" alt="Artist 2" className="w-8 h-8 rounded-full border-2 border-white" />
+                  <LazyImage src="/WhatsApp Image 2025-09-08 at 20.31.58.jpeg" alt="Artist 3" className="w-8 h-8 rounded-full border-2 border-white" />
+                  <LazyImage src="/WhatsApp Image 2025-09-08 at 21.35.50.jpeg" alt="Artist 4" className="w-8 h-8 rounded-full border-2 border-white" />
+                  <LazyImage src="/image.dslr2.jpg" alt="Artist 5" className="w-8 h-8 rounded-full border-2 border-white" />
                 </div>
                 <div className="text-left">
                   <span className="text-sm text-white/90 font-medium block">1,000+ artists</span>
@@ -345,7 +549,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex justify-center w-full max-w-md">
               <Button
                 onClick={handleRegisterClick}
-                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-5 px-10 sm:py-4 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-lg sm:text-base"
+                className="animated-gradient text-white font-semibold py-5 px-10 sm:py-4 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-lg sm:text-base"
               >
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6 sm:h-5 sm:w-5" />
@@ -367,7 +571,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Your <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Creative Journey</span> Starts Here
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Whether you're an artist or a parent supporting young talent, this is your gateway to national recognition
             </p>
           </div>
@@ -380,10 +584,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <Palette className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">For Artists</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Artists</h3>
               </div>
               
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Showcase your artistic talent on a national platform and win from a <span className="font-semibold text-orange-600">₹50,000 prize pool</span>.
               </p>
               
@@ -392,27 +596,27 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Connect with like-minded artists nationwide</p>
+                  <p className="text-sm sm:text-base text-gray-700">Connect with like-minded artists nationwide</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Get professional feedback on your artwork</p>
+                  <p className="text-sm sm:text-base text-gray-700">Get professional feedback on your artwork</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Add national recognition to your portfolio</p>
+                  <p className="text-sm sm:text-base text-gray-700">Add national recognition to your portfolio</p>
                 </div>
               </div>
               
-              <Button 
+              <Button
                 onClick={handleRegisterClick}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="w-full animated-gradient text-white font-semibold py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
-                <Palette className="h-5 w-5 mr-2" />
+                <Palette className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Artist
               </Button>
             </div>
@@ -423,10 +627,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <Heart className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">For Parents</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Parents</h3>
               </div>
               
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Nurture your child's creativity and give them a platform to shine with <span className="font-semibold text-blue-600">confidence-building experience</span>.
               </p>
               
@@ -435,27 +639,27 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Boost your child's artistic confidence</p>
+                  <p className="text-sm sm:text-base text-gray-700">Boost your child's artistic confidence</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Recognition beyond school achievements</p>
+                  <p className="text-sm sm:text-base text-gray-700">Recognition beyond school achievements</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
-                  <p className="text-gray-700">Special addition to education portfolio</p>
+                  <p className="text-sm sm:text-base text-gray-700">Special addition to education portfolio</p>
                 </div>
               </div>
               
-              <Button 
+              <Button
                 onClick={handleRegisterClick}
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="w-full animated-gradient text-white font-semibold py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
-                <Heart className="h-5 w-5 mr-2" />
+                <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Parent
               </Button>
             </div>
@@ -498,10 +702,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shadow-xl border-2 border-white/30">
-                <img
-                  src="/public/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
+                <LazyImage
+                  src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
                   alt="Daami Presents Logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
             </div>
@@ -557,7 +761,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </p>
               <Button
                 onClick={handleRegisterClick}
-                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold py-4 px-12 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-fit text-lg"
+                className="animated-gradient text-white font-semibold py-4 px-12 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-fit text-lg"
               >
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6" />
@@ -755,10 +959,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex space-x-0 h-full">
               {artworkImages.map((image, index) => (
                 <div key={`benefits-row1-${index}`} className="flex-shrink-0 h-full">
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`Artwork ${index + 1}`}
-                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 object-cover shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
+                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
                   />
                 </div>
               ))}
@@ -785,10 +989,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex space-x-0 h-full">
               {artworkImages.map((image, index) => (
                 <div key={`benefits-row3-${index}`} className="flex-shrink-0 h-full">
-                  <img
+                  <LazyImage
                     src={image}
                     alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 object-cover shadow-2xl opacity-20 hover:opacity-40 transition-opacity duration-300"
+                    className="h-full w-48 md:w-64 shadow-2xl opacity-20 hover:opacity-40 transition-opacity duration-300"
                   />
                 </div>
               ))}
@@ -903,7 +1107,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           }
           
           .animate-slide-left-continuous {
-            animation: slide-left-continuous 30s linear infinite;
+            animation: slide-left-continuous 40s linear infinite;
+          }
+          
+          /* Pause animations when not visible */
+          @media (prefers-reduced-motion: reduce) {
+            .animate-slide-left-continuous {
+              animation: none !important;
+            }
           }
         `}</style>
       </section>
@@ -919,163 +1130,333 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         <div className="container mx-auto max-w-6xl relative z-10 px-4">
           
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-orange-200 mb-4">
-              <Trophy className="h-4 w-4 mr-2 text-orange-600" />
+          <motion.div 
+            ref={successHeaderRef}
+            variants={textVariants}
+            initial="hidden"
+            animate={isSuccessHeaderInView ? "visible" : "hidden"}
+            className="text-center mb-12"
+          >
+            <motion.div 
+              variants={wordVariants}
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-orange-200 mb-4"
+            >
+              <motion.div
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+              >
+                <Trophy className="h-4 w-4 mr-2 text-orange-600" />
+              </motion.div>
               <span className="text-sm font-semibold text-orange-700">Success Stories</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            </motion.div>
+            <motion.h2 
+              variants={textVariants}
+              className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+            >
               Previous Competition <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Highlights</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p 
+              variants={wordVariants}
+              className="text-lg text-gray-600 max-w-2xl mx-auto"
+            >
               Celebrating incredible talent from our past competitions
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           {/* Leaderboard Podium with Artworks - Larger */}
           <div className="mb-20 relative">
             
             {/* Mobile Stats Grid - Visible only on mobile */}
-            <div className="block md:hidden mb-8">
-              <div className="grid grid-cols-2 gap-3">
+            <motion.div 
+              ref={successStatsRef}
+              variants={fadeInUp}
+              initial="hidden"
+              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              className="block md:hidden mb-8"
+            >
+              <motion.div 
+                variants={fadeInUp}
+                className="grid grid-cols-2 gap-3"
+              >
                 {[
                   { icon: Users, number: "500+", label: "Participants", gradient: "from-blue-500 to-cyan-500", color: "text-blue-600" },
                   { icon: Gift, number: "₹50K", label: "Prize Pool", gradient: "from-green-500 to-emerald-500", color: "text-green-600" },
                   { icon: Star, number: "4.9★", label: "Rating", gradient: "from-purple-500 to-pink-500", color: "text-purple-600" },
                   { icon: Award, number: "100+", label: "Featured", gradient: "from-orange-500 to-red-500", color: "text-orange-600" }
                 ].map((stat, index) => (
-                  <div key={index} className="bg-white/60 backdrop-blur-md rounded-xl p-3 shadow-lg border border-white/30">
+                  <motion.div 
+                    key={index} 
+                    variants={cardVariants}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      rotateY: 5,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                    }}
+                    className="bg-white/60 backdrop-blur-md rounded-xl p-3 shadow-lg border border-white/30"
+                  >
                     <div className="flex items-center gap-2">
-                      <div className={`w-8 h-8 bg-gradient-to-r ${stat.gradient} rounded-lg flex items-center justify-center`}>
+                      <motion.div 
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                        className={`w-8 h-8 bg-gradient-to-r ${stat.gradient} rounded-lg flex items-center justify-center`}
+                      >
                         <stat.icon className="h-4 w-4 text-white" />
-                      </div>
+                      </motion.div>
                       <div>
                         <div className={`text-lg font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             
             {/* Desktop Side Cards - Hidden on mobile with Floating Animation */}
-            <div className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4">
-              <div className="space-y-4">
+            <motion.div 
+              variants={slideInLeft}
+              initial="hidden"
+              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
+            >
+              <motion.div 
+                variants={fadeInUp}
+                className="space-y-4"
+              >
                 {[
                   { icon: Users, number: "500+", label: "Participants Joined", gradient: "from-blue-500 to-cyan-500", color: "text-blue-600", delay: "0s" },
                   { icon: Gift, number: "₹25K", label: "Prize Distributed", gradient: "from-green-500 to-emerald-500", color: "text-green-600", delay: "1s" },
                   { icon: Star, number: "4.9★", label: "Success Rating", gradient: "from-purple-500 to-pink-500", color: "text-purple-600", delay: "2s" }
                 ].map((stat, index) => (
-                  <div key={index} className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 hover:scale-105 transition-all duration-300 animate-float" style={{ animationDelay: stat.delay }}>
+                  <motion.div 
+                    key={index} 
+                    variants={cardVariants}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      rotateY: 5,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                    }}
+                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
+                    style={{ animationDelay: stat.delay }}
+                  >
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}>
+                      <motion.div 
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                        className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}
+                      >
                         <stat.icon className="h-5 w-5 text-white" />
-                      </div>
+                      </motion.div>
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             
-            <div className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4">
-              <div className="space-y-4">
+            <motion.div 
+              variants={slideInRight}
+              initial="hidden"
+              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
+            >
+              <motion.div 
+                variants={fadeInUp}
+                className="space-y-4"
+              >
                 {[
                   { icon: Award, number: "100+", label: "Featured Artists", gradient: "from-orange-500 to-red-500", color: "text-orange-600", delay: "0.5s" },
                   { icon: Globe, number: "50K+", label: "Media Reach", gradient: "from-indigo-500 to-purple-500", color: "text-indigo-600", delay: "1.5s" },
                   { icon: BookOpen, number: "500+", label: "Certificates Issued", gradient: "from-teal-500 to-cyan-500", color: "text-teal-600", delay: "2.5s" }
                 ].map((stat, index) => (
-                  <div key={index} className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 hover:scale-105 transition-all duration-300 animate-float" style={{ animationDelay: stat.delay }}>
+                  <motion.div 
+                    key={index} 
+                    variants={cardVariants}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      rotateY: -5,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                    }}
+                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
+                    style={{ animationDelay: stat.delay }}
+                  >
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}>
+                      <motion.div 
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                        className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}
+                      >
                         <stat.icon className="h-5 w-5 text-white" />
-                      </div>
+                      </motion.div>
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             
-            <div className="flex items-end justify-center gap-2 md:gap-12 mb-12 px-4">
+            <motion.div 
+              ref={successPodiumRef}
+              variants={scaleIn}
+              initial="hidden"
+              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              className="flex items-end justify-center gap-2 md:gap-12 mb-12 px-4"
+            >
               
               {/* 2nd Place */}
-              <div className="flex flex-col items-center">
-                <div className="relative mb-3 md:mb-6">
+              <motion.div 
+                variants={slideInLeft}
+                whileHover={{ scale: 1.05, rotateY: 5 }}
+                className="flex flex-col items-center"
+              >
+                <motion.div 
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative mb-3 md:mb-6"
+                >
                   <img
                     src={baseArtworkImages[1]}
                     alt="2nd Place Artwork"
                     className="w-24 h-24 md:w-40 md:h-40 object-cover rounded-xl md:rounded-3xl shadow-xl md:shadow-2xl border-2 md:border-6 border-gray-300"
                   />
-                  <div className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-6 h-6 md:w-12 md:h-12 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full flex items-center justify-center shadow-lg md:shadow-xl">
+                  <motion.div 
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-6 h-6 md:w-12 md:h-12 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full flex items-center justify-center shadow-lg md:shadow-xl"
+                  >
                     <span className="text-white font-bold text-xs md:text-lg">2</span>
-                  </div>
-                </div>
-                <div className="w-28 h-20 md:w-48 md:h-32 bg-gradient-to-t from-gray-400 to-gray-300 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl">
+                  </motion.div>
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="w-28 h-20 md:w-48 md:h-32 bg-gradient-to-t from-gray-400 to-gray-300 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl"
+                >
                   <span className="text-white font-black text-lg md:text-4xl">2nd</span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* 1st Place - Tallest */}
-              <div className="flex flex-col items-center">
-                <div className="relative mb-3 md:mb-6">
+              <motion.div 
+                variants={scaleIn}
+                whileHover={{ scale: 1.05, rotateY: 5 }}
+                className="flex flex-col items-center"
+              >
+                <motion.div 
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative mb-3 md:mb-6"
+                >
                   <img
                     src={baseArtworkImages[0]}
                     alt="1st Place Artwork"
                     className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-xl md:rounded-3xl shadow-xl md:shadow-2xl border-2 md:border-6 border-yellow-400"
                   />
-                  <div className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-8 h-8 md:w-14 md:h-14 bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full flex items-center justify-center shadow-xl md:shadow-2xl">
+                  <motion.div 
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-8 h-8 md:w-14 md:h-14 bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full flex items-center justify-center shadow-xl md:shadow-2xl"
+                  >
                     <Trophy className="h-4 w-4 md:h-7 md:w-7 text-white" />
-                  </div>
-                </div>
-                <div className="w-36 h-28 md:w-56 md:h-40 bg-gradient-to-t from-yellow-500 to-yellow-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl relative">
+                  </motion.div>
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="w-36 h-28 md:w-56 md:h-40 bg-gradient-to-t from-yellow-500 to-yellow-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl relative"
+                >
                   <span className="text-white font-black text-2xl md:text-5xl">1st</span>
-                  <div className="absolute -top-1 md:-top-3 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-8 md:h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                  <motion.div 
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute -top-1 md:-top-3 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-8 md:h-8 bg-orange-500 rounded-full flex items-center justify-center"
+                  >
                     <Star className="h-2 w-2 md:h-4 md:w-4 text-white" />
-                  </div>
-                </div>
-              </div>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
 
               {/* 3rd Place */}
-              <div className="flex flex-col items-center">
-                <div className="relative mb-3 md:mb-6">
+              <motion.div 
+                variants={slideInRight}
+                whileHover={{ scale: 1.05, rotateY: -5 }}
+                className="flex flex-col items-center"
+              >
+                <motion.div 
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative mb-3 md:mb-6"
+                >
                   <img
                     src={baseArtworkImages[2]}
                     alt="3rd Place Artwork"
                     className="w-20 h-20 md:w-36 md:h-36 object-cover rounded-xl md:rounded-3xl shadow-lg md:shadow-xl border-2 md:border-6 border-orange-400"
                   />
-                  <div className="absolute -top-1 -right-1 md:-top-3 md:-right-3 w-5 h-5 md:w-10 md:h-10 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg md:shadow-xl">
+                  <motion.div 
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute -top-1 -right-1 md:-top-3 md:-right-3 w-5 h-5 md:w-10 md:h-10 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg md:shadow-xl"
+                  >
                     <span className="text-white font-bold text-xs md:text-base">3</span>
-                  </div>
-                </div>
-                <div className="w-24 h-16 md:w-44 md:h-28 bg-gradient-to-t from-orange-500 to-orange-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-lg md:shadow-xl">
+                  </motion.div>
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.05 }}
+                  className="w-24 h-16 md:w-44 md:h-28 bg-gradient-to-t from-orange-500 to-orange-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-lg md:shadow-xl"
+                >
                   <span className="text-white font-black text-sm md:text-3xl">3rd</span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
               
-            </div>
+            </motion.div>
             
             {/* Prize Pool Banner */}
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 md:gap-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl md:rounded-3xl px-4 md:px-8 py-2 md:py-4 shadow-xl md:shadow-2xl">
-                <Gift className="h-5 w-5 md:h-8 md:w-8 text-white" />
+            <motion.div 
+              variants={scaleIn}
+              initial="hidden"
+              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              className="text-center"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.05, rotateY: 5 }}
+                className="inline-flex items-center gap-2 md:gap-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl md:rounded-3xl px-4 md:px-8 py-2 md:py-4 shadow-xl md:shadow-2xl"
+              >
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.2 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Gift className="h-5 w-5 md:h-8 md:w-8 text-white" />
+                </motion.div>
                 <span className="text-lg md:text-2xl font-bold text-white">₹50K Prize Pool</span>
-                <Trophy className="h-5 w-5 md:h-8 md:w-8 text-white" />
-              </div>
-            </div>
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.2 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Trophy className="h-5 w-5 md:h-8 md:w-8 text-white" />
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
-        <div className="mb-8">
-          <h3 className="text-lg md:text-xl font-bold text-gray-900 text-center mb-4 md:mb-6 px-4">Artist Success Stories</h3>
+        <motion.div 
+          ref={successTestimonialsRef}
+          variants={fadeInUp}
+          initial="hidden"
+          animate={isSuccessTestimonialsInView ? "visible" : "hidden"}
+          className="mb-8"
+        >
+          <motion.h3 
+            variants={textVariants}
+            className="text-lg md:text-xl font-bold text-gray-900 text-center mb-4 md:mb-6 px-4"
+          >
+            Artist Success Stories
+          </motion.h3>
           
           <div className="overflow-hidden">
             <div className="flex animate-testimonial-slide-fast space-x-3 md:space-x-6">
@@ -1103,60 +1484,116 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     { name: "Anushka Verma", quote: "As an art teacher, I encouraged my students to participate, and many did. The joy they felt in seeing their names featured officially is priceless.", avatar: "A", gradient: "from-green-500 to-teal-500" },
                     { name: "Ganesh Lama", quote: "I must say the professionalism surprised me. Most competitions are messy, but here everything was well-structured. The support team was excellent.", avatar: "G", gradient: "from-purple-500 to-violet-500" }
                   ].map((testimonial, index) => (
-                    <div key={`${setIndex}-${index}`} className="flex-shrink-0 w-64 md:w-80">
+                    <motion.div 
+                      key={`${setIndex}-${index}`} 
+                      variants={cardVariants}
+                      whileHover={{ 
+                        scale: 1.02, 
+                        rotateY: 5,
+                        boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                      }}
+                      className="flex-shrink-0 w-64 md:w-80"
+                    >
                       <div className="bg-white/60 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-white/30 relative">
                         {/* Verified Badge */}
-                        <div className="absolute top-1 right-1 bg-green-500 text-white font-medium px-1.5 py-0.5 rounded-full shadow-sm flex items-center gap-0.5">
+                        <motion.div 
+                          whileHover={{ scale: 1.1 }}
+                          className="absolute top-1 right-1 bg-green-500 text-white font-medium px-1.5 py-0.5 rounded-full shadow-sm flex items-center gap-0.5"
+                        >
                           <CheckCircle className="h-2 w-2" />
                           <span className="text-xs">Verified</span>
-                        </div>
+                        </motion.div>
                         <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 mt-2">
-                          <div className={`w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r ${testimonial.gradient} rounded-full flex items-center justify-center shadow-lg`}>
+                          <motion.div 
+                            whileHover={{ rotate: 360, scale: 1.1 }}
+                            transition={{ duration: 0.6 }}
+                            className={`w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r ${testimonial.gradient} rounded-full flex items-center justify-center shadow-lg`}
+                          >
                             <span className="text-white font-bold text-xs md:text-sm">{testimonial.avatar}</span>
-                          </div>
+                          </motion.div>
                           <div>
                             <div className="text-xs md:text-sm font-bold text-gray-900">{testimonial.name}</div>
                             <div className="flex">
                               {[...Array(5)].map((_, i) => (
-                                <Star key={i} className="h-2 w-2 md:h-3 md:w-3 text-yellow-400 fill-current" />
+                                <motion.div
+                                  key={i}
+                                  whileHover={{ scale: 1.2, rotate: 10 }}
+                                  transition={{ duration: 0.2, delay: i * 0.1 }}
+                                >
+                                  <Star className="h-2 w-2 md:h-3 md:w-3 text-yellow-400 fill-current" />
+                                </motion.div>
                               ))}
                             </div>
                           </div>
                         </div>
                         <p className="text-xs md:text-sm text-gray-700 italic leading-tight">"{testimonial.quote}"</p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </React.Fragment>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
-        <div className="overflow-hidden">
-          <div className="flex animate-slide-right-fast space-x-2 md:space-x-4">
+        <motion.div 
+          ref={successGalleryRef}
+          variants={fadeInUp}
+          initial="hidden"
+          animate={isSuccessGalleryInView ? "visible" : "hidden"}
+          className="overflow-hidden"
+        >
+          <motion.div 
+            variants={fadeInUp}
+            className="flex animate-slide-right-fast space-x-2 md:space-x-4"
+          >
             {[...Array(3)].map((_, setIndex) => (
               <React.Fragment key={setIndex}>
                 {baseArtworkImages.map((image, index) => (
-                  <div key={`gallery-${setIndex}-${index}`} className="flex-shrink-0">
+                  <motion.div 
+                    key={`gallery-${setIndex}-${index}`} 
+                    variants={cardVariants}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      rotateY: 5,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                    }}
+                    className="flex-shrink-0"
+                  >
                     <div className="relative group overflow-hidden rounded-xl md:rounded-2xl w-48 h-48 md:w-80 md:h-60">
-                      <img
+                      <LazyImage
                         src={image}
                         alt={`Previous artwork ${index + 1}`}
-                        className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110"
+                        className="w-full h-full transition-all duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute bottom-1 left-1 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="text-xs font-bold">🏆</div>
-                      </div>
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+                      ></motion.div>
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileHover={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute bottom-1 left-1 text-white"
+                      >
+                        <motion.div 
+                          whileHover={{ rotate: 360, scale: 1.2 }}
+                          transition={{ duration: 0.6 }}
+                          className="text-xs font-bold"
+                        >
+                          🏆
+                        </motion.div>
+                      </motion.div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </React.Fragment>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         
         <style>{`
           @keyframes testimonial-slide-fast {
@@ -1175,21 +1612,33 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           }
           
           .animate-testimonial-slide-fast {
-            animation: testimonial-slide-fast 20s linear infinite;
+            animation: testimonial-slide-fast 30s linear infinite;
           }
           
           .animate-slide-right-fast {
-            animation: slide-right-fast 27s linear infinite;
+            animation: slide-right-fast 35s linear infinite;
           }
           
           .animate-float {
-            animation: float 3s ease-in-out infinite;
+            animation: float 4s ease-in-out infinite;
+          }
+          
+          /* Pause animations when not visible */
+          @media (prefers-reduced-motion: reduce) {
+            .animate-testimonial-slide-fast,
+            .animate-slide-right-fast,
+            .animate-float {
+              animation: none !important;
+            }
           }
         `}</style>
       </section>
 
       {/* Testimonials Section - Moved here after Previous Competition Highlights */}
       <TestimonialsSection />
+      
+      {/* Countdown Section */}
+      <CountdownSection onRegisterClick={handleRegisterClick} />
       
       {/* Winners Gallery - Moved here after Testimonials */}
       <div id="gallery">
@@ -1604,7 +2053,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           }
           
           .animate-slide-left-continuous {
-            animation: slide-left-continuous 25s linear infinite;
+            animation: slide-left-continuous 35s linear infinite;
+          }
+          
+          /* Pause animations when not visible */
+          @media (prefers-reduced-motion: reduce) {
+            .animate-slide-left-continuous {
+              animation: none !important;
+            }
           }
         `}</style>
       </section>
@@ -1617,33 +2073,44 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       {/* Beautiful Registration Modal */}
       {!onRegistrationClick && (
         <Dialog open={showRegistrationDrawer} onOpenChange={(open) => { if (!open) handleCloseModal(); }}>
-          <DialogContent hideClose className="sm:max-w-[720px] w-[92vw] sm:w-full max-h-[90vh] overflow-y-auto p-0 border-0 bg-transparent shadow-none">
-            <div className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+          <DialogContent hideClose className="sm:max-w-[600px] w-[95vw] sm:w-full max-h-[98vh] sm:max-h-[90vh] overflow-y-auto p-0 border-0 bg-transparent shadow-none mx-auto px-3 sm:px-0">
+            <div className="bg-white rounded-lg sm:rounded-3xl overflow-hidden shadow-2xl">
               {/* Header */}
-              <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 px-5 py-6 sm:px-8 sm:py-8 text-white relative">
-                <div className="flex items-start sm:items-center justify-between gap-4">
-                  <div className="min-w-0">
-                    <DialogHeader className="p-0">
-                      <DialogTitle className="text-2xl sm:text-3xl font-bold">🎨 Join Indian Creative Star</DialogTitle>
-                    </DialogHeader>
-                    <p className="text-sm sm:text-base opacity-90 mt-1 truncate">Transform your art into national recognition</p>
-                  </div>
-                  <button
-                    aria-label="Close"
-                    onClick={handleCloseModal}
-                    className="shrink-0 rounded-full bg-white/15 hover:bg-white/25 transition-colors p-2 sm:p-2.5"
-                  >
-                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
-                  </button>
+              <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 px-4 py-5 sm:px-8 sm:py-8 text-white relative">
+                {/* Close Button - Top Right */}
+                <button
+                  aria-label="Close"
+                  onClick={handleCloseModal}
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 rounded-full bg-white/15 hover:bg-white/25 transition-colors p-1.5 sm:p-2.5 z-10"
+                >
+                  <X className="h-4 w-4 sm:h-6 sm:w-6" />
+                </button>
+                
+                {/* Content - Centered */}
+                <div className="text-center">
+                  <DialogHeader className="p-0">
+                    <DialogTitle className="text-xl sm:text-3xl font-bold leading-tight">
+                      <div className="flex items-center justify-center gap-3 mb-1">
+                        
+                        <div className="text-center">
+                          <span className="block text-lg sm:text-2xl font-extrabold leading-tight">Join Indian Creative Star</span>
+                          <span className="block text-sm sm:text-lg font-semibold opacity-95 -mt-1">Art Competition</span>
+                        </div>
+                      </div>
+                    </DialogTitle>
+                  </DialogHeader>
+                  <p className="text-sm sm:text-base opacity-90 mt-1 leading-relaxed font-medium">
+                    Become the next creative star
+                  </p>
                 </div>
               </div>
 
               {/* Form */}
-              <div className="px-5 py-6 sm:p-8">
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              <div className="px-3 py-4 sm:px-8 sm:py-8">
+                <form onSubmit={handleFormSubmit} className="space-y-3 sm:space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
                     <div>
-                      <Label htmlFor="name" className="mb-2 block">Full Name</Label>
+                      <Label htmlFor="name" className="mb-1.5 block text-sm sm:text-base font-medium">Full Name</Label>
                       <Input
                         id="name"
                         type="text"
@@ -1651,41 +2118,28 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Enter your full name"
-                        className="h-12 text-base"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="mb-2 block">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="Enter your email"
-                        className="h-12 text-base"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-                    <div>
-                      <Label htmlFor="phone" className="mb-2 block">Phone Number</Label>
+                      <Label htmlFor="phone" className="mb-1.5 block text-sm sm:text-base font-medium">WhatsApp Number</Label>
                       <Input
                         id="phone"
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        placeholder="Enter your phone number"
-                        className="h-12 text-base"
+                        placeholder="Enter your WhatsApp number"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
                     <div>
-                      <Label htmlFor="age" className="mb-2 block">Age</Label>
+                      <Label htmlFor="age" className="mb-1.5 block text-sm sm:text-base font-medium">Age</Label>
                       <Input
                         id="age"
                         type="number"
@@ -1695,35 +2149,33 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         placeholder="Enter your age"
                         min={1}
                         max={120}
-                        className="h-12 text-base"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                         required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="email" className="mb-1.5 block text-sm sm:text-base font-medium">Email (Optional)</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Enter your email"
+                        className="h-10 sm:h-12 text-sm sm:text-base"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="category" className="mb-2 block">Category</Label>
-                    <select
-                      id="category"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleInputChange}
-                      className="w-full h-12 px-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all text-base appearance-none bg-white"
-                    >
-                      <option value="adult">Adult (18+ years)</option>
-                      <option value="teen">Teen (13-17 years)</option>
-                      <option value="child">Child (5-12 years)</option>
-                    </select>
-                  </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:from-purple-700 hover:via-pink-700 hover:to-orange-600 text-white font-bold py-4 sm:py-5 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-base sm:text-lg"
+                    className="w-full animated-gradient text-white font-bold py-2.5 sm:py-5 rounded-lg sm:rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-sm sm:text-lg"
                   >
                     <div className="flex items-center justify-center gap-2 sm:gap-3">
-                      <Star className="h-5 w-5 sm:h-6 sm:w-6" />
+                      <Star className="h-4 w-4 sm:h-6 sm:w-6" />
                       Register Now
-                      <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                      <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6" />
                     </div>
                   </Button>
                 </form>
@@ -1748,10 +2200,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Logo and Brand */}
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl ring-2 sm:ring-4 ring-white/20">
-                <img
+                <LazyImage
                   src="/company-logo.jpeg"
                   alt="Daami Event Logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
               <div className="text-left">
@@ -1792,3 +2244,4 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 };
 
 export default IndexV2;
+

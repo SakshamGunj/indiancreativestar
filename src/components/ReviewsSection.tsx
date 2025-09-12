@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Star, CheckCircle, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { motion, useInView } from "framer-motion";
 
 interface Review {
   id: number;
@@ -106,6 +107,20 @@ const reviews: Review[] = [
 
 const TestimonialsSection: React.FC = () => {
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  console.log("TestimonialsSection isInView:", isInView);
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -127,7 +142,13 @@ const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+    <motion.section
+      ref={ref}
+      variants={sectionVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className="py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -140,10 +161,16 @@ const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Reviews Grid - Desktop */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
           {reviews.map((review) => (
-            <div
+            <motion.div
               key={review.id}
+              variants={cardVariants}
               onClick={() => openReviewModal(review)}
               className="bg-white/80 backdrop-blur-sm rounded-2xl p-3 sm:p-6 shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 hover:scale-105 flex flex-col h-full cursor-pointer"
             >
@@ -195,9 +222,9 @@ const TestimonialsSection: React.FC = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Mobile Sliding Reviews */}
         <div className="md:hidden overflow-hidden h-[700px] relative">
@@ -445,7 +472,7 @@ const TestimonialsSection: React.FC = () => {
       </Dialog>
 
       {/* CSS Animation for Mobile Sliding */}
-      <style jsx>{`
+      <style>{`
         @keyframes slide-up-continuous {
           0% { transform: translateY(0); }
           100% { transform: translateY(-50%); }
@@ -455,7 +482,7 @@ const TestimonialsSection: React.FC = () => {
           animation: slide-up-continuous 30s linear infinite;
         }
       `}</style>
-    </section>
+    </motion.section>
   );
 };
 

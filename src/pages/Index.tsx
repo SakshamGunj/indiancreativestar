@@ -67,7 +67,7 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-3xl blur-xl"></div>
             <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
               <img
-                src="/public/Daami Presents (1920 x 1080 px).jpg"
+                src="/Daami Presents (1920 x 1080 px).jpg"
                 alt="Daami Presents Banner"
                 className="w-full h-48 sm:h-56 lg:h-80 xl:h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
               />

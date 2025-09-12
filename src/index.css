@@ -54,11 +54,13 @@
 html, body {
   overflow-x: hidden;
   width: 100%;
+  background-color: #000;
 }
 
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
+  overscroll-behavior-y: contain;
 }
 
 /* Custom Glassmorphism Styles */

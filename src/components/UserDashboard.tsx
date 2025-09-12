@@ -20,9 +20,11 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { User as FirebaseUser } from "firebase/auth";
+import { GeneratePassModal } from "@/components/GeneratePassModal";
+import QRCode from "qrcode";
 
 interface UserData {
   name: string;
@@ -43,10 +45,13 @@ interface UserDashboardProps {
 export function UserDashboard({ user }: UserDashboardProps) {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isGeneratePassModalOpen, setIsGeneratePassModalOpen] = useState(false);
+  const [generatedPasses, setGeneratedPasses] = useState<any[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
         const userDoc = await getDoc(doc(db, "participantdetailspersonal", user.uid));
         if (userDoc.exists()) {
@@ -56,15 +61,32 @@ export function UserDashboard({ user }: UserDashboardProps) {
             registrationDate: data.registrationDate.toDate()
           } as UserData);
         }
+
+        const passesRef = collection(db, 'eventPasses');
+        const q = query(passesRef, where('userId', '==', user.uid));
+        const querySnapshot = await getDocs(q);
+        const passes = querySnapshot.docs.map(doc => doc.data());
+
+        const passesWithQr = await Promise.all(passes.map(async (pass) => {
+          if (pass.token) {
+            const qrCodeUrl = await QRCode.toDataURL(pass.token);
+            return { ...pass, qrCodeUrl };
+          }
+          return pass;
+        }));
+        setGeneratedPasses(passesWithQr);
+
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data or passes:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchUserData();
-  }, [user.uid]);
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   const handleSignOut = async () => {
     try {
@@ -198,55 +220,52 @@ export function UserDashboard({ user }: UserDashboardProps) {
 
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            {/* Status Updates */}
+
+            {/* Generate Pass Section */}
             <Card className="bg-black border border-gray-700">
               <CardHeader className="pb-4 sm:pb-6">
                 <CardTitle className="text-white flex items-center gap-2 text-lg sm:text-xl">
-                  <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
-                  Registration Status
+                  <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-creative-yellow" />
+                  Event Pass
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-6">
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-base sm:text-lg">Account Created</p>
-                        <p className="text-white/70 text-xs sm:text-sm">Your account has been successfully created</p>
-                      </div>
-                    </div>
-                    <Badge className="bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Completed</Badge>
+                {generatedPasses.length === 0 ? (
+                  <div className="text-center">
+                    <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+                      Generate your pass for the upcoming "Prize Distribution Ceremony" event. You can generate up to 4 additional passes for guests.
+                    </p>
+                    <Button
+                      onClick={() => setIsGeneratePassModalOpen(true)}
+                      className="bg-gradient-to-r from-creative-yellow to-creative-orange hover:from-creative-orange hover:to-creative-yellow text-black font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+                    >
+                      <Download className="h-5 w-5 mr-2" />
+                      Generate Passes
+                    </Button>
                   </div>
-                  
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-base sm:text-lg">Profile Image Uploaded</p>
-                        <p className="text-white/70 text-xs sm:text-sm">Your profile photo has been uploaded successfully</p>
-                      </div>
-                    </div>
-                    <Badge className="bg-blue-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Completed</Badge>
+                ) : (
+                  <div className="text-center">
+                    <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+                      Your passes have been generated successfully! You can download them below.
+                    </p>
                   </div>
-                  
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-5 rounded-xl bg-gray-900 border border-gray-700 gap-3 sm:gap-4">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-base sm:text-lg">Admin Review</p>
-                        <p className="text-white/70 text-xs sm:text-sm">Your application has been approved</p>
-                      </div>
+                )}
+                {generatedPasses.length > 0 && (
+                  <div className="mt-6">
+                    <h4 className="text-white font-semibold text-lg mb-4">Generated Passes</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {generatedPasses.map((pass, index) => (
+                        <div key={index} className="bg-gray-800 p-4 rounded-lg text-center">
+                          <p className="text-white font-semibold">Pass #{index + 1}: {pass.name}</p>
+                          <p className="text-white/70">{pass.phone}</p>
+                          {pass.qrCodeUrl && (
+                            <img src={pass.qrCodeUrl} alt="QR Code" className="mx-auto mt-4" />
+                          )}
+                        </div>
+                      ))}
                     </div>
-                    <Badge className="bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm self-start sm:self-center">Approved</Badge>
                   </div>
-                </div>
+                )}
               </CardContent>
             </Card>
 
@@ -328,6 +347,28 @@ export function UserDashboard({ user }: UserDashboardProps) {
           </div>
         </div>
       </div>
+      {isGeneratePassModalOpen && (
+        <GeneratePassModal
+          isOpen={isGeneratePassModalOpen}
+          onClose={() => setIsGeneratePassModalOpen(false)}
+          user={{
+            uid: user.uid,
+            name: userData.name,
+            email: userData.email,
+            phone: userData.phone,
+          }}
+          onPassesGenerated={async (passes) => {
+            const passesWithQr = await Promise.all(passes.map(async (pass) => {
+              if (pass.token) {
+                const qrCodeUrl = await QRCode.toDataURL(pass.token);
+                return { ...pass, qrCodeUrl };
+              }
+              return pass;
+            }));
+            setGeneratedPasses(passesWithQr);
+          }}
+        />
+      )}
     </div>
   );
 }

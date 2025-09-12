@@ -74,7 +74,7 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
           <div className="flex items-center gap-2">
             <div className="w-12 h-12 rounded-xl overflow-hidden">
               <img 
-                src="/public/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
+                src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
                 alt="Daami Presents Logo" 
                 className="w-full h-full object-cover"
               />

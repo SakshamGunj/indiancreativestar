@@ -44,7 +44,7 @@ export default function ThankYou() {
   }, []);
   
   const handleBackHome = () => {
-    navigate("/");
+    navigate("/indiancreativestar/v2");
   };
   
   const handleReferralEmailChange = (index: number, value: string) => {
@@ -238,7 +238,7 @@ export default function ThankYou() {
                 <Share2 className="mr-2 h-4 w-4" />
                 Share Your Achievement
               </Button>
-              <Button className="py-2.5 sm:py-3 text-sm sm:text-base mt-3 sm:mt-0 bg-gray-900 hover:bg-black text-white" onClick={() => navigate("/")}>
+              <Button className="py-2.5 sm:py-3 text-sm sm:text-base mt-3 sm:mt-0 bg-gray-900 hover:bg-black text-white" onClick={() => navigate("/indiancreativestar/v2")}>
                 <ArrowRight className="mr-2 h-4 w-4" />
                 Explore More Competitions
               </Button>

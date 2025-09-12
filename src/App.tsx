@@ -15,6 +15,7 @@ import IndexV2 from "./pages/v2/IndexV2";
 import AdminExport from "./pages/AdminExport";
 import AdminCertificates from "./pages/AdminCertificates";
 import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
+import AdminVerify from "./pages/AdminVerify";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -123,6 +124,7 @@ const App = () => {
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />
                   <Route path="/admin/certificates" element={<AdminCertificates />} />
+                  <Route path="/admin/verify" element={<AdminVerify />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

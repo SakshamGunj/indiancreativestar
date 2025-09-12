@@ -23,7 +23,8 @@ export function Confetti() {
   const createConfetti = () => {
     const confettiElements = [];
     
-    for (let i = 0; i < 50; i++) {
+    // Reduced from 50 to 20 for better performance
+    for (let i = 0; i < 20; i++) {
       const left = Math.random() * 100;
       const width = Math.random() * 10 + 5;
       const height = width * 0.4;

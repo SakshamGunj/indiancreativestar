@@ -1,11 +1,13 @@
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { HelpCircle } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const faqs = [
   {
@@ -43,8 +45,30 @@ const faqs = [
 ];
 
 export function FAQSectionV2() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  console.log("FAQSectionV2 isInView:", isInView);
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50" id="faq">
+    <motion.section
+      ref={ref}
+      variants={sectionVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className="py-20 px-4 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50"
+      id="faq"
+    >
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <Badge className="mb-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold rounded-full shadow-lg">
@@ -58,23 +82,30 @@ export function FAQSectionV2() {
           </p>
         </div>
         
-        <div className="glassmorphism-card p-8">
+        <motion.div
+          className="glassmorphism-card p-8"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-gray-200/50">
-                <AccordionTrigger className="text-lg font-semibold hover:text-purple-600 text-left text-gray-900 py-4 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <HelpCircle className="h-5 w-5 text-purple-500 flex-shrink-0" />
-                    {faq.question}
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 leading-relaxed pb-4 pl-8">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <motion.div key={index} variants={itemVariants}>
+                <AccordionItem value={`item-${index}`} className="border-gray-200/50">
+                  <AccordionTrigger className="text-lg font-semibold hover:text-purple-600 text-left text-gray-900 py-4 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <HelpCircle className="h-5 w-5 text-purple-500 flex-shrink-0" />
+                      {faq.question}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600 leading-relaxed pb-4 pl-8">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
-        </div>
+        </motion.div>
         
         {/* Additional Help Section */}
         <div className="text-center mt-12">
@@ -98,7 +129,7 @@ export function FAQSectionV2() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
