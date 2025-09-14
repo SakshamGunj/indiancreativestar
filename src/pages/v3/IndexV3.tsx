@@ -62,14 +62,14 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
     category: 'adult'
   });
 
-  // Apple-style animation variants
+  // Apple-style animation variants with enhanced smoothness
   const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
+    hidden: { opacity: 0, y: 40 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.8, 
+        duration: 0.7, 
         ease: [0.25, 0.46, 0.45, 0.94]
       } 
     },
@@ -80,14 +80,14 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.08,
+        delayChildren: 0.15
       }
     }
   };
 
   const scaleIn = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.9 },
     visible: { 
       opacity: 1, 
       scale: 1,
@@ -99,24 +99,36 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
   };
 
   const slideInLeft = {
-    hidden: { opacity: 0, x: -100 },
+    hidden: { opacity: 0, x: -60 },
     visible: { 
       opacity: 1, 
       x: 0,
       transition: { 
-        duration: 0.8, 
+        duration: 0.7, 
         ease: [0.25, 0.46, 0.45, 0.94]
       } 
     },
   };
 
   const slideInRight = {
-    hidden: { opacity: 0, x: 100 },
+    hidden: { opacity: 0, x: 60 },
     visible: { 
       opacity: 1, 
       x: 0,
       transition: { 
-        duration: 0.8, 
+        duration: 0.7, 
+        ease: [0.25, 0.46, 0.45, 0.94]
+      } 
+    },
+  };
+
+  const floatUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6, 
         ease: [0.25, 0.46, 0.45, 0.94]
       } 
     },
@@ -300,8 +312,14 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
       <motion.section 
         ref={heroRef}
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100"
+        className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden"
       >
+        {/* Artistic Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-green-500/10 to-teal-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-orange-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
+        </div>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.div
             variants={staggerContainer}
@@ -311,17 +329,17 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
           >
             {/* Badge */}
             <motion.div variants={fadeInUp}>
-              <Badge className="bg-blue-50 text-blue-700 border-blue-200 px-4 py-2 rounded-full text-sm font-medium">
+              <Badge className="bg-white/10 text-white border-white/20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
                 Season 1 • Limited Time
               </Badge>
             </motion.div>
 
             {/* Main Headline */}
             <motion.div variants={fadeInUp} className="space-y-4">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-gray-900 leading-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-white leading-tight">
                 Indian Creative Star
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 font-light max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto">
                 India's most prestigious art competition. 
                 <br className="hidden md:block" />
                 Where creativity meets recognition.
@@ -331,16 +349,16 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
             {/* Stats */}
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-8 py-8">
               <div className="text-center">
-                <div className="text-3xl font-light text-gray-900">₹50,000</div>
-                <div className="text-sm text-gray-500 font-medium">Prize Pool</div>
+                <div className="text-3xl font-light text-white">₹50,000</div>
+                <div className="text-sm text-gray-400 font-medium">Prize Pool</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-light text-gray-900">1,000+</div>
-                <div className="text-sm text-gray-500 font-medium">Artists</div>
+                <div className="text-3xl font-light text-white">1,000+</div>
+                <div className="text-sm text-gray-400 font-medium">Artists</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-light text-gray-900">Nationwide</div>
-                <div className="text-sm text-gray-500 font-medium">Platform</div>
+                <div className="text-3xl font-light text-white">Nationwide</div>
+                <div className="text-sm text-gray-400 font-medium">Platform</div>
               </div>
             </motion.div>
 
@@ -349,12 +367,12 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
               <Button 
                 onClick={handleRegisterClick}
                 size="lg"
-                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-200 hover:scale-105"
+                className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-medium transition-all duration-200 hover:scale-105"
               >
                 Register Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <p className="text-sm text-gray-500">Entry Fee: ₹249 • All participants receive certificates</p>
+              <p className="text-sm text-gray-400">Entry Fee: ₹249 • All participants receive certificates</p>
             </motion.div>
 
             {/* Scroll Indicator */}
@@ -365,11 +383,59 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="flex flex-col items-center text-gray-400"
+                className="flex flex-col items-center text-gray-300"
               >
                 <span className="text-xs font-medium mb-2">Scroll to explore</span>
                 <ChevronDown className="w-5 h-5" />
               </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Creative Manifesto Section */}
+      <motion.section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="space-y-8"
+          >
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8">
+                Our Creative Manifesto
+              </h2>
+            </motion.div>
+            
+            <motion.div 
+              variants={fadeInUp}
+              className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12"
+            >
+              <blockquote className="text-xl md:text-2xl font-light text-gray-700 leading-relaxed italic">
+                "They told your dreams don't pay,<br />
+                but your brush had more to say.<br />
+                What you create alone — the nation will now celebrate.<br />
+                <span className="text-gray-900 font-medium not-italic">India has millions of stories. Let yours rise today.</span>"
+              </blockquote>
+            </motion.div>
+            
+            <motion.div variants={fadeInUp} className="flex justify-center">
+              <div className="flex items-center space-x-8 text-sm text-gray-500">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span>Open Theme</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span>All Ages Welcome</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span>Nationwide Platform</span>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -445,6 +511,119 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
                   </div>
                 </div>
               </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Target Audience Section */}
+      <motion.section className="py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                Who can join
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Whether you're an artist or a parent supporting young talent, this is your gateway to national recognition
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            className="grid lg:grid-cols-2 gap-12"
+          >
+            {/* For Artists */}
+            <motion.div variants={slideInLeft} className="bg-white rounded-3xl p-8 shadow-sm border border-gray-200">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                  <Palette className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-medium text-gray-900">For Artists</h3>
+              </div>
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Showcase your artistic talent on a national platform and win from a <span className="font-semibold text-blue-600">₹50,000 prize pool</span>.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                  </div>
+                  <span className="text-gray-700">Connect with like-minded artists nationwide</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                  </div>
+                  <span className="text-gray-700">Get professional feedback on your artwork</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                  </div>
+                  <span className="text-gray-700">Add national recognition to your portfolio</span>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={handleRegisterClick}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-full font-medium transition-all duration-200"
+              >
+                <Palette className="w-5 h-5 mr-2" />
+                Register as Artist
+              </Button>
+            </motion.div>
+
+            {/* For Parents */}
+            <motion.div variants={slideInRight} className="bg-white rounded-3xl p-8 shadow-sm border border-gray-200">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center">
+                  <Heart className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-medium text-gray-900">For Parents</h3>
+              </div>
+              
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Nurture your child's creativity and give them a platform to shine with <span className="font-semibold text-green-600">confidence-building experience</span>.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <span className="text-gray-700">Boost your child's artistic confidence</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <span className="text-gray-700">Recognition beyond school achievements</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <span className="text-gray-700">Special addition to education portfolio</span>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={handleRegisterClick}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-full font-medium transition-all duration-200"
+              >
+                <Heart className="w-5 h-5 mr-2" />
+                Register as Parent
+              </Button>
             </motion.div>
           </motion.div>
         </div>
@@ -668,14 +847,23 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
             ].map((image, index) => (
               <motion.div 
                 key={index} 
-                variants={scaleIn}
-                className="aspect-square bg-gray-200 rounded-2xl overflow-hidden group cursor-pointer"
+                variants={floatUp}
+                className="aspect-square bg-gray-200 rounded-2xl overflow-hidden group cursor-pointer relative"
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <img 
                   src={image} 
                   alt={`Artwork ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center space-x-1">
+                    <Star className="w-3 h-3 text-white fill-current" />
+                    <span className="text-white text-xs font-medium">Featured</span>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -731,6 +919,288 @@ const IndexV3 = ({ onRegistrationClick }: IndexV3Props) => {
               >
                 <h3 className="text-lg font-medium text-gray-900 mb-3">{faq.question}</h3>
                 <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Artist Benefits Section */}
+      <motion.section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                Every artist wins something
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Because we believe every creative soul deserves recognition, growth, and a platform to shine
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
+            {[
+              {
+                icon: Star,
+                title: "Your Spotlight Moment",
+                description: "Featured in our Artist Showcase reaching 50,000+ art lovers across India",
+                color: "from-yellow-400 to-orange-400"
+              },
+              {
+                icon: Award,
+                title: "Official Creative Badge",
+                description: "Digital certificate + Artist ID that you can proudly display on LinkedIn & social media",
+                color: "from-blue-400 to-cyan-400"
+              },
+              {
+                icon: Users,
+                title: "Exclusive Artist Circle",
+                description: "Join our private community of 1,000+ verified artists for collaborations & opportunities",
+                color: "from-green-400 to-emerald-400"
+              },
+              {
+                icon: Zap,
+                title: "VIP Early Access",
+                description: "First to know about exhibitions, contests & art opportunities before anyone else",
+                color: "from-purple-400 to-pink-400"
+              }
+            ].map((benefit, index) => (
+              <motion.div 
+                key={index} 
+                variants={scaleIn}
+                className="text-center group"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <benefit.icon className="w-8 h-8 text-gray-600" />
+                </div>
+                <h3 className="text-xl font-medium text-gray-900 mb-3">{benefit.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Success Stories Section */}
+      <motion.section className="py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                Success stories
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Celebrating incredible talent from our past competitions
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-8 mb-16"
+          >
+            {[
+              { number: "500+", label: "Participants Joined", icon: Users },
+              { number: "₹25K", label: "Prize Distributed", icon: Gift },
+              { number: "4.9★", label: "Success Rating", icon: Star }
+            ].map((stat, index) => (
+              <motion.div 
+                key={index} 
+                variants={scaleIn}
+                className="text-center"
+              >
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <stat.icon className="w-8 h-8 text-gray-600" />
+                </div>
+                <div className="text-3xl font-light text-gray-900 mb-2">{stat.number}</div>
+                <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Testimonials */}
+          <motion.div 
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                name: "Anjali Sharma",
+                quote: "Very professional management! My daughter participated and felt so motivated. Finally, an art platform that respects young talent.",
+                avatar: "A"
+              },
+              {
+                name: "Rizwan Khan", 
+                quote: "As an artist, I joined Sikkim Creative Star Season 1 and now I'm here again for Season 2. The team keeps improving every year. Excited!",
+                avatar: "R"
+              },
+              {
+                name: "Priya Das",
+                quote: "Honestly, I didn't expect such smooth coordination. From registration to updates, everything was managed really well. Great job, Daami Event!",
+                avatar: "P"
+              }
+            ].map((testimonial, index) => (
+              <motion.div 
+                key={index} 
+                variants={scaleIn}
+                className="bg-white rounded-3xl p-8 shadow-sm border border-gray-200"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                    <span className="text-white font-semibold">{testimonial.avatar}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">{testimonial.name}</h4>
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600 italic">"{testimonial.quote}"</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Official Recognition Section */}
+      <motion.section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid lg:grid-cols-2 gap-16 items-center"
+          >
+            <motion.div variants={slideInLeft} className="space-y-8">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                  Official recognition
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                  All participants receive a professionally designed digital certificate perfect for:
+                </p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-gray-900 mb-2">Resume Enhancement</h3>
+                    <p className="text-gray-600">Add creative credentials to your professional profile</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <Palette className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-gray-900 mb-2">Portfolio Building</h3>
+                    <p className="text-gray-600">Demonstrate your commitment to your craft</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <Users className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-medium text-gray-900 mb-2">Social Media Sharing</h3>
+                    <p className="text-gray-600">Share your achievement with friends and followers</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div variants={slideInRight} className="relative">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8">
+                <div className="bg-white rounded-2xl p-8 shadow-lg">
+                  <div className="text-center space-y-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto">
+                      <Award className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-medium text-gray-900 mb-2">Indian Creative Star</h3>
+                      <h4 className="text-lg font-medium text-gray-700 mb-4">Certificate of Participation</h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        This certifies that [Participant Name] has successfully participated in India's premier art competition
+                      </p>
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <div className="w-8 h-1 bg-blue-300 rounded"></div>
+                      <div className="w-8 h-1 bg-purple-300 rounded"></div>
+                      <div className="w-8 h-1 bg-orange-300 rounded"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Supporters Section */}
+      <motion.section className="py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <motion.div variants={fadeInUp}>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6">
+                Our supporters
+              </h2>
+              <p className="text-lg text-gray-600">Our Partners & Sponsors</p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8"
+          >
+            {[
+              { name: "Funky Monkey", type: "Sponsor" },
+              { name: "Daami Event", type: "Event Management" },
+              { name: "Tenverse Media", type: "Sponsor" },
+              { name: "Sikkim Daily News", type: "Media Partner" },
+              { name: "Cultural Dept. Sikkim", type: "Government Partner" },
+              { name: "Education Dept. Sikkim", type: "Educational Partner" }
+            ].map((partner, index) => (
+              <motion.div 
+                key={index} 
+                variants={scaleIn}
+                className="text-center group"
+              >
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-gray-600 font-semibold text-sm">{partner.name.split(' ').map(w => w[0]).join('')}</span>
+                </div>
+                <h3 className="text-sm font-medium text-gray-900 mb-1">{partner.name}</h3>
+                <p className="text-xs text-gray-600">{partner.type}</p>
               </motion.div>
             ))}
           </motion.div>
