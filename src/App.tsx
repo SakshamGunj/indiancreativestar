@@ -12,6 +12,7 @@ import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
 import IndexV2 from "./pages/v2/IndexV2";
+import IndexV3 from "./pages/v3/IndexV3";
 import AdminExport from "./pages/AdminExport";
 import AdminCertificates from "./pages/AdminCertificates";
 import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
@@ -121,6 +122,7 @@ const App = () => {
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
                   <Route path="/indiancreativestar/v2" element={<IndexV2 />} />
+                  <Route path="/indiancreativestar/v3" element={<IndexV3 />} />
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />
                   <Route path="/admin/certificates" element={<AdminCertificates />} />
