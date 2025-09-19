@@ -213,6 +213,7 @@ export const addSubmission = async (submissionData: {
   email: string;
   artworkUrl: string;
   source?: string;
+  whatsapp?: string;
 }) => {
   try {
     const docRef = await addDoc(collection(db, COLLECTIONS.SUBMISSIONS), {
