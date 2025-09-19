@@ -28,7 +28,8 @@ const googleProvider = new GoogleAuthProvider();
 // Collection names
 export const COLLECTIONS = {
   PARTICIPANTS: 'participants',
-  REVIEWS: 'reviews'
+  REVIEWS: 'reviews',
+  SUBMISSIONS: 'submissions'
 };
 
 // Webhook URL for n8n automation
@@ -205,3 +206,23 @@ export const addReview = async (reviewData: {
 
 export { db, analytics, auth, googleProvider };
 export default app; 
+
+// Artwork submission helper
+export const addSubmission = async (submissionData: {
+  name: string;
+  email: string;
+  artworkUrl: string;
+  source?: string;
+}) => {
+  try {
+    const docRef = await addDoc(collection(db, COLLECTIONS.SUBMISSIONS), {
+      ...submissionData,
+      createdAt: Timestamp.now(),
+      campaign: 'indiancreativestar',
+    });
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error('Error adding submission: ', error);
+    return { success: false, error };
+  }
+};
