@@ -16,6 +16,7 @@ import AdminExport from "./pages/AdminExport";
 import AdminCertificates from "./pages/AdminCertificates";
 import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
 import AdminVerify from "./pages/AdminVerify";
+import IndianCreativeStarSubmission from "./pages/IndianCreativeStarSubmission";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -121,6 +122,7 @@ const App = () => {
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
                   <Route path="/indiancreativestar/v2" element={<IndexV2 />} />
+                  <Route path="/indiancreativestar/submission" element={<IndianCreativeStarSubmission />} />
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />
                   <Route path="/admin/certificates" element={<AdminCertificates />} />
