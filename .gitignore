@@ -13,6 +13,9 @@ dist
 dist-ssr
 *.local
 
+# Payment server (separate deployment)
+cashfree-payment-server/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

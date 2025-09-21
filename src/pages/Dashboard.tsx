@@ -267,8 +267,8 @@ const Dashboard = () => {
     setIsProcessingCheckout(true);
 
     try {
-      // Create order using our working API endpoint
-      const response = await fetch('/api/cashfree/create-order', {
+      // Create order using our dedicated payment server
+      const response = await fetch('https://indiancreativestarbackend.vercel.app/create-order', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json'
