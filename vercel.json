@@ -2,68 +2,25 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "api/cashfree/create-order.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/cashfree/order-status.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/cashfree/health.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/health.js",
-      "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/cashfree/create-order.js": {
-      "maxDuration": 30
-    },
-    "api/cashfree/order-status.js": {
-      "maxDuration": 30
-    },
-    "api/cashfree/health.js": {
-      "maxDuration": 10
-    }
-  },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/cashfree/create-order",
-      "dest": "/api/cashfree/create-order.js"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
-      "src": "/api/cashfree/order-status",
-      "dest": "/api/cashfree/order-status.js"
-    },
-    {
-      "src": "/api/cashfree/health",
-      "dest": "/api/cashfree/health.js"
-    },
-    {
-      "src": "/api/health",
-      "dest": "/api/health.js"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ]
 }
