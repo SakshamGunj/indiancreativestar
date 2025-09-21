@@ -1,10 +1,6 @@
 {
   "builds": [
     {
-      "src": "api/create-payment.js",
-      "use": "@vercel/node"
-    },
-    {
       "src": "api/cashfree/create-order.js",
       "use": "@vercel/node"
     },
