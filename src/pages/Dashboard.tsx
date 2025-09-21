@@ -81,7 +81,7 @@ const Dashboard = () => {
         paymentDate: new Date(),
         paymentStatus: 'success',
         paymentMethod: 'cashfree',
-        paymentAmount: 1,
+        paymentAmount: 249,
         paymentCurrency: 'INR',
         lastUpdated: new Date()
       }).then(() => {
@@ -274,7 +274,7 @@ const Dashboard = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          order_amount: '1',
+          order_amount: '249',
           order_currency: 'INR',
           customer_details: {
             customer_name: name || currentUser!.displayName || 'Artist',
@@ -957,7 +957,7 @@ const Dashboard = () => {
                   </div>
                   <p className="text-xs font-medium text-gray-600">Entry Fee</p>
                   <p className={`text-sm font-bold ${userData?.hasPaid ? 'text-green-600' : 'text-gray-400'}`}>
-                    {userData?.hasPaid ? 'Paid ₹1' : 'Pending'}
+                    {userData?.hasPaid ? 'Paid ₹249' : 'Pending'}
                   </p>
                 </CardContent>
               </Card>
@@ -1024,7 +1024,7 @@ const Dashboard = () => {
 
                 <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-4 mb-6 border border-green-200">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-green-700 mb-1">₹1</div>
+                    <div className="text-3xl font-bold text-green-700 mb-1">₹249</div>
                     <div className="text-sm font-medium text-green-600">Competition Entry Fee</div>
                     <div className="text-xs text-green-500 mt-1">✨ Instant Access • Secure Payment</div>
                   </div>
@@ -1068,7 +1068,7 @@ const Dashboard = () => {
 
                   <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 mb-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600 mb-1">₹1</div>
+                      <div className="text-2xl font-bold text-green-600 mb-1">₹249</div>
                       <div className="text-xs text-green-700">Entry Fee Required</div>
                     </div>
                   </div>
