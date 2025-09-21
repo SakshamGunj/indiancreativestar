@@ -12,10 +12,15 @@ import AdminPage from "./pages/voting/admin";
 import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage component
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
 import IndexV2 from "./pages/v2/IndexV2";
+import IndexV3 from "./pages/v3/IndexV3";
 import AdminExport from "./pages/AdminExport";
 import AdminCertificates from "./pages/AdminCertificates";
 import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
 import AdminVerify from "./pages/AdminVerify";
+import ArtworkSubmission from "./pages/ArtworkSubmission";
+import Dashboard from "./pages/Dashboard";
+import CashfreeTest from "./pages/CashfreeTest";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -83,7 +88,7 @@ const App = () => {
       <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin w-8 h-8 border-2 border-creative-purple border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-white/70">Loading Sikkim Creative Star...</p>
+          <p className="text-white/70">Loading Indian Creative Star...</p>
         </div>
       </div>
     );
@@ -121,10 +126,15 @@ const App = () => {
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
                   <Route path="/indiancreativestar/v2" element={<IndexV2 />} />
+                  <Route path="/indiancreativestar/v3" element={<IndexV3 />} />
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />
                   <Route path="/admin/certificates" element={<AdminCertificates />} />
                   <Route path="/admin/verify" element={<AdminVerify />} />
+                  <Route path="/indiancreativestar/submission" element={<Dashboard />} />
+                  <Route path="/indiancreativestar/dashboard" element={<Dashboard />} />
+                  <Route path="/cashfree-test" element={<CashfreeTest />} />
+                  <Route path="/payment-success" element={<PaymentSuccess />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

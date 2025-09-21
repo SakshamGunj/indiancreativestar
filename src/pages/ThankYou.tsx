@@ -129,7 +129,8 @@ export default function ThankYou() {
   }, []);
   
   const handleBackHome = () => {
-    navigate("/indiancreativestar/v2");
+    const from = searchParams.get("from") || "/indiancreativestar/v2";
+    navigate(from);
   };
   
   

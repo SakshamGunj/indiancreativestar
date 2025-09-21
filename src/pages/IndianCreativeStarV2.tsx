@@ -34,9 +34,11 @@ const IndianCreativeStarV2 = () => {
             <a href="#prizes" className="text-gray-600 hover:text-purple-500 transition-colors font-semibold">Prizes</a>
             <a href="#gallery" className="text-gray-600 hover:text-purple-500 transition-colors font-semibold">Gallery</a>
           </div>
-          <Button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold py-3 px-6 rounded-full text-lg transform hover:scale-105 transition-transform shadow-lg">
-            Register Now
-          </Button>
+          <a href="/thank-you?from=/indiancreativestar/v2">
+            <Button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold py-3 px-6 rounded-full text-lg transform hover:scale-105 transition-transform shadow-lg">
+              Register Now
+            </Button>
+          </a>
         </div>
       </header>
 
@@ -399,59 +401,3 @@ const IndianCreativeStarV2 = () => {
 
 export default IndianCreativeStarV2;
 
-<style jsx global>{`
-  .glassmorphism-card {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  @keyframes-down {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .animate-fade-in-down {
-    animation: fade-in-down 1s ease-out forwards;
-  }
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .animate-fade-in-up {
-    animation: fade-in-up 1s ease-out forwards;
-  }
-  @keyframes blob {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-  .animate-blob {
-    animation: blob 7s infinite;
-  }
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-`}</style>

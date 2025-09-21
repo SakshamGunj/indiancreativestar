@@ -368,7 +368,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     });
   };
 
-  // Artwork images for Netflix-style background
+  // Best artwork images for static backgrounds
   const baseArtworkImages = [
     "https://i.ibb.co/WvDdnrrp/ba50688142d1.jpg",
     "https://i.ibb.co/kgs0nvH0/b663bb4fcdd5.jpg",
@@ -387,20 +387,18 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     "https://i.ibb.co/cc5kPhJf/bbbe857c0f6f.png"
   ];
 
-  // Create continuous flow by duplicating images multiple times for seamless animation
-  // Optimized: Use only base images instead of massive duplication
-  const artworkImages = baseArtworkImages;
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black" style={{ scrollBehavior: 'smooth' }}>
+    <div className="min-h-screen overflow-x-hidden bg-black" style={{ scrollBehavior: 'smooth', willChange: 'scroll-position' }}>
       {/* Fix mobile white flash */}
       <style>{`
         body {
           background-color: black !important;
           overflow-x: hidden;
+          -webkit-overflow-scrolling: touch;
         }
         html {
           background-color: black !important;
+          scroll-behavior: smooth;
         }
         @media (max-width: 768px) {
           body {
@@ -409,7 +407,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           }
         }
         
-        /* Optimized gradient animation - only runs when visible */
+        /* Performance optimizations */
+        * {
+          box-sizing: border-box;
+        }
+        
+        .gpu-accelerated {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Optimized gradient animation */
         @keyframes gradient-shift {
           0% {
             background-position: 0% 50%;
@@ -449,57 +457,21 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       
 
       
-      {/* Hero Section - Netflix Style with Flowing Artwork */}
+      {/* Hero Section - Single Blurred Background */}
       <section className="relative pt-0 sm:pt-32 pb-16 sm:pb-20 px-2 sm:px-4 overflow-hidden min-h-screen">
-        {/* Full-Screen Artwork Gallery Background */}
+        {/* Single Blurred Background Image */}
         <div className="absolute inset-0 overflow-hidden">
+          {/* Background Image - Best artwork from the collection */}
+          <div className="absolute inset-0">
+            <LazyImage
+              src="https://i.ibb.co/fz9nV0sg/4fe133328b5c.jpg"
+              alt="Featured Artwork Background"
+              className="w-full h-full object-cover blur-sm scale-110"
+            />
+          </div>
+          
           {/* Dark Gradient Overlay for Better Text Visibility */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
-
-          {/* Large Square Artwork Grid - Row 1 (Left to Right) */}
-          <div className="absolute top-0 left-0 w-full h-1/3 animate-flow-right-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.map((image, index) => (
-                <div key={`row1-${index}`} className="flex-shrink-0 h-full">
-                  <LazyImage
-                    src={image} 
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 shadow-2xl opacity-60 hover:opacity-80 transition-opacity duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Large Square Artwork Grid - Row 2 (Right to Left) */}
-          <div className="absolute top-1/3 left-0 w-full h-1/3 animate-flow-left-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.slice().reverse().map((image, index) => (
-                <div key={`row2-${index}`} className="flex-shrink-0 h-full">
-                  <LazyImage
-                    src={image} 
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 shadow-2xl opacity-50 hover:opacity-70 transition-opacity duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Large Square Artwork Grid - Row 3 (Left to Right) */}
-          <div className="absolute top-2/3 left-0 w-full h-1/3 animate-flow-right-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.map((image, index) => (
-                <div key={`row3-${index}`} className="flex-shrink-0 h-full">
-                  <LazyImage
-                    src={image} 
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Content Overlay */}
@@ -1021,57 +993,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </div>
       </section>
 
-      {/* Artist Benefits Sliding Section */}
-      <section className="relative py-20 overflow-x-hidden overflow-y-visible" id="benefits">
-        {/* Hero-style Background */}
+      {/* Artist Benefits Section */}
+      <section className="relative py-20 overflow-hidden" id="benefits">
+        {/* Single Blurred Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
-          
-          {/* Artwork Grid Background - Row 1 */}
-          <div className="absolute top-0 left-0 w-full h-1/3 animate-flow-right-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.map((image, index) => (
-                <div key={`benefits-row1-${index}`} className="flex-shrink-0 h-full">
-                  <LazyImage
-                    src={image}
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-32 sm:w-40 md:w-48 lg:w-56 xl:w-64 shadow-2xl opacity-40 hover:opacity-60 transition-opacity duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-            </div>
-            
-          {/* Artwork Grid Background - Row 2 */}
-          <div className="absolute top-1/3 left-0 w-full h-1/3 animate-flow-left-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.slice().reverse().map((image, index) => (
-                <div key={`benefits-row2-${index}`} className="flex-shrink-0 h-full">
-                  <img
-                    src={image}
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 object-cover shadow-2xl opacity-30 hover:opacity-50 transition-opacity duration-300"
-                  />
-              </div>
-              ))}
-            </div>
-            </div>
-            
-          {/* Artwork Grid Background - Row 3 */}
-          <div className="absolute top-2/3 left-0 w-full h-1/3 animate-flow-right-slow">
-            <div className="flex space-x-0 h-full">
-              {artworkImages.map((image, index) => (
-                <div key={`benefits-row3-${index}`} className="flex-shrink-0 h-full">
-                  <LazyImage
-                    src={image}
-                    alt={`Artwork ${index + 1}`}
-                    className="h-full w-48 md:w-64 shadow-2xl opacity-20 hover:opacity-40 transition-opacity duration-300"
-                  />
-              </div>
-              ))}
-            </div>
-            </div>
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <LazyImage
+              src="https://i.ibb.co/kgs0nvH0/b663bb4fcdd5.jpg"
+              alt="Benefits Background"
+              className="w-full h-full object-cover blur-sm scale-110"
+            />
           </div>
+          
+          {/* Dark Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
+        </div>
 
         {/* Header Section */}
         <div className="relative z-20 text-center mb-6 pt-2">
@@ -1173,23 +1110,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
         
-        <style>{`
-          @keyframes slide-left-continuous {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
-          
-          .animate-slide-left-continuous {
-            animation: slide-left-continuous 40s linear infinite;
-          }
-          
-          /* Pause animations when not visible */
-          @media (prefers-reduced-motion: reduce) {
-            .animate-slide-left-continuous {
-              animation: none !important;
-            }
-          }
-        `}</style>
+
       </section>
 
       {/* Previous Competition Highlights - Compact */}
@@ -1710,6 +1631,92 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       {/* Testimonials Section - Moved here after Previous Competition Highlights */}
       <TestimonialsSection />
       
+      {/* Real Reviews Section */}
+      <section className="py-12 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">
+              Real Reviews 📱
+            </h2>
+            <p className="text-base text-gray-600">Authentic feedback from Season 1 participants</p>
+          </div>
+          
+          <div className="columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
+            {[
+              "https://i.ibb.co/LXMnjMLz/IMG-20250915-171938-11zon.jpg",
+              "https://i.ibb.co/hxqkWzyk/IMG-20250915-132944-11zon.jpg",
+              "https://i.ibb.co/b5WmDsgm/IMG-20250915-133022-11zon.jpg",
+              "https://i.ibb.co/qLYnPNPD/IMG-20250915-130155-11zon.jpg",
+              "https://i.ibb.co/fYJz2x2j/IMG-20250915-132857-11zon.jpg",
+              "https://i.ibb.co/67Fh2bGj/IMG-20250915-130115-11zon.jpg",
+              "https://i.ibb.co/wFPN7RDg/Screenshot-2025-09-16-13-58-31-33-6012fa4d4ddec268fc5c7112cbb265e7-11zon.jpg"
+            ].map((image, i) => (
+              <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} className="relative group break-inside-avoid mb-3 md:mb-4">
+                <div className="bg-white rounded-xl p-2 shadow-md hover:shadow-lg transition-shadow">
+                  <div className="relative overflow-hidden rounded-lg">
+                    <LazyImage src={image} alt={`Review ${i + 1}`} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
+                    <div className="absolute top-2 right-2 bg-green-500 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
+                      ✓
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-6">
+            <div className="inline-flex items-center gap-2 bg-white rounded-xl px-4 py-2 shadow-md">
+              <span className="text-lg">⭐</span>
+              <span className="font-bold text-gray-900 text-sm">4.9/5 from 300+ Artists</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Prize Distribution Ceremony Section */}
+      <section className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
+              Prize Distribution Ceremony 🏆
+            </h2>
+            <p className="text-lg text-gray-600">Season 1 - Celebrating our Creative Stars</p>
+          </div>
+          
+          <div className="columns-2 md:columns-2 lg:columns-3 gap-3 space-y-3" style={{ columnFill: 'balance' }}>
+            {[
+              "https://i.ibb.co/GvxDtkMB/IMG-20250914-WA0061-1-11zon.jpg",
+              "https://i.ibb.co/dsLXSzc5/IMG-20250914-WA0034-11zon.jpg",
+              "https://i.ibb.co/6Jf9VgW9/IMG-20250914-WA0065-11zon.jpg",
+              "https://i.ibb.co/gFjJ0nrD/IMG-20250915-133301-11zon.jpg",
+              "https://i.ibb.co/hFtJFDNM/IMG-20250914-WA0024-11zon.jpg",
+              "https://i.ibb.co/PRq5Y0T/IMG-20250914-WA0028-11zon.jpg",
+              "https://i.ibb.co/RxbjbPt/IMG-20250914-WA0026-11zon-2.jpg"
+            ].map((image, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className={`relative group break-inside-avoid mb-3 ${i === 0 ? 'column-span-2' : ''}`}>
+                <div className="bg-white rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow">
+                  <div className="relative overflow-hidden rounded-md">
+                    <LazyImage src={image} alt={`Prize Distribution ${i + 1}`} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
+                    <div className="absolute bottom-1 left-1 bg-black/70 text-white px-1 py-0.5 rounded text-xs">
+                      <div className="text-sm mb-0">🎉</div>
+                      <div className="font-bold text-xs">Season 1</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl px-6 py-3 text-white shadow-lg">
+              <span className="text-2xl">🎊</span>
+              <span className="font-bold">6 Creative Stars Awarded in Season 1</span>
+              <span className="text-2xl">✨</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Countdown Section */}
       <CountdownSection onRegisterClick={handleRegisterClick} />
       
@@ -2024,13 +2031,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       </div>
       
         {/* Full Width Sliding Partners */}
-        <div className="overflow-hidden mb-8">
-          <div className="flex animate-slide-left-continuous space-x-6">
-            {[...Array(3)].map((_, setIndex) => (
-              <React.Fragment key={setIndex}>
-                  
-                  {/* Funky Monkey */}
-                  <div className="flex-shrink-0 w-48">
+        <div className="mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            {/* Funky Monkey */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">FM</span>
@@ -2040,8 +2044,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
 
-                  {/* Daami Event */}
-                  <div className="flex-shrink-0 w-48">
+            {/* Daami Event */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">DE</span>
@@ -2051,8 +2055,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
 
-                  {/* Tenverse Media */}
-                  <div className="flex-shrink-0 w-48">
+            {/* Tenverse Media */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">TM</span>
@@ -2062,8 +2066,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
 
-                  {/* Sikkim Daily News */}
-                  <div className="flex-shrink-0 w-48">
+            {/* Sikkim Daily News */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">SDN</span>
@@ -2073,8 +2077,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
 
-                  {/* Cultural Department */}
-                  <div className="flex-shrink-0 w-48">
+            {/* Cultural Department */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <Award className="h-6 w-6 text-white" />
@@ -2084,8 +2088,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
 
-                  {/* Education Department */}
-                  <div className="flex-shrink-0 w-48">
+            {/* Education Department */}
+            <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <BookOpen className="h-6 w-6 text-white" />
@@ -2094,9 +2098,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <p className="text-xs text-gray-600">Educational Partner</p>
                     </div>
                   </div>
-                  
-                </React.Fragment>
-              ))}
+
             </div>
           </div>
 
@@ -2119,29 +2121,55 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
         
-        <style>{`
-          @keyframes slide-left-continuous {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
-          
-          .animate-slide-left-continuous {
-            animation: slide-left-continuous 35s linear infinite;
-          }
-          
-          /* Pause animations when not visible */
-          @media (prefers-reduced-motion: reduce) {
-            .animate-slide-left-continuous {
-              animation: none !important;
-            }
-          }
-        `}</style>
+
       </section>
       
       {/* FAQ Section */}
       <div id="faq">
-        <FAQSectionV2 />
+        <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse"></div>}>
+          <FAQSectionV2 />
+        </React.Suspense>
       </div>
+      
+      {/* Performance Optimization Styles */}
+      <style>{`
+        /* Smooth scrolling optimization */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* GPU acceleration for transforms */
+        .hover\:scale-105:hover,
+        .hover\:scale-110:hover {
+          transform: scale(1.05) translateZ(0);
+          will-change: transform;
+        }
+        
+        /* Optimize images */
+        img {
+          content-visibility: auto;
+          contain-intrinsic-size: 300px 200px;
+        }
+        
+        /* Reduce motion for better performance */
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+        
+        /* Optimize scrolling */
+        * {
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Prevent layout shifts */
+        .container {
+          contain: layout style;
+        }
+      `}</style>
       
       {/* Beautiful Registration Modal */}
       {!onRegistrationClick && (

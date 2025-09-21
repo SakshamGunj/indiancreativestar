@@ -460,7 +460,7 @@ export default function SikkimCreativeStar() {
       <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin text-creative-purple mx-auto mb-4" />
-          <p className="text-white/70">Loading Sikkim Creative Star...</p>
+          <p className="text-whnoite/70">Loading Indian Creative Star...</p>
         </div>
       </div>
     );

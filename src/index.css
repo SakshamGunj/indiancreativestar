@@ -114,51 +114,7 @@ body {
   }
 }
 
-/* Netflix Style Flowing Artwork Animations */
-@keyframes flow-right {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes flow-left {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animate-flow-right {
-  animation: flow-right 60s linear infinite;
-}
-
-.animate-flow-left {
-  animation: flow-left 80s linear infinite;
-}
-
-.animate-flow-right-slow {
-  animation: flow-right 60s linear infinite;
-}
-
-.animate-flow-left-slow {
-  animation: flow-left 70s linear infinite;
-}
-
-/* Mobile optimization - faster on small screens */
-@media (max-width: 640px) {
-  .animate-flow-right-slow {
-    animation: flow-right 45s linear infinite;
-  }
-
-  .animate-flow-left-slow {
-    animation: flow-left 50s linear infinite;
-  }
-}
+/* Removed sliding animations for better performance */
 
 /* Utility Classes */
 .glass {
