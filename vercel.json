@@ -1,4 +1,5 @@
 {
+  "framework": "vite",
   "builds": [
     {
       "src": "api/cashfree/create-order.js",
