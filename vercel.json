@@ -21,10 +21,29 @@
       "use": "@vercel/node"
     }
   ],
+  "functions": {
+    "api/cashfree/create-order.js": {
+      "maxDuration": 30
+    },
+    "api/cashfree/order-status.js": {
+      "maxDuration": 30
+    },
+    "api/cashfree/health.js": {
+      "maxDuration": 10
+    }
+  },
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/cashfree/create-order",
+      "dest": "/api/cashfree/create-order.js"
+    },
+    {
+      "src": "/api/cashfree/order-status",
+      "dest": "/api/cashfree/order-status.js"
+    },
+    {
+      "src": "/api/cashfree/health",
+      "dest": "/api/cashfree/health.js"
     },
     {
       "src": "/assets/(.*)",
