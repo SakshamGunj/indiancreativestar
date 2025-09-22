@@ -37,6 +37,7 @@ interface UserData {
   status: string;
   deviceId: string;
   certificateUrl?: string;
+  artistIdUrl?: string;
 }
 
 interface UserDashboardProps {
@@ -481,7 +482,62 @@ export function UserDashboard({ user }: UserDashboardProps) {
                     )}
                   </div>
 
-                  {/* ID Card Placeholder */}
+                  {/* Artist ID Card Section */}
+                  <div className={`p-4 sm:p-6 rounded-2xl bg-black text-center ${
+                    userData.artistIdUrl ? 'border-2 border-blue-500/30' : 'border-2 border-dashed border-gray-700'
+                  }`}>
+                    <div className="flex justify-center items-center gap-3 mb-4">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                            userData.artistIdUrl ? 'bg-blue-500/20' : 'bg-creative-blue/20'
+                        }`}>
+                            {userData.artistIdUrl ? (
+                                <CheckCircle className="h-6 w-6 text-blue-500" />
+                            ) : (
+                                <User className="h-6 w-6 text-creative-blue" />
+                            )}
+                        </div>
+                        <h3 className="text-white font-semibold text-lg sm:text-xl">Artist ID Card</h3>
+                    </div>
+                    <p className="text-white/70 text-sm mb-6 max-w-lg mx-auto">
+                        {userData.artistIdUrl
+                            ? "Your artist ID card is ready for download! You can preview it or download it directly."
+                            : "Your artist ID card is not yet available. It will appear here once your application is approved by the admin."
+                        }
+                    </p>
+
+                    {userData.artistIdUrl ? (
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-full max-w-lg h-auto bg-gray-900/50 rounded-xl overflow-hidden flex items-center justify-center border border-blue-500/30 mb-4">
+                                <img
+                                    src={userData.artistIdUrl}
+                                    alt="Artist ID Card Preview"
+                                    className="w-full h-auto object-contain rounded-lg"
+                                />
+                            </div>
+                            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-3 mt-4">
+                                <Button
+                                    onClick={() => window.open(userData.artistIdUrl, '_blank')}
+                                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+                                >
+                                    <Download className="h-5 w-5 mr-2" />
+                                    Download
+                                </Button>
+                                <Button
+                                    onClick={() => window.open(userData.artistIdUrl, '_blank')}
+                                    className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-all"
+                                >
+                                    <Eye className="h-5 w-5 mr-2" />
+                                    Preview
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <Button disabled variant="outline" className="border-gray-600 text-gray-400 px-6 py-3 rounded-lg text-sm">
+                            <Clock className="h-4 w-4 mr-2" />
+                            Not Available Yet
+                        </Button>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
