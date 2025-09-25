@@ -9,9 +9,10 @@ const RefundAndCancellation: React.FC = () => {
       <section className="space-y-4 text-white/90">
         <p><strong>Refunds:</strong> No refunds for cancellations made within <strong>48 hours of the event</strong>.</p>
         <p><strong>Refund Window:</strong> Cancellations before 48 hours of the event may be eligible for refund (subject to processing fees).</p>
-        <p><strong>Refund Processing Time:</strong> 5–7 business days.</p>
+        <p><strong>Refund Request Window:</strong> Participants can request a refund within <strong>7 working days</strong> from the date of payment/registration, subject to the above event timeline rule.</p>
+        <p><strong>Refund Processing Time:</strong> Approved refunds will be processed within <strong>48 hours</strong>.</p>
         <p><strong>Refund Method:</strong> Same mode as original payment (wallet/UPI/card/bank).</p>
-        <p><strong>Failed Transactions/Duplicate Payments:</strong> Will be verified and refunded within 5–7 business days.</p>
+        <p><strong>Failed Transactions/Duplicate Payments:</strong> Will be verified and refunded within <strong>48 hours</strong> after verification.</p>
         <p><strong>Non-Refundable Fees:</strong> Service/processing charges, merchandise orders, and no-shows.</p>
       </section>
 
