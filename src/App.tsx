@@ -21,6 +21,9 @@ import ArtworkSubmission from "./pages/ArtworkSubmission";
 import Dashboard from "./pages/Dashboard";
 import CashfreeTest from "./pages/CashfreeTest";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import RefundAndCancellation from "./pages/RefundAndCancellation";
+import ContactUs from "./pages/ContactUs";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -135,6 +138,9 @@ const App = () => {
                   <Route path="/indiancreativestar/dashboard" element={<Dashboard />} />
                   <Route path="/cashfree-test" element={<CashfreeTest />} />
                   <Route path="/payment-success" element={<PaymentSuccess />} />
+                  <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                  <Route path="/refund-and-cancellation" element={<RefundAndCancellation />} />
+                  <Route path="/contact-us" element={<ContactUs />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
