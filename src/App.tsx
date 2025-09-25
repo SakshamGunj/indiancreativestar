@@ -24,6 +24,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -141,6 +142,7 @@ const App = () => {
                   <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                   <Route path="/refund-and-cancellation" element={<RefundAndCancellation />} />
                   <Route path="/contact-us" element={<ContactUs />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

@@ -3,27 +3,22 @@ import React from "react";
 const RefundAndCancellation: React.FC = () => {
   return (
     <div className="min-h-screen text-white px-4 py-12 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Refund and Cancellation Policy</h1>
-      <p className="text-white/80 mb-4">Last updated: {new Date().toLocaleDateString()}</p>
+      <h1 className="text-3xl font-bold mb-6">Refund & Cancellation Policy – Daami Event</h1>
+      <p className="text-white/80 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
 
-      <div className="space-y-6 text-white/90">
-        <p>
-          This is a placeholder policy. Provide your fee structure, non-refundable components,
-          processing timelines, and any conditions for cancellations/changes so we can finalize
-          this page.
-        </p>
+      <section className="space-y-4 text-white/90">
+        <p><strong>Refunds:</strong> No refunds for cancellations made within <strong>48 hours of the event</strong>.</p>
+        <p><strong>Refund Window:</strong> Cancellations before 48 hours of the event may be eligible for refund (subject to processing fees).</p>
+        <p><strong>Refund Processing Time:</strong> 5–7 business days.</p>
+        <p><strong>Refund Method:</strong> Same mode as original payment (wallet/UPI/card/bank).</p>
+        <p><strong>Failed Transactions/Duplicate Payments:</strong> Will be verified and refunded within 5–7 business days.</p>
+        <p><strong>Non-Refundable Fees:</strong> Service/processing charges, merchandise orders, and no-shows.</p>
+      </section>
 
-        <h2 className="text-xl font-semibold">What We Need From You</h2>
-        <ul className="list-disc ml-6 space-y-2">
-          <li>Products/services covered (registrations, tickets, subscriptions, etc.)</li>
-          <li>Which fees are refundable vs non-refundable</li>
-          <li>Time window for cancellation and refund eligibility</li>
-          <li>Processing time to issue refunds (e.g., 5-7 business days)</li>
-          <li>Method of refund (original payment method, wallet/credit)</li>
-          <li>Contact channel to request a refund/cancellation</li>
-          <li>Special cases (duplicate payments, failed transactions)</li>
-        </ul>
-      </div>
+      <section className="space-y-2 text-white/90 mt-8">
+        <h2 className="text-xl font-semibold">How to Request a Refund</h2>
+        <p>Email us at <a className="text-blue-300 underline" href="mailto:daamievent@gmail.com">daamievent@gmail.com</a> with payment details and proof.</p>
+      </section>
     </div>
   );
 };
