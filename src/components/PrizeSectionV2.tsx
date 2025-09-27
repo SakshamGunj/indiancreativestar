@@ -357,10 +357,10 @@ export function PrizeSectionV2() {
                       </ul>
                     </CardContent>
                   </Card>
+                  </motion.div>
                 </motion.div>
               </motion.div>
-            </div>
-          </motion.div>
+            </motion.div>
 
           {/* Kids Art Competition Prizes */}
           <motion.div 

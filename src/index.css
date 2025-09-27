@@ -49,42 +49,81 @@
 
 * {
   border-color: hsl(var(--border));
+  box-sizing: border-box;
+}
+
+/* Critical performance optimizations */
+*,
+*::before,
+*::after {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Optimize image loading */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px 200px;
+}
+
+/* Optimize scrolling */
+.scroll-container {
+  contain: layout style paint;
+  content-visibility: auto;
 }
 
 html, body {
   overflow-x: hidden;
   width: 100%;
   background-color: #000;
+  scroll-behavior: smooth;
 }
 
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
   overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  transform: translateZ(0); /* Force GPU acceleration */
+  font-display: swap; /* Optimize font loading */
+  image-rendering: optimizeSpeed; /* Optimize image rendering */
+  text-rendering: optimizeSpeed; /* Optimize text rendering */
 }
 
-/* Custom Glassmorphism Styles */
+/* Custom Glassmorphism Styles - Optimized */
 .glassmorphism-card {
   @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl rounded-3xl;
+  will-change: transform;
+  transform: translateZ(0); /* GPU acceleration */
+}
+
+.glassmorphism-card:hover {
+  transform: translateZ(0) scale(1.02); /* Reduced scale for better performance */
+  transition: transform 0.2s ease-out;
 }
 
 .creative-card {
   @apply rounded-3xl border border-white/20 backdrop-blur-xl bg-white/10 shadow-2xl;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .creative-card:hover {
-  @apply transform scale-105;
-  @apply shadow-3xl;
-  @apply bg-white/20;
+  @apply shadow-3xl bg-white/20;
+  transform: translateZ(0) scale(1.02);
+  transition: all 0.2s ease-out;
 }
 
 .prize-card {
   @apply rounded-2xl border-2 backdrop-blur-lg bg-white/80 shadow-lg;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .prize-card:hover {
-  @apply transform scale-105;
   @apply shadow-3xl;
+  transform: translateZ(0) scale(1.02);
+  transition: all 0.2s ease-out;
 }
 
 .text-gradient {
@@ -197,17 +236,74 @@ body {
   transform: scale(1.03);
 }
 
-/* Animation Classes */
+/* Animation Classes - Optimized for performance */
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite alternate;
+  will-change: box-shadow;
 }
 
 .animate-pulse-slow {
   animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Optimized gradient animation for hero section */
+@keyframes gradient-shift-optimized {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animated-gradient-hero {
+  background: linear-gradient(-45deg, #ff6b6b, #ffa500, #ff4757, #ff6348);
+  background-size: 300% 300%;
+  animation: gradient-shift-optimized 6s ease-in-out infinite;
+  will-change: background-position;
+}
+
+/* Optimized scrolling animations */
+.animate-slide-right-optimized {
+  animation: slide-right-optimized 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes slide-right-optimized {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Performance optimizations */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Reduce motion for users with accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-glow,
+  .animate-pulse-slow,
+  .animated-gradient-hero,
+  .animate-slide-right-optimized {
+    animation: none !important;
+  }
+  
+  .glassmorphism-card:hover,
+  .creative-card:hover,
+  .prize-card:hover {
+    transform: none !important;
+  }
 }
 
 /* Confetti animation */
