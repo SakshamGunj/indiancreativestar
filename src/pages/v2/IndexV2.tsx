@@ -929,7 +929,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Header Section */}
         <div className="relative z-20 text-center mb-6 pt-2">
-          <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 mb-6">
+          <div className="inline-flex items-center px-6 py-3 bg-white/30 rounded-full border border-white/40 mb-6">
             <Lightbulb className="h-4 w-4 mr-2 text-orange-300" />
             <span className="text-sm font-medium text-white/90">Your Creative Journey</span>
                 </div>
@@ -944,7 +944,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         {/* Sliding Benefits Cards */}
         <div className="relative z-20">
           <div className="overflow-x-hidden">
-            <div className="flex animate-slide-left-continuous space-x-4 sm:space-x-8 max-w-[100vw]">
+            <div className="flex animate-slide-left-continuous space-x-4 sm:space-x-8 max-w-[100vw]" style={{ willChange: 'transform' }}>
                {/* Duplicate cards for seamless loop */}
                {[...Array(3)].map((_, setIndex) => (
                  <React.Fragment key={setIndex}>
@@ -953,7 +953,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Star className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -971,7 +971,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -989,7 +989,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -1007,7 +1007,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
