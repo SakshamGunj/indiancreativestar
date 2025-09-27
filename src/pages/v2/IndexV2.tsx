@@ -34,13 +34,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   const navigate = useNavigate();
   
-  // Optimized animation refs - reduced from 6 to 2 for better performance
+  // Optimized animation refs - reduced from 6 to 3 for better performance
   const mainSectionRef = useRef(null);
   const secondarySectionRef = useRef(null);
+  const highlightsSectionRef = useRef(null);
   
-  // Optimized animation visibility hooks - reduced from 6 to 2
+  // Optimized animation visibility hooks - reduced from 6 to 3
   const isMainSectionInView = useInView(mainSectionRef, { once: true, margin: "-100px" });
   const isSecondarySectionInView = useInView(secondarySectionRef, { once: true, margin: "-100px" });
+  const isHighlightsSectionInView = useInView(highlightsSectionRef, { once: true, margin: "-200px" });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -1042,10 +1044,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           
           {/* Header */}
           <motion.div 
-            ref={mainSectionRef}
+            ref={highlightsSectionRef}
             variants={optimizedFadeIn}
             initial="hidden"
-            animate={isMainSectionInView ? "visible" : "hidden"}
+            animate={isHighlightsSectionInView ? "visible" : "hidden"}
             className="text-center mb-12"
           >
             <motion.div 
@@ -1079,10 +1081,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Mobile Stats Grid - Visible only on mobile */}
             <motion.div 
-              ref={mainSectionRef}
+              ref={highlightsSectionRef}
               variants={optimizedFadeIn}
               initial="hidden"
-              animate={isMainSectionInView ? "visible" : "hidden"}
+              animate={isHighlightsSectionInView ? "visible" : "hidden"}
               className="block md:hidden mb-8"
             >
               <motion.div 
@@ -1449,10 +1451,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
-          ref={secondarySectionRef}
+          ref={highlightsSectionRef}
           variants={optimizedFadeIn}
           initial="hidden"
-          animate={isSecondarySectionInView ? "visible" : "hidden"}
+          animate={isHighlightsSectionInView ? "visible" : "hidden"}
           className="overflow-hidden"
         >
           <motion.div 
