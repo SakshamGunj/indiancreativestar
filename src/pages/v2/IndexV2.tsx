@@ -70,13 +70,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     },
   }), []);
 
-  // Instant animation for highlights section to appear immediately
-  const instantFadeIn = useMemo(() => ({
-    hidden: { opacity: 0, y: 10 },
+  // Fast animation for highlights section to appear immediately
+  const fastFadeIn = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.1, ease: "easeOut" }
+      transition: { duration: 0.3, ease: "easeOut" }
     },
   }), []);
 
@@ -397,7 +397,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               alt="Featured Artwork Background"
               className="w-full h-full object-cover blur-sm scale-110"
             />
-          </motion.div>
+          </div>
           
           {/* Dark Gradient Overlay for Better Text Visibility */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
@@ -410,7 +410,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Top Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
               <span className="text-sm font-medium text-white/90">Limited Time Opportunity</span>
-            </motion.div>
+            </div>
 
             {/* Main Heading */}
             <div className="space-y-4">
@@ -424,8 +424,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <div className="space-y-2">
                 <p className="text-lg sm:text-xl text-white/90 font-light">Transform Your Art Into</p>
                 <p className="text-base text-white/70">National Recognition</p>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Reviews and Badges */}
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -436,12 +436,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <LazyImage src="/WhatsApp Image 2025-09-08 at 20.31.58.jpeg" alt="Artist 3" className="w-8 h-8 rounded-full border-2 border-white" />
                   <LazyImage src="/WhatsApp Image 2025-09-08 at 21.35.50.jpeg" alt="Artist 4" className="w-8 h-8 rounded-full border-2 border-white" />
                   <LazyImage src="/image.dslr2.jpg" alt="Artist 5" className="w-8 h-8 rounded-full border-2 border-white" />
-                </motion.div>
+                </div>
                 <div className="text-left">
                   <span className="text-sm text-white/90 font-medium block">1,000+ artists</span>
                   <span className="text-xs text-white/70">Verified by Google Reviews</span>
-                </motion.div>
-          </motion.div>
+                </div>
+          </div>
 
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <div className="flex items-center gap-1">
@@ -451,20 +451,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                </motion.div>
+                </div>
                   <span className="text-sm text-white/90 font-medium ml-1">4.9 rating</span>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
               
               <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <span className="text-sm text-white/90 font-medium">Nationwide</span>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
               
             {/* Theme Badge */}
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl border border-white/20">
               <span className="text-white font-medium">Open Theme</span>
-                </motion.div>
+                </div>
 
             {/* Description */}
             <div className="max-w-2xl">
@@ -472,39 +472,39 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Join thousands of artists across India in this nationwide art movement.
                 Become a Creative Star and showcase your talent nationwide.
               </p>
-              </motion.div>
+              </div>
               
             {/* Key Stats */}
             <div className="grid grid-cols-2 gap-3 sm:gap-6 w-full max-w-4xl">
               <div className="relative bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-2.5 -right-2.5 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white/20">
                   <Trophy className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                 <div className="text-lg sm:text-4xl font-bold text-orange-300 mb-1 sm:mb-2 text-center">₹50,000</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Prize Pool</div>
-              </motion.div>
+              </div>
               <div className="relative bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-2.5 -right-2.5 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white/20">
                   <Gift className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                 <div className="text-lg sm:text-4xl font-bold text-green-300 mb-1 sm:mb-2 text-center">₹249</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Entry Fee</div>
-              </motion.div>
+              </div>
               <div className="relative bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-2.5 -right-2.5 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white/20">
                   <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                 <div className="text-sm sm:text-lg font-bold text-blue-300 mb-1 sm:mb-2 text-center">Government</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Verified Certificate</div>
-              </motion.div>
+              </div>
               <div className="relative bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
                 <div className="absolute -top-2.5 -right-2.5 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white/20">
                   <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                 <div className="text-sm sm:text-lg font-bold text-purple-300 mb-1 sm:mb-2 text-center">500 Slots</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Available</div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
             {/* Creative Manifesto */}
             <div className="max-w-3xl">
@@ -516,8 +516,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   What you create alone — the nation will now celebrate.<br />
                   <span className="text-yellow-300 font-medium">India has millions of stories. Let yours rise today.</span>"
                 </blockquote>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             
             {/* CTA Buttons */}
             <div className="flex justify-center w-full max-w-md">
@@ -528,9 +528,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6 sm:h-5 sm:w-5" />
               </Button>
-              </motion.div>
+              </div>
 
-            </motion.div>
+            </div>
         </div>
       </section>
 
@@ -541,14 +541,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-white/50 shadow-lg mb-6">
               <span className="text-sm font-medium text-gray-800">Who Can Join</span>
-              </motion.div>
+              </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Your <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Creative Journey</span> Starts Here
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Whether you're an artist or a parent supporting young talent, this is your gateway to national recognition
               </p>
-            </motion.div>
+            </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
@@ -557,9 +557,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <Palette className="h-8 w-8 text-white" />
-                </motion.div>
+                </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Artists</h3>
-          </motion.div>
+          </div>
 
               <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Showcase your artistic talent on a national platform and win from a <span className="font-semibold text-orange-600">₹50,000 prize pool</span>.
@@ -569,22 +569,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </motion.div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Connect with like-minded artists nationwide</p>
-                  </motion.div>
+                  </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                </motion.div>
+                </div>
                   <p className="text-sm sm:text-base text-gray-700">Get professional feedback on your artwork</p>
-                </motion.div>
+                </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </motion.div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Add national recognition to your portfolio</p>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               
               <Button
                 onClick={handleRegisterClick}
@@ -593,16 +593,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <Palette className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Artist
               </Button>
-              </motion.div>
+              </div>
               
             {/* For Parents */}
             <div className="bg-white/40 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <Heart className="h-8 w-8 text-white" />
-                </motion.div>
+                </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Parents</h3>
-              </motion.div>
+              </div>
               
               <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Nurture your child's creativity and give them a platform to shine with <span className="font-semibold text-blue-600">confidence-building experience</span>.
@@ -612,22 +612,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </motion.div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Boost your child's artistic confidence</p>
-                  </motion.div>
+                  </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                </motion.div>
+                </div>
                   <p className="text-sm sm:text-base text-gray-700">Recognition beyond school achievements</p>
-                </motion.div>
+                </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                  </motion.div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Special addition to education portfolio</p>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
               
               <Button
                 onClick={handleRegisterClick}
@@ -636,9 +636,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Parent
               </Button>
-            </motion.div>
+            </div>
             
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -663,15 +663,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
                 <Award className="h-8 w-8 text-white" />
-                  </motion.div>
+                  </div>
                   <div>
                 <h3 className="text-base md:text-2xl font-bold text-white mb-1" style={{
                   animation: 'colorGlow 3s ease-in-out infinite alternate'
                 }}>
                   Every participant will get Official Certificate & Artist ID Card
                 </h3>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
 
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -681,11 +681,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   alt="Daami Presents Logo"
                   className="w-full h-full"
                 />
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
         <style>{`
           @keyframes gradientShift {
@@ -725,7 +725,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-white/50 shadow-lg mb-6">
                 <Trophy className="h-4 w-4 mr-2 text-orange-600" />
                 <span className="text-sm font-medium text-gray-800">Rewards & Recognition</span>
-              </motion.div>
+              </div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Get <span className="bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-transparent">Rewarded</span>
               </h2>
@@ -740,11 +740,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
-            </motion.div>
+            </div>
             <div className="space-y-8 order-2 flex flex-col justify-start">
               {/* This will be shown on mobile only, below the categories */}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Competition Categories */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -757,71 +757,71 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                       <Users className="h-8 w-8 text-white" />
-                    </motion.div>
+                    </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-1">Adult Art Competition</h3>
                       <p className="text-orange-100 font-medium">18+ Years | Prize Pool: ₹30,000</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-                </motion.div>
+                </div>
                 <div className="p-6">
                   <div className="flex items-end justify-center gap-4 mb-6">
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-20 bg-gradient-to-t from-gray-400 to-gray-300 rounded-t-lg flex items-center justify-center mb-2 shadow-lg">
                         <span className="text-white font-bold text-lg">2</span>
-                      </motion.div>
+                      </div>
                       <div className="text-center">
                         <p className="text-xl font-bold text-gray-700">₹10,000</p>
                         <p className="text-xs text-gray-500">Silver</p>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
                     <div className="flex flex-col items-center">
                       <div className="w-20 h-28 bg-gradient-to-t from-yellow-500 to-yellow-400 rounded-t-lg flex items-center justify-center mb-2 shadow-xl relative">
                         <span className="text-white font-bold text-2xl">1</span>
                         <div className="absolute -top-2 -right-2 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
                           <Trophy className="h-3 w-3 text-white" />
-                        </motion.div>
-                      </motion.div>
+                        </div>
+                      </div>
                       <div className="text-center">
                         <p className="text-2xl font-bold text-orange-600">₹15,000</p>
                         <p className="text-xs text-gray-500">Gold Champion</p>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
                     <div className="flex flex-col items-center">
                       <div className="w-16 h-16 bg-gradient-to-t from-orange-500 to-orange-400 rounded-t-lg flex items-center justify-center mb-2 shadow-lg">
                         <span className="text-white font-bold text-lg">3</span>
-                      </motion.div>
+                      </div>
                       <div className="text-center">
                         <p className="text-xl font-bold text-orange-600">₹5,000</p>
                         <p className="text-xs text-gray-500">Bronze</p>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="bg-white/40 rounded-2xl p-4 backdrop-blur-sm">
                     <h4 className="font-bold text-gray-800 mb-3 text-center">All Winners Receive</h4>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <Globe className="h-4 w-4 text-blue-500" />
                         <span className="text-xs font-medium text-gray-700">National Recognition</span>
-                      </motion.div>
+                      </div>
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <BookOpen className="h-4 w-4 text-purple-500" />
                         <span className="text-xs font-medium text-gray-700">e-Magazine Feature</span>
-                      </motion.div>
+                      </div>
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <Gift className="h-4 w-4 text-green-500" />
                         <span className="text-xs font-medium text-gray-700">Surprise Hamper</span>
-                      </motion.div>
+                      </div>
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <Zap className="h-4 w-4 text-yellow-500" />
                         <span className="text-xs font-medium text-gray-700">Mystery Gift</span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-          </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
 
             {/* Kids Competition */}
             <div className="relative group">
@@ -831,14 +831,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                       <Heart className="h-8 w-8 text-white" />
-              </motion.div>
+              </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-1">Kids Art Competition</h3>
                       <p className="text-blue-100 font-medium">5-17 Years | Prize Pool: ₹20,000</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-                </motion.div>
+                </div>
                 <div className="p-6 space-y-4">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl blur opacity-20"></div>
@@ -847,19 +847,19 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
                             <Heart className="h-6 w-6 text-white" />
-                          </motion.div>
+                          </div>
                           <div>
                             <h4 className="font-bold text-gray-800">Group A (5-8 years)</h4>
                             <p className="text-sm text-gray-600">Little Artists</p>
-                          </motion.div>
-                        </motion.div>
+                          </div>
+                        </div>
                         <div className="text-right">
                           <p className="text-2xl font-bold text-green-600">₹5,000</p>
                           <p className="text-xs text-gray-500">Winner</p>
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl blur opacity-20"></div>
                     <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
@@ -867,19 +867,19 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
                             <Palette className="h-6 w-6 text-white" />
-                          </motion.div>
+                          </div>
                           <div>
                             <h4 className="font-bold text-gray-800">Group B (9-12 years)</h4>
                             <p className="text-sm text-gray-600">Young Creators</p>
-                          </motion.div>
-                        </motion.div>
+                          </div>
+                        </div>
                         <div className="text-right">
                           <p className="text-2xl font-bold text-blue-600">₹5,000</p>
                           <p className="text-xs text-gray-500">Winner</p>
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl blur opacity-20"></div>
                     <div className="relative bg-white/50 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
@@ -887,39 +887,39 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
                             <Trophy className="h-6 w-6 text-white" />
-                          </motion.div>
+                          </div>
                           <div>
                             <h4 className="font-bold text-gray-800">Group C (13-17 years)</h4>
                             <p className="text-sm text-gray-600">Teen Artists</p>
-                          </motion.div>
-                        </motion.div>
+                          </div>
+                        </div>
                         <div className="text-right">
                           <p className="text-2xl font-bold text-purple-600">₹10,000</p>
                           <p className="text-xs text-gray-500">Winner</p>
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="bg-white/40 rounded-2xl p-4 backdrop-blur-sm mt-4">
                     <h4 className="font-bold text-gray-800 mb-3 text-center">All Winners Receive</h4>
                     <div className="flex justify-center gap-4">
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <BookOpen className="h-4 w-4 text-purple-500" />
                         <span className="text-xs font-medium text-gray-700">e-Magazine Feature</span>
-                      </motion.div>
+                      </div>
                       <div className="flex items-center gap-2 bg-white/50 rounded-lg p-2">
                         <Gift className="h-4 w-4 text-green-500" />
                         <span className="text-xs font-medium text-gray-700">Gift Hamper</span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-            </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
             
 
-              </motion.div>
+              </div>
       </section>
 
       {/* Artist Benefits Section */}
@@ -933,7 +933,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               alt="Benefits Background"
               className="w-full h-full object-cover blur-sm scale-110"
             />
-          </motion.div>
+          </div>
           
           {/* Dark Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
@@ -944,7 +944,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="inline-flex items-center px-6 py-3 bg-white/30 rounded-full border border-white/40 mb-6">
             <Lightbulb className="h-4 w-4 mr-2 text-orange-300" />
             <span className="text-sm font-medium text-white/90">Your Creative Journey</span>
-                </motion.div>
+                </div>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
             Every Artist <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Wins Something</span>
           </h2>
@@ -969,15 +969,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Star className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </motion.div>
+                           </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Your Spotlight Moment</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               Featured in our Artist Showcase reaching <span className="font-bold text-orange-600">50,000+ art lovers</span> across India
                             </p>
-                         </motion.div>
-                       </motion.div>
-                </motion.div>
-              </motion.div>
+                         </div>
+                       </div>
+                </div>
+              </div>
               
                    {/* Official Creative Badge */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
@@ -987,15 +987,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Official Creative Badge</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               Digital certificate + Artist ID that you can proudly display on <span className="font-bold text-blue-600">LinkedIn & social media</span>
                             </p>
-                </motion.div>
-                       </motion.div>
-                </motion.div>
-              </motion.div>
+                </div>
+                       </div>
+                </div>
+              </div>
               
                    {/* Exclusive Artist Circle */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
@@ -1005,15 +1005,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </motion.div>
+                           </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Exclusive Artist Circle</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               Join our private community of <span className="font-bold text-green-600">1,000+ verified artists</span> for collaborations & opportunities
                             </p>
-                         </motion.div>
-                       </motion.div>
-                     </motion.div>
-            </motion.div>
+                         </div>
+                       </div>
+                     </div>
+            </div>
             
                    {/* VIP Early Access */}
                    <div className="flex-shrink-0 w-56 sm:w-80">
@@ -1023,20 +1023,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </motion.div>
+                </div>
                            <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">VIP Early Access</h3>
                            <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
                               First to know about <span className="font-bold text-purple-600">exhibitions, contests & art opportunities</span> before anyone else
                             </p>
-                         </motion.div>
-                       </motion.div>
-                </motion.div>
-              </motion.div>
+                         </div>
+                       </div>
+                </div>
+              </div>
               
                  </React.Fragment>
                ))}
-                </motion.div>
-          </motion.div>
+                </div>
+          </div>
         </div>
         
 
@@ -1055,7 +1055,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           {/* Header */}
           <motion.div 
             ref={highlightsSectionRef}
-            variants={optimizedFadeIn}
+            variants={fastFadeIn}
             initial="hidden"
             animate={isHighlightsSectionInView ? "visible" : "hidden"}
             className="text-center mb-12"
@@ -1092,7 +1092,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Mobile Stats Grid - Visible only on mobile */}
             <motion.div 
               ref={highlightsSectionRef}
-              variants={optimizedFadeIn}
+              variants={fastFadeIn}
               initial="hidden"
               animate={isHighlightsSectionInView ? "visible" : "hidden"}
               className="block md:hidden mb-8"
@@ -1128,8 +1128,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div>
                         <div className={`text-lg font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1173,8 +1173,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                </motion.div>
-                    </motion.div>
+                </div>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1217,8 +1217,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div>
                         <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -1363,8 +1363,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </motion.div>
               </motion.div>
             </motion.div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
         <motion.div 
@@ -1447,22 +1447,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                                 </motion.div>
                               ))}
         </div>
-                          </motion.div>
-                        </motion.div>
+                          </div>
+                        </div>
                         <p className="text-xs md:text-sm text-gray-700 italic leading-tight">"{testimonial.quote}"</p>
-                      </motion.div>
+                      </div>
                     </motion.div>
                   ))}
                 </React.Fragment>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
           ref={highlightsSectionRef}
-          variants={optimizedFadeIn}
+          variants={fastFadeIn}
           initial="hidden"
           animate={isHighlightsSectionInView ? "visible" : "hidden"}
           className="overflow-hidden"
@@ -1510,7 +1510,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                           🏆
                         </motion.div>
                       </motion.div>
-                    </motion.div>
+                    </div>
                   </motion.div>
                 ))}
               </React.Fragment>
@@ -1568,7 +1568,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               Real Reviews 📱
             </h2>
             <p className="text-base text-gray-600">Authentic feedback from Season 1 participants</p>
-          </motion.div>
+          </div>
           
           <div className="columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
             {[
@@ -1586,19 +1586,19 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <LazyImage src={image} alt={`Review ${i + 1}`} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
                     <div className="absolute top-2 right-2 bg-green-500 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
                       ✓
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
           
           <div className="text-center mt-6">
             <div className="inline-flex items-center gap-2 bg-white rounded-xl px-4 py-2 shadow-md">
               <span className="text-lg">⭐</span>
               <span className="font-bold text-gray-900 text-sm">4.9/5 from 300+ Artists</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
       
@@ -1610,7 +1610,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               Prize Distribution Ceremony 🏆
             </h2>
             <p className="text-lg text-gray-600">Season 1 - Celebrating our Creative Stars</p>
-          </motion.div>
+          </div>
           
           <div className="columns-2 md:columns-2 lg:columns-3 gap-3 space-y-3" style={{ columnFill: 'balance' }}>
             {[
@@ -1629,20 +1629,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <div className="absolute bottom-1 left-1 bg-black/70 text-white px-1 py-0.5 rounded text-xs">
                       <div className="text-sm mb-0">🎉</div>
                       <div className="font-bold text-xs">Season 1</div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
           
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl px-6 py-3 text-white shadow-lg">
               <span className="text-2xl">🎊</span>
               <span className="font-bold">6 Creative Stars Awarded in Season 1</span>
               <span className="text-2xl">✨</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
       
@@ -1662,7 +1662,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-full border border-blue-200 mb-4">
               <span className="text-sm font-semibold text-blue-700">Step-by-Step Process</span>
-            </motion.div>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">How It Works</span>
             </h2>
@@ -1670,7 +1670,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <p className="text-base text-gray-600 max-w-2xl mx-auto">
               From registration to winning - your path to nationwide recognition
             </p>
-          </motion.div>
+          </div>
 
           {/* Responsive Timeline */}
           <div className="relative">
@@ -1687,7 +1687,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">1</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-blue-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-blue-500" />
-              </motion.div>
+              </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Register & Join</h3>
@@ -1699,17 +1699,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
                           <CheckCircle className="h-2 w-2 mr-1" />WhatsApp support
                         </span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-            </motion.div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
 
                 {/* Step 2 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">2</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-purple-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-purple-500" />
-              </motion.div>
+              </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Submit Your Artwork</h3>
@@ -1721,17 +1721,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <span className="inline-flex items-center px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
                           <CheckCircle className="h-2 w-2 mr-1" />Any medium
                         </span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-            </motion.div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
 
                 {/* Step 3 - Right Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">3</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-orange-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-orange-500" />
-              </motion.div>
+              </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Judging & Voting</h3>
@@ -1743,17 +1743,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <span className="inline-flex items-center px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
                           <CheckCircle className="h-2 w-2 mr-1" />Public voting
                         </span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-            </motion.div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
 
                 {/* Step 4 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">4</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-green-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-green-500" />
-              </motion.div>
+              </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Winners Announced</h3>
@@ -1765,13 +1765,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
                           <CheckCircle className="h-2 w-2 mr-1" />Recognition
                         </span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Mobile Timeline - Visible only on mobile */}
             <div className="md:hidden space-y-6">
@@ -1789,9 +1789,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
                       <CheckCircle className="h-2 w-2 mr-1" />WhatsApp support
                     </span>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
 
               {/* Step 2 */}
               <div className="flex items-start gap-4">
@@ -1806,9 +1806,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="inline-flex items-center px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
                       <CheckCircle className="h-2 w-2 mr-1" />Any medium
                     </span>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
 
               {/* Step 3 */}
               <div className="flex items-start gap-4">
@@ -1823,9 +1823,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="inline-flex items-center px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
                       <CheckCircle className="h-2 w-2 mr-1" />Public voting
                     </span>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
 
               {/* Step 4 */}
               <div className="flex items-start gap-4">
@@ -1840,12 +1840,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
                       <CheckCircle className="h-2 w-2 mr-1" />Recognition
                     </span>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
               
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1862,7 +1862,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Our professionally designed digital certificate is perfect for:
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
@@ -1874,60 +1874,60 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <BookOpen className="h-6 w-6 text-white" />
-                  </motion.div>
+                  </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Resume Enhancement</h3>
                     <p className="text-gray-600 leading-relaxed">
                       Add creative credentials to your professional profile
                     </p>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
               
               {/* Portfolio Building */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Palette className="h-6 w-6 text-white" />
-                  </motion.div>
+                  </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Portfolio Building</h3>
                     <p className="text-gray-600 leading-relaxed">
                       Demonstrate your commitment to your craft
                     </p>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
               
               {/* Social Media Sharing */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Users className="h-6 w-6 text-white" />
-                  </motion.div>
+                  </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Social Media Sharing</h3>
                     <p className="text-gray-600 leading-relaxed">
                       Share your achievement with friends and followers
                     </p>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
+                  </div>
+                </div>
+              </div>
               
-            </motion.div>
+            </div>
 
             {/* Certificate Preview */}
             <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
               <div className="text-center">
                 <div className="w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Award className="h-10 w-10 text-white" />
-                </motion.div>
+                </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Indian Creative Star Certificate</h3>
                 <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-dashed border-blue-200">
                   <div className="text-center space-y-3">
                     <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto">
                       <Star className="h-8 w-8 text-white" />
-                    </motion.div>
+                    </div>
                     <h4 className="text-lg font-bold text-gray-800">Certificate of Participation</h4>
                     <p className="text-sm text-gray-600">Indian Creative Star Season 1</p>
                     <p className="text-xs text-gray-500">This certifies that [Participant Name] has successfully participated in India's premier art competition</p>
@@ -1935,14 +1935,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       <div className="w-8 h-1 bg-blue-300 rounded"></div>
                       <div className="w-8 h-1 bg-purple-300 rounded"></div>
                       <div className="w-8 h-1 bg-orange-300 rounded"></div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                    </div>
+                  </div>
+                </div>
                 <p className="text-sm text-gray-500 mt-4">Professional design • High resolution • Instantly downloadable</p>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             
-          </motion.div>
+          </div>
         </div>
       </section>
       
@@ -1956,7 +1956,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               Our <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Supporters</span>
             </h2>
             <p className="text-lg text-gray-600">Our Partners & Sponsors</p>
-          </motion.div>
+          </div>
       </div>
       
         {/* Full Width Sliding Partners */}
@@ -1967,69 +1967,69 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">FM</span>
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Funky Monkey</h3>
                       <p className="text-xs text-gray-600">Sponsor</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
             {/* Daami Event */}
             <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">DE</span>
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Daami Event</h3>
                       <p className="text-xs text-gray-600">Event Management</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
             {/* Tenverse Media */}
             <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">TM</span>
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Tenverse Media</h3>
                       <p className="text-xs text-gray-600">Sponsor</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
             {/* Sikkim Daily News */}
             <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <span className="text-white font-bold text-sm">SDN</span>
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Sikkim Daily News</h3>
                       <p className="text-xs text-gray-600">Media Partner</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
             {/* Cultural Department */}
             <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <Award className="h-6 w-6 text-white" />
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Cultural Dept. Sikkim</h3>
                       <p className="text-xs text-gray-600">Government Partner</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
             {/* Education Department */}
             <div>
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
                       <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
                         <BookOpen className="h-6 w-6 text-white" />
-                      </motion.div>
+                      </div>
                       <h3 className="text-sm font-bold text-gray-900 mb-1">Education Dept. Sikkim</h3>
                       <p className="text-xs text-gray-600">Educational Partner</p>
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
         {/* Campus Network Section - Compact */}
         <div className="container mx-auto max-w-6xl px-4">
@@ -2041,13 +2041,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="inline-flex items-center gap-3 bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30">
               <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
                 <span className="text-white font-bold text-sm">S</span>
-              </motion.div>
+              </div>
               <div className="text-left">
                 <h5 className="text-sm font-bold text-gray-900">Shashank Saha</h5>
                 <p className="text-xs text-gray-600">Sikkim Manipal Institute of Technology, Northeast India</p>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              </div>
+            </div>
+          </div>
         </div>
         
 
@@ -2125,15 +2125,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         <div className="text-center">
                           <span className="block text-lg sm:text-2xl font-extrabold leading-tight">Join Indian Creative Star</span>
                           <span className="block text-sm sm:text-lg font-semibold opacity-95 -mt-1">Art Competition</span>
-                        </motion.div>
-                      </motion.div>
+                        </div>
+                      </div>
                     </DialogTitle>
                   </DialogHeader>
                   <p className="text-sm sm:text-base opacity-90 mt-1 leading-relaxed font-medium">
                     Become the next creative star
                   </p>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
               {/* Form */}
               <div className="px-3 py-4 sm:px-8 sm:py-8">
@@ -2151,7 +2151,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
-                    </motion.div>
+                    </div>
                     <div>
                       <Label htmlFor="phone" className="mb-1.5 block text-sm sm:text-base font-medium">WhatsApp Number</Label>
                       <Input
@@ -2164,8 +2164,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
                     <div>
@@ -2182,7 +2182,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         className="h-10 sm:h-12 text-sm sm:text-base"
                         required
                       />
-                    </motion.div>
+                    </div>
                     <div>
                       <Label htmlFor="email" className="mb-1.5 block text-sm sm:text-base font-medium">Email (Optional)</Label>
                       <Input
@@ -2194,8 +2194,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                         placeholder="Enter your email"
                         className="h-10 sm:h-12 text-sm sm:text-base"
                       />
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
 
 
                   <Button
@@ -2216,11 +2216,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                           <ArrowRight className="h-4 w-4 sm:h-6 sm:w-6" />
                         </>
                       )}
-                    </motion.div>
+                    </div>
                   </Button>
                 </form>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       )}
@@ -2245,14 +2245,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   alt="Daami Event Logo"
                   className="w-full h-full"
                 />
-              </motion.div>
+              </div>
               <div className="text-left">
                 <h3 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   Daami Event
                 </h3>
                 <p className="text-purple-300 text-xs sm:text-sm font-medium">Event Management Company</p>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             
             {/* Tagline */}
             <div className="mb-4 sm:mb-6">
@@ -2262,7 +2262,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <p className="text-white/70 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed px-4">
                 Through creative competitions, recognition, and building a community of talented artists across India.
               </p>
-            </motion.div>
+            </div>
             
             {/* Divider */}
             <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-4 sm:mb-6"></div>
@@ -2275,8 +2275,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <p className="text-white/50 text-xs">
                 Proudly organizing India's premier art competitions since 2024
               </p>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
