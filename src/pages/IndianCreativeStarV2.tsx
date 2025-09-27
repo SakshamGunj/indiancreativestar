@@ -56,9 +56,9 @@ const IndianCreativeStarV2 = () => {
               </p>
               <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
                 <div className="flex -space-x-2 overflow-hidden">
-                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""/>
-                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80" alt=""/>
-                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80" alt=""/>
+                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=64&amp;h=64&amp;q=80" alt="" loading="lazy"/>
+                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=64&amp;h=64&amp;q=80" alt="" loading="lazy"/>
+                  <img className="inline-block h-12 w-12 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=64&amp;h=64&amp;q=80" alt="" loading="lazy"/>
                 </div>
                 <div>
                   <p className="font-bold">1,000+ Artists Nationwide</p>
@@ -152,7 +152,7 @@ const IndianCreativeStarV2 = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1581092919534-89c3f19d3a4d?q=80&w=2070&auto=format&fit=crop" alt="Artists" className="rounded-3xl shadow-2xl w-full" />
+              <img src="https://images.unsplash.com/photo-1581092919534-89c3f19d3a4d?q=80&w=800&auto=format&fit=crop" alt="Artists" className="rounded-3xl shadow-2xl w-full" loading="lazy" />
               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-gradient-to-br from-blue-100 to-purple-200 rounded-2xl -z-10 transform rotate-45"></div>
             </div>
             <div className="glassmorphism-card p-8 rounded-3xl shadow-2xl border border-gray-200/50">
@@ -208,7 +208,7 @@ const IndianCreativeStarV2 = () => {
               </ul>
             </div>
             <div className="relative md:order-1">
-              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" alt="Parents" className="rounded-3xl shadow-2xl w-full" />
+              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop" alt="Parents" className="rounded-3xl shadow-2xl w-full" loading="lazy" />
               <div className="absolute -bottom-8 -left-8 w-48 h-48 bg-gradient-to-br from-pink-100 to-red-200 rounded-2xl -z-10 transform rotate-45"></div>
             </div>
           </div>
@@ -297,28 +297,28 @@ const IndianCreativeStarV2 = () => {
           <h2 className="text-5xl font-bold mb-16">Explore the Gallery</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2070&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=2070&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1536924940846-222b320bb0b6?q=80&w=1935&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1536924940846-222b320bb0b6?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
              <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
              <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=2070&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
              <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1887&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
              <div className="h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1887&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" />
+              <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=400&auto=format&fit=crop" alt="Artwork" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
           <Button className="mt-12 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-4 px-8 rounded-full text-lg transform hover:scale-105 transition-transform shadow-xl">
@@ -373,19 +373,19 @@ const IndianCreativeStarV2 = () => {
           <h2 className="text-5xl font-bold text-center mb-16">What Our Participants Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-3xl shadow-lg text-center transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" />
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" loading="lazy" />
               <h4 className="font-bold text-xl">Aarav Sharma</h4>
               <p className="text-sm text-gray-500 mb-4">Last Year's Winner</p>
               <p className="text-gray-600 italic">"This competition was a turning point in my artistic journey. The exposure and recognition I received were incredible."</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-lg text-center transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" />
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" loading="lazy" />
               <h4 className="font-bold text-xl">Priya Singh</h4>
               <p className="text-sm text-gray-500 mb-4">Participant</p>
               <p className="text-gray-600 italic">"A fantastic platform to connect with other artists and learn from their experiences. Highly recommended!"</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-lg text-center transform hover:scale-105 transition-transform">
-              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1887&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" />
+              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop" alt="Participant" className="w-24 h-24 rounded-full object-cover mx-auto mb-6 border-4 border-white shadow-xl" loading="lazy" />
               <h4 className="font-bold text-xl">Rohan Verma</h4>
               <p className="text-sm text-gray-500 mb-4">Participant</p>
               <p className="text-gray-600 italic">"The entire experience was so well-organized. I'm already looking forward to the next season!"</p>

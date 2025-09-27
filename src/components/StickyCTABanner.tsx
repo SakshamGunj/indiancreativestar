@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,43 +14,55 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
   const isMobile = useIsMobile();
   const { brandName, regionName } = useBranding();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get the About section position
-      const aboutSection = document.getElementById('about-section');
-      
-      if (aboutSection) {
-        const aboutSectionTop = aboutSection.getBoundingClientRect().top;
-        // Show the banner after scrolling to the About section
-        if (aboutSectionTop <= 100) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
+  // Optimized scroll handler with throttling
+  const handleScroll = useCallback(() => {
+    // Get the About section position
+    const aboutSection = document.getElementById('about-section');
+    
+    if (aboutSection) {
+      const aboutSectionTop = aboutSection.getBoundingClientRect().top;
+      // Show the banner after scrolling to the About section
+      if (aboutSectionTop <= 100) {
+        setIsVisible(true);
       } else {
-        // Fallback to previous behavior if section not found
-        if (window.scrollY > 600) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
+        setIsVisible(false);
+      }
+    } else {
+      // Fallback to previous behavior if section not found
+      if (window.scrollY > 600) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
     // Initial check
     handleScroll();
     
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [handleScroll]);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (onRegisterClick) {
       onRegisterClick();
     } else {
       window.location.href = "#register";
     }
-  };
+  }, [onRegisterClick]);
 
   return (
     <div

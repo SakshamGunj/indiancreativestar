@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, Users, AlertTriangle } from 'lucide-react';
@@ -18,6 +18,7 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ onRegisterClick }) 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  // Optimized countdown timer with reduced frequency
   useEffect(() => {
     // Set countdown to 1 hour from now
     const targetTime = new Date().getTime() + (60 * 60 * 1000); // 1 hour from now
@@ -37,7 +38,7 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ onRegisterClick }) 
         const newTargetTime = new Date().getTime() + (60 * 60 * 1000);
         setTimeLeft({ hours: 1, minutes: 0, seconds: 0 });
       }
-    }, 1000);
+    }, 2000); // Reduced frequency from 1000ms to 2000ms for better performance
 
     return () => clearInterval(timer);
   }, []);
@@ -51,7 +52,7 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ onRegisterClick }) 
         }
         return prev;
       });
-    }, 30000); // Decrease every 30 seconds
+    }, 60000); // Optimized: Decrease every 60 seconds for better performance
 
     return () => clearInterval(slotTimer);
   }, []);

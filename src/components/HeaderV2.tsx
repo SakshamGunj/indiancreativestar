@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Menu, X, Star, Palette, Users } from "lucide-react";
@@ -14,14 +14,26 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Optimized scroll handler with throttling for better performance
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 20);
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [handleScroll]);
 
   // Close on Escape and lock body scroll while open
   useEffect(() => {
