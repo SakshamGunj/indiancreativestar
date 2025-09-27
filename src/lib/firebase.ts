@@ -100,7 +100,7 @@ const sendToWebhook = async (participantData: any, registrationId: string) => {
       test: false,
       // Additional data for n8n processing
       meta: {
-        whatsapp_group_link: "https://chat.whatsapp.com/G8JA8VYNvXR2KsW1Depn1j",
+        whatsapp_group_link: "https://chat.whatsapp.com/BZfAg82QE65ABitnvi7UYO",
         contact_email: "daamievent@gmail.com",
         contact_phone: "+91 9800452188",
         instagram_handle: "@daamievent",
