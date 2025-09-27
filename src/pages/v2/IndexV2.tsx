@@ -1055,9 +1055,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           {/* Header */}
           <motion.div 
             ref={highlightsSectionRef}
-            variants={fastFadeIn}
-            initial="hidden"
-            animate={isHighlightsSectionInView ? "visible" : "hidden"}
             className="text-center mb-12"
           >
             <motion.div 
@@ -1462,9 +1459,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
           ref={highlightsSectionRef}
-          variants={fastFadeIn}
-          initial="hidden"
-          animate={isHighlightsSectionInView ? "visible" : "hidden"}
           className="overflow-hidden"
         >
           <motion.div 
