@@ -62,7 +62,7 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
       : "bg-black/30 border-white/10 text-white"
     : "bg-transparent border-transparent text-white";
 
-  const headerExtra = variant === "dark" && !isMobileMenuOpen ? " backdrop-blur-lg" : "";
+  const headerExtra = variant === "dark" && !isMobileMenuOpen ? " bg-black/50" : "";
 
   const navLink = variant === "light"
     ? "text-gray-900 hover:text-gray-700"
@@ -70,7 +70,7 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
 
   const menuButton = variant === "light"
     ? "md:hidden p-1.5 rounded-lg bg-gray-100 border border-gray-200"
-    : "md:hidden p-1.5 rounded-lg bg-white/20 backdrop-blur-sm border border-white/20";
+    : "md:hidden p-1.5 rounded-lg bg-white/30 border border-white/30";
 
   const ctaClass = variant === "light"
     ? "bg-gray-900 hover:bg-black text-white"
@@ -145,7 +145,7 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
           <div className="fixed inset-0 z-30 bg-transparent" onClick={() => setIsMobileMenuOpen(false)} />
 
           <div className="md:hidden fixed inset-x-0 top-20 z-40 px-3">
-            <div className="mx-auto w-full max-w-[420px] rounded-2xl bg-black/70 backdrop-blur-sm border border-white/20 shadow-2xl max-h-[65vh] overflow-y-auto animate-in slide-in-from-top duration-300" onClick={(e) => e.stopPropagation()}>
+            <div className="mx-auto w-full max-w-[420px] rounded-2xl bg-black/80 border border-white/30 shadow-2xl max-h-[65vh] overflow-y-auto animate-in slide-in-from-top duration-300" onClick={(e) => e.stopPropagation()}>
               <nav className="flex flex-col divide-y divide-white/15">
                 <a href={href("#about")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">About</a>
                 <a href={href("#prizes")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">Prizes</a>

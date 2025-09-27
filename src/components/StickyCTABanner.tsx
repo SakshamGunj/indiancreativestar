@@ -67,7 +67,7 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
   return (
     <div
       className={cn(
-        "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300 pb-safe bg-black/70 backdrop-blur-md",
+        "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300 pb-safe bg-black/80",
         isVisible ? "translate-y-0" : "translate-y-full opacity-0"
       )}
       style={{
