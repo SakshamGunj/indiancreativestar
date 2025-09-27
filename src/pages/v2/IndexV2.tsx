@@ -1042,14 +1042,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           
           {/* Header */}
           <motion.div 
-            ref={successHeaderRef}
-            variants={textVariants}
+            ref={mainSectionRef}
+            variants={optimizedFadeIn}
             initial="hidden"
-            animate={isSuccessHeaderInView ? "visible" : "hidden"}
+            animate={isMainSectionInView ? "visible" : "hidden"}
             className="text-center mb-12"
           >
             <motion.div 
-              variants={wordVariants}
+              variants={optimizedFadeIn}
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-orange-200 mb-4"
             >
               <motion.div
@@ -1061,13 +1061,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <span className="text-sm font-semibold text-orange-700">Success Stories</span>
             </motion.div>
             <motion.h2 
-              variants={textVariants}
+              variants={optimizedFadeIn}
               className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             >
               Previous Competition <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Highlights</span>
             </motion.h2>
             <motion.p 
-              variants={wordVariants}
+              variants={optimizedFadeIn}
               className="text-lg text-gray-600 max-w-2xl mx-auto"
             >
               Celebrating incredible talent from our past competitions
@@ -1079,14 +1079,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Mobile Stats Grid - Visible only on mobile */}
             <motion.div 
-              ref={successStatsRef}
-              variants={fadeInUp}
+              ref={mainSectionRef}
+              variants={optimizedFadeIn}
               initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              animate={isMainSectionInView ? "visible" : "hidden"}
               className="block md:hidden mb-8"
             >
               <motion.div 
-                variants={fadeInUp}
+                variants={optimizedFadeIn}
                 className="grid grid-cols-2 gap-3"
               >
                 {[
@@ -1097,7 +1097,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
+                    variants={optimizedFadeIn}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
@@ -1125,13 +1125,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Desktop Side Cards - Hidden on mobile with Floating Animation */}
             <motion.div 
-              variants={slideInLeft}
+              variants={optimizedSlideIn}
               initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              animate={isMainSectionInView ? "visible" : "hidden"}
               className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
             >
               <motion.div 
-                variants={fadeInUp}
+                variants={optimizedFadeIn}
                 className="space-y-4"
               >
                 {[
@@ -1141,7 +1141,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
+                    variants={optimizedFadeIn}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
@@ -1169,13 +1169,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </motion.div>
             
             <motion.div 
-              variants={slideInRight}
+              variants={optimizedSlideIn}
               initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              animate={isMainSectionInView ? "visible" : "hidden"}
               className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
             >
               <motion.div 
-                variants={fadeInUp}
+                variants={optimizedFadeIn}
                 className="space-y-4"
               >
                 {[
@@ -1185,7 +1185,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
+                    variants={optimizedFadeIn}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: -5,
@@ -1213,16 +1213,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </motion.div>
             
             <motion.div 
-              ref={successPodiumRef}
-              variants={scaleIn}
+              ref={secondarySectionRef}
+              variants={optimizedFadeIn}
               initial="hidden"
-              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="flex items-end justify-center gap-2 md:gap-12 mb-12 px-4"
             >
               
               {/* 2nd Place */}
               <motion.div 
-                variants={slideInLeft}
+                variants={optimizedSlideIn}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
@@ -1254,7 +1254,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
               {/* 1st Place - Tallest */}
               <motion.div 
-                variants={scaleIn}
+                variants={optimizedFadeIn}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
@@ -1293,7 +1293,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
               {/* 3rd Place */}
               <motion.div 
-                variants={slideInRight}
+                variants={optimizedSlideIn}
                 whileHover={{ scale: 1.05, rotateY: -5 }}
                 className="flex flex-col items-center"
               >
@@ -1327,9 +1327,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Prize Pool Banner */}
             <motion.div 
-              variants={scaleIn}
+              variants={optimizedFadeIn}
               initial="hidden"
-              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="text-center"
             >
               <motion.div 
@@ -1356,14 +1356,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
         <motion.div 
-          ref={successTestimonialsRef}
-          variants={fadeInUp}
+          ref={secondarySectionRef}
+          variants={optimizedFadeIn}
           initial="hidden"
-          animate={isSuccessTestimonialsInView ? "visible" : "hidden"}
+          animate={isSecondarySectionInView ? "visible" : "hidden"}
           className="mb-8"
         >
           <motion.h3 
-            variants={textVariants}
+            variants={optimizedFadeIn}
             className="text-lg md:text-xl font-bold text-gray-900 text-center mb-4 md:mb-6 px-4"
           >
             Artist Success Stories
@@ -1397,7 +1397,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   ].map((testimonial, index) => (
                     <motion.div 
                       key={`${setIndex}-${index}`} 
-                      variants={cardVariants}
+                      variants={optimizedFadeIn}
                       whileHover={{ 
                         scale: 1.02, 
                         rotateY: 5,
@@ -1449,14 +1449,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
-          ref={successGalleryRef}
-          variants={fadeInUp}
+          ref={secondarySectionRef}
+          variants={optimizedFadeIn}
           initial="hidden"
-          animate={isSuccessGalleryInView ? "visible" : "hidden"}
+          animate={isSecondarySectionInView ? "visible" : "hidden"}
           className="overflow-hidden"
         >
           <motion.div 
-            variants={fadeInUp}
+            variants={optimizedFadeIn}
             className="flex animate-slide-right-fast space-x-2 md:space-x-4"
           >
             {[...Array(3)].map((_, setIndex) => (
@@ -1464,7 +1464,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 {baseArtworkImages.map((image, index) => (
                   <motion.div 
                     key={`gallery-${setIndex}-${index}`} 
-                    variants={cardVariants}
+                    variants={optimizedFadeIn}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
