@@ -1,10 +1,8 @@
-import { criticalImages } from '@/data/artworkImages';
-
 // Preload critical images for better perceived performance
-export const preloadCriticalImages = () => {
-  if (typeof window === 'undefined') return;
+export const preloadCriticalImages = (images: string[] = []) => {
+  if (typeof window === 'undefined' || images.length === 0) return;
 
-  criticalImages.forEach((src) => {
+  images.forEach((src) => {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';

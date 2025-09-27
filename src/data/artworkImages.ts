@@ -18,12 +18,6 @@ export const baseArtworkImages = [
   "https://i.ibb.co/cc5kPhJf/bbbe857c0f6f.png"
 ];
 
-// Critical images that should be preloaded
-export const criticalImages = [
-  baseArtworkImages[0], // First artwork image
-  heroBackgroundImage
-];
-
 export const reviewImages = [
   "https://i.ibb.co/LXMnjMLz/IMG-20250915-171938-11zon.jpg",
   "https://i.ibb.co/hxqkWzyk/IMG-20250915-132944-11zon.jpg",
@@ -46,3 +40,9 @@ export const prizeDistributionImages = [
 
 // Preload only the hero background image for faster initial render
 export const heroBackgroundImage = "https://i.ibb.co/fz9nV0sg/4fe133328b5c.jpg";
+
+// Critical images that should be preloaded
+export const criticalImages = [
+  baseArtworkImages[0], // First artwork image
+  heroBackgroundImage
+];

@@ -4,7 +4,7 @@ import { Sparkles, PenLine, Palette, Trophy, Award, Star, Users, Globe, Heart, B
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-export function AboutSectionV2() {
+function AboutSectionV2() {
   const ref = useRef(null);
   const headerRef = useRef(null);
   const videoRef = useRef(null);
@@ -378,3 +378,6 @@ export function AboutSectionV2() {
     </motion.section>
   );
 }
+
+export { AboutSectionV2 };
+export default AboutSectionV2;

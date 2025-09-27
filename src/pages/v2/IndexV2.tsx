@@ -62,7 +62,13 @@ const IndexV2 = memo(({ onRegistrationClick }: IndexV2Props) => {
 
   // Preload critical images immediately and register service worker
   useEffect(() => {
-    preloadCriticalImages();
+    // Define critical images inline to avoid circular dependency
+    const criticalImages = [
+      baseArtworkImages[0], // First artwork image
+      "https://i.ibb.co/fz9nV0sg/4fe133328b5c.jpg" // Hero background
+    ];
+    
+    preloadCriticalImages(criticalImages);
     
     // Register service worker for caching
     if ('serviceWorker' in navigator) {
@@ -194,7 +200,7 @@ const IndexV2 = memo(({ onRegistrationClick }: IndexV2Props) => {
         </Suspense>
         
         <Suspense fallback={<SectionLoader />}>
-          <HowItWorksSectionV2 />
+          <HowItWorksSectionV2 onRegistrationClick={handleRegisterClick} />
         </Suspense>
         
         <Suspense fallback={<SectionLoader />}>

@@ -87,7 +87,7 @@ const artworkItems = [
   }
 ];
 
-export function GallerySectionV2() {
+function GallerySectionV2() {
   return (
     <section className="py-20 px-4" id="gallery">
       <div className="container mx-auto max-w-7xl">
@@ -182,3 +182,5 @@ export function GallerySectionV2() {
   );
 }
 
+export { GallerySectionV2 };
+export default GallerySectionV2;
