@@ -23,8 +23,8 @@ export function Confetti() {
   const createConfetti = () => {
     const confettiElements = [];
     
-    // Reduced from 50 to 20 for better performance
-    for (let i = 0; i < 20; i++) {
+    // Further reduced from 20 to 12 for even better performance
+    for (let i = 0; i < 12; i++) {
       const left = Math.random() * 100;
       const width = Math.random() * 10 + 5;
       const height = width * 0.4;
@@ -43,6 +43,7 @@ export function Confetti() {
             backgroundColor: color,
             transform: `rotate(${rotation}deg)`,
             animationDelay: `${delay}s`,
+            willChange: 'transform, opacity',
           }}
         />
       );

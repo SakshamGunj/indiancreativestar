@@ -10,7 +10,7 @@ const artworkItems = [
     title: "Ephemeral Dreams",
     artist: "Ananya Sharma",
     type: "Digital Art",
-    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 432,
     views: 1204,
     category: "Digital"
@@ -20,7 +20,7 @@ const artworkItems = [
     title: "Urban Canvas",
     artist: "Vikram Singh",
     type: "Painting",
-    imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 521,
     views: 1457,
     category: "Traditional"
@@ -30,7 +30,7 @@ const artworkItems = [
     title: "Mystic Forest",
     artist: "Priya Nair",
     type: "Mixed Media",
-    imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 289,
     views: 734,
     category: "Mixed Media"
@@ -40,7 +40,7 @@ const artworkItems = [
     title: "Digital Bloom",
     artist: "Rajiv Mehta",
     type: "Photography",
-    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 356,
     views: 890,
     category: "Photography"
@@ -60,7 +60,7 @@ const artworkItems = [
     title: "Nature's Palette",
     artist: "Arjun Kumar",
     type: "Landscape",
-    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 445,
     views: 1123,
     category: "Landscape"
@@ -80,7 +80,7 @@ const artworkItems = [
     title: "Cultural Fusion",
     artist: "Rahul Verma",
     type: "Cultural",
-    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=300&fit=crop&auto=format&q=80",
     likes: 512,
     views: 1289,
     category: "Cultural"

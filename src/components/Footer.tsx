@@ -15,7 +15,7 @@ export function Footer({ onRegisterClick }: FooterProps) {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="h-10 w-10 rounded-full overflow-hidden">
-                <img src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png" alt="Daami Presents Logo" className="w-full h-full object-cover" />
+                <img src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80" alt="Daami Presents Logo" className="w-full h-full object-cover" />
               </div>
               <span className="font-playfair font-bold text-gray-800 text-xl">Indian Creative Star</span>
             </div>

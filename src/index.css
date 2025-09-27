@@ -63,13 +63,15 @@ body {
   overscroll-behavior-y: contain;
 }
 
-/* Custom Glassmorphism Styles */
+/* Optimized Glassmorphism Styles - removed backdrop-blur for better performance */
 .glassmorphism-card {
-  @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl rounded-3xl;
+  @apply bg-white/80 border border-white/30 shadow-xl rounded-3xl;
+  /* Removed backdrop-blur-xl which was causing GPU overload */
 }
 
 .creative-card {
-  @apply rounded-3xl border border-white/20 backdrop-blur-xl bg-white/10 shadow-2xl;
+  @apply rounded-3xl border border-white/20 bg-white/15 shadow-2xl;
+  /* Removed backdrop-blur-xl for better performance */
 }
 
 .creative-card:hover {
@@ -79,7 +81,8 @@ body {
 }
 
 .prize-card {
-  @apply rounded-2xl border-2 backdrop-blur-lg bg-white/80 shadow-lg;
+  @apply rounded-2xl border-2 bg-white/90 shadow-lg;
+  /* Removed backdrop-blur-lg for better performance */
 }
 
 .prize-card:hover {
@@ -116,13 +119,15 @@ body {
 
 /* Removed sliding animations for better performance */
 
-/* Utility Classes */
+/* Optimized Utility Classes - removed backdrop-blur */
 .glass {
-  @apply bg-white/20 backdrop-blur-xl border border-white/30;
+  @apply bg-white/30 border border-white/40;
+  /* Removed backdrop-blur-xl for better performance */
 }
 
 .glass-dark {
-  @apply bg-black/20 backdrop-blur-xl border border-white/20;
+  @apply bg-black/30 border border-white/30;
+  /* Removed backdrop-blur-xl for better performance */
 }
 
 .gradient-text-purple {
@@ -153,40 +158,33 @@ body {
   box-shadow: 0 50px 80px -20px rgba(0, 0, 0, 0.3);
 }
 
-/* Outstanding Hero Effects */
+/* Optimized Hero Effects - simplified animations for better performance */
 @keyframes textGlow {
   0%, 100% {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
   50% {
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
   }
 }
 
-@keyframes rainbowGlow {
-  0% {
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-  }
-  25% {
-    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+@keyframes simpleGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
   }
   50% {
-    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
-  }
-  75% {
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
   }
 }
 
 .animate-text-glow {
-  animation: textGlow 2s ease-in-out infinite;
+  animation: textGlow 3s ease-in-out infinite;
+  /* Increased duration for smoother performance */
 }
 
-.animate-rainbow-glow {
-  animation: rainbowGlow 3s linear infinite;
+.animate-simple-glow {
+  animation: simpleGlow 2s ease-in-out infinite;
+  /* Replaced complex rainbow glow with simple glow */
 }
 
 .scale-102 {
@@ -203,45 +201,62 @@ body {
 }
 
 .animate-glow {
-  animation: glow 2s ease-in-out infinite alternate;
+  animation: glow 3s ease-in-out infinite alternate;
+  /* Increased duration for better performance */
 }
 
 .animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  /* Increased duration for smoother performance */
 }
 
-/* Confetti animation */
+/* Optimized Confetti animation - simplified for better performance */
 @keyframes confetti-fall {
   0% {
     transform: translateY(-100vh) rotate(0deg);
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) rotate(720deg);
+    transform: translateY(100vh) rotate(360deg);
     opacity: 0;
   }
 }
 
 .confetti {
-  animation: confetti-fall 3s linear infinite;
+  animation: confetti-fall 4s linear infinite;
+  /* Increased duration and reduced rotation for better performance */
 }
 
 .confetti:nth-child(odd) {
-  animation-delay: 0.5s;
+  animation-delay: 0.8s;
 }
 
 .confetti:nth-child(even) {
-  animation-delay: 1s;
+  animation-delay: 1.6s;
 }
 
 .confetti:nth-child(3n) {
-  animation-delay: 1.5s;
+  animation-delay: 2.4s;
 }
 
-.confetti:nth-child(4n) {
-  animation-delay: 2s;
+/* Reduced number of animation delays for better performance */
+
+/* Sliding Animation for Benefits Cards */
+@keyframes slide-left-continuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
-.confetti:nth-child(5n) {
-  animation-delay: 2.5s;
+.animate-slide-left-continuous {
+  animation: slide-left-continuous 30s linear infinite;
+  /* 30 seconds for smooth, slow sliding */
+}
+
+.animate-slide-left-continuous:hover {
+  animation-play-state: paused;
+  /* Pause animation on hover for better UX */
 }

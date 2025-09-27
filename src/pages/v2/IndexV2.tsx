@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -34,21 +34,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   const navigate = useNavigate();
   
-  // Animation refs for Success Stories section
-  const successStoriesRef = useRef(null);
-  const successHeaderRef = useRef(null);
-  const successStatsRef = useRef(null);
-  const successPodiumRef = useRef(null);
-  const successTestimonialsRef = useRef(null);
-  const successGalleryRef = useRef(null);
+  // Optimized animation refs - reduced from 6 to 3 for better performance
+  const mainSectionRef = useRef(null);
+  const secondarySectionRef = useRef(null);
+  const highlightsSectionRef = useRef(null);
   
-  // Animation visibility hooks
-  const isSuccessStoriesInView = useInView(successStoriesRef, { once: true, margin: "-50px" });
-  const isSuccessHeaderInView = useInView(successHeaderRef, { once: true, margin: "-20px" });
-  const isSuccessStatsInView = useInView(successStatsRef, { once: true, margin: "-50px" });
-  const isSuccessPodiumInView = useInView(successPodiumRef, { once: true, margin: "-50px" });
-  const isSuccessTestimonialsInView = useInView(successTestimonialsRef, { once: true, margin: "-50px" });
-  const isSuccessGalleryInView = useInView(successGalleryRef, { once: true, margin: "-50px" });
+  // Optimized animation visibility hooks - reduced from 6 to 3
+  const isMainSectionInView = useInView(mainSectionRef, { once: true, margin: "-100px" });
+  const isSecondarySectionInView = useInView(secondarySectionRef, { once: true, margin: "-100px" });
+  const isHighlightsSectionInView = useInView(highlightsSectionRef, { once: true, margin: "0px" });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -57,105 +51,40 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     category: 'adult'
   });
 
-  // Animation variants for Success Stories section
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 100, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: { 
-        duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        staggerChildren: 0.1
-      } 
-    },
-  };
-
-  const slideInLeft = {
-    hidden: { opacity: 0, x: -150, rotateY: -30 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
-      rotateY: 0,
-      transition: { 
-        duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.2
-      } 
-    },
-  };
-
-  const slideInRight = {
-    hidden: { opacity: 0, x: 150, rotateY: 30 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
-      rotateY: 0,
-      transition: { 
-        duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.3
-      } 
-    },
-  };
-
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.5, rotateX: -45 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      rotateX: 0,
-      transition: { 
-        duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.1
-      } 
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 80, scale: 0.7, rotateX: -20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      rotateX: 0,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
-      } 
-    },
-  };
-
-  const textVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
+  // Optimized animation variants - reduced complexity for better performance
+  const optimizedFadeIn = useMemo(() => ({
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
-      scale: 1,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94],
-        staggerChildren: 0.1
-      } 
+      transition: { duration: 0.6, ease: "easeOut" }
     },
-  };
+  }), []);
 
-  const wordVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.8 },
+  const optimizedSlideIn = useMemo(() => ({
+    hidden: { opacity: 0, x: -50 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    },
+  }), []);
+
+  // Fast animation for highlights section to appear immediately
+  const fastFadeIn = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      scale: 1,
-      transition: { duration: 0.6 }
+      transition: { duration: 0.3, ease: "easeOut" }
     },
-  };
+  }), []);
 
+  // Optimized confetti - delayed longer to improve initial load performance
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowConfetti(true);
-    }, 5000);
+    }, 8000); // Increased from 5000ms to 8000ms
     return () => clearTimeout(timer);
   }, []);
 
@@ -172,82 +101,82 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     };
   }, []);
 
-  useEffect(() => {
-    const createMobileBanner = () => {
-      if (window.innerWidth >= 1024) return;
-      
-      const existingBanner = document.getElementById('mobile-sticky-banner');
-      if (existingBanner) existingBanner.remove();
-      
-      const banner = document.createElement('div');
-      banner.id = 'mobile-sticky-banner';
-      banner.style.cssText = `
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 999999 !important;
-        background: linear-gradient(to right, #9333ea, #ec4899) !important;
-        border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
-        box-shadow: 0 -10px 25px -3px rgba(0, 0, 0, 0.3) !important;
-        padding: 12px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-      `;
-      
-      banner.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
-            <img src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" />
-          </div>
-          <div>
-            <h3 style="color: white; font-weight: bold; font-size: 14px; margin: 0; line-height: 1.2;">Indian Creative Star</h3>
-            <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">Art Competition</p>
-          </div>
-        </div>
-        <button id="mobile-register-btn" style="
-          background: white !important;
-          color: #9333ea !important;
-          font-weight: bold !important;
-          padding: 10px 20px !important;
-          border-radius: 25px !important;
-          border: none !important;
-          font-size: 14px !important;
-          cursor: pointer !important;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-          transition: all 0.3s ease !important;
-        ">Register Now</button>
-      `;
-      
-      document.body.appendChild(banner);
-      
-      const registerBtn = document.getElementById('mobile-register-btn');
-      if (registerBtn) {
-        registerBtn.onclick = () => handleRegisterClick();
-        
-        // Add hover effects
-        registerBtn.addEventListener('mouseenter', () => {
-          registerBtn.style.transform = 'scale(1.05)';
-          registerBtn.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-        });
-        
-        registerBtn.addEventListener('mouseleave', () => {
-          registerBtn.style.transform = 'scale(1)';
-          registerBtn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-        });
-      }
-    };
+  // Optimized mobile banner creation with better performance
+  const createMobileBanner = useCallback(() => {
+    if (window.innerWidth >= 1024) return;
     
-    // Debounced resize handler for better performance
+    const existingBanner = document.getElementById('mobile-sticky-banner');
+    if (existingBanner) existingBanner.remove();
+    
+    const banner = document.createElement('div');
+    banner.id = 'mobile-sticky-banner';
+    banner.style.cssText = `
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 999999 !important;
+      background: linear-gradient(to right, #9333ea, #ec4899) !important;
+      border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 0 -10px 25px -3px rgba(0, 0, 0, 0.3) !important;
+      padding: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      will-change: transform;
+    `;
+    
+    banner.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
+          <img src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+        </div>
+        <div>
+          <h3 style="color: white; font-weight: bold; font-size: 14px; margin: 0; line-height: 1.2;">Indian Creative Star</h3>
+          <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">Art Competition</p>
+        </div>
+      </div>
+      <button id="mobile-register-btn" style="
+        background: white !important;
+        color: #9333ea !important;
+        font-weight: bold !important;
+        padding: 10px 20px !important;
+        border-radius: 25px !important;
+        border: none !important;
+        font-size: 14px !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        transition: transform 0.2s ease !important;
+      ">Register Now</button>
+    `;
+    
+    document.body.appendChild(banner);
+    
+    const registerBtn = document.getElementById('mobile-register-btn');
+    if (registerBtn) {
+      registerBtn.onclick = () => handleRegisterClick();
+      
+      // Optimized hover effects with transform only
+      registerBtn.addEventListener('mouseenter', () => {
+        registerBtn.style.transform = 'scale(1.05)';
+      });
+      
+      registerBtn.addEventListener('mouseleave', () => {
+        registerBtn.style.transform = 'scale(1)';
+      });
+    }
+  }, []);
+  
+  useEffect(() => {
+    // Debounced resize handler with better performance
     let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(createMobileBanner, 100);
+      resizeTimeout = setTimeout(createMobileBanner, 200); // Increased debounce time
     };
     
     createMobileBanner();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
     
     return () => {
       clearTimeout(resizeTimeout);
@@ -255,7 +184,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       if (banner) banner.remove();
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [createMobileBanner]);
 
   // Hide sticky banner when modal is open
   useEffect(() => {
@@ -271,17 +200,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     }
   }, [showRegistrationDrawer]);
 
-  const handleRegisterClick = () => {    
+  const handleRegisterClick = useCallback(() => {    
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
       setShowRegistrationDrawer(true);
     }
-  };
+  }, [onRegistrationClick]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowRegistrationDrawer(false);
-  };
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -361,15 +290,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
       [e.target.name]: e.target.value
-    });
-  };
+    }));
+  }, []);
 
-  // Best artwork images for static backgrounds
-  const baseArtworkImages = [
+  // Memoized artwork images for better performance
+  const baseArtworkImages = useMemo(() => [
     "https://i.ibb.co/WvDdnrrp/ba50688142d1.jpg",
     "https://i.ibb.co/kgs0nvH0/b663bb4fcdd5.jpg",
     "https://i.ibb.co/1tfb4qTq/1753870691007.jpg",
@@ -385,11 +314,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     "https://i.ibb.co/Y7MkyNRm/Screenshot-20250710-193546.png",
     "https://i.ibb.co/mF6VsCY5/96f7ff59210a.png",
     "https://i.ibb.co/cc5kPhJf/bbbe857c0f6f.png"
-  ];
+  ], []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black" style={{ scrollBehavior: 'smooth', willChange: 'scroll-position' }}>
-      {/* Fix mobile white flash */}
+    <div className="min-h-screen overflow-x-hidden bg-black" style={{ scrollBehavior: 'smooth' }}>
+      {/* Performance optimization: reduced willChange usage */}
       <style>{`
         body {
           background-color: black !important;
@@ -464,7 +393,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           {/* Background Image - Best artwork from the collection */}
           <div className="absolute inset-0">
             <LazyImage
-              src="https://i.ibb.co/fz9nV0sg/4fe133328b5c.jpg"
+              src="https://i.ibb.co/KjhKdP27/4fe133328b5c-1.jpg?auto=format&q=80"
               alt="Featured Artwork Background"
               className="w-full h-full object-cover blur-sm scale-110"
             />
@@ -748,7 +677,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex-shrink-0">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shadow-xl border-2 border-white/30">
                 <LazyImage
-                  src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
+                  src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80"
                   alt="Daami Presents Logo"
                   className="w-full h-full"
                 />
@@ -1012,7 +941,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Header Section */}
         <div className="relative z-20 text-center mb-6 pt-2">
-          <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 mb-6">
+          <div className="inline-flex items-center px-6 py-3 bg-white/30 rounded-full border border-white/40 mb-6">
             <Lightbulb className="h-4 w-4 mr-2 text-orange-300" />
             <span className="text-sm font-medium text-white/90">Your Creative Journey</span>
                 </div>
@@ -1027,7 +956,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         {/* Sliding Benefits Cards */}
         <div className="relative z-20">
           <div className="overflow-x-hidden">
-            <div className="flex animate-slide-left-continuous space-x-4 sm:space-x-8 max-w-[100vw]">
+            <div className="flex animate-slide-left-continuous space-x-4 sm:space-x-8 max-w-[100vw]" style={{ willChange: 'transform' }}>
                {/* Duplicate cards for seamless loop */}
                {[...Array(3)].map((_, setIndex) => (
                  <React.Fragment key={setIndex}>
@@ -1036,7 +965,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Star className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -1054,7 +983,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -1072,7 +1001,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -1090,7 +1019,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                    <div className="flex-shrink-0 w-56 sm:w-80">
                      <div className="relative">
                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/60 backdrop-blur-md rounded-3xl p-3 sm:p-6 border border-white/40 shadow-xl">
+                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
                          <div className="text-center">
                            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
                              <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
@@ -1125,14 +1054,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           
           {/* Header */}
           <motion.div 
-            ref={successHeaderRef}
-            variants={textVariants}
-            initial="hidden"
-            animate={isSuccessHeaderInView ? "visible" : "hidden"}
+            ref={highlightsSectionRef}
             className="text-center mb-12"
           >
             <motion.div 
-              variants={wordVariants}
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-orange-200 mb-4"
             >
               <motion.div
@@ -1144,13 +1069,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <span className="text-sm font-semibold text-orange-700">Success Stories</span>
             </motion.div>
             <motion.h2 
-              variants={textVariants}
               className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             >
               Previous Competition <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Highlights</span>
             </motion.h2>
             <motion.p 
-              variants={wordVariants}
               className="text-lg text-gray-600 max-w-2xl mx-auto"
             >
               Celebrating incredible talent from our past competitions
@@ -1162,14 +1085,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Mobile Stats Grid - Visible only on mobile */}
             <motion.div 
-              ref={successStatsRef}
-              variants={fadeInUp}
-              initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              ref={highlightsSectionRef}
               className="block md:hidden mb-8"
             >
               <motion.div 
-                variants={fadeInUp}
                 className="grid grid-cols-2 gap-3"
               >
                 {[
@@ -1180,7 +1099,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
@@ -1208,13 +1126,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Desktop Side Cards - Hidden on mobile with Floating Animation */}
             <motion.div 
-              variants={slideInLeft}
+              variants={optimizedSlideIn}
               initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              animate={isMainSectionInView ? "visible" : "hidden"}
               className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
             >
               <motion.div 
-                variants={fadeInUp}
                 className="space-y-4"
               >
                 {[
@@ -1224,7 +1141,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
@@ -1252,13 +1168,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </motion.div>
             
             <motion.div 
-              variants={slideInRight}
+              variants={optimizedSlideIn}
               initial="hidden"
-              animate={isSuccessStatsInView ? "visible" : "hidden"}
+              animate={isMainSectionInView ? "visible" : "hidden"}
               className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
             >
               <motion.div 
-                variants={fadeInUp}
                 className="space-y-4"
               >
                 {[
@@ -1268,7 +1183,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ].map((stat, index) => (
                   <motion.div 
                     key={index} 
-                    variants={cardVariants}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: -5,
@@ -1296,16 +1210,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </motion.div>
             
             <motion.div 
-              ref={successPodiumRef}
-              variants={scaleIn}
+              ref={secondarySectionRef}
               initial="hidden"
-              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="flex items-end justify-center gap-2 md:gap-12 mb-12 px-4"
             >
               
               {/* 2nd Place */}
               <motion.div 
-                variants={slideInLeft}
+                variants={optimizedSlideIn}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
@@ -1337,7 +1250,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
               {/* 1st Place - Tallest */}
               <motion.div 
-                variants={scaleIn}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
@@ -1376,7 +1288,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
               {/* 3rd Place */}
               <motion.div 
-                variants={slideInRight}
+                variants={optimizedSlideIn}
                 whileHover={{ scale: 1.05, rotateY: -5 }}
                 className="flex flex-col items-center"
               >
@@ -1410,9 +1322,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             
             {/* Prize Pool Banner */}
             <motion.div 
-              variants={scaleIn}
               initial="hidden"
-              animate={isSuccessPodiumInView ? "visible" : "hidden"}
+              animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="text-center"
             >
               <motion.div 
@@ -1439,14 +1350,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
         <motion.div 
-          ref={successTestimonialsRef}
-          variants={fadeInUp}
+          ref={secondarySectionRef}
           initial="hidden"
-          animate={isSuccessTestimonialsInView ? "visible" : "hidden"}
+          animate={isSecondarySectionInView ? "visible" : "hidden"}
           className="mb-8"
         >
           <motion.h3 
-            variants={textVariants}
             className="text-lg md:text-xl font-bold text-gray-900 text-center mb-4 md:mb-6 px-4"
           >
             Artist Success Stories
@@ -1480,7 +1389,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   ].map((testimonial, index) => (
                     <motion.div 
                       key={`${setIndex}-${index}`} 
-                      variants={cardVariants}
                       whileHover={{ 
                         scale: 1.02, 
                         rotateY: 5,
@@ -1532,14 +1440,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
-          ref={successGalleryRef}
-          variants={fadeInUp}
-          initial="hidden"
-          animate={isSuccessGalleryInView ? "visible" : "hidden"}
+          ref={highlightsSectionRef}
           className="overflow-hidden"
         >
           <motion.div 
-            variants={fadeInUp}
             className="flex animate-slide-right-fast space-x-2 md:space-x-4"
           >
             {[...Array(3)].map((_, setIndex) => (
@@ -1547,7 +1451,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 {baseArtworkImages.map((image, index) => (
                   <motion.div 
                     key={`gallery-${setIndex}-${index}`} 
-                    variants={cardVariants}
                     whileHover={{ 
                       scale: 1.05, 
                       rotateY: 5,
