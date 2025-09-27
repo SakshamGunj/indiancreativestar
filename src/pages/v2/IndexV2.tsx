@@ -381,7 +381,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           {/* Background Image - Best artwork from the collection */}
           <div className="absolute inset-0">
             <LazyImage
-              src="https://i.ibb.co/fz9nV0sg/4fe133328b5c.jpg"
+              src="https://i.ibb.co/KjhKdP27/4fe133328b5c-1.jpg?auto=format&q=80"
               alt="Featured Artwork Background"
               className="w-full h-full object-cover blur-sm scale-110"
             />
