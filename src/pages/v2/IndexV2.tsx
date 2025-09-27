@@ -42,7 +42,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   // Optimized animation visibility hooks - reduced from 6 to 3
   const isMainSectionInView = useInView(mainSectionRef, { once: true, margin: "-100px" });
   const isSecondarySectionInView = useInView(secondarySectionRef, { once: true, margin: "-100px" });
-  const isHighlightsSectionInView = useInView(highlightsSectionRef, { once: true, margin: "-200px" });
+  const isHighlightsSectionInView = useInView(highlightsSectionRef, { once: true, margin: "200px" });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,6 +67,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       opacity: 1, 
       x: 0,
       transition: { duration: 0.6, ease: "easeOut" }
+    },
+  }), []);
+
+  // Fast animation for highlights section to appear immediately
+  const fastFadeIn = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
     },
   }), []);
 
@@ -1045,7 +1055,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           {/* Header */}
           <motion.div 
             ref={highlightsSectionRef}
-            variants={optimizedFadeIn}
+            variants={fastFadeIn}
             initial="hidden"
             animate={isHighlightsSectionInView ? "visible" : "hidden"}
             className="text-center mb-12"
@@ -1082,7 +1092,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Mobile Stats Grid - Visible only on mobile */}
             <motion.div 
               ref={highlightsSectionRef}
-              variants={optimizedFadeIn}
+              variants={fastFadeIn}
               initial="hidden"
               animate={isHighlightsSectionInView ? "visible" : "hidden"}
               className="block md:hidden mb-8"
@@ -1452,7 +1462,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         {/* Full Width Artwork Gallery - Improved Mobile */}
         <motion.div 
           ref={highlightsSectionRef}
-          variants={optimizedFadeIn}
+          variants={fastFadeIn}
           initial="hidden"
           animate={isHighlightsSectionInView ? "visible" : "hidden"}
           className="overflow-hidden"
