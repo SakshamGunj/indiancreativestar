@@ -38,7 +38,7 @@ export const HeaderV3 = ({ onRegistrationClick }: HeaderV3Props) => {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg overflow-hidden">
               <LazyImage
-                src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
+                src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80"
                 alt="Daami Presents Logo"
                 className="w-full h-full object-cover"
               />

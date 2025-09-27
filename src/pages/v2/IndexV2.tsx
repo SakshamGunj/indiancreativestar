@@ -117,7 +117,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     banner.innerHTML = `
       <div style="display: flex; align-items: center; gap: 12px;">
         <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
-          <img src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+          <img src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
         </div>
         <div>
           <h3 style="color: white; font-weight: bold; font-size: 14px; margin: 0; line-height: 1.2;">Indian Creative Star</h3>
@@ -665,7 +665,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="flex-shrink-0">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden shadow-xl border-2 border-white/30">
                 <LazyImage
-                  src="/Daami Presents (1920 x 1080 px) (1000 x 1000 px).png"
+                  src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80"
                   alt="Daami Presents Logo"
                   className="w-full h-full"
                 />
