@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-export function PrizeSectionV2() {
+function PrizeSectionV2() {
   const ref = useRef(null);
   const headerRef = useRef(null);
   const top100Ref = useRef(null);
@@ -357,10 +357,10 @@ export function PrizeSectionV2() {
                       </ul>
                     </CardContent>
                   </Card>
+                  </motion.div>
                 </motion.div>
               </motion.div>
-            </div>
-          </motion.div>
+            </motion.div>
 
           {/* Kids Art Competition Prizes */}
           <motion.div 
@@ -595,4 +595,7 @@ export function PrizeSectionV2() {
     </motion.section>
   );
 }
+
+export { PrizeSectionV2 };
+export default PrizeSectionV2;
 

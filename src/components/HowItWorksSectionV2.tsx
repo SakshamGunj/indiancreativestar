@@ -9,7 +9,7 @@ interface HowItWorksSectionV2Props {
   onRegistrationClick?: () => void;
 }
 
-export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2Props) {
+function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2Props) {
   const navigate = useNavigate();
   const ref = useRef(null);
   const headerRef = useRef(null);
@@ -502,4 +502,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
     </motion.section>
   );
 }
+
+export { HowItWorksSectionV2 };
+export default HowItWorksSectionV2;
 

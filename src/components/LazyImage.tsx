@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo, useCallback } from 'react';
 
 interface LazyImageProps {
   src: string;
@@ -8,52 +8,59 @@ interface LazyImageProps {
   placeholder?: string;
   onLoad?: () => void;
   onError?: () => void;
+  priority?: boolean; // For critical images that should load immediately
 }
 
-const LazyImage: React.FC<LazyImageProps> = ({
+const LazyImage: React.FC<LazyImageProps> = memo(({
   src,
   alt,
   className = '',
   style = {},
   placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y3ZjdmNyIvPjwvc3ZnPg==',
   onLoad,
-  onError
+  onError,
+  priority = false
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(priority); // Load immediately if priority
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const handleLoad = useCallback(() => {
+    setIsLoaded(true);
+    onLoad?.();
+  }, [onLoad]);
+
+  const handleError = useCallback(() => {
+    setHasError(true);
+    onError?.();
+  }, [onError]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    if (priority || isInView) return; // Skip observer if priority or already in view
+
+    observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          observer.disconnect();
+          observerRef.current?.disconnect();
         }
       },
       {
-        rootMargin: '50px', // Start loading 50px before the image comes into view
+        rootMargin: '100px', // Increased for better performance
         threshold: 0.1
       }
     );
 
     if (imgRef.current) {
-      observer.observe(imgRef.current);
+      observerRef.current.observe(imgRef.current);
     }
 
-    return () => observer.disconnect();
-  }, []);
-
-  const handleLoad = () => {
-    setIsLoaded(true);
-    onLoad?.();
-  };
-
-  const handleError = () => {
-    setHasError(true);
-    onError?.();
-  };
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, [priority, isInView]);
 
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${className}`} style={style}>
@@ -77,7 +84,8 @@ const LazyImage: React.FC<LazyImageProps> = ({
           }`}
           onLoad={handleLoad}
           onError={handleError}
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
         />
       )}
       
@@ -89,6 +97,8 @@ const LazyImage: React.FC<LazyImageProps> = ({
       )}
     </div>
   );
-};
+});
+
+LazyImage.displayName = 'LazyImage';
 
 export default LazyImage;

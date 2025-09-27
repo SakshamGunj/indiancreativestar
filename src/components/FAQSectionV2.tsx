@@ -44,7 +44,7 @@ const faqs = [
   }
 ];
 
-export function FAQSectionV2() {
+function FAQSectionV2() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -132,4 +132,7 @@ export function FAQSectionV2() {
     </motion.section>
   );
 }
+
+export { FAQSectionV2 };
+export default FAQSectionV2;
 

@@ -15,29 +15,30 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
   const { brandName, regionName } = useBranding();
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      // Get the About section position
-      const aboutSection = document.getElementById('about-section');
-      
-      if (aboutSection) {
-        const aboutSectionTop = aboutSection.getBoundingClientRect().top;
-        // Show the banner after scrolling to the About section
-        if (aboutSectionTop <= 100) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
-      } else {
-        // Fallback to previous behavior if section not found
-        if (window.scrollY > 600) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          // Get the About section position
+          const aboutSection = document.getElementById('about-section');
+          
+          if (aboutSection) {
+            const aboutSectionTop = aboutSection.getBoundingClientRect().top;
+            // Show the banner after scrolling to the About section
+            setIsVisible(aboutSectionTop <= 100);
+          } else {
+            // Fallback to previous behavior if section not found
+            setIsVisible(window.scrollY > 600);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     // Initial check
     handleScroll();
     

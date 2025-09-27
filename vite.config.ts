@@ -31,6 +31,31 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    exclude: ['canvg']
+    exclude: ['canvg'],
+    include: ['react', 'react-dom']
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          animations: ['framer-motion'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-label', '@radix-ui/react-slot'],
+          utils: ['lucide-react', 'clsx', 'tailwind-merge'],
+          firebase: ['firebase/app', 'firebase/firestore'],
+          router: ['react-router-dom'],
+          forms: ['react-hook-form', '@hookform/resolvers']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 600,
+    target: 'esnext',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production',
+        drop_debugger: mode === 'production'
+      }
+    }
   }
 }));

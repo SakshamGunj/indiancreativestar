@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 
 const colors = [
   "#8B5CF6", // creative-purple
@@ -9,33 +9,26 @@ const colors = [
   "#F97316", // creative-orange
 ];
 
-export function Confetti() {
+export const Confetti = memo(() => {
   const [confetti, setConfetti] = useState<JSX.Element[]>([]);
+  const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    createConfetti();
-    // Cleanup function to avoid memory leaks
-    return () => {
-      setConfetti([]);
-    };
-  }, []);
-
-  const createConfetti = () => {
+  const createConfetti = useCallback(() => {
     const confettiElements = [];
     
-    // Reduced from 50 to 20 for better performance
-    for (let i = 0; i < 20; i++) {
+    // Further reduced for better performance
+    for (let i = 0; i < 12; i++) {
       const left = Math.random() * 100;
-      const width = Math.random() * 10 + 5;
+      const width = Math.random() * 8 + 4;
       const height = width * 0.4;
       const color = colors[Math.floor(Math.random() * colors.length)];
-      const delay = Math.random() * 3;
+      const delay = Math.random() * 2;
       const rotation = Math.random() * 360;
       
       confettiElements.push(
         <div
           key={i}
-          className="confetti absolute"
+          className="confetti absolute will-change-transform"
           style={{
             left: `${left}%`,
             width: `${width}px`,
@@ -49,7 +42,30 @@ export function Confetti() {
     }
     
     setConfetti(confettiElements);
-  };
+    
+    // Auto-hide after animation completes
+    setTimeout(() => {
+      setIsVisible(false);
+      setConfetti([]);
+    }, 5000);
+  }, []);
 
-  return <div className="fixed inset-0 pointer-events-none z-20">{confetti}</div>;
-}
+  useEffect(() => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotion) {
+      createConfetti();
+    }
+    
+    return () => {
+      setConfetti([]);
+    };
+  }, [createConfetti]);
+
+  if (!isVisible || confetti.length === 0) return null;
+
+  return <div className="fixed inset-0 pointer-events-none z-20 no-select">{confetti}</div>;
+});
+
+Confetti.displayName = 'Confetti';
