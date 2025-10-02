@@ -19,6 +19,7 @@ import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar
 import AdminVerify from "./pages/AdminVerify";
 import ArtworkSubmission from "./pages/ArtworkSubmission";
 import Dashboard from "./pages/Dashboard";
+import AdminConfirmation from "./pages/AdminConfirmation";
 import CashfreeTest from "./pages/CashfreeTest";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import TermsAndConditions from "./pages/TermsAndConditions";
@@ -138,6 +139,7 @@ const App = () => {
                   <Route path="/indiancreativestar/submission" element={<Dashboard />} />
                   <Route path="/indiancreativestar/dashboard" element={<Dashboard />} />
                   <Route path="/cashfree-test" element={<CashfreeTest />} />
+                  <Route path="/indiancreativestar/admin/confirmation" element={<AdminConfirmation />} />
                   <Route path="/payment-success" element={<PaymentSuccess />} />
                   <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                   <Route path="/refund-and-cancellation" element={<RefundAndCancellation />} />

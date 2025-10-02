@@ -23,6 +23,9 @@ const Dashboard = () => {
   const [isSubmittingArtwork, setIsSubmittingArtwork] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [selectedFile2, setSelectedFile2] = useState<File | null>(null);
+  const [previewUrl2, setPreviewUrl2] = useState<string | null>(null);
+  const [isSubmittingArtwork2, setIsSubmittingArtwork2] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
@@ -158,7 +161,7 @@ const Dashboard = () => {
       const existingData = userDoc.exists() ? userDoc.data() : null;
       
       await setDoc(doc(db, 'indiancreativestar_accounts', user.uid), {
-        name: user.displayName || '',
+        name: user.displayName || user.email?.split('@')[0] || '',
         email: user.email || '',
         whatsapp: existingData?.whatsapp || '',
         authProvider: 'google',
@@ -345,6 +348,55 @@ const Dashboard = () => {
     }
   };
 
+  const handleFileSelect2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File too large. Please select an image under 10MB.');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        return;
+      }
+      setSelectedFile2(file);
+      setPreviewUrl2(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadToImgBB = async (file: File, uid: string) => {
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          resolve((reader.result as string).split(',')[1]);
+        } else {
+          reject(new Error('Failed to read file.'));
+        }
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  
+    const formData = new FormData();
+    formData.append('key', '91acddc60c0c58dde66ca6509d4e9fd9');
+    formData.append('image', base64);
+    formData.append('name', `artwork_${uid}_${Date.now()}`);
+  
+    const response = await fetch('https://api.imgbb.com/1/upload', {
+      method: 'POST',
+      body: formData,
+    });
+  
+    const result = await response.json();
+  
+    if (result.success) {
+      return result.data;
+    } else {
+      throw new Error(result?.error?.message || 'Failed to upload image to ImgBB');
+    }
+  };
+  
   // Handle Artwork Submission
   const handleArtworkSubmission = async () => {
     if (!selectedFile) {
@@ -359,70 +411,119 @@ const Dashboard = () => {
 
     setIsSubmittingArtwork(true);
     try {
-      // Convert file to base64
-      const base64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result as string;
-          resolve(result.split(',')[1]); // Remove data:image/jpeg;base64, prefix
-        };
-        reader.readAsDataURL(selectedFile);
-      });
+      const imgbbData = await uploadToImgBB(selectedFile, currentUser!.uid);
+      
+      const artworkData: any = {
+        hasSubmittedArtwork: true,
+        submissionDate: new Date(),
+        artworkFileName: selectedFile.name,
+        artworkFileSize: selectedFile.size,
+        artworkFileType: selectedFile.type,
+        artworkUrl: imgbbData.url,
+        artworkDisplayUrl: imgbbData.display_url,
+        artworkViewerUrl: imgbbData.url_viewer,
+        artworkDeleteUrl: imgbbData.delete_url,
+        artworkId: imgbbData.id,
+        submissionStatus: 'submitted',
+        lastUpdated: new Date()
+      };
 
-      // Upload to ImgBB
-      const formData = new FormData();
-      formData.append('key', '91acddc60c0c58dde66ca6509d4e9fd9');
-      formData.append('image', base64);
-      formData.append('name', `artwork_${currentUser!.uid}_${Date.now()}`);
-
-      const response = await fetch('https://api.imgbb.com/1/upload', {
-        method: 'POST',
-        body: formData
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        // Update user data with submission details
-        await updateDoc(doc(db, 'indiancreativestar_accounts', currentUser!.uid), {
-          hasSubmittedArtwork: true,
-          submissionDate: new Date(),
-          artworkFileName: selectedFile.name,
-          artworkFileSize: selectedFile.size,
-          artworkFileType: selectedFile.type,
-          artworkUrl: result.data.url,
-          artworkDisplayUrl: result.data.display_url,
-          artworkViewerUrl: result.data.url_viewer,
-          artworkDeleteUrl: result.data.delete_url,
-          artworkId: result.data.id,
-          submissionStatus: 'submitted',
-          lastUpdated: new Date()
-        });
-
-        setUserData(prev => ({ 
-          ...prev, 
-          hasSubmittedArtwork: true,
-          artworkUrl: result.data.url,
-          artworkDisplayUrl: result.data.display_url
-        }));
-        setSelectedFile(null);
-        setPreviewUrl(null);
-        
-        // Auto switch to dashboard to show success
-        setActiveTab('dashboard');
-        setShowSuccessMessage(true);
-        
-        // Auto hide success message after 5 seconds
-        setTimeout(() => setShowSuccessMessage(false), 5000);
-      } else {
-        throw new Error('Failed to upload image');
+      if (selectedFile2) {
+        const imgbbData2 = await uploadToImgBB(selectedFile2, currentUser!.uid);
+        artworkData.hasSubmittedArtwork2 = true;
+        artworkData.submissionDate2 = new Date();
+        artworkData.artworkFileName2 = selectedFile2.name;
+        artworkData.artworkFileSize2 = selectedFile2.size;
+        artworkData.artworkFileType2 = selectedFile2.type;
+        artworkData.artworkUrl2 = imgbbData2.url;
+        artworkData.artworkDisplayUrl2 = imgbbData2.display_url;
+        artworkData.artworkViewerUrl2 = imgbbData2.url_viewer;
+        artworkData.artworkDeleteUrl2 = imgbbData2.delete_url;
+        artworkData.artworkId2 = imgbbData2.id;
+        artworkData.submissionStatus2 = 'submitted';
       }
+
+      await updateDoc(doc(db, 'indiancreativestar_accounts', currentUser!.uid), artworkData);
+
+      setUserData(prev => ({
+        ...prev,
+        ...artworkData
+      }));
+      setSelectedFile(null);
+      setPreviewUrl(null);
+      if (selectedFile2) {
+        setSelectedFile2(null);
+        setPreviewUrl2(null);
+      }
+      
+      setActiveTab('dashboard');
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 5000);
+
     } catch (error) {
       console.error('Submission error:', error);
       alert('Submission failed. Please try again.');
     } finally {
       setIsSubmittingArtwork(false);
     }
+  };
+
+  // Handle 2nd Artwork Submission (Festival Offer)
+  const handleArtworkSubmission2 = async () => {
+    if (!selectedFile2) {
+      alert('Please select your second artwork to submit.');
+      return;
+    }
+
+    if (!userData?.hasSubmittedArtwork) {
+      alert('Please submit your first artwork before submitting the second one.');
+      return;
+    }
+
+    setIsSubmittingArtwork2(true);
+    try {
+      const imgbbData = await uploadToImgBB(selectedFile2, currentUser!.uid);
+
+      const artworkData2 = {
+        hasSubmittedArtwork2: true,
+        submissionDate2: new Date(),
+        artworkFileName2: selectedFile2.name,
+        artworkFileSize2: selectedFile2.size,
+        artworkFileType2: selectedFile2.type,
+        artworkUrl2: imgbbData.url,
+        artworkDisplayUrl2: imgbbData.display_url,
+        artworkViewerUrl2: imgbbData.url_viewer,
+        artworkDeleteUrl2: imgbbData.delete_url,
+        artworkId2: imgbbData.id,
+        submissionStatus2: 'submitted',
+        lastUpdated: new Date()
+      };
+
+      await updateDoc(doc(db, 'indiancreativestar_accounts', currentUser!.uid), artworkData2);
+
+      setUserData(prev => ({
+        ...prev,
+        ...artworkData2
+      }));
+      setSelectedFile2(null);
+      setPreviewUrl2(null);
+      
+      setActiveTab('dashboard');
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 5000);
+
+    } catch (error) {
+      console.error('Second artwork submission error:', error);
+      alert('Second artwork submission failed. Please try again.');
+    } finally {
+      setIsSubmittingArtwork2(false);
+    }
+  };
+
+  const safeFormatDate = (date: any) => {
+    if (!date) return 'N/A';
+    if (date.toDate) return new Date(date.toDate()).toLocaleDateString('en-IN');
+    return new Date(date).toLocaleDateString('en-IN');
   };
 
   if (isLoading) {
@@ -872,7 +973,9 @@ const Dashboard = () => {
                     <div className="text-gray-500">Paid</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-bold text-purple-600">{userData?.hasSubmittedArtwork ? '✓' : '○'}</div>
+                    <div className="font-bold text-purple-600">
+                      {userData?.hasSubmittedArtwork2 ? '2/2' : userData?.hasSubmittedArtwork ? '1/2' : '0/2'}
+                    </div>
                     <div className="text-gray-500">Submitted</div>
                   </div>
                   <div className="text-center">
@@ -982,7 +1085,7 @@ const Dashboard = () => {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between py-2">
                     <span className="text-gray-600">Joined</span>
-                    <span className="text-sm text-gray-900">{userData?.createdAt ? new Date(userData.createdAt.toDate()).toLocaleDateString() : 'Today'}</span>
+                    <span className="text-sm text-gray-900">{safeFormatDate(userData?.createdAt)}</span>
                   </div>
                   <div className="flex items-center justify-between py-2">
                     <span className="text-gray-600">Status</span>
@@ -1097,29 +1200,77 @@ const Dashboard = () => {
                     <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3">
                       <Trophy className="h-6 w-6 text-white" />
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">🏆 Artwork Already Submitted!</h3>
-                    <p className="text-gray-600 mb-4 text-sm">Your masterpiece is competing among India's finest artists!</p>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">🏆 Artwork Submitted!</h3>
+                    <p className="text-gray-600 mb-4 text-sm">Your first masterpiece is in the competition!</p>
                   </div>
-                  
-                  {/* Submitted Artwork Preview */}
+
                   {userData?.artworkDisplayUrl && (
                     <div className="mb-4">
                       <div className="bg-white rounded-xl p-3 border border-green-200">
-                        <img 
-                          src={userData.artworkDisplayUrl} 
-                          alt="Submitted Artwork" 
+                        <img
+                          src={userData.artworkDisplayUrl}
+                          alt="Submitted Artwork"
                           className="w-full max-w-xs mx-auto rounded-lg shadow-sm"
                           style={{maxHeight: '200px', objectFit: 'contain'}}
                         />
                       </div>
                     </div>
                   )}
-                  
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 text-center">
-                    <p className="text-green-800 font-semibold mb-1">🌟 Your art speaks volumes!</p>
-                    <p className="text-green-600 text-sm">Results will be announced soon. Keep creating!</p>
-                    <p className="text-xs text-green-700 mt-2">Submitted on {userData?.submissionDate ? new Date(userData.submissionDate.toDate()).toLocaleDateString() : 'Today'}</p>
-                  </div>
+
+                  {!userData?.hasSubmittedArtwork2 ? (
+                    <div className="mt-6 border-t pt-6">
+                      <div className="text-center mb-4">
+                        <h3 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400 mb-2">🎉 Festival Week Offer! 🎉</h3>
+                        <p className="text-gray-600 text-sm">Submit a second artwork for FREE and double your chances of winning!</p>
+                      </div>
+
+                      <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center mb-4 hover:border-purple-400 transition-colors">
+                        <input type="file" accept="image/*" onChange={handleFileSelect2} className="hidden" id="artwork-upload-festival" />
+                        <label htmlFor="artwork-upload-festival" className="cursor-pointer">
+                          {previewUrl2 ? (
+                            <div className="space-y-3">
+                              <img src={previewUrl2} alt="Preview 2" className="w-24 h-24 object-cover rounded-xl mx-auto" />
+                              <p className="text-sm text-gray-600">Second Artwork (Click to change)</p>
+                            </div>
+                          ) : (
+                            <div className="space-y-3">
+                              <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
+                              <div>
+                                <p className="text-base font-medium text-gray-700">Upload Second Artwork</p>
+                                <p className="text-sm text-gray-500">Don't miss this chance!</p>
+                              </div>
+                            </div>
+                          )}
+                        </label>
+                      </div>
+
+                      <Button
+                        onClick={handleArtworkSubmission2}
+                        disabled={isSubmittingArtwork2 || !selectedFile2}
+                        className="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 h-11 font-medium rounded-xl text-white"
+                      >
+                        {isSubmittingArtwork2 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
+                        Submit 2nd Artwork (Festival Offer)
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="mt-6 text-center">
+                      <h3 className="text-lg font-bold text-green-600 mb-2">🚀 Both Artworks Submitted!</h3>
+                      <p className="text-gray-600 text-sm">You've made the most of the Festival Week Offer. Best of luck!</p>
+                      {userData?.artworkDisplayUrl2 && (
+                        <div className="mt-4">
+                          <div className="bg-white rounded-xl p-3 border border-green-200">
+                            <img
+                              src={userData.artworkDisplayUrl2}
+                              alt="Submitted Artwork 2"
+                              className="w-full max-w-xs mx-auto rounded-lg shadow-sm"
+                              style={{maxHeight: '200px', objectFit: 'contain'}}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
@@ -1131,30 +1282,48 @@ const Dashboard = () => {
                     <p className="text-gray-600 text-sm">Upload your masterpiece and inspire thousands</p>
                   </div>
 
-                  <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center mb-4 hover:border-purple-400 transition-colors">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                      id="artwork-upload"
-                    />
-                    <label htmlFor="artwork-upload" className="cursor-pointer">
-                      {previewUrl ? (
-                        <div className="space-y-3">
-                          <img src={previewUrl} alt="Preview" className="w-24 h-24 object-cover rounded-xl mx-auto" />
-                          <p className="text-sm text-gray-600">Click to change image</p>
-                        </div>
-                      ) : (
-                        <div className="space-y-3">
-                          <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
-                          <div>
-                            <p className="text-base font-medium text-gray-700">Upload Your Artwork</p>
-                            <p className="text-sm text-gray-500">PNG, JPG, GIF, WEBP up to 10MB</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {/* Artwork 1 Upload */}
+                    <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-purple-400 transition-colors">
+                      <input type="file" accept="image/*" onChange={handleFileSelect} className="hidden" id="artwork-upload-1" />
+                      <label htmlFor="artwork-upload-1" className="cursor-pointer">
+                        {previewUrl ? (
+                          <div className="space-y-3">
+                            <img src={previewUrl} alt="Preview 1" className="w-24 h-24 object-cover rounded-xl mx-auto" />
+                            <p className="text-sm text-gray-600">Artwork 1 (Click to change)</p>
                           </div>
-                        </div>
-                      )}
-                    </label>
+                        ) : (
+                          <div className="space-y-3">
+                            <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
+                            <div>
+                              <p className="text-base font-medium text-gray-700">Upload Artwork 1</p>
+                              <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
+                            </div>
+                          </div>
+                        )}
+                      </label>
+                    </div>
+
+                    {/* Artwork 2 Upload */}
+                    <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-purple-400 transition-colors">
+                      <input type="file" accept="image/*" onChange={handleFileSelect2} className="hidden" id="artwork-upload-2" />
+                      <label htmlFor="artwork-upload-2" className="cursor-pointer">
+                        {previewUrl2 ? (
+                          <div className="space-y-3">
+                            <img src={previewUrl2} alt="Preview 2" className="w-24 h-24 object-cover rounded-xl mx-auto" />
+                            <p className="text-sm text-gray-600">Artwork 2 (Click to change)</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
+                            <div>
+                              <p className="text-base font-medium text-gray-700">Upload Artwork 2 (Optional)</p>
+                              <p className="text-sm text-gray-500">Festival Week Offer!</p>
+                            </div>
+                          </div>
+                        )}
+                      </label>
+                    </div>
                   </div>
 
                   <Button
@@ -1187,30 +1356,48 @@ const Dashboard = () => {
                 <p className="text-gray-600 text-sm">Upload your masterpiece and join the competition</p>
               </div>
 
-              <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center mb-4 hover:border-purple-400 transition-colors">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileSelect}
-                  className="hidden"
-                  id="artwork-upload-dashboard"
-                />
-                <label htmlFor="artwork-upload-dashboard" className="cursor-pointer">
-                  {previewUrl ? (
-                    <div className="space-y-3">
-                      <img src={previewUrl} alt="Preview" className="w-24 h-24 object-cover rounded-xl mx-auto" />
-                      <p className="text-sm text-gray-600">Click to change image</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
-                      <div>
-                        <p className="text-base font-medium text-gray-700">Upload Your Artwork</p>
-                        <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {/* Artwork 1 Upload */}
+                <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-purple-400 transition-colors">
+                  <input type="file" accept="image/*" onChange={handleFileSelect} className="hidden" id="artwork-upload-dashboard-1" />
+                  <label htmlFor="artwork-upload-dashboard-1" className="cursor-pointer">
+                    {previewUrl ? (
+                      <div className="space-y-3">
+                        <img src={previewUrl} alt="Preview 1" className="w-24 h-24 object-cover rounded-xl mx-auto" />
+                        <p className="text-sm text-gray-600">Artwork 1 (Click to change)</p>
                       </div>
-                    </div>
-                  )}
-                </label>
+                    ) : (
+                      <div className="space-y-3">
+                        <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
+                        <div>
+                          <p className="text-base font-medium text-gray-700">Upload Artwork 1</p>
+                          <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
+                        </div>
+                      </div>
+                    )}
+                  </label>
+                </div>
+
+                {/* Artwork 2 Upload */}
+                <div className="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center hover:border-purple-400 transition-colors">
+                  <input type="file" accept="image/*" onChange={handleFileSelect2} className="hidden" id="artwork-upload-dashboard-2" />
+                  <label htmlFor="artwork-upload-dashboard-2" className="cursor-pointer">
+                    {previewUrl2 ? (
+                      <div className="space-y-3">
+                        <img src={previewUrl2} alt="Preview 2" className="w-24 h-24 object-cover rounded-xl mx-auto" />
+                        <p className="text-sm text-gray-600">Artwork 2 (Click to change)</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <ImageIcon className="h-10 w-10 text-gray-400 mx-auto" />
+                        <div>
+                          <p className="text-base font-medium text-gray-700">Upload Artwork 2 (Optional)</p>
+                          <p className="text-sm text-gray-500">Festival Week Offer!</p>
+                        </div>
+                      </div>
+                    )}
+                  </label>
+                </div>
               </div>
 
               <Button
@@ -1253,13 +1440,35 @@ const Dashboard = () => {
                       <h4 className="text-lg font-bold text-gray-800 mb-1">🎨 Your Creative Vision</h4>
                       <p className="text-sm text-gray-600">Now part of India's most prestigious art competition</p>
                     </div>
-                    <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-4 shadow-inner border border-gray-100">
-                      <img 
-                        src={userData.artworkDisplayUrl} 
-                        alt="Your Masterpiece" 
-                        className="w-full max-w-sm mx-auto rounded-xl shadow-lg border-2 border-white"
-                        style={{maxHeight: '250px', objectFit: 'contain'}}
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-4 shadow-inner border border-gray-100">
+                        <img
+                          src={userData.artworkDisplayUrl}
+                          alt="Your Masterpiece 1"
+                          className="w-full max-w-sm mx-auto rounded-xl shadow-lg border-2 border-white"
+                          style={{maxHeight: '250px', objectFit: 'contain'}}
+                        />
+                      </div>
+                      {userData.artworkDisplayUrl2 ? (
+                        <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-4 shadow-inner border border-gray-100">
+                          <img
+                            src={userData.artworkDisplayUrl2}
+                            alt="Your Masterpiece 2"
+                            className="w-full max-w-sm mx-auto rounded-xl shadow-lg border-2 border-white"
+                            style={{maxHeight: '250px', objectFit: 'contain'}}
+                          />
+                        </div>
+                      ) : (
+                        <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-4 shadow-inner border border-gray-100 flex flex-col justify-center">
+                          <div className="text-center">
+                            <h3 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400 mb-2">🎉 Festival Week Offer! 🎉</h3>
+                            <p className="text-gray-600 text-sm mb-4">Submit a second artwork for FREE!</p>
+                            <Button onClick={() => setActiveTab('submit')} className="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 h-11 font-medium rounded-xl text-white">
+                              Submit 2nd Artwork
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -1300,18 +1509,27 @@ const Dashboard = () => {
                 </div>
 
                 {/* Submission Details */}
-                <div className="mt-4 text-center">
+                <div className="mt-4 text-center flex flex-col items-center gap-2">
                   <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-200">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-xs font-medium text-gray-600">
-                      Submitted on {userData?.submissionDate ? new Date(userData.submissionDate.toDate()).toLocaleDateString('en-IN') : 'Today'}
+                      Artwork 1: {safeFormatDate(userData?.submissionDate)}
                     </span>
                   </div>
+                  {userData?.hasSubmittedArtwork2 && (
+                    <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm border border-gray-200">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-medium text-gray-600">
+                        Artwork 2: {safeFormatDate(userData?.submissionDate2)}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
           </Card>
         )}
+        
       </div>
       
       {/* Instagram-style Bottom Navigation */}
