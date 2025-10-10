@@ -41,7 +41,7 @@ const Index = () => {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden ring-1 ring-white/10">
               <img
-                src="/company-logo.jpeg"
+                src="/company-logo.webp"
                 alt="Daami Event"
                 className="w-full h-full object-cover"
               />
@@ -67,7 +67,7 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-3xl blur-xl"></div>
             <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
               <img
-                src="/Daami Presents (1920 x 1080 px).jpg"
+                src="/Daami Presents (1920 x 1080 px).webp"
                 alt="Daami Presents Banner"
                 className="w-full h-48 sm:h-56 lg:h-80 xl:h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
               />
@@ -163,7 +163,7 @@ const Index = () => {
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="w-6 h-6 rounded-lg overflow-hidden">
               <img
-                src="/company-logo.jpeg"
+                src="/company-logo.webp"
                 alt="Daami Event"
                 className="w-full h-full object-cover"
               />

@@ -81,7 +81,7 @@ const PartnershipIndianCreativeStar = () => {
           <div className="flex items-center gap-4">
             <div className="w-11 h-11 rounded-2xl overflow-hidden shadow-sm ring-1 ring-black/5">
               <img
-                src="/company-logo.jpeg"
+                src="/company-logo.webp"
                 alt="Daami Event"
                 className="w-full h-full object-cover"
               />
@@ -129,7 +129,7 @@ const PartnershipIndianCreativeStar = () => {
                 <div className="relative max-w-5xl mx-auto">
                   <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
                     <img
-                      src="/Daami Presents (1920 x 1080 px).jpg"
+                      src="/Daami Presents (1920 x 1080 px).webp"
                       alt="Daami Event presents Indian Creative Star"
                       className="w-full h-auto object-cover"
                     />
@@ -526,7 +526,7 @@ const PartnershipIndianCreativeStar = () => {
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-7 h-7 rounded-xl overflow-hidden shadow-sm">
               <img
-                src="/company-logo.jpeg"
+                src="/company-logo.webp"
                 alt="Daami Event"
                 className="w-full h-full object-cover"
               />

@@ -25,7 +25,7 @@ const IndianCreativeStarV2 = () => {
       <header className="absolute top-0 left-0 w-full z-30 bg-white/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <img src="/company-logo.jpeg" alt="SCS Logo" className="h-10 w-10 rounded-full object-cover" />
+            <img src="/company-logo.webp" alt="SCS Logo" className="h-10 w-10 rounded-full object-cover" />
             <span className="font-bold text-xl text-gray-800">Indian Creative Star</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
@@ -285,7 +285,7 @@ const IndianCreativeStarV2 = () => {
               </Button>
             </div>
             <div className="flex justify-center">
-              <img src="/certificate-template-new.png" alt="Certificate" className="rounded-2xl shadow-2xl w-full max-w-lg" />
+              <img src="/certificate-template-new.webp" alt="Certificate" className="rounded-2xl shadow-2xl w-full max-w-lg" />
             </div>
           </div>
         </div>

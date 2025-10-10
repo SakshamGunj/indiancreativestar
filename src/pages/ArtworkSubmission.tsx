@@ -179,7 +179,7 @@ const ArtworkSubmission = () => {
     setIsProcessingPayment(true);
 
     try {
-      const response = await fetch('http://localhost:3001/create-payment', {
+      const response = await fetch('https://backendcashfree.vercel.app/create-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ export const FooterV3 = () => {
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-12 h-12 rounded-xl overflow-hidden">
               <LazyImage
-                src="/company-logo.jpeg"
+                src="/company-logo.webp"
                 alt="Daami Event Logo"
                 className="w-full h-full object-cover"
               />

@@ -24,17 +24,177 @@ export default function ThankYou() {
   const email = searchParams.get("email") || "";
   const phone = searchParams.get("phone") || "";
   const txId = searchParams.get("txId") || searchParams.get("transactionId") || "";
+  const orderId = searchParams.get("orderId") || searchParams.get("order_id") || "";
   const utmSource = searchParams.get("utm_source") || "";
   const utmCampaign = searchParams.get("utm_campaign") || "";
   const age = searchParams.get("age") || "";
   const whatsapp = searchParams.get("whatsapp") || "";
   const instagram = searchParams.get("instagram") || "";
   const category = searchParams.get("category") || "";
+  const paymentStatus = searchParams.get("payment") || "";
 
   const [showConfetti, setShowConfetti] = useState(true);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
+  
+  // Helper function to normalize phone number to Indian format (91XXXXXXXXXX)
+  const normalizePhoneNumber = (phone: string): string => {
+    if (!phone) return '';
+    
+    // Remove all spaces, dashes, parentheses, and trim
+    let cleaned = phone.replace(/[\s\-\(\)]/g, '').trim();
+    
+    // Remove + prefix if exists
+    if (cleaned.startsWith('+')) {
+      cleaned = cleaned.substring(1);
+    }
+    
+    // If 10 digits, add 91 prefix
+    if (cleaned.length === 10 && /^\d{10}$/.test(cleaned)) {
+      return `91${cleaned}`;
+    }
+    
+    // If 12 digits starting with 91, return as is
+    if (cleaned.length === 12 && cleaned.startsWith('91') && /^\d{12}$/.test(cleaned)) {
+      return cleaned;
+    }
+    
+    // Fallback: try to extract digits and add 91 if needed
+    const digitsOnly = cleaned.replace(/\D/g, '');
+    if (digitsOnly.length === 10) {
+      return `91${digitsOnly}`;
+    }
+    
+    return cleaned;
+  };
+  
+  // 🎯 FACEBOOK PIXEL PURCHASE EVENT - Push to GTM dataLayer
+  useEffect(() => {
+    console.log('🎯 [GTM] Thank You page loaded - Preparing Purchase Event');
+    
+    // Get Facebook cookies for attribution
+    const getFacebookCookie = (name: string) => {
+      const match = document.cookie.match(new RegExp(`${name}=([^;]*)`));
+      return match ? match[1] : '';
+    };
+
+    const fbp = getFacebookCookie('_fbp');
+    const fbc = getFacebookCookie('_fbc');
+    
+    // Hydrate data from sessionStorage if available
+    let fullData = {
+      name,
+      email,
+      phone: phone || whatsapp,
+      age,
+      whatsapp,
+      orderId: orderId || txId,
+      amount: 249 // Registration fee
+    };
+
+    try {
+      const cached = sessionStorage.getItem("ics_last_registration");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        fullData.email = fullData.email || parsed.email || "";
+        fullData.phone = fullData.phone || parsed.whatsapp || parsed.phone || "";
+        fullData.whatsapp = fullData.whatsapp || parsed.whatsapp || "";
+        fullData.name = fullData.name || parsed.fullName || parsed.name || "";
+        fullData.age = fullData.age || parsed.age || "";
+        fullData.orderId = fullData.orderId || parsed.orderId || "";
+      }
+    } catch (e) {
+      console.warn('[GTM] Could not parse sessionStorage data:', e);
+    }
+
+    // Split name into first and last name & normalize to lowercase (Meta requirement)
+    const nameParts = fullData.name.trim().split(' ');
+    const firstName = (nameParts[0] || '').toLowerCase();
+    const lastName = (nameParts.slice(1).join(' ') || '').toLowerCase();
+    
+    // Normalize phone number with country code +91 (India) - handles all formats
+    const normalizedPhone = normalizePhoneNumber(fullData.phone);  // Use helper function
+    
+    // Normalize email to lowercase (Meta requirement)
+    const normalizedEmail = fullData.email.trim().toLowerCase();
+
+    // Generate unique event_id for deduplication
+    const eventId = fullData.orderId || `EVENT_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // 📊 Prepare GTM Data Layer Object
+    const purchaseData = {
+      event: 'purchase_complete',                    // GTM trigger event
+      event_id: eventId,                             // Unique order ID for deduplication
+      transaction_id: fullData.orderId,              // Order/Transaction ID
+      value: fullData.amount,                        // Payment amount
+      currency: 'INR',                               // Indian Rupees
+      content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],  // Fixed product ID
+      content_type: 'competition_entry',             // Content type
+      content_name: 'Indian Creative Star Art Competition Entry', // Product name
+      content_category: contestType,                 // Category (art/kids)
+      num_items: 1,                                  // Number of items purchased
+      
+      // Customer Information (Meta format - lowercase, normalized, will be auto-hashed by Pixel)
+      email: normalizedEmail,                        // Meta: 'em' parameter
+      phone_number: normalizedPhone,                 // Meta: 'ph' parameter (with country code)
+      first_name: firstName,                         // Meta: 'fn' parameter (lowercase)
+      last_name: lastName,                           // Meta: 'ln' parameter (lowercase)
+      country: 'in',                                 // Meta: 'country' parameter (ISO code)
+      
+      // Legacy fields (for backwards compatibility)
+      customer_email: normalizedEmail,
+      customer_phone: normalizedPhone,
+      customer_first_name: firstName,
+      customer_last_name: lastName,
+      
+      // Facebook Attribution Cookies
+      fbp: fbp || '',                                // Facebook browser ID
+      fbc: fbc || '',                                // Facebook click ID
+      
+      // Additional tracking data
+      client_user_agent: navigator.userAgent,
+      page_title: document.title,
+      page_location: window.location.href,
+      
+      // Campaign data
+      utm_source: utmSource || '',
+      utm_campaign: utmCampaign || '',
+      
+      // Custom event data
+      payment_status: paymentStatus || 'success',
+      registration_type: contestType,
+      customer_age: fullData.age,
+      
+      // Timestamp
+      event_timestamp: new Date().toISOString(),
+      event_time: Math.floor(Date.now() / 1000),     // Unix timestamp for Meta
+    };
+
+    console.log('📤 [GTM] Pushing Purchase Event to dataLayer:', purchaseData);
+    console.log('💰 [GTM] Purchase Details (Meta Pixel Format):', {
+      'Event ID': eventId,
+      'Transaction ID': fullData.orderId,
+      'Amount': `₹${fullData.amount}`,
+      'Customer': fullData.name,
+      'First Name (lowercase)': firstName,
+      'Last Name (lowercase)': lastName,
+      'Email (lowercase)': normalizedEmail,
+      'Phone (with +91)': normalizedPhone,
+      'Country': 'in (India)',
+      'Facebook FBP Cookie': fbp || 'Not found',
+      'Facebook FBC Cookie': fbc || 'Not found',
+      'Note': '✅ All PII will be AUTO-HASHED by Facebook Pixel'
+    });
+
+    // Push to GTM dataLayer
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(purchaseData);
+    
+    console.log('✅ [GTM] Purchase event pushed successfully!');
+    console.log('🔍 [GTM] Current dataLayer:', window.dataLayer);
+    
+  }, []); // Run once on mount
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -188,23 +348,32 @@ export default function ThankYou() {
               You're In, {name}!
             </h2>
             
+            <div className="bg-green-500/10 border border-green-400/30 rounded-xl p-4 sm:p-5 mb-6 sm:mb-8">
+              <p className="text-base sm:text-lg text-green-400 font-bold mb-2">
+                ✅ Payment Completed & Entry Confirmed!
+              </p>
+              <p className="text-sm sm:text-base text-white/80">
+                Your payment has been successfully processed and your entry in the {contestType === "art" ? "Art" : "Poetry"} competition is now confirmed.
+              </p>
+            </div>
+            
             <p className="text-base sm:text-lg text-white/80 mb-6 sm:mb-8">
-              Your registration for the {contestType === "art" ? "Art" : "Poetry"} competition has been confirmed. Check your email and WhatsApp for further details.
+              You will receive the submission portal link or form on the official WhatsApp group to submit your artwork. Join the group below!
             </p>
             
             {/* WhatsApp CTA */}
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
               <h3 className="text-lg sm:text-xl font-extrabold mb-3 sm:mb-4 flex items-center justify-center gap-2 text-white">
                 <Users className="h-5 w-5 sm:h-6 sm:w-6 text-creative-yellow" />
-                Join Our {contestType === "art" ? "Art" : "Poetry"} Community
+                Join Our Official WhatsApp Group
               </h3>
               <p className="text-xs sm:text-sm text-white/80 mb-4">
-                Connect with fellow participants, share tips, and stay updated with all important announcements.
-                <span className="block mt-2 text-white font-medium">This is where you'll receive submission instructions!</span>
+                <span className="block font-bold text-white text-base mb-2">📝 Important: Get Your Submission Form Here!</span>
+                You will receive the artwork submission portal link/form in this official WhatsApp group. Join now to get all important updates, submission instructions, and connect with fellow participants.
               </p>
               <Button 
                 className="w-full bg-[#25D366] hover:bg-[#20bd59] text-black font-bold py-3 sm:py-4 text-base"
-                onClick={() => window.open("https://chat.whatsapp.com/BZfAg82QE65ABitnvi7UYO", "_blank")}
+                onClick={() => window.open("https://chat.whatsapp.com/HeaoLbpKBI9DxAMcCjUorI", "_blank")}
               >
                 <MessageSquare className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Join WhatsApp Group Now
@@ -229,7 +398,7 @@ export default function ThankYou() {
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl ring-2 sm:ring-4 ring-white/20">
                 <LazyImage
-                  src="/company-logo.jpeg"
+                  src="/company-logo.webp"
                   alt="Daami Event Logo"
                   className="w-full h-full"
                 />

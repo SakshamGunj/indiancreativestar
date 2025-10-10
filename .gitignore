@@ -13,6 +13,18 @@ dist
 dist-ssr
 *.local
 
+# Environment variables (NEVER COMMIT THESE!)
+.env
+.env.local
+.env.production
+.env.*.local
+backend/.env
+backend/.env.production
+backend/.env.local
+
+# Backend (separate repository - deploy separately)
+backend/
+api/
 # Payment server (separate deployment)
 cashfree-payment-server/
 

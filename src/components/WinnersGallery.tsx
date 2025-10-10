@@ -37,7 +37,7 @@ const winners: Winner[] = [
     category: "Adult Category",
     position: "3rd Place",
     image: "/WhatsApp Image 2025-09-08 at 17.20.43.jpeg",
-    artwork: "/1753870691007 (5).jpg",
+    artwork: "/1753870691007 (5).webp",
     year: "2025"
   },
   {
