@@ -146,7 +146,7 @@ export const sendInitiateCheckoutWebhook = (payload: WebhookPayload): void => {
  */
 export const sendPurchaseWebhook = (payload: WebhookPayload): void => {
   sendWebhookOptimized(
-    'https://hook.eu2.make.com/oo6w9swewogla5tw993bubynqloapxvz',
+    'https://hook.eu2.make.com/si8fjydj1vzwo6q55gomjif3pnmhyuof',
     payload,
     {
       timeout: 3000,    // 3 second timeout

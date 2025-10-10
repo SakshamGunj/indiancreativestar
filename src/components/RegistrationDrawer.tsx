@@ -649,6 +649,10 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         // Normalize email to lowercase (Meta requirement)
         const normalizedEmail = formData.email.trim().toLowerCase();
         
+        // Get Facebook cookies and browser info
+        const { fbp, fbc } = getFBCookies();
+        const { browser, deviceType } = getBrowserInfo();
+        
         // 🎯 GTM Event: Payment success (client-side) - COMPLETE CONVERSION DATA
         console.log('🎯 [GTM] Payment Completed Successfully (Client-side)');
         console.log('🆔 [PURCHASE] Event ID:', order_id);
@@ -701,16 +705,23 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           
           // Timestamps
           event_timestamp: new Date().toISOString(),
-          event_time: Math.floor(Date.now() / 1000)    // Unix timestamp for Meta
+          event_time: Math.floor(Date.now() / 1000),   // Unix timestamp for Meta
+          
+          // ✅ Facebook Pixel Parameters (Critical for Meta Conversions API)
+          fbp: fbp,                                     // Facebook Browser ID cookie (_fbp)
+          fbc: fbc,                                     // Facebook Click ID cookie (_fbc)
+          
+          // ✅ Source & Device Information
+          source_url: window.location.href,             // Current page URL
+          user_agent: navigator.userAgent,              // User agent string
+          browser: browser,                             // Browser name
+          device_type: deviceType                       // Device type (mobile/tablet/desktop)
         });
         console.log('✅ [GTM] payment_success_client event pushed with FULL conversion data');
         
         // 🔥 Send Purchase event to Make.com webhook (OPTIMIZED - NON-BLOCKING)
         // ✅ SENDING EXACT SAME DATA AS GTM DATALAYER
         console.log('📤 [WEBHOOK] Sending Purchase event to Make.com (non-blocking)...');
-        
-        const { fbp, fbc } = getFBCookies();
-        const { browser, deviceType } = getBrowserInfo();
         
         // Fire and forget - won't block redirect to thank you page
         sendPurchaseWebhook({
@@ -761,7 +772,17 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           
           // Timestamps (✅ event_time in Unix timestamp format)
           event_timestamp: new Date().toISOString(),
-          event_time: Math.floor(Date.now() / 1000)  // ✅ Unix timestamp (same as GTM)
+          event_time: Math.floor(Date.now() / 1000),  // ✅ Unix timestamp (same as GTM)
+          
+          // ✅ Facebook Pixel Parameters (Critical for Meta Conversions API)
+          fbp: fbp,                                     // Facebook Browser ID cookie (_fbp)
+          fbc: fbc,                                     // Facebook Click ID cookie (_fbc)
+          
+          // ✅ Source & Device Information
+          source_url: window.location.href,             // Current page URL
+          user_agent: navigator.userAgent,              // User agent string
+          browser: browser,                             // Browser name
+          device_type: deviceType                       // Device type (mobile/tablet/desktop)
         });
         console.log('💳 [GTM] Payment Details:', result.paymentDetails);
         console.log('📊 [GTM] Complete Conversion Data (Meta Pixel Format):', {
