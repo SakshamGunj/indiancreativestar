@@ -476,7 +476,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           name: formData.fullName,
           email: formData.email,
           phone: formData.whatsapp,
-          amount: 249,
+          amount: 1, // ⚠️ TESTING MODE - Change back to 249 for production
           customerId: `CUST_${Date.now()}`,
           orderNote: `Indian Creative Star - Registration Fee`,
           customOrderId: eventId
