@@ -130,7 +130,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
           name: values.name,
           email: values.email,
           phone: values.whatsapp,
-          amount: 1, // ⚠️ TESTING MODE - Change back to 249 for production
+          amount: 249,
           customerId: regData.id,
           orderNote: `Indian Creative Star - ${regData.category} - Registration Fee`
         })

@@ -63,7 +63,8 @@ const AdminConfirmation = () => {
         paymentStatus: 'success',
         paymentDate: new Date(),
         paymentMethod: 'manual_admin',
-        paymentAmount: 1, // ⚠️ TESTING MODE - Change back to 249 for production
+        paymentAmount: 249,
+        orderId: `MANUAL_${Date.now()}`,
         paymentCurrency: 'INR',
         lastUpdated: new Date()
       });

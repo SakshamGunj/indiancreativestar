@@ -73,9 +73,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       
       // Store in localStorage (persistent)
       localStorage.setItem(storageKey, externalId);
-      console.log('🆔 [EXTERNAL ID] Created new external_id:', externalId);
-    } else {
-      console.log('🆔 [EXTERNAL ID] Retrieved existing external_id:', externalId);
     }
     
     return externalId;
@@ -92,12 +89,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     
     // Generate unique event ID
     const eventId = generateEventId();
-    
-    console.log('📊 [PAGE VIEW] Firing custom page_view event');
-    console.log('🆔 [PAGE VIEW] Event ID:', eventId);
-    console.log('🆔 [PAGE VIEW] External ID:', externalId);
-    console.log('🍪 [PAGE VIEW] FBP:', fbp || 'not_available');
-    console.log('🍪 [PAGE VIEW] FBC:', fbc || 'not_available');
 
     // Push to GTM dataLayer
     window.dataLayer = window.dataLayer || [];
@@ -142,14 +133,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       event_label: 'Indian Creative Star V2'
     });
 
-    console.log('✅ [PAGE VIEW] Custom page_view_custom event pushed to GTM dataLayer');
-    console.log('📊 [PAGE VIEW] Configure GTM trigger for "page_view_custom" event');
-
     // 🔥 Send to n8n webhook immediately after GTM dataLayer push
     // ✅ SENDING EXACT SAME DATA AS GTM DATALAYER
     try {
-      console.log('📤 [PAGE VIEW WEBHOOK] Sending PageView to n8n...');
-      
       fetch('https://indiancreativestar.app.n8n.cloud/webhook/c0c5c2ad-aa3f-477c-9117-f2f929e0195a', {
         method: 'POST',
         headers: {
@@ -197,16 +183,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           event_label: 'Indian Creative Star V2'
         })
       }).then(response => {
-        if (response.ok) {
-          console.log('✅ [PAGE VIEW WEBHOOK] Sent successfully to n8n');
-        } else {
-          console.error('❌ [PAGE VIEW WEBHOOK] Failed to send to n8n:', response.status);
-        }
+        // Silent success
       }).catch(error => {
-        console.error('❌ [PAGE VIEW WEBHOOK] Error sending to n8n:', error);
+        // Silent error
       });
     } catch (error) {
-      console.error('❌ [PAGE VIEW WEBHOOK] Error preparing webhook:', error);
+      // Silent error
     }
 
   }, []); // ✅ Empty dependency array = runs once on mount
@@ -218,13 +200,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     const orderId = urlParams.get('order_id');
 
     if (paymentStatus === 'success' && orderId) {
-      console.log('🔄 [URL] Detected payment return from Cashfree:', orderId);
-      
       // Get registration data from sessionStorage
       const lastReg = sessionStorage.getItem('ics_last_registration');
       if (lastReg) {
         const regData = JSON.parse(lastReg);
-        console.log('📋 [URL] Found registration data in session');
         
         // Trigger verification overlay
         handlePaymentInitiated(orderId, regData);
@@ -232,7 +211,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         // Clean URL
         window.history.replaceState({}, '', window.location.pathname);
       } else {
-        console.warn('⚠️ [URL] No registration data found in session for order:', orderId);
         // Still verify payment
         setIsVerifyingPayment(true);
         setPaymentVerificationData({ orderId, regData: {} });
@@ -421,7 +399,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   // Handle payment verification after Cashfree checkout
   const handlePaymentInitiated = useCallback(async (orderId: string, regData: any) => {
-    console.log('🔄 [VERIFICATION] Starting verification...', orderId);
     setIsVerifyingPayment(true);
     setPaymentVerificationData({ orderId, regData });
 
@@ -454,7 +431,6 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       const verifyData = await response.json();
 
       if (verifyData.success && verifyData.data.is_paid) {
-        console.log('✅ [VERIFICATION] Payment verified for order:', orderId);
         setTimeout(() => {
           navigate(`/thank-you?orderId=${orderId}&payment=success`);
         }, 1500);
