@@ -562,7 +562,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       <HeaderV2 onRegistrationClick={() => handleRegisterClick()} />
       
       {showConfetti && <Confetti />}
-      <StickyCTABanner onRegisterClick={() => handleRegisterClick()} />
+      <StickyCTABanner onRegisterClick={() => handleRegisterClick()} isDrawerOpen={showRegistrationDrawer} />
       
 
       

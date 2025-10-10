@@ -512,7 +512,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
       // Initialize Cashfree SDK
       const cashfree = await load({
-        mode: "sandbox" // Change to "production" when going live
+        mode: "production" // ✅ Production mode
       });
 
       console.log('💳 [CASHFREE] Opening checkout...');
@@ -884,10 +884,14 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
                 {/* Banner Image */}
                 <div className="relative mb-4 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl mx-auto max-w-xs sm:max-w-sm">
                   <img 
-                    src="/Daami Presents (1920 x 1080 px).webp" 
+                    src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg"
                     alt="Indian Creative Star Competition Banner" 
                     className="w-full h-auto object-contain"
-                    loading="lazy"
+                    loading="eager"
+                    onError={(e) => {
+                      // Fallback to local file if CDN fails
+                      (e.target as HTMLImageElement).src = "/Daami Presents (1920 x 1080 px).webp";
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>

@@ -7,9 +7,10 @@ import { useBranding } from "@/lib/branding";
 
 interface StickyCTABannerProps {
   onRegisterClick?: () => void;
+  isDrawerOpen?: boolean;  // ✅ Add this prop to control visibility
 }
 
-export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
+export function StickyCTABanner({ onRegisterClick, isDrawerOpen = false }: StickyCTABannerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const isMobile = useIsMobile();
   const { brandName, regionName } = useBranding();
@@ -68,11 +69,11 @@ export function StickyCTABanner({ onRegisterClick }: StickyCTABannerProps) {
     <div
       className={cn(
         "fixed z-40 bottom-0 left-0 right-0 transition-all duration-300 pb-safe bg-black/80",
-        isVisible ? "translate-y-0" : "translate-y-full opacity-0"
+        (isVisible && !isDrawerOpen) ? "translate-y-0" : "translate-y-full opacity-0"  // ✅ Hide when drawer is open
       )}
       style={{
         willChange: "transform, opacity",
-        transform: isVisible ? "translateY(0)" : "translateY(100%)",
+        transform: (isVisible && !isDrawerOpen) ? "translateY(0)" : "translateY(100%)",
         backfaceVisibility: "hidden"
       }}
     >

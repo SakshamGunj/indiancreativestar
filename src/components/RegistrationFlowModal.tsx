@@ -175,7 +175,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
       
       // Initialize Cashfree SDK
       const cashfree = await load({
-        mode: "sandbox" // Change to "production" when going live
+        mode: "production" // ✅ Production mode
       });
 
       console.log('✅ [CASHFREE] SDK loaded successfully');
