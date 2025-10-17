@@ -4,13 +4,15 @@ import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { CheckCircle, Loader2, Eye, Trash2 } from 'lucide-react';
+import { CheckCircle, Loader2, Eye, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface UserAdminData {
   id: string;
   name?: string;
   email?: string;
   whatsapp?: string;
+  age?: string;
   hasPaid?: boolean;
   paymentStatus?: string;
   hasSubmittedArtwork?: boolean;
@@ -20,6 +22,8 @@ interface UserAdminData {
   submissionDate2?: any;
   artworkDisplayUrl?: string;
   artworkDisplayUrl2?: string;
+  orderId?: string;
+  submissionType?: 'firebase' | 'simple';
 }
 
 const AdminConfirmation = () => {
@@ -28,17 +32,62 @@ const AdminConfirmation = () => {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<UserAdminData | null>(null);
   const [isArtworkModalOpen, setIsArtworkModalOpen] = useState(false);
+  const [showSimpleSubmissions, setShowSimpleSubmissions] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       setIsLoading(true);
       try {
+        const allUsers: UserAdminData[] = [];
+
+        // Fetch Firebase users
         const usersCollection = collection(db, 'indiancreativestar_accounts');
         const usersSnapshot = await getDocs(usersCollection);
-        const usersList: UserAdminData[] = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
+        const firebaseUsers: UserAdminData[] = usersSnapshot.docs.map(doc => ({ 
+          id: doc.id, 
+          ...doc.data() as any,
+          submissionType: 'firebase' as const
+        }));
+        allUsers.push(...firebaseUsers);
+
+        // Check localStorage for SimpleSubmission data
+        if (showSimpleSubmissions) {
+          const lastSubmission = localStorage.getItem('ics_last_submission');
+          if (lastSubmission) {
+            try {
+              const simpleData = JSON.parse(lastSubmission);
+              allUsers.push({
+                id: `simple_${Date.now()}`,
+                name: simpleData.userData.name,
+                email: simpleData.userData.email,
+                whatsapp: simpleData.userData.whatsapp,
+                age: simpleData.userData.age,
+                hasPaid: simpleData.paymentStatus === 'success',
+                paymentStatus: simpleData.paymentStatus,
+                hasSubmittedArtwork: !!simpleData.artwork1,
+                hasSubmittedArtwork2: !!simpleData.artwork2,
+                artworkDisplayUrl: simpleData.artwork1?.displayUrl,
+                artworkDisplayUrl2: simpleData.artwork2?.displayUrl,
+                orderId: simpleData.orderId,
+                createdAt: simpleData.submittedAt,
+                submissionDate: simpleData.submittedAt,
+                submissionDate2: simpleData.artwork2 ? simpleData.submittedAt : null,
+                submissionType: 'simple' as const
+              });
+            } catch (e) {
+              console.error('Failed to parse simple submission:', e);
+            }
+          }
+        }
+
         // Sort users by creation date, most recent first
-        usersList.sort((a, b) => (b.createdAt?.toDate()?.getTime() || 0) - (a.createdAt?.toDate()?.getTime() || 0));
-        setUsers(usersList);
+        allUsers.sort((a, b) => {
+          const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : new Date(a.createdAt || 0).getTime();
+          const dateB = b.createdAt?.toDate ? b.createdAt.toDate().getTime() : new Date(b.createdAt || 0).getTime();
+          return dateB - dateA;
+        });
+        
+        setUsers(allUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
         alert('Failed to fetch user data.');
@@ -48,10 +97,16 @@ const AdminConfirmation = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [showSimpleSubmissions]);
 
-  const handleMarkAsPaid = async (userId: string) => {
+  const handleMarkAsPaid = async (userId: string, submissionType?: 'firebase' | 'simple') => {
     if (!window.confirm('Are you sure you want to mark this user as paid? This action cannot be undone.')) {
+      return;
+    }
+    
+    // Can't update localStorage submissions this way
+    if (submissionType === 'simple') {
+      alert('Cannot mark localStorage submissions as paid. This is for Firebase records only.');
       return;
     }
     
@@ -124,7 +179,17 @@ const AdminConfirmation = () => {
   const safeFormatDate = (date: any) => {
     if (!date) return 'N/A';
     if (date.toDate) return new Date(date.toDate()).toLocaleString();
+    if (typeof date === 'string') return new Date(date).toLocaleString();
     return new Date(date).toLocaleString();
+  };
+
+  // Calculate statistics
+  const stats = {
+    totalUsers: users.length,
+    paidUsers: users.filter(u => u.hasPaid).length,
+    submittedArtwork: users.filter(u => u.hasSubmittedArtwork).length,
+    simpleSubmissions: users.filter(u => u.submissionType === 'simple').length,
+    firebaseSubmissions: users.filter(u => u.submissionType === 'firebase').length
   };
 
   if (isLoading) {
@@ -139,33 +204,89 @@ const AdminConfirmation = () => {
     <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Confirmation</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Admin Confirmation Dashboard</h1>
           <p className="text-gray-600 mt-1">Manage user payments and submission status.</p>
         </header>
+
+        {/* Statistics Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-gray-900">{stats.totalUsers}</div>
+              <div className="text-sm text-gray-600">Total Users</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-green-600">{stats.paidUsers}</div>
+              <div className="text-sm text-gray-600">Paid Users</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-blue-600">{stats.submittedArtwork}</div>
+              <div className="text-sm text-gray-600">Artworks Submitted</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-purple-600">{stats.simpleSubmissions}</div>
+              <div className="text-sm text-gray-600">Simple Submissions</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-orange-600">{stats.firebaseSubmissions}</div>
+              <div className="text-sm text-gray-600">Firebase Submissions</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filter Toggle */}
+        <div className="mb-4 flex justify-end">
+          <Button
+            variant={showSimpleSubmissions ? "default" : "outline"}
+            onClick={() => setShowSimpleSubmissions(!showSimpleSubmissions)}
+            size="sm"
+          >
+            {showSimpleSubmissions ? 'Hide' : 'Show'} Simple Submissions
+          </Button>
+        </div>
 
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow className="bg-gray-50">
-                <TableHead className="w-[200px]">User</TableHead>
+                <TableHead className="w-[180px]">User</TableHead>
+                <TableHead>Age</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>WhatsApp</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Payment</TableHead>
                 <TableHead>Artwork</TableHead>
+                <TableHead>Order ID</TableHead>
                 <TableHead>Registered</TableHead>
                 <TableHead className="text-right w-[250px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users.map(user => (
-                <TableRow key={user.id}>
+                <TableRow key={user.id} className={user.submissionType === 'simple' ? 'bg-purple-50' : ''}>
                   <TableCell className="font-medium">{user.name || 'N/A'}</TableCell>
-                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.age || 'N/A'}</TableCell>
+                  <TableCell className="text-sm">{user.email}</TableCell>
                   <TableCell>{user.whatsapp || 'N/A'}</TableCell>
+                  <TableCell>
+                    {user.submissionType === 'simple' ? (
+                      <Badge className="bg-purple-100 text-purple-800">Simple</Badge>
+                    ) : (
+                      <Badge variant="outline">Firebase</Badge>
+                    )}
+                  </TableCell>
                   <TableCell>
                     {user.hasPaid ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Paid
+                        ✓ Paid ₹249
                       </span>
                     ) : (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -177,10 +298,11 @@ const AdminConfirmation = () => {
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       user.hasSubmittedArtwork ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
                     }`}>
-                      {user.hasSubmittedArtwork2 ? '2/2 Submitted' : user.hasSubmittedArtwork ? '1/2 Submitted' : '0/2 Submitted'}
+                      {user.hasSubmittedArtwork2 ? '✓ 2/2' : user.hasSubmittedArtwork ? '✓ 1/2' : '0/2'}
                     </span>
                   </TableCell>
-                  <TableCell>{safeFormatDate(user.createdAt)}</TableCell>
+                  <TableCell className="text-xs font-mono">{user.orderId ? user.orderId.slice(-8) : 'N/A'}</TableCell>
+                  <TableCell className="text-sm">{safeFormatDate(user.createdAt)}</TableCell>
                   <TableCell className="text-right space-x-2">
                     {user.hasSubmittedArtwork && (
                       <Button
@@ -191,21 +313,25 @@ const AdminConfirmation = () => {
                           setIsArtworkModalOpen(true);
                         }}
                       >
-                        <Eye className="h-4 w-4 mr-2" />
-                        View Art
+                        <Eye className="h-4 w-4 mr-1" />
+                        View
                       </Button>
                     )}
                     {!user.hasPaid && (
                       <Button
                         size="sm"
-                        onClick={() => handleMarkAsPaid(user.id)}
-                        disabled={isUpdating === user.id}
+                        onClick={() => handleMarkAsPaid(user.id, user.submissionType)}
+                        disabled={isUpdating === user.id || user.submissionType === 'simple'}
                         className="bg-green-500 hover:bg-green-600 text-white"
+                        title={user.submissionType === 'simple' ? 'Cannot mark localStorage submissions as paid' : 'Mark as paid'}
                       >
                         {isUpdating === user.id ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
-                          <CheckCircle className="h-4 w-4" />
+                          <>
+                            <CheckCircle className="h-4 w-4 mr-1" />
+                            Pay
+                          </>
                         )}
                       </Button>
                     )}

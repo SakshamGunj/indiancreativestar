@@ -26,6 +26,8 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundAndCancellation from "./pages/RefundAndCancellation";
 import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ArtworkMarketplace from "./pages/ArtworkMarketplace";
+import SimpleSubmission from "./pages/SimpleSubmission";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -138,6 +140,7 @@ const App = () => {
                   <Route path="/admin/verify" element={<AdminVerify />} />
                   <Route path="/indiancreativestar/submission" element={<Dashboard />} />
                   <Route path="/indiancreativestar/dashboard" element={<Dashboard />} />
+                  <Route path="/indiancreativestar/submitartwork" element={<SimpleSubmission />} />
                   <Route path="/cashfree-test" element={<CashfreeTest />} />
                   <Route path="/indiancreativestar/admin/confirmation" element={<AdminConfirmation />} />
                   <Route path="/payment-success" element={<PaymentSuccess />} />
@@ -145,6 +148,8 @@ const App = () => {
                   <Route path="/refund-and-cancellation" element={<RefundAndCancellation />} />
                   <Route path="/contact-us" element={<ContactUs />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/marketplace" element={<ArtworkMarketplace />} />
+                  <Route path="/art-shop" element={<ArtworkMarketplace />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />

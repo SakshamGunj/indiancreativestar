@@ -51,9 +51,19 @@ const Index = () => {
               <p className="text-xs text-white/50">Event Management</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-green-300 font-medium text-sm tracking-wide">LIVE EVENT</span>
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={() => navigate("/marketplace")}
+              variant="outline"
+              className="hidden md:flex items-center gap-2 border-white/20 text-white hover:bg-white/10"
+            >
+              <Sparkles className="w-4 h-4" />
+              Art Shop
+            </Button>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-green-300 font-medium text-sm tracking-wide">LIVE EVENT</span>
+            </div>
           </div>
         </div>
       </header>
