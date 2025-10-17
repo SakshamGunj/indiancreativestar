@@ -47,6 +47,7 @@ const SimpleSubmission = () => {
   // Processing states
   const [isProcessing, setIsProcessing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<string>('');
   
   // Load saved user data from localStorage on mount
   useEffect(() => {
@@ -307,25 +308,28 @@ const SimpleSubmission = () => {
     }
   };
 
-  // Handle final submission after artwork upload
+  // Handle final submission after artwork upload (optimized with parallel uploads)
   const handleFinalSubmit = async () => {
     if (!userData || !artwork1) return;
 
     setIsUploading(true);
     
     try {
-      // Upload artwork 1
-      const imgbbData1 = await uploadToImgBB(artwork1.file);
+      // Upload both artworks in parallel for faster processing
+      const uploadPromises: Promise<any>[] = [uploadToImgBB(artwork1.file)];
       
-      let imgbbData2 = null;
       if (artwork2) {
-        imgbbData2 = await uploadToImgBB(artwork2.file);
+        uploadPromises.push(uploadToImgBB(artwork2.file));
       }
+
+      const uploadResults = await Promise.all(uploadPromises);
+      const imgbbData1 = uploadResults[0];
+      const imgbbData2 = uploadResults[1] || null;
 
       // Get stored order ID
       const orderId = localStorage.getItem('ics_payment_order_id') || '';
 
-      // Store submission data in localStorage (you can save to Firebase here)
+      // Store submission data in localStorage
       const submissionData = {
         userData,
         artwork1: {
@@ -362,7 +366,7 @@ const SimpleSubmission = () => {
       console.error('Artwork upload error:', uploadError);
       toast({
         title: 'Upload Error',
-        description: 'Payment successful but artwork upload failed. Please contact support.',
+        description: uploadError instanceof Error ? uploadError.message : 'Failed to upload artwork. Please try again.',
         variant: 'destructive'
       });
       setIsUploading(false);
@@ -840,16 +844,9 @@ const SimpleSubmission = () => {
       
       <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border-2 border-green-300 mb-6">
         <p className="text-lg font-bold text-green-800 mb-2">📢 Stay Updated!</p>
-        <p className="text-sm text-gray-700 mb-3">
-          Join our WhatsApp group for competition updates, results, and more information
+        <p className="text-sm text-gray-700">
+          We will send you competition updates, results, and important information via WhatsApp group in which you are added
         </p>
-        <Button
-          size="lg"
-          onClick={() => window.open('https://chat.whatsapp.com/YOUR_GROUP_LINK', '_blank')}
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-bold"
-        >
-          Join WhatsApp Group
-        </Button>
       </div>
 
       <Card className="border-2 border-green-200 bg-green-50 mb-8">
@@ -867,13 +864,6 @@ const SimpleSubmission = () => {
               <div>
                 <p className="font-semibold">Artwork Uploaded</p>
                 <p className="text-sm text-gray-600">{artwork2 ? '2 artworks' : '1 artwork'} submitted successfully</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-semibold">Confirmation Email Sent</p>
-                <p className="text-sm text-gray-600">Check your email at {userData?.email}</p>
               </div>
             </div>
           </div>
