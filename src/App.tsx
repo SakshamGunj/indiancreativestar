@@ -1,9 +1,11 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import CompetitionSelect from "./pages/CompetitionSelect";
 import ThankYou from "./pages/ThankYou";
@@ -13,6 +15,9 @@ import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
 import IndexV2 from "./pages/v2/IndexV2";
 import IndexV3 from "./pages/v3/IndexV3";
+import WinterArtRoyale from "./pages/WinterArtRoyale";
+import WinterAdmin from "./pages/WinterAdmin";
+import WarThankYou from "./pages/WarThankYou";
 import AdminExport from "./pages/AdminExport";
 import AdminCertificates from "./pages/AdminCertificates";
 import PartnershipIndianCreativeStar from "./pages/PartnershipIndianCreativeStar";
@@ -28,6 +33,16 @@ import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ArtworkMarketplace from "./pages/ArtworkMarketplace";
 import SimpleSubmission from "./pages/SimpleSubmission";
+import CertificateValidation from "./pages/CertificateValidation";
+import GuruArtProgram from "./pages/GuruArtProgram";
+import StudentSubmissionPortal from "./pages/StudentSubmissionPortal";
+import WeatherDemo from "./pages/WeatherDemo";
+import JudgingPortal from "./pages/JudgingPortal";
+import WarRegistrationPage from "./pages/WarRegistrationPage";
+
+import GuruStudentForm from "./pages/guru/GuruStudentForm";
+import GuruLogin from "./pages/guru/GuruLogin";
+import GuruDashboard from "./pages/guru/GuruDashboard";
 
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
@@ -43,6 +58,36 @@ const App = () => {
   const [showLaunchScreen, setShowLaunchScreen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isCheckingLaunchStatus, setIsCheckingLaunchStatus] = useState(true);
+
+  // Navigation Loading State
+  const location = useLocation();
+  const [progress, setProgress] = useState(0);
+  const [appLoading, setAppLoading] = useState(true);
+
+  // Trigger loader on route change
+  useEffect(() => {
+    // Skip loader for registration page
+    if (location.pathname === '/winter-art-royale/register') {
+      setAppLoading(false);
+      return;
+    }
+
+    setAppLoading(true);
+    setProgress(0);
+
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          setTimeout(() => setAppLoading(false), 500);
+          return 100;
+        }
+        return prev + Math.random() * 15; // Slightly faster for page transitions
+      });
+    }, 50); // Faster Interval
+
+    return () => clearInterval(timer);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Check Firebase for global launch screen setting only
@@ -75,10 +120,10 @@ const App = () => {
 
   const handleLaunch = async () => {
     setIsTransitioning(true);
-    
+
     // Disable launch screen globally for everyone
     await disableLaunchScreenGlobally();
-    
+
     // Start hiding launch screen immediately
     setTimeout(() => {
       setShowLaunchScreen(false);
@@ -89,13 +134,34 @@ const App = () => {
     }, 1200);
   };
 
-  // Show loading state while checking Firebase
-  if (isCheckingLaunchStatus) {
+  // Show loading state
+  if ((isCheckingLaunchStatus || appLoading) && location.pathname !== '/winter-art-royale/register') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-2 border-creative-purple border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-white/70">Loading Indian Creative Star...</p>
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-black to-black opacity-50"></div>
+
+        <div className="text-center z-10 space-y-6 max-w-md w-full px-6">
+          {/* Logo or Brand Name */}
+          <div className="mb-8">
+            <h1 className="font-bilderberg text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] via-[#FFF] to-[#FFD700] animate-pulse tracking-widest drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">
+              DAAMI EVENT
+            </h1>
+          </div>
+
+          {/* Progress Bar Container */}
+          <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden border border-white/10 relative">
+            <div
+              className="h-full bg-gradient-to-r from-blue-600 via-cyan-400 to-white transition-all duration-300 ease-out shadow-[0_0_20px_rgba(34,211,238,0.8)]"
+              style={{ width: `${progress}% ` }}
+            ></div>
+          </div>
+
+          {/* Loading Text */}
+          <div className="flex justify-between items-center text-xs text-[#FFD700]/80 font-bilderberg tracking-wider uppercase">
+            <span>Loading Daami Event Site...</span>
+            <span className="font-bold">{Math.round(progress)}%</span>
+          </div>
         </div>
       </div>
     );
@@ -104,19 +170,17 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className={`app-wrapper min-h-screen bg-gradient-to-b from-black to-[#1a1a2e] relative ${showLaunchScreen ? 'overflow-hidden' : 'overflow-auto'}`}>
+        <div className={`app - wrapper min - h - screen bg - gradient - to - b from - black to - [#1a1a2e] relative ${showLaunchScreen ? '' : 'overflow-auto'} `}>
           <Toaster />
           <Sonner />
-          
+
           {/* Main Website Content - Always rendered but controlled by visibility */}
-          <div className={`main-content absolute inset-0 transition-all duration-1200 ease-out transform-gpu ${
-            showLaunchScreen 
-              ? 'opacity-0 scale-95 blur-lg pointer-events-none' 
-              : 'opacity-100 scale-100 blur-0 pointer-events-auto'
-          }`}>
-            <BrowserRouter>
-              <BrandingProvider>
-              <div 
+          <div className={`main - content transition - all duration - 1200 ease - out transform - gpu ${showLaunchScreen
+            ? 'opacity-0 scale-95 blur-lg pointer-events-none'
+            : 'opacity-100 scale-100 blur-0 pointer-events-auto'
+            } `}>
+            <BrandingProvider>
+              <div
                 className="page-transition-wrapper h-full"
                 style={{
                   opacity: isPageLoaded ? 1 : 0,
@@ -125,6 +189,7 @@ const App = () => {
               >
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
                   <Route path="/Indiancreativestar" element={<Index />} />
                   <Route path="/competitions" element={<CompetitionSelect />} />
                   <Route path="/thank-you" element={<ThankYou />} />
@@ -134,6 +199,11 @@ const App = () => {
                   <Route path="/sikkimcreativestar" element={<SikkimCreativeStar />} />
                   <Route path="/indiancreativestar/v2" element={<IndexV2 />} />
                   <Route path="/indiancreativestar/v3" element={<IndexV3 />} />
+                  <Route path="/winter-art-royale" element={<WinterArtRoyale />} />
+                  <Route path="/winter-art-royale/thank-you" element={<WarThankYou />} />
+                  <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
+                  <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
+                  <Route path="/winter-art-royale/register" element={<WarRegistrationPage />} />
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />
                   <Route path="/admin/certificates" element={<AdminCertificates />} />
@@ -150,23 +220,34 @@ const App = () => {
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/marketplace" element={<ArtworkMarketplace />} />
                   <Route path="/art-shop" element={<ArtworkMarketplace />} />
+                  <Route path="/certificate/validation" element={<CertificateValidation />} />
+                  <Route path="/weather-demo" element={<WeatherDemo />} />
+                  <Route path="/guru/portal" element={<GuruArtProgram />} />
+                  <Route path="/judging-portal" element={<JudgingPortal />} />
+                  <Route path="/student/:academySlug/:studentSlug" element={<StudentSubmissionPortal />} />
+
+                  <Route path="/student/:academySlug/:studentSlug" element={<StudentSubmissionPortal />} />
+
+                  {/* Guru / Writer Platform */}
+                  <Route path="/guru/login" element={<GuruLogin />} />
+                  <Route path="/guru/dashboard" element={<GuruDashboard />} />
+                  <Route path="/guru/onboard" element={<GuruStudentForm />} />
 
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
-              
-              <RegistrationFlowModal 
+
+              <RegistrationFlowModal
                 isOpen={showRegistrationModal}
                 onClose={() => setShowRegistrationModal(false)}
               />
-              </BrandingProvider>
-            </BrowserRouter>
+            </BrandingProvider>
           </div>
 
           {/* Launch Screen - Overlays everything */}
           {showLaunchScreen && <LaunchScreen onLaunch={handleLaunch} />}
-          
+
           {/* Transition overlay to ensure smooth handoff */}
           {isTransitioning && (
             <div className="fixed inset-0 bg-gradient-to-b from-black to-[#1a1a2e] z-40 opacity-50 transition-opacity duration-800" />

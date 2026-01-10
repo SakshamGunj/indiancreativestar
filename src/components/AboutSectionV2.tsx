@@ -10,7 +10,7 @@ export function AboutSectionV2() {
   const videoRef = useRef(null);
   const storyRef = useRef(null);
   const featuresRef = useRef(null);
-  
+
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-50px" });
   const isVideoInView = useInView(videoRef, { once: true, margin: "-100px" });
@@ -20,90 +20,90 @@ export function AboutSectionV2() {
   // Enhanced animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 60, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { 
-        duration: 0.8, 
+      transition: {
+        duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
         staggerChildren: 0.1
-      } 
+      }
     },
   };
 
   const slideInLeft = {
     hidden: { opacity: 0, x: -80, rotateY: -15 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
+    visible: {
+      opacity: 1,
+      x: 0,
       rotateY: 0,
-      transition: { 
-        duration: 1, 
+      transition: {
+        duration: 1,
         ease: [0.25, 0.46, 0.45, 0.94],
         delay: 0.2
-      } 
+      }
     },
   };
 
   const slideInRight = {
     hidden: { opacity: 0, x: 80, rotateY: 15 },
-    visible: { 
-      opacity: 1, 
-      x: 0, 
+    visible: {
+      opacity: 1,
+      x: 0,
       rotateY: 0,
-      transition: { 
-        duration: 1, 
+      transition: {
+        duration: 1,
         ease: [0.25, 0.46, 0.45, 0.94],
         delay: 0.3
-      } 
+      }
     },
   };
 
   const scaleIn = {
     hidden: { opacity: 0, scale: 0.8, rotateX: -20 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
+    visible: {
+      opacity: 1,
+      scale: 1,
       rotateX: 0,
-      transition: { 
-        duration: 0.8, 
+      transition: {
+        duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
         delay: 0.1
-      } 
+      }
     },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.9 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94]
-      } 
+      }
     },
   };
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94],
         staggerChildren: 0.1
-      } 
+      }
     },
   };
 
   const wordVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.5 }
     },
@@ -126,28 +126,28 @@ export function AboutSectionV2() {
         <div className="hidden lg:block absolute top-1/4 right-1/4 w-20 h-20 xl:w-24 xl:h-24 bg-gradient-to-r from-indigo-400/15 to-purple-400/15 rounded-full blur-lg"></div>
         <div className="hidden lg:block absolute bottom-1/4 left-1/4 w-16 h-16 xl:w-20 xl:h-20 bg-gradient-to-r from-pink-400/15 to-orange-400/15 rounded-full blur-lg"></div>
       </div>
-      
+
       <div className="container mx-auto max-w-7xl relative z-10 px-4 lg:px-6 xl:px-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           ref={headerRef}
           variants={fadeInUp}
           initial="hidden"
           animate={isHeaderInView ? "visible" : "hidden"}
           className="text-center mb-12 lg:mb-16 xl:mb-20"
         >
-          <motion.div 
+          <motion.div
             variants={scaleIn}
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-purple-200 mb-6"
           >
-            <span className="text-sm font-semibold text-purple-700">About the Platform</span>
+            <span className="text-sm font-semibold text-purple-700">About Us</span>
           </motion.div>
-          <motion.h2 
+          <motion.h2
             variants={textVariants}
             className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6"
           >
             <motion.span variants={wordVariants}>What is </motion.span>
-            <motion.span 
+            <motion.span
               variants={wordVariants}
               className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
             >
@@ -155,23 +155,23 @@ export function AboutSectionV2() {
             </motion.span>
             <motion.span variants={wordVariants}>?</motion.span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={fadeInUp}
             className="text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
           >
-            India's premier platform for discovering, recognizing and celebrating visual artists and poets from across the nation.
+            India's best platform to find and celebrate artists like you.
           </motion.p>
         </motion.div>
 
         {/* YouTube Video Section */}
-        <motion.div 
+        <motion.div
           ref={videoRef}
           variants={scaleIn}
           initial="hidden"
           animate={isVideoInView ? "visible" : "hidden"}
           className="mb-12 lg:mb-16 xl:mb-20 max-w-4xl mx-auto"
         >
-          <motion.div 
+          <motion.div
             variants={scaleIn}
             className="aspect-video w-full overflow-hidden rounded-3xl shadow-2xl"
             whileHover={{ scale: 1.02, rotateY: 2 }}
@@ -189,7 +189,7 @@ export function AboutSectionV2() {
         </motion.div>
 
         {/* Story Section */}
-        <motion.div 
+        <motion.div
           ref={storyRef}
           variants={fadeInUp}
           initial="hidden"
@@ -198,7 +198,7 @@ export function AboutSectionV2() {
         >
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Image */}
-            <motion.div 
+            <motion.div
               variants={slideInLeft}
               className="w-full lg:w-1/3"
             >
@@ -211,15 +211,15 @@ export function AboutSectionV2() {
               />
             </motion.div>
             {/* Content */}
-            <motion.div 
+            <motion.div
               variants={slideInRight}
               className="flex-1"
             >
-              <motion.div 
+              <motion.div
                 variants={fadeInUp}
                 className="flex items-center gap-4 lg:gap-6 mb-6"
               >
-                <motion.div 
+                <motion.div
                   variants={scaleIn}
                   className="w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0"
                   whileHover={{ rotate: 360, scale: 1.1 }}
@@ -232,7 +232,7 @@ export function AboutSectionV2() {
                   <p className="text-purple-600 font-medium text-sm lg:text-base">Discover what makes us special</p>
                 </div>
               </motion.div>
-              <motion.div 
+              <motion.div
                 variants={textVariants}
                 className="space-y-2 lg:space-y-4 text-xs lg:text-base xl:text-lg leading-tight lg:leading-relaxed mb-4 lg:mb-6"
               >
@@ -249,7 +249,7 @@ export function AboutSectionV2() {
                   Our mission: <span className="font-bold text-pink-600">discover and celebrate Creative Stars across India</span>.
                 </motion.p>
               </motion.div>
-              <motion.div 
+              <motion.div
                 variants={scaleIn}
                 className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4"
                 whileHover={{ scale: 1.02 }}
@@ -282,11 +282,11 @@ export function AboutSectionV2() {
           animate={isFeaturesInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8"
           variants={{
-            visible: { 
-              transition: { 
+            visible: {
+              transition: {
                 staggerChildren: 0.2,
                 delayChildren: 0.1
-              } 
+              }
             },
           }}
         >
@@ -294,15 +294,15 @@ export function AboutSectionV2() {
           <motion.div
             variants={cardVariants}
             className="bg-white/50 backdrop-blur-md rounded-xl lg:rounded-2xl p-4 lg:p-8 shadow-lg border border-white/30 hover:scale-105 transition-all duration-300"
-            whileHover={{ 
-              scale: 1.05, 
+            whileHover={{
+              scale: 1.05,
               rotateY: 5,
               boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
             }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-start gap-3 lg:gap-4">
-              <motion.div 
+              <motion.div
                 className="w-8 h-8 lg:w-12 lg:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg lg:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.5 }}
@@ -310,27 +310,27 @@ export function AboutSectionV2() {
                 <Globe className="h-4 w-4 lg:h-6 lg:w-6 text-white" />
               </motion.div>
               <div>
-                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Nationwide Platform</h4>
+                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Seen by Everyone</h4>
                 <p className="text-gray-600 leading-tight lg:leading-relaxed text-xs lg:text-base">
-                  Connect with creatives from across India and showcase your talent on a national stage.
+                  Show your talent to the whole country.
                 </p>
               </div>
             </div>
           </motion.div>
-          
+
           {/* Exciting Prizes */}
           <motion.div
             variants={cardVariants}
             className="bg-white/50 backdrop-blur-md rounded-xl lg:rounded-2xl p-4 lg:p-8 shadow-lg border border-white/30 hover:scale-105 transition-all duration-300"
-            whileHover={{ 
-              scale: 1.05, 
+            whileHover={{
+              scale: 1.05,
               rotateY: 5,
               boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
             }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-start gap-3 lg:gap-4">
-              <motion.div 
+              <motion.div
                 className="w-8 h-8 lg:w-12 lg:h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg lg:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.5 }}
@@ -338,27 +338,27 @@ export function AboutSectionV2() {
                 <Trophy className="h-4 w-4 lg:h-6 lg:w-6 text-white" />
               </motion.div>
               <div>
-                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Exciting Prizes</h4>
+                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Win Big</h4>
                 <p className="text-gray-600 leading-tight lg:leading-relaxed text-xs lg:text-base">
-                  Win cash prizes, get featured in our eBook, and receive recognition across India.
+                  Win cash, get famous, and be seen.
                 </p>
               </div>
             </div>
           </motion.div>
-          
+
           {/* Official Certification */}
           <motion.div
             variants={cardVariants}
             className="bg-white/50 backdrop-blur-md rounded-xl lg:rounded-2xl p-4 lg:p-8 shadow-lg border border-white/30 hover:scale-105 transition-all duration-300"
-            whileHover={{ 
-              scale: 1.05, 
+            whileHover={{
+              scale: 1.05,
               rotateY: 5,
               boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
             }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-start gap-3 lg:gap-4">
-              <motion.div 
+              <motion.div
                 className="w-8 h-8 lg:w-12 lg:h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg lg:rounded-xl flex items-center justify-center shadow-lg flex-shrink-0"
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.5 }}
@@ -366,9 +366,9 @@ export function AboutSectionV2() {
                 <Award className="h-4 w-4 lg:h-6 lg:w-6 text-white" />
               </motion.div>
               <div>
-                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Official Certification</h4>
+                <h4 className="text-base lg:text-2xl font-bold text-gray-900 mb-1 lg:mb-2">Get Certified</h4>
                 <p className="text-gray-600 leading-tight lg:leading-relaxed text-xs lg:text-base">
-                  Every participant receives a digital certificate to boost their portfolio and resume.
+                  Get a verified certificate for your career.
                 </p>
               </div>
             </div>

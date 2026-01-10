@@ -58,8 +58,8 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
     ? variant === "gradient"
       ? "bg-gradient-to-r from-purple-600 to-pink-600 border-transparent text-white"
       : variant === "light"
-      ? "bg-white/95 border-gray-200 text-gray-900"
-      : "bg-black/30 border-white/10 text-white"
+        ? "bg-white/95 border-gray-200 text-gray-900"
+        : "bg-black/30 border-white/10 text-white"
     : "bg-transparent border-transparent text-white";
 
   const headerExtra = variant === "dark" && !isMobileMenuOpen ? " bg-black/50" : "";
@@ -85,9 +85,9 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-12 h-12 rounded-xl overflow-hidden">
-              <img 
+              <img
                 src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80"
-                alt="Daami Presents Logo" 
+                alt="Daami Presents Logo"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -95,24 +95,24 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href={href("#about")} className={`${navLink} font-medium transition-colors text-sm`}>
-              About
-            </a>
-            <a href={href("#prizes")} className={`${navLink} font-medium transition-colors text-sm`}>
+            <button onClick={(e) => { e.preventDefault(); const el = document.querySelector('#battle'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className={`${navLink} font-medium transition-colors text-sm bg-transparent border-none cursor-pointer`}>
+              The Battle
+            </button>
+            <button onClick={(e) => { e.preventDefault(); const el = document.querySelector('#prizes'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className={`${navLink} font-medium transition-colors text-sm bg-transparent border-none cursor-pointer`}>
               Prizes
-            </a>
-            <a href={href("#gallery")} className={`${navLink} font-medium transition-colors text-sm`}>
-              Gallery
-            </a>
-            <a href={href("#faq")} className={`${navLink} font-medium transition-colors text-sm`}>
+            </button>
+            <button onClick={(e) => { e.preventDefault(); const el = document.querySelector('#legacy'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className={`${navLink} font-medium transition-colors text-sm bg-transparent border-none cursor-pointer`}>
+              Legacy
+            </button>
+            <button onClick={(e) => { e.preventDefault(); const el = document.querySelector('#faq'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className={`${navLink} font-medium transition-colors text-sm bg-transparent border-none cursor-pointer`}>
               FAQ
-            </a>
+            </button>
           </nav>
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             {showJoinButton && onRegistrationClick && (
-              <Button 
+              <Button
                 onClick={onRegistrationClick}
                 className={`${ctaClass} font-semibold rounded-lg px-4 py-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-sm`}
               >
@@ -147,14 +147,14 @@ export function HeaderV2({ onRegistrationClick, variant = "dark", showJoinButton
           <div className="md:hidden fixed inset-x-0 top-20 z-40 px-3">
             <div className="mx-auto w-full max-w-[420px] rounded-2xl bg-black/80 border border-white/30 shadow-2xl max-h-[65vh] overflow-y-auto animate-in slide-in-from-top duration-300" onClick={(e) => e.stopPropagation()}>
               <nav className="flex flex-col divide-y divide-white/15">
-                <a href={href("#about")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">About</a>
-                <a href={href("#prizes")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">Prizes</a>
-                <a href={href("#gallery")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">Gallery</a>
-                <a href={href("#faq")} onClick={() => setIsMobileMenuOpen(false)} className="px-5 py-3 text-sm font-medium text-white hover:bg-white/10">FAQ</a>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); const el = document.querySelector('#battle'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full text-left px-5 py-3 text-sm font-medium text-white hover:bg-white/10">The Battle</button>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); const el = document.querySelector('#prizes'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full text-left px-5 py-3 text-sm font-medium text-white hover:bg-white/10">Prizes</button>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); const el = document.querySelector('#legacy'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full text-left px-5 py-3 text-sm font-medium text-white hover:bg-white/10">Legacy</button>
+                <button onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); const el = document.querySelector('#faq'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full text-left px-5 py-3 text-sm font-medium text-white hover:bg-white/10">FAQ</button>
               </nav>
               {showJoinButton && onRegistrationClick && (
                 <div className="p-4 border-t border-white/15">
-                  <Button 
+                  <Button
                     onClick={() => { setIsMobileMenuOpen(false); onRegistrationClick(); }}
                     className={`w-full ${ctaClass} font-semibold rounded-xl py-2.5 shadow-lg text-sm`}
                   >

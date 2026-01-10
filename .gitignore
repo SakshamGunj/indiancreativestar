@@ -24,7 +24,6 @@ backend/.env.local
 
 # Backend (separate repository - deploy separately)
 backend/
-api/
 # Payment server (separate deployment)
 cashfree-payment-server/
 

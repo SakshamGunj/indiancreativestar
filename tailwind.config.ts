@@ -145,6 +145,8 @@ export default {
 			fontFamily: {
 				'playfair': ['"Playfair Display"', 'serif'],
 				'poppins': ['Poppins', 'sans-serif'],
+				'bilderberg': ['Bilderberg', 'serif'],
+				'inter': ['Inter', 'sans-serif'],
 			},
 			backgroundImage: {
 				'gradient-creative': 'linear-gradient(to right, #8B5CF6, #EC4899, #3B82F6)',

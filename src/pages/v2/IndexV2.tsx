@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { updateWinterArtPayment } from '../../lib/firebase';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { GallerySectionV2 } from "@/components/GallerySectionV2";
@@ -34,13 +36,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   const [showRegistrationDrawer, setShowRegistrationDrawer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
-  const [paymentVerificationData, setPaymentVerificationData] = useState<{orderId: string, regData: any} | null>(null);
+  const [paymentVerificationData, setPaymentVerificationData] = useState<{ orderId: string, regData: any } | null>(null);
 
   const navigate = useNavigate();
 
   // 🎯 Helper: Get Facebook Pixel cookies (fbp and fbc)
   const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
+    const value = `; ${document.cookie} `;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop()?.split(';').shift();
     return undefined;
@@ -48,16 +50,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   // 🎯 Helper: Generate unique event ID for deduplication
   const generateEventId = () => {
-    return `PAGEVIEW_ICS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `PAGEVIEW_ICS_${Date.now()}_${Math.random().toString(36).substr(2, 9)} `;
   };
 
   // 🆔 Helper: Get or create unique external_id for this user (persistent across events)
   const getOrCreateExternalId = () => {
     const storageKey = 'ics_external_id';
-    
+
     // Try to get existing external_id from localStorage
     let externalId = localStorage.getItem(storageKey);
-    
+
     if (!externalId) {
       // Generate new unique external_id
       // Format: EXT_ICS_{timestamp}_{random_part1}_{random_part2}
@@ -68,13 +70,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         a = ((a << 5) - a) + b.charCodeAt(0);
         return a & a;
       }, 0).toString(36);
-      
-      externalId = `EXT_ICS_${timestamp}_${random1}_${random2}_${browserFingerprint}`;
-      
+
+      externalId = `EXT_ICS_${timestamp}_${random1}_${random2}_${browserFingerprint} `;
+
       // Store in localStorage (persistent)
       localStorage.setItem(storageKey, externalId);
     }
-    
+
     return externalId;
   };
 
@@ -82,11 +84,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   useEffect(() => {
     // Get or create persistent external_id for this user
     const externalId = getOrCreateExternalId();
-    
+
     // Get Facebook Pixel cookies
     const fbp = getCookie('_fbp');
     const fbc = getCookie('_fbc');
-    
+
     // Generate unique event ID
     const eventId = generateEventId();
 
@@ -98,35 +100,35 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       external_id: externalId,                // ✅ Persistent user identifier (same across all events)
       event_name: 'PageView',                 // ✅ Standard FB event name
       event_time: Math.floor(Date.now() / 1000), // ✅ Unix timestamp
-      
+
       // Facebook Attribution
       fbp: fbp || 'not_available',            // ✅ Facebook browser ID
       fbc: fbc || 'not_available',            // ✅ Facebook click ID
-      
+
       // Product/Content Details (Same as InitiateCheckout & Purchase)
       content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],  // ✅ Fixed product ID
       content_type: 'competition_entry',      // ✅ Content type
       content_name: 'Indian Creative Star Art Competition Entry',  // ✅ Product name
       content_category: 'art',                // ✅ Default category (art/kids detected later)
       num_items: 1,                           // ✅ Number of items
-      
+
       // Page Info
       page_url: window.location.href,         // ✅ Current page URL
       page_title: document.title,             // ✅ Page title for reporting
       page_location: window.location.href,    // ✅ Full URL
       page_path: window.location.pathname,    // ✅ Path only
-      
+
       // Browser Info
       user_agent: navigator.userAgent,        // ✅ Browser user agent
-      screen_resolution: `${window.screen.width}x${window.screen.height}`, // ✅ Screen size
-      viewport_size: `${window.innerWidth}x${window.innerHeight}`, // ✅ Viewport size
-      
+      screen_resolution: `${window.screen.width}x${window.screen.height} `, // ✅ Screen size
+      viewport_size: `${window.innerWidth}x${window.innerHeight} `, // ✅ Viewport size
+
       // Referrer Info
       referrer: document.referrer || 'direct', // ✅ Where user came from
-      
+
       // Timestamps
       client_timestamp: new Date().toISOString(), // ✅ ISO format
-      
+
       // Event Category
       event_category: 'Page View',
       event_action: 'Page Load',
@@ -148,35 +150,35 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           external_id: externalId,
           event_name: 'PageView',
           event_time: Math.floor(Date.now() / 1000),
-          
+
           // Facebook Attribution
           fbp: fbp || 'not_available',
           fbc: fbc || 'not_available',
-          
+
           // Product/Content Details
           content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],
           content_type: 'competition_entry',
           content_name: 'Indian Creative Star Art Competition Entry',
           content_category: 'art',
           num_items: 1,
-          
+
           // Page Info
           page_url: window.location.href,
           page_title: document.title,
           page_location: window.location.href,
           page_path: window.location.pathname,
-          
+
           // Browser Info
           user_agent: navigator.userAgent,
-          screen_resolution: `${window.screen.width}x${window.screen.height}`,
-          viewport_size: `${window.innerWidth}x${window.innerHeight}`,
-          
+          screen_resolution: `${window.screen.width}x${window.screen.height} `,
+          viewport_size: `${window.innerWidth}x${window.innerHeight} `,
+
           // Referrer Info
           referrer: document.referrer || 'direct',
-          
+
           // Timestamps
           client_timestamp: new Date().toISOString(),
-          
+
           // Event Category
           event_category: 'Page View',
           event_action: 'Page Load',
@@ -204,10 +206,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       const lastReg = sessionStorage.getItem('ics_last_registration');
       if (lastReg) {
         const regData = JSON.parse(lastReg);
-        
+
         // Trigger verification overlay
         handlePaymentInitiated(orderId, regData);
-        
+
         // Clean URL
         window.history.replaceState({}, '', window.location.pathname);
       } else {
@@ -218,12 +220,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       }
     }
   }, []);
-  
+
   // Optimized animation refs - reduced from 6 to 3 for better performance
   const mainSectionRef = useRef(null);
   const secondarySectionRef = useRef(null);
   const highlightsSectionRef = useRef(null);
-  
+
   // Optimized animation visibility hooks - reduced from 6 to 3
   const isMainSectionInView = useInView(mainSectionRef, { once: true, margin: "-100px" });
   const isSecondarySectionInView = useInView(secondarySectionRef, { once: true, margin: "-100px" });
@@ -239,8 +241,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   // Optimized animation variants - reduced complexity for better performance
   const optimizedFadeIn = useMemo(() => ({
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.6, ease: "easeOut" }
     },
@@ -248,8 +250,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
   const optimizedSlideIn = useMemo(() => ({
     hidden: { opacity: 0, x: -50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
       transition: { duration: 0.6, ease: "easeOut" }
     },
@@ -258,8 +260,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   // Fast animation for highlights section to appear immediately
   const fastFadeIn = useMemo(() => ({
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.3, ease: "easeOut" }
     },
@@ -278,7 +280,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     // Set body background to black to prevent white flash
     document.body.style.backgroundColor = 'black';
     document.documentElement.style.backgroundColor = 'black';
-    
+
     return () => {
       // Reset on unmount
       document.body.style.backgroundColor = '';
@@ -289,30 +291,30 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   // Optimized mobile banner creation with better performance
   const createMobileBanner = useCallback(() => {
     if (window.innerWidth >= 1024) return;
-    
+
     const existingBanner = document.getElementById('mobile-sticky-banner');
     if (existingBanner) existingBanner.remove();
-    
+
     const banner = document.createElement('div');
     banner.id = 'mobile-sticky-banner';
     banner.style.cssText = `
-      position: fixed !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 999999 !important;
-      background: linear-gradient(to right, #9333ea, #ec4899) !important;
-      border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
-      box-shadow: 0 -10px 25px -3px rgba(0, 0, 0, 0.3) !important;
-      padding: 12px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      will-change: transform;
-    `;
-    
+position: fixed!important;
+bottom: 0!important;
+left: 0!important;
+right: 0!important;
+z - index: 999999!important;
+background: linear - gradient(to right, #9333ea, #ec4899)!important;
+border - top: 2px solid rgba(255, 255, 255, 0.2)!important;
+box - shadow: 0 - 10px 25px - 3px rgba(0, 0, 0, 0.3)!important;
+padding: 12px!important;
+display: flex!important;
+align - items: center!important;
+justify - content: space - between!important;
+will - change: transform;
+`;
+
     banner.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 12px;">
+  < div style = "display: flex; align-items: center; gap: 12px;" >
         <div style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;">
           <img src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg?auto=format&q=80" alt="Daami Presents Logo" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
         </div>
@@ -320,8 +322,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <h3 style="color: white; font-weight: bold; font-size: 14px; margin: 0; line-height: 1.2;">Indian Creative Star</h3>
           <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">Art Competition</p>
         </div>
-      </div>
-      <button id="mobile-register-btn" style="
+      </div >
+  <button id="mobile-register-btn" style="
         background: white !important;
         color: #9333ea !important;
         font-weight: bold !important;
@@ -333,25 +335,25 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
         transition: transform 0.2s ease !important;
       ">Register Now</button>
-    `;
-    
+`;
+
     document.body.appendChild(banner);
-    
+
     const registerBtn = document.getElementById('mobile-register-btn');
     if (registerBtn) {
       registerBtn.onclick = () => handleRegisterClick();
-      
+
       // Optimized hover effects with transform only
       registerBtn.addEventListener('mouseenter', () => {
         registerBtn.style.transform = 'scale(1.05)';
       });
-      
+
       registerBtn.addEventListener('mouseleave', () => {
         registerBtn.style.transform = 'scale(1)';
       });
     }
   }, []);
-  
+
   useEffect(() => {
     // Debounced resize handler with better performance
     let resizeTimeout: NodeJS.Timeout;
@@ -359,10 +361,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(createMobileBanner, 200); // Increased debounce time
     };
-    
+
     createMobileBanner();
     window.addEventListener('resize', handleResize, { passive: true });
-    
+
     return () => {
       clearTimeout(resizeTimeout);
       const banner = document.getElementById('mobile-sticky-banner');
@@ -385,7 +387,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
     }
   }, [showRegistrationDrawer, showRegistrationModal]);
 
-  const handleRegisterClick = useCallback(() => {    
+  const handleRegisterClick = useCallback(() => {
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
@@ -404,13 +406,25 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      const response = await fetch(`https://backendcashfree.vercel.app/api/payment/verify/${orderId}`);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787';
+      const response = await fetch(`${API_URL}/api/verify-payment?orderId=${orderId}`);
       const verifyData = await response.json();
 
       if (verifyData.success && verifyData.data.is_paid) {
-        sessionStorage.setItem("ics_last_registration", JSON.stringify({...regData, paymentStatus: 'success', orderId, paymentVerified: true}));
-        setTimeout(() => {
-          const qp = new URLSearchParams({...regData, payment: 'success', orderId});
+        sessionStorage.setItem("ics_last_registration", JSON.stringify({ ...regData, paymentStatus: 'success', orderId, paymentVerified: true }));
+        setTimeout(async () => { // Added async here
+          // Update Firebase
+          const firebaseId = sessionStorage.getItem('ics_firebase_id');
+          if (firebaseId) {
+            await updateWinterArtPayment(firebaseId, {
+              paymentStatus: 'success',
+              amountPaid: verifyData.data.order_amount || 0, // Ensure backend returns amount or fallback
+              orderId: orderId,
+              paymentId: verifyData.data.cf_payment_id
+            });
+            console.log('✅ [FIREBASE] Payment status updated to SUCCESS');
+          }
+          const qp = new URLSearchParams({ ...regData, payment: 'success', orderId });
           navigate(`/thank-you?${qp.toString()}`);
         }, 1500);
       } else {
@@ -427,11 +441,23 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
   const verifyPaymentOnly = useCallback(async (orderId: string) => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      const response = await fetch(`https://backendcashfree.vercel.app/api/payment/verify/${orderId}`);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787';
+      const response = await fetch(`${API_URL}/api/verify-payment?orderId=${orderId}`);
       const verifyData = await response.json();
 
       if (verifyData.success && verifyData.data.is_paid) {
-        setTimeout(() => {
+        setTimeout(async () => { // Added async here
+          // Update Firebase
+          const firebaseId = sessionStorage.getItem('ics_firebase_id');
+          if (firebaseId) {
+            await updateWinterArtPayment(firebaseId, {
+              paymentStatus: 'success',
+              amountPaid: verifyData.data.order_amount || 0, // Ensure backend returns amount or fallback
+              orderId: orderId,
+              paymentId: verifyData.data.cf_payment_id
+            });
+            console.log('✅ [FIREBASE] Payment status updated to SUCCESS');
+          }
           navigate(`/thank-you?orderId=${orderId}&payment=success`);
         }, 1500);
       } else {
@@ -477,71 +503,71 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       {/* Performance optimization: reduced willChange usage */}
       <style>{`
         body {
-          background-color: black !important;
-          overflow-x: hidden;
-          -webkit-overflow-scrolling: touch;
-        }
+  background - color: black!important;
+  overflow - x: hidden;
+  -webkit - overflow - scrolling: touch;
+}
         html {
-          background-color: black !important;
-          scroll-behavior: smooth;
-        }
-        @media (max-width: 768px) {
+  background - color: black!important;
+  scroll - behavior: smooth;
+}
+@media(max - width: 768px) {
           body {
-            background-color: black !important;
-            -webkit-overflow-scrolling: touch;
-          }
-        }
-        
+    background - color: black!important;
+    -webkit - overflow - scrolling: touch;
+  }
+}
+
         /* Performance optimizations */
         * {
-          box-sizing: border-box;
+  box- sizing: border - box;
         }
         
-        .gpu-accelerated {
-          transform: translateZ(0);
-          backface-visibility: hidden;
-        }
-        
-        /* Optimized gradient animation */
-        @keyframes gradient-shift {
-          0% {
-            background-position: 0% 50%;
+        .gpu - accelerated {
+  transform: translateZ(0);
+  backface - visibility: hidden;
+}
+
+/* Optimized gradient animation */
+@keyframes gradient - shift {
+  0 % {
+    background- position: 0 % 50 %;
+}
+50 % {
+  background- position: 100 % 50 %;
           }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-        
-        .animated-gradient {
-          background: linear-gradient(-45deg, #ff6b6b, #ffa500, #ff4757, #ff6348, #ff7675, #fd79a8);
-          background-size: 400% 400%;
-          animation: gradient-shift 4s ease infinite;
-        }
-        
-        .animated-gradient:hover {
-          animation-duration: 2s;
-        }
-        
-        /* Pause animations when not visible to save battery */
-        @media (prefers-reduced-motion: reduce) {
-          .animated-gradient {
-            animation: none !important;
-            background: linear-gradient(-45deg, #ff6b6b, #ffa500) !important;
+100 % {
+  background- position: 0 % 50 %;
           }
         }
-      `}</style>
-      
+        
+        .animated - gradient {
+  background: linear - gradient(-45deg, #ff6b6b, #ffa500, #ff4757, #ff6348, #ff7675, #fd79a8);
+  background - size: 400 % 400 %;
+  animation: gradient - shift 4s ease infinite;
+}
+        
+        .animated - gradient:hover {
+  animation - duration: 2s;
+}
+
+/* Pause animations when not visible to save battery */
+@media(prefers - reduced - motion: reduce) {
+          .animated - gradient {
+    animation: none!important;
+    background: linear - gradient(-45deg, #ff6b6b, #ffa500)!important;
+  }
+}
+`}</style>
+
       {/* Header */}
       <HeaderV2 onRegistrationClick={() => handleRegisterClick()} />
-      
+
       {showConfetti && <Confetti />}
       <StickyCTABanner onRegisterClick={() => handleRegisterClick()} isDrawerOpen={showRegistrationDrawer} />
-      
 
-      
+
+
       {/* Hero Section - Single Blurred Background */}
       <section className="relative pt-0 sm:pt-32 pb-16 sm:pb-20 px-2 sm:px-4 overflow-hidden min-h-screen">
         {/* Single Blurred Background Image */}
@@ -554,7 +580,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               className="w-full h-full object-cover blur-sm scale-110"
             />
           </div>
-          
+
           {/* Dark Gradient Overlay for Better Text Visibility */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
         </div>
@@ -562,7 +588,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         {/* Content Overlay */}
         <div className="container mx-auto max-w-6xl relative z-20 px-4 pt-24">
           <div className="flex flex-col items-center text-center space-y-8">
-            
+
             {/* Top Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
               <span className="text-sm font-medium text-white/90">Limited Time Opportunity</span>
@@ -571,15 +597,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             {/* Main Heading */}
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                <span className="block text-white font-light">Indian Creative Star Season 1</span>
+                <span className="block text-white font-light">India's Biggest Art Contest</span>
                 <span className="block bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent font-bold">
-                  India's Prestigious Art Competition
-              </span>
-            </h1>
-            
+                  Win Cash Prizes & Fame
+                </span>
+              </h1>
+
               <div className="space-y-2">
-                <p className="text-lg sm:text-xl text-white/90 font-light">Transform Your Art Into</p>
-                <p className="text-base text-white/70">National Recognition</p>
+                <p className="text-lg sm:text-xl text-white/90 font-light">Turn Your Art Into</p>
+                <p className="text-base text-white/70">National Fame</p>
               </div>
             </div>
 
@@ -597,7 +623,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <span className="text-sm text-white/90 font-medium block">1,000+ artists</span>
                   <span className="text-xs text-white/70">Verified by Google Reviews</span>
                 </div>
-          </div>
+              </div>
 
               <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <div className="flex items-center gap-1">
@@ -607,20 +633,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
                     <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                </div>
+                  </div>
                   <span className="text-sm text-white/90 font-medium ml-1">4.9 rating</span>
                 </div>
               </div>
-              
+
               <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                 <span className="text-sm text-white/90 font-medium">Nationwide</span>
-                </div>
               </div>
-              
+            </div>
+
             {/* Theme Badge */}
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl border border-white/20">
               <span className="text-white font-medium">Open Theme</span>
-                </div>
+            </div>
 
             {/* Description */}
             <div className="max-w-2xl">
@@ -628,8 +654,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Join thousands of artists across India in this nationwide art movement.
                 Become a Creative Star and showcase your talent nationwide.
               </p>
-              </div>
-              
+            </div>
+
             {/* Key Stats */}
             <div className="grid grid-cols-2 gap-3 sm:gap-6 w-full max-w-4xl">
               <div className="relative bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-md rounded-2xl p-3 sm:p-6 border border-white/20 shadow-xl hover:scale-105 transition-all duration-300">
@@ -659,8 +685,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
                 <div className="text-sm sm:text-lg font-bold text-purple-300 mb-1 sm:mb-2 text-center">500 Slots</div>
                 <div className="text-white/80 text-xs sm:text-sm font-medium text-center">Available</div>
+              </div>
             </div>
-          </div>
 
             {/* Creative Manifesto */}
             <div className="max-w-3xl">
@@ -674,7 +700,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </blockquote>
               </div>
             </div>
-            
+
             {/* CTA Buttons */}
             <div className="flex justify-center w-full max-w-md">
               <Button
@@ -684,9 +710,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6 sm:h-5 sm:w-5" />
               </Button>
-              </div>
-
             </div>
+
+          </div>
         </div>
       </section>
 
@@ -697,17 +723,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-white/50 shadow-lg mb-6">
               <span className="text-sm font-medium text-gray-800">Who Can Join</span>
-              </div>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Your <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Creative Journey</span> Starts Here
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Whether you're an artist or a parent supporting young talent, this is your gateway to national recognition
-              </p>
-            </div>
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
+
             {/* For Artists */}
             <div className="bg-white/40 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-4 mb-6">
@@ -715,23 +741,23 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <Palette className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Artists</h3>
-          </div>
+              </div>
 
               <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Showcase your artistic talent on a national platform and win from a <span className="font-semibold text-orange-600">₹50,000 prize pool</span>.
               </p>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Connect with like-minded artists nationwide</p>
-                  </div>
+                </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                </div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Get professional feedback on your artwork</p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -739,9 +765,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Add national recognition to your portfolio</p>
-                  </div>
                 </div>
-              
+              </div>
+
               <Button
                 onClick={handleRegisterClick}
                 className="w-full animated-gradient text-white font-semibold py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
@@ -749,8 +775,8 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <Palette className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                 Register as Artist
               </Button>
-              </div>
-              
+            </div>
+
             {/* For Parents */}
             <div className="bg-white/40 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-4 mb-6">
@@ -759,22 +785,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">For Parents</h3>
               </div>
-              
+
               <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
                 Nurture your child's creativity and give them a platform to shine with <span className="font-semibold text-blue-600">confidence-building experience</span>.
               </p>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
                   </div>
                   <p className="text-sm sm:text-base text-gray-700">Boost your child's artistic confidence</p>
-                  </div>
+                </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mt-0.5">
                     <CheckCircle className="h-4 w-4 text-white" />
-                </div>
+                  </div>
                   <p className="text-sm sm:text-base text-gray-700">Recognition beyond school achievements</p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -784,7 +810,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <p className="text-sm sm:text-base text-gray-700">Special addition to education portfolio</p>
                 </div>
               </div>
-              
+
               <Button
                 onClick={handleRegisterClick}
                 className="w-full animated-gradient text-white font-semibold py-3 sm:py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
@@ -793,7 +819,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Register as Parent
               </Button>
             </div>
-            
+
           </div>
         </div>
       </section>
@@ -811,23 +837,23 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           backgroundSize: '400% 400%',
           animation: 'gradientShift 15s ease-in-out infinite'
         }}></div>
-        
+
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="flex items-center justify-between">
-            
+
             {/* Content */}
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
                 <Award className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
+              </div>
+              <div>
                 <h3 className="text-base md:text-2xl font-bold text-white mb-1" style={{
                   animation: 'colorGlow 3s ease-in-out infinite alternate'
                 }}>
                   Every participant will get Official Certificate & Artist ID Card
                 </h3>
-                  </div>
-                </div>
+              </div>
+            </div>
 
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -839,37 +865,38 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 />
               </div>
             </div>
-            
-            </div>
+
           </div>
+        </div>
 
         <style>{`
-          @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 200% 50%; }
-            75% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+@keyframes gradientShift {
+  0 % { background- position: 0 % 50 %;
+}
+25 % { background- position: 100 % 50 %; }
+50 % { background- position: 200 % 50 %; }
+75 % { background- position: 100 % 50 %; }
+100 % { background- position: 0 % 50 %; }
           }
-          
-          @keyframes colorGlow {
-            0% {
-              text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4);
+
+@keyframes colorGlow {
+  0 % {
+    text- shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+}
+25 % {
+  text- shadow: 0 0 20px rgba(255, 182, 193, 0.8), 0 0 30px rgba(255, 182, 193, 0.6), 0 0 40px rgba(255, 182, 193, 0.4);
             }
-            25% {
-              text-shadow: 0 0 20px rgba(255,182,193,0.8), 0 0 30px rgba(255,182,193,0.6), 0 0 40px rgba(255,182,193,0.4);
+50 % {
+  text- shadow: 0 0 20px rgba(173, 216, 230, 0.8), 0 0 30px rgba(173, 216, 230, 0.6), 0 0 40px rgba(173, 216, 230, 0.4);
             }
-            50% {
-              text-shadow: 0 0 20px rgba(173,216,230,0.8), 0 0 30px rgba(173,216,230,0.6), 0 0 40px rgba(173,216,230,0.4);
+75 % {
+  text- shadow: 0 0 20px rgba(144, 238, 144, 0.8), 0 0 30px rgba(144, 238, 144, 0.6), 0 0 40px rgba(144, 238, 144, 0.4);
             }
-            75% {
-              text-shadow: 0 0 20px rgba(144,238,144,0.8), 0 0 30px rgba(144,238,144,0.6), 0 0 40px rgba(144,238,144,0.4);
-            }
-            100% {
-              text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4);
+100 % {
+  text- shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
             }
           }
-        `}</style>
+`}</style>
       </section>
 
       {/* Prizes Section */}
@@ -885,17 +912,17 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Get <span className="bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 bg-clip-text text-transparent">Rewarded</span>
               </h2>
-              <p className="text-2xl font-semibold text-gray-800 mb-4">What's in it for YOU?</p>
+              <p className="text-2xl font-semibold text-gray-800 mb-4">What do you get?</p>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                We believe in recognizing and rewarding creativity. Here are the exciting prizes available in our competitions.
+                We reward talent. Here is what you can win.
               </p>
-            <Button 
-              onClick={handleRegisterClick}
+              <Button
+                onClick={handleRegisterClick}
                 className="animated-gradient text-white font-semibold py-4 px-12 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl w-fit text-lg"
-            >
+              >
                 Register Now
                 <ArrowRight className="ml-2 h-6 w-6" />
-            </Button>
+              </Button>
             </div>
             <div className="space-y-8 order-2 flex flex-col justify-start">
               {/* This will be shown on mobile only, below the categories */}
@@ -904,7 +931,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
 
           {/* Competition Categories */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
+
             {/* Adult Competition */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
@@ -977,7 +1004,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
 
             {/* Kids Competition */}
             <div className="relative group">
@@ -987,7 +1014,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                       <Heart className="h-8 w-8 text-white" />
-              </div>
+                    </div>
                     <div>
                       <h3 className="text-2xl font-bold text-white mb-1">Kids Art Competition</h3>
                       <p className="text-blue-100 font-medium">5-17 Years | Prize Pool: ₹20,000</p>
@@ -1072,10 +1099,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </div>
               </div>
             </div>
-            </div>
-            
+          </div>
 
-              </div>
+
+        </div>
       </section>
 
       {/* Artist Benefits Section */}
@@ -1090,7 +1117,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               className="w-full h-full object-cover blur-sm scale-110"
             />
           </div>
-          
+
           {/* Dark Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/60 to-black/80 z-10"></div>
         </div>
@@ -1100,12 +1127,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           <div className="inline-flex items-center px-6 py-3 bg-white/30 rounded-full border border-white/40 mb-6">
             <Lightbulb className="h-4 w-4 mr-2 text-orange-300" />
             <span className="text-sm font-medium text-white/90">Your Creative Journey</span>
-                </div>
+          </div>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-6">
             Every Artist <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Wins Something</span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
-            Because we believe every creative soul deserves recognition, growth, and a platform to shine.
+            Because every artist deserves to be seen.
           </p>
         </div>
 
@@ -1113,107 +1140,107 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         <div className="relative z-20">
           <div className="overflow-x-hidden">
             <div className="flex animate-slide-left-continuous space-x-4 sm:space-x-8 max-w-[100vw]" style={{ willChange: 'transform' }}>
-               {/* Duplicate cards for seamless loop */}
-               {[...Array(3)].map((_, setIndex) => (
-                 <React.Fragment key={setIndex}>
-                   
-                   {/* Your Spotlight Moment */}
-                   <div className="flex-shrink-0 w-56 sm:w-80">
-                     <div className="relative">
-                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
-                         <div className="text-center">
-                           <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
-                             <Star className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </div>
-                           <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Your Spotlight Moment</h3>
-                           <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
-                              Featured in our Artist Showcase reaching <span className="font-bold text-orange-600">50,000+ art lovers</span> across India
-                            </p>
-                         </div>
-                       </div>
-                </div>
-              </div>
-              
-                   {/* Official Creative Badge */}
-                   <div className="flex-shrink-0 w-56 sm:w-80">
-                     <div className="relative">
-                       <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
-                         <div className="text-center">
-                           <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
-                             <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </div>
-                           <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Official Creative Badge</h3>
-                           <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
-                              Digital certificate + Artist ID that you can proudly display on <span className="font-bold text-blue-600">LinkedIn & social media</span>
-                            </p>
-                </div>
-                       </div>
-                </div>
-              </div>
-              
-                   {/* Exclusive Artist Circle */}
-                   <div className="flex-shrink-0 w-56 sm:w-80">
-                     <div className="relative">
-                       <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
-                         <div className="text-center">
-                           <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
-                             <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                           </div>
-                           <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Exclusive Artist Circle</h3>
-                           <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
-                              Join our private community of <span className="font-bold text-green-600">1,000+ verified artists</span> for collaborations & opportunities
-                            </p>
-                         </div>
-                       </div>
-                     </div>
+              {/* Duplicate cards for seamless loop */}
+              {[...Array(3)].map((_, setIndex) => (
+                <React.Fragment key={setIndex}>
+
+                  {/* Your Spotlight Moment */}
+                  <div className="flex-shrink-0 w-56 sm:w-80">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20"></div>
+                      <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
+                        <div className="text-center">
+                          <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
+                            <Star className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+                          </div>
+                          <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Your Spotlight Moment</h3>
+                          <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
+                            Featured in our Artist Showcase reaching <span className="font-bold text-orange-600">50,000+ art lovers</span> across India
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Official Creative Badge */}
+                  <div className="flex-shrink-0 w-56 sm:w-80">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-3xl blur opacity-20"></div>
+                      <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
+                        <div className="text-center">
+                          <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
+                            <Award className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+                          </div>
+                          <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Official Creative Badge</h3>
+                          <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
+                            Digital certificate + Artist ID that you can proudly display on <span className="font-bold text-blue-600">LinkedIn & social media</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Exclusive Artist Circle */}
+                  <div className="flex-shrink-0 w-56 sm:w-80">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 rounded-3xl blur opacity-20"></div>
+                      <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
+                        <div className="text-center">
+                          <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
+                            <Users className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+                          </div>
+                          <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">Exclusive Artist Circle</h3>
+                          <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
+                            Join our private community of <span className="font-bold text-green-600">1,000+ verified artists</span> for collaborations & opportunities
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* VIP Early Access */}
+                  <div className="flex-shrink-0 w-56 sm:w-80">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur opacity-20"></div>
+                      <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
+                        <div className="text-center">
+                          <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
+                            <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+                          </div>
+                          <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">VIP Early Access</h3>
+                          <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
+                            First to know about <span className="font-bold text-purple-600">exhibitions, contests & art opportunities</span> before anyone else
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </React.Fragment>
+              ))}
             </div>
-            
-                   {/* VIP Early Access */}
-                   <div className="flex-shrink-0 w-56 sm:w-80">
-                     <div className="relative">
-                       <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-3xl blur opacity-20"></div>
-                       <div className="relative bg-white/70 rounded-3xl p-3 sm:p-6 border border-white/50 shadow-xl">
-                         <div className="text-center">
-                           <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-2.5 sm:mb-4">
-                             <Zap className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-                </div>
-                           <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-3">VIP Early Access</h3>
-                           <p className="text-gray-700 leading-relaxed text-xs sm:text-base">
-                              First to know about <span className="font-bold text-purple-600">exhibitions, contests & art opportunities</span> before anyone else
-                            </p>
-                         </div>
-                       </div>
-                </div>
-              </div>
-              
-                 </React.Fragment>
-               ))}
-                </div>
           </div>
         </div>
-        
+
 
       </section>
 
       {/* Previous Competition Highlights - Compact */}
-      <section className="py-12 -mx-4 px-1 sm:mx-0 sm:px-4 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 relative overflow-hidden">
+      <section id="legacy" className="py-12 -mx-4 px-1 sm:mx-0 sm:px-4 bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-orange-400/20 to-pink-400/20 rounded-full blur-2xl"></div>
           <div className="absolute bottom-10 right-10 w-24 h-24 bg-gradient-to-r from-purple-400/20 to-blue-400/20 rounded-full blur-2xl"></div>
         </div>
-        
+
         <div className="container mx-auto max-w-6xl relative z-10 px-4">
-          
+
           {/* Header */}
-          <motion.div 
+          <motion.div
             ref={highlightsSectionRef}
             className="text-center mb-12"
           >
-            <motion.div 
+            <motion.div
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500/10 to-pink-500/10 backdrop-blur-sm rounded-full border border-orange-200 mb-4"
             >
               <motion.div
@@ -1224,27 +1251,27 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </motion.div>
               <span className="text-sm font-semibold text-orange-700">Success Stories</span>
             </motion.div>
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             >
-              Previous Competition <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Highlights</span>
+              Last Season <span className="bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Highlights</span>
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-lg text-gray-600 max-w-2xl mx-auto"
             >
-              Celebrating incredible talent from our past competitions
+              See what happened last time.
             </motion.p>
           </motion.div>
 
           {/* Leaderboard Podium with Artworks - Larger */}
           <div className="mb-20 relative">
-            
+
             {/* Mobile Stats Grid - Visible only on mobile */}
-            <motion.div 
+            <motion.div
               ref={highlightsSectionRef}
               className="block md:hidden mb-8"
             >
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-2 gap-3"
               >
                 {[
@@ -1253,25 +1280,25 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   { icon: Star, number: "4.9★", label: "Rating", gradient: "from-purple-500 to-pink-500", color: "text-purple-600" },
                   { icon: Award, number: "100+", label: "Featured", gradient: "from-orange-500 to-red-500", color: "text-orange-600" }
                 ].map((stat, index) => (
-                  <motion.div 
-                    key={index} 
-                    whileHover={{ 
-                      scale: 1.05, 
+                  <motion.div
+                    key={index}
+                    whileHover={{
+                      scale: 1.05,
                       rotateY: 5,
                       boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
                     }}
                     className="bg-white/60 backdrop-blur-md rounded-xl p-3 shadow-lg border border-white/30"
                   >
                     <div className="flex items-center gap-2">
-                      <motion.div 
+                      <motion.div
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
-                        className={`w-8 h-8 bg-gradient-to-r ${stat.gradient} rounded-lg flex items-center justify-center`}
+                        className={`w - 8 h - 8 bg - gradient - to - r ${stat.gradient} rounded - lg flex items - center justify - center`}
                       >
                         <stat.icon className="h-4 w-4 text-white" />
                       </motion.div>
                       <div>
-                        <div className={`text-lg font-bold ${stat.color}`}>{stat.number}</div>
+                        <div className={`text - lg font - bold ${stat.color} `}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
                       </div>
                     </div>
@@ -1279,106 +1306,108 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 ))}
               </motion.div>
             </motion.div>
-            
+
             {/* Desktop Side Cards - Hidden on mobile with Floating Animation */}
-            <motion.div 
-              variants={optimizedSlideIn}
-              initial="hidden"
-              animate={isMainSectionInView ? "visible" : "hidden"}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={isMainSectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              transition={{ duration: 0.8 }}
               className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4"
             >
-              <motion.div 
+              <motion.div
                 className="space-y-4"
               >
                 {[
-                  { icon: Users, number: "500+", label: "Participants Joined", gradient: "from-blue-500 to-cyan-500", color: "text-blue-600", delay: "0s" },
-                  { icon: Gift, number: "₹25K", label: "Prize Distributed", gradient: "from-green-500 to-emerald-500", color: "text-green-600", delay: "1s" },
-                  { icon: Star, number: "4.9★", label: "Success Rating", gradient: "from-purple-500 to-pink-500", color: "text-purple-600", delay: "2s" }
+                  { icon: Users, number: "500+", label: "Artists Joined", gradient: "from-blue-500 to-cyan-500", color: "text-blue-600", delay: "0s" },
+                  { icon: Gift, number: "₹25K", label: "Cash Won", gradient: "from-green-500 to-emerald-500", color: "text-green-600", delay: "1s" },
+                  { icon: Star, number: "4.9★", label: "Top Rated", gradient: "from-purple-500 to-pink-500", color: "text-purple-600", delay: "2s" }
                 ].map((stat, index) => (
-                  <motion.div 
-                    key={index} 
-                    whileHover={{ 
-                      scale: 1.05, 
+                  <motion.div
+                    key={index}
+                    whileHover={{
+                      scale: 1.05,
                       rotateY: 5,
                       boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
                     }}
-                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
+                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float"
                     style={{ animationDelay: stat.delay }}
                   >
-                <div className="flex items-center gap-3">
-                      <motion.div 
+                    <div className="flex items-center gap-3">
+                      <motion.div
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
-                        className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}
+                        className={`w - 10 h - 10 bg - gradient - to - r ${stat.gradient} rounded - xl flex items - center justify - center`}
                       >
                         <stat.icon className="h-5 w-5 text-white" />
                       </motion.div>
                       <div>
-                        <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
+                        <div className={`text - 2xl font - bold ${stat.color} `}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                </div>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
               </motion.div>
             </motion.div>
-            
-            <motion.div 
-              variants={optimizedSlideIn}
-              initial="hidden"
-              animate={isMainSectionInView ? "visible" : "hidden"}
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={isMainSectionInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              transition={{ duration: 0.8 }}
               className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4"
             >
-              <motion.div 
+              <motion.div
                 className="space-y-4"
               >
                 {[
                   { icon: Award, number: "100+", label: "Featured Artists", gradient: "from-orange-500 to-red-500", color: "text-orange-600", delay: "0.5s" },
-                  { icon: Globe, number: "50K+", label: "Media Reach", gradient: "from-indigo-500 to-purple-500", color: "text-indigo-600", delay: "1.5s" },
-                  { icon: BookOpen, number: "500+", label: "Certificates Issued", gradient: "from-teal-500 to-cyan-500", color: "text-teal-600", delay: "2.5s" }
+                  { icon: Globe, number: "50K+", label: "Views", gradient: "from-indigo-500 to-purple-500", color: "text-indigo-600", delay: "1.5s" },
+                  { icon: BookOpen, number: "500+", label: "Certified Artists", gradient: "from-teal-500 to-cyan-500", color: "text-teal-600", delay: "2.5s" }
                 ].map((stat, index) => (
-                  <motion.div 
-                    key={index} 
-                    whileHover={{ 
-                      scale: 1.05, 
+                  <motion.div
+                    key={index}
+                    whileHover={{
+                      scale: 1.05,
                       rotateY: -5,
                       boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
                     }}
-                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float" 
+                    className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30 w-48 animate-float"
                     style={{ animationDelay: stat.delay }}
                   >
-                <div className="flex items-center gap-3">
-                      <motion.div 
+                    <div className="flex items-center gap-3">
+                      <motion.div
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.6 }}
-                        className={`w-10 h-10 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center`}
+                        className={`w - 10 h - 10 bg - gradient - to - r ${stat.gradient} rounded - xl flex items - center justify - center`}
                       >
                         <stat.icon className="h-5 w-5 text-white" />
                       </motion.div>
                       <div>
-                        <div className={`text-2xl font-bold ${stat.color}`}>{stat.number}</div>
+                        <div className={`text - 2xl font - bold ${stat.color} `}>{stat.number}</div>
                         <div className="text-xs text-gray-600 font-semibold">{stat.label}</div>
-                </div>
-              </div>
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               ref={secondarySectionRef}
               initial="hidden"
               animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="flex items-end justify-center gap-2 md:gap-12 mb-12 px-4"
             >
-              
+
               {/* 2nd Place */}
-              <motion.div 
-                variants={optimizedSlideIn}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isSecondarySectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
                   className="relative mb-3 md:mb-6"
@@ -1388,7 +1417,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     alt="2nd Place Artwork"
                     className="w-24 h-24 md:w-40 md:h-40 object-cover rounded-xl md:rounded-3xl shadow-xl md:shadow-2xl border-2 md:border-6 border-gray-300"
                   />
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
                     className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-6 h-6 md:w-12 md:h-12 bg-gradient-to-r from-gray-400 to-gray-300 rounded-full flex items-center justify-center shadow-lg md:shadow-xl"
@@ -1396,7 +1425,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="text-white font-bold text-xs md:text-lg">2</span>
                   </motion.div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   className="w-28 h-20 md:w-48 md:h-32 bg-gradient-to-t from-gray-400 to-gray-300 rounded-t-lg md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl"
                 >
@@ -1405,11 +1434,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </motion.div>
 
               {/* 1st Place - Tallest */}
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="flex flex-col items-center"
               >
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
                   className="relative mb-3 md:mb-6"
@@ -1419,7 +1448,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     alt="1st Place Artwork"
                     className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-xl md:rounded-3xl shadow-xl md:shadow-2xl border-2 md:border-6 border-yellow-400"
                   />
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
                     className="absolute -top-1 -right-1 md:-top-4 md:-right-4 w-8 h-8 md:w-14 md:h-14 bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full flex items-center justify-center shadow-xl md:shadow-2xl"
@@ -1427,12 +1456,12 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Trophy className="h-4 w-4 md:h-7 md:w-7 text-white" />
                   </motion.div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   className="w-36 h-28 md:w-56 md:h-40 bg-gradient-to-t from-yellow-500 to-yellow-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-xl md:shadow-2xl relative"
                 >
                   <span className="text-white font-black text-2xl md:text-5xl">1st</span>
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
                     className="absolute -top-1 md:-top-3 left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-8 md:h-8 bg-orange-500 rounded-full flex items-center justify-center"
@@ -1443,12 +1472,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </motion.div>
 
               {/* 3rd Place */}
-              <motion.div 
-                variants={optimizedSlideIn}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isSecondarySectionInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
                 whileHover={{ scale: 1.05, rotateY: -5 }}
                 className="flex flex-col items-center"
               >
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
                   className="relative mb-3 md:mb-6"
@@ -1458,7 +1489,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     alt="3rd Place Artwork"
                     className="w-20 h-20 md:w-36 md:h-36 object-cover rounded-xl md:rounded-3xl shadow-lg md:shadow-xl border-2 md:border-6 border-orange-400"
                   />
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
                     className="absolute -top-1 -right-1 md:-top-3 md:-right-3 w-5 h-5 md:w-10 md:h-10 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full flex items-center justify-center shadow-lg md:shadow-xl"
@@ -1466,23 +1497,23 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <span className="text-white font-bold text-xs md:text-base">3</span>
                   </motion.div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   className="w-24 h-16 md:w-44 md:h-28 bg-gradient-to-t from-orange-500 to-orange-400 rounded-t-xl md:rounded-t-3xl flex items-center justify-center shadow-lg md:shadow-xl"
                 >
                   <span className="text-white font-black text-sm md:text-3xl">3rd</span>
                 </motion.div>
               </motion.div>
-              
+
             </motion.div>
-            
+
             {/* Prize Pool Banner */}
-            <motion.div 
+            <motion.div
               initial="hidden"
               animate={isSecondarySectionInView ? "visible" : "hidden"}
               className="text-center"
             >
-              <motion.div 
+              <motion.div
                 whileHover={{ scale: 1.05, rotateY: 5 }}
                 className="inline-flex items-center gap-2 md:gap-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl md:rounded-3xl px-4 md:px-8 py-2 md:py-4 shadow-xl md:shadow-2xl"
               >
@@ -1501,22 +1532,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 </motion.div>
               </motion.div>
             </motion.div>
-            </div>
           </div>
+        </div>
 
         {/* Full Width Sliding Testimonials - Improved Mobile */}
-        <motion.div 
+        <motion.div
           ref={secondarySectionRef}
           initial="hidden"
           animate={isSecondarySectionInView ? "visible" : "hidden"}
           className="mb-8"
         >
-          <motion.h3 
+          <motion.h3
             className="text-lg md:text-xl font-bold text-gray-900 text-center mb-4 md:mb-6 px-4"
           >
             Artist Success Stories
           </motion.h3>
-          
+
           <div className="overflow-hidden">
             <div className="flex animate-testimonial-slide-fast space-x-3 md:space-x-6">
               {[...Array(4)].map((_, setIndex) => (
@@ -1543,10 +1574,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     { name: "Anushka Verma", quote: "As an art teacher, I encouraged my students to participate, and many did. The joy they felt in seeing their names featured officially is priceless.", avatar: "A", gradient: "from-green-500 to-teal-500" },
                     { name: "Ganesh Lama", quote: "I must say the professionalism surprised me. Most competitions are messy, but here everything was well-structured. The support team was excellent.", avatar: "G", gradient: "from-purple-500 to-violet-500" }
                   ].map((testimonial, index) => (
-                    <motion.div 
-                      key={`${setIndex}-${index}`} 
-                      whileHover={{ 
-                        scale: 1.02, 
+                    <motion.div
+                      key={`${setIndex} -${index} `}
+                      whileHover={{
+                        scale: 1.02,
                         rotateY: 5,
                         boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
                       }}
@@ -1554,7 +1585,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     >
                       <div className="bg-white/60 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-4 shadow-lg border border-white/30 relative">
                         {/* Verified Badge */}
-                        <motion.div 
+                        <motion.div
                           whileHover={{ scale: 1.1 }}
                           className="absolute top-1 right-1 bg-green-500 text-white font-medium px-1.5 py-0.5 rounded-full shadow-sm flex items-center gap-0.5"
                         >
@@ -1562,10 +1593,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                           <span className="text-xs">Verified</span>
                         </motion.div>
                         <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 mt-2">
-                          <motion.div 
+                          <motion.div
                             whileHover={{ rotate: 360, scale: 1.1 }}
                             transition={{ duration: 0.6 }}
-                            className={`w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r ${testimonial.gradient} rounded-full flex items-center justify-center shadow-lg`}
+                            className={`w - 8 h - 8 md: w - 10 md: h - 10 bg - gradient - to - r ${testimonial.gradient} rounded - full flex items - center justify - center shadow - lg`}
                           >
                             <span className="text-white font-bold text-xs md:text-sm">{testimonial.avatar}</span>
                           </motion.div>
@@ -1595,20 +1626,20 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         </motion.div>
 
         {/* Full Width Artwork Gallery - Improved Mobile */}
-        <motion.div 
+        <motion.div
           ref={highlightsSectionRef}
           className="overflow-hidden"
         >
-          <motion.div 
+          <motion.div
             className="flex animate-slide-right-fast space-x-2 md:space-x-4"
           >
             {[...Array(3)].map((_, setIndex) => (
               <React.Fragment key={setIndex}>
                 {baseArtworkImages.map((image, index) => (
-                  <motion.div 
-                    key={`gallery-${setIndex}-${index}`} 
-                    whileHover={{ 
-                      scale: 1.05, 
+                  <motion.div
+                    key={`gallery - ${setIndex} -${index} `}
+                    whileHover={{
+                      scale: 1.05,
                       rotateY: 5,
                       boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
                     }}
@@ -1617,22 +1648,22 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <div className="relative group overflow-hidden rounded-xl md:rounded-2xl w-48 h-48 md:w-80 md:h-60">
                       <LazyImage
                         src={image}
-                        alt={`Previous artwork ${index + 1}`}
+                        alt={`Previous artwork ${index + 1} `}
                         className="w-full h-full transition-all duration-300"
                       />
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                         className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
                       ></motion.div>
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileHover={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
                         className="absolute bottom-1 left-1 text-white"
                       >
-                        <motion.div 
+                        <motion.div
                           whileHover={{ rotate: 360, scale: 1.2 }}
                           transition={{ duration: 0.6 }}
                           className="text-xs font-bold"
@@ -1647,49 +1678,49 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             ))}
           </motion.div>
         </motion.div>
-        
+
         <style>{`
-          @keyframes testimonial-slide-fast {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
+@keyframes testimonial - slide - fast {
+  0 % { transform: translateX(0); }
+  100 % { transform: translateX(-100 %); }
+}
+
+@keyframes slide - right - fast {
+  0 % { transform: translateX(0); }
+  100 % { transform: translateX(-100 %); }
+}
+
+@keyframes float {
+  0 %, 100 % { transform: translateY(0px); }
+  50 % { transform: translateY(-10px); }
+}
           
-          @keyframes slide-right-fast {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-          }
+          .animate - testimonial - slide - fast {
+  animation: testimonial - slide - fast 30s linear infinite;
+}
           
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-          }
+          .animate - slide - right - fast {
+  animation: slide - right - fast 35s linear infinite;
+}
           
-          .animate-testimonial-slide-fast {
-            animation: testimonial-slide-fast 30s linear infinite;
-          }
-          
-          .animate-slide-right-fast {
-            animation: slide-right-fast 35s linear infinite;
-          }
-          
-          .animate-float {
-            animation: float 4s ease-in-out infinite;
-          }
-          
-          /* Pause animations when not visible */
-          @media (prefers-reduced-motion: reduce) {
-            .animate-testimonial-slide-fast,
-            .animate-slide-right-fast,
-            .animate-float {
-              animation: none !important;
-            }
-          }
-        `}</style>
+          .animate - float {
+  animation: float 4s ease -in -out infinite;
+}
+
+/* Pause animations when not visible */
+@media(prefers - reduced - motion: reduce) {
+            .animate - testimonial - slide - fast,
+            .animate - slide - right - fast,
+            .animate - float {
+    animation: none!important;
+  }
+}
+`}</style>
       </section>
 
       {/* Testimonials Section - Moved here after Previous Competition Highlights */}
       <TestimonialsSection />
-      
+
       {/* Real Reviews Section */}
       <section className="py-12 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
         <div className="container mx-auto max-w-5xl px-4">
@@ -1699,7 +1730,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </h2>
             <p className="text-base text-gray-600">Authentic feedback from Season 1 participants</p>
           </div>
-          
+
           <div className="columns-2 md:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
             {[
               "https://i.ibb.co/LXMnjMLz/IMG-20250915-171938-11zon.jpg",
@@ -1713,7 +1744,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} className="relative group break-inside-avoid mb-3 md:mb-4">
                 <div className="bg-white rounded-xl p-2 shadow-md hover:shadow-lg transition-shadow">
                   <div className="relative overflow-hidden rounded-lg">
-                    <LazyImage src={image} alt={`Review ${i + 1}`} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
+                    <LazyImage src={image} alt={`Review ${i + 1} `} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
                     <div className="absolute top-2 right-2 bg-green-500 text-white px-1.5 py-0.5 rounded-full text-xs font-bold">
                       ✓
                     </div>
@@ -1722,7 +1753,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-6">
             <div className="inline-flex items-center gap-2 bg-white rounded-xl px-4 py-2 shadow-md">
               <span className="text-lg">⭐</span>
@@ -1731,7 +1762,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
       </section>
-      
+
       {/* Prize Distribution Ceremony Section */}
       <section className="py-16 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
         <div className="container mx-auto max-w-6xl px-4">
@@ -1741,7 +1772,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </h2>
             <p className="text-lg text-gray-600">Season 1 - Celebrating our Creative Stars</p>
           </div>
-          
+
           <div className="columns-2 md:columns-2 lg:columns-3 gap-3 space-y-3" style={{ columnFill: 'balance' }}>
             {[
               "https://i.ibb.co/GvxDtkMB/IMG-20250914-WA0061-1-11zon.jpg",
@@ -1752,10 +1783,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               "https://i.ibb.co/PRq5Y0T/IMG-20250914-WA0028-11zon.jpg",
               "https://i.ibb.co/RxbjbPt/IMG-20250914-WA0026-11zon-2.jpg"
             ].map((image, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className={`relative group break-inside-avoid mb-3 ${i === 0 ? 'column-span-2' : ''}`}>
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className={`relative group break-inside - avoid mb - 3 ${i === 0 ? 'column-span-2' : ''} `}>
                 <div className="bg-white rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow">
                   <div className="relative overflow-hidden rounded-md">
-                    <LazyImage src={image} alt={`Prize Distribution ${i + 1}`} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
+                    <LazyImage src={image} alt={`Prize Distribution ${i + 1} `} className="w-full h-auto max-h-96 object-contain transition-transform group-hover:scale-105" />
                     <div className="absolute bottom-1 left-1 bg-black/70 text-white px-1 py-0.5 rounded text-xs">
                       <div className="text-sm mb-0">🎉</div>
                       <div className="font-bold text-xs">Season 1</div>
@@ -1765,7 +1796,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl px-6 py-3 text-white shadow-lg">
               <span className="text-2xl">🎊</span>
@@ -1775,19 +1806,19 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
       </section>
-      
+
       {/* Countdown Section */}
       <CountdownSection onRegisterClick={handleRegisterClick} />
-      
+
       {/* Winners Gallery - Moved here after Testimonials */}
       <div id="gallery">
         <WinnersGallery />
       </div>
 
       {/* How It Works Section - Vertical Timeline */}
-      <section className="py-20 -mx-4 px-1 sm:mx-0 sm:px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <section id="battle" className="py-20 -mx-4 px-1 sm:mx-0 sm:px-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="container mx-auto max-w-4xl">
-          
+
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-full border border-blue-200 mb-4">
@@ -1796,9 +1827,9 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">How It Works</span>
             </h2>
-            <p className="text-lg font-semibold text-gray-800 mb-2">Simple Step-by-Step Journey</p>
+            <p className="text-lg font-semibold text-gray-800 mb-2">Simple 4 Step Process</p>
             <p className="text-base text-gray-600 max-w-2xl mx-auto">
-              From registration to winning - your path to nationwide recognition
+              From signing up to winning
             </p>
           </div>
 
@@ -1808,16 +1839,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             <div className="hidden md:block">
               {/* Central Vertical Line */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 via-orange-500 to-green-500 rounded-full opacity-30"></div>
-              
+
               {/* Desktop Timeline Steps */}
               <div className="space-y-8">
-                
+
                 {/* Step 1 - Right Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">1</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-blue-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-blue-500" />
-              </div>
+                  </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Register & Join</h3>
@@ -1832,14 +1863,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-            </div>
+                </div>
 
                 {/* Step 2 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">2</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-purple-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-purple-500" />
-              </div>
+                  </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Submit Your Artwork</h3>
@@ -1854,14 +1885,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-            </div>
+                </div>
 
                 {/* Step 3 - Right Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">3</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 translate-x-6 w-6 h-0.5 bg-orange-500 z-5">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-orange-500" />
-              </div>
+                  </div>
                   <div className="w-5/12 ml-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Judging & Voting</h3>
@@ -1876,14 +1907,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                       </div>
                     </div>
                   </div>
-            </div>
+                </div>
 
                 {/* Step 4 - Left Side */}
                 <div className="relative flex items-center">
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl z-10">4</div>
                   <div className="absolute left-1/2 transform -translate-x-1/2 -translate-x-6 w-6 h-0.5 bg-green-500 z-5 rotate-180">
                     <ArrowRight className="absolute right-0 top-1/2 transform -translate-y-1/2 h-3 w-3 text-green-500" />
-              </div>
+                  </div>
                   <div className="w-5/12 mr-auto">
                     <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/30">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">Winners Announced</h3>
@@ -1899,13 +1930,13 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </div>
 
             {/* Mobile Timeline - Visible only on mobile */}
             <div className="md:hidden space-y-6">
-              
+
               {/* Step 1 */}
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg flex-shrink-0">1</div>
@@ -1973,7 +2004,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                   </div>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -1982,23 +2013,23 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
       {/* Official Recognition Section */}
       <section className="py-20 -mx-4 px-1 sm:mx-0 sm:px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
         <div className="container mx-auto max-w-6xl">
-          
+
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              <span className="text-blue-600">Official Recognition</span>
+              <span className="text-blue-600">Get Certified</span>
             </h2>
-            <p className="text-xl text-gray-600 mb-4">All Participants Receive a Digital Certificate</p>
+            <p className="text-xl text-gray-600 mb-4">Everyone gets a certificate</p>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our professionally designed digital certificate is perfect for:
+              Our certificate is perfect for:
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Benefits */}
             <div className="space-y-8">
-              
+
               {/* Resume Enhancement */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div className="flex items-start gap-4">
@@ -2006,14 +2037,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <BookOpen className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Resume Enhancement</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Boost Your Career</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Add creative credentials to your professional profile
+                      Add to your resume/CV
                     </p>
                   </div>
                 </div>
               </div>
-              
+
               {/* Portfolio Building */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div className="flex items-start gap-4">
@@ -2021,14 +2052,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Palette className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Portfolio Building</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Build Your Profile</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Demonstrate your commitment to your craft
+                      Show you are a serious artist
                     </p>
                   </div>
                 </div>
               </div>
-              
+
               {/* Social Media Sharing */}
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div className="flex items-start gap-4">
@@ -2036,14 +2067,14 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Social Media Sharing</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Share with Friends</h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Share your achievement with friends and followers
+                      Show off your achievement
                     </p>
                   </div>
                 </div>
               </div>
-              
+
             </div>
 
             {/* Certificate Preview */}
@@ -2071,15 +2102,15 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <p className="text-sm text-gray-500 mt-4">Professional design • High resolution • Instantly downloadable</p>
               </div>
             </div>
-            
+
           </div>
         </div>
       </section>
-      
+
       {/* Our Supporters Section */}
       <section className="py-12 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 overflow-hidden">
         <div className="container mx-auto max-w-6xl px-4">
-          
+
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -2087,86 +2118,86 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </h2>
             <p className="text-lg text-gray-600">Our Partners & Sponsors</p>
           </div>
-      </div>
-      
+        </div>
+
         {/* Full Width Sliding Partners */}
         <div className="mb-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
             {/* Funky Monkey */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <span className="text-white font-bold text-sm">FM</span>
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Funky Monkey</h3>
-                      <p className="text-xs text-gray-600">Sponsor</p>
-                    </div>
-                  </div>
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <span className="text-white font-bold text-sm">FM</span>
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Funky Monkey</h3>
+                <p className="text-xs text-gray-600">Sponsor</p>
+              </div>
+            </div>
 
             {/* Daami Event */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <span className="text-white font-bold text-sm">DE</span>
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Daami Event</h3>
-                      <p className="text-xs text-gray-600">Event Management</p>
-                    </div>
-                  </div>
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <span className="text-white font-bold text-sm">DE</span>
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Daami Event</h3>
+                <p className="text-xs text-gray-600">Event Management</p>
+              </div>
+            </div>
 
             {/* Tenverse Media */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <span className="text-white font-bold text-sm">TM</span>
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Tenverse Media</h3>
-                      <p className="text-xs text-gray-600">Sponsor</p>
-                    </div>
-                  </div>
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <span className="text-white font-bold text-sm">TM</span>
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Tenverse Media</h3>
+                <p className="text-xs text-gray-600">Sponsor</p>
+              </div>
+            </div>
 
             {/* Sikkim Daily News */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <span className="text-white font-bold text-sm">SDN</span>
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Sikkim Daily News</h3>
-                      <p className="text-xs text-gray-600">Media Partner</p>
-                    </div>
-                  </div>
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <span className="text-white font-bold text-sm">SDN</span>
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Sikkim Daily News</h3>
+                <p className="text-xs text-gray-600">Media Partner</p>
+              </div>
+            </div>
 
             {/* Cultural Department */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <Award className="h-6 w-6 text-white" />
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Cultural Dept. Sikkim</h3>
-                      <p className="text-xs text-gray-600">Government Partner</p>
-                    </div>
-                  </div>
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <Award className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Cultural Dept. Sikkim</h3>
+                <p className="text-xs text-gray-600">Government Partner</p>
+              </div>
+            </div>
 
             {/* Education Department */}
             <div>
-                    <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                        <BookOpen className="h-6 w-6 text-white" />
-                      </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">Education Dept. Sikkim</h3>
-                      <p className="text-xs text-gray-600">Educational Partner</p>
-                    </div>
-                  </div>
-
+              <div className="bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30 text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Education Dept. Sikkim</h3>
+                <p className="text-xs text-gray-600">Educational Partner</p>
+              </div>
             </div>
+
           </div>
+        </div>
 
         {/* Campus Network Section - Compact */}
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center">
             <h3 className="text-xl font-bold text-gray-900 mb-2">Campus Network</h3>
             <p className="text-sm text-gray-600 mb-4">Our Campus Ambassadors - Student representatives from top institutions across Sikkim helping us discover emerging artistic talent</p>
-            
+
             {/* Ambassador Card - Inline */}
             <div className="inline-flex items-center gap-3 bg-white/60 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/30">
               <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
@@ -2179,61 +2210,61 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
             </div>
           </div>
         </div>
-        
+
 
       </section>
-      
+
       {/* FAQ Section */}
       <div id="faq">
         <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse"></div>}>
           <FAQSectionV2 />
         </React.Suspense>
       </div>
-      
+
       {/* Performance Optimization Styles */}
       <style>{`
         /* Smooth scrolling optimization */
         html {
-          scroll-behavior: smooth;
-        }
-        
+  scroll - behavior: smooth;
+}
+
         /* GPU acceleration for transforms */
-        .hover\:scale-105:hover,
-        .hover\:scale-110:hover {
-          transform: scale(1.05) translateZ(0);
-          will-change: transform;
-        }
-        
+        .hover\: scale - 105: hover,
+        .hover\: scale - 110:hover {
+  transform: scale(1.05) translateZ(0);
+  will - change: transform;
+}
+
         /* Optimize images */
         img {
-          content-visibility: auto;
-          contain-intrinsic-size: 300px 200px;
-        }
-        
-        /* Reduce motion for better performance */
-        @media (prefers-reduced-motion: reduce) {
+  content - visibility: auto;
+  contain - intrinsic - size: 300px 200px;
+}
+
+/* Reduce motion for better performance */
+@media(prefers - reduced - motion: reduce) {
           * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
+    animation- duration: 0.01ms!important;
+  animation - iteration - count: 1!important;
+  transition - duration: 0.01ms!important;
+}
         }
-        
+
         /* Optimize scrolling */
         * {
-          -webkit-overflow-scrolling: touch;
+          - webkit - overflow - scrolling: touch;
         }
-        
+
         /* Prevent layout shifts */
         .container {
-          contain: layout style;
-        }
-      `}</style>
-      
+  contain: layout style;
+}
+`}</style>
+
       {/* Beautiful Registration Modal */}
       {!onRegistrationClick && (
-        <RegistrationFlowModal 
-          isOpen={showRegistrationModal} 
+        <RegistrationFlowModal
+          isOpen={showRegistrationModal}
           onClose={handleCloseModal}
           contestType="art"
           onPaymentInitiated={handlePaymentInitiated}
@@ -2246,7 +2277,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
         onClose={() => setShowRegistrationDrawer(false)}
         contestType="art"
       />
-      
+
       {/* Payment Verification Overlay */}
       {isVerifyingPayment && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md">
@@ -2270,11 +2301,11 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <span>Checking payment status...</span>
               </div>
               <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
                 <span>Confirming with bank...</span>
               </div>
               <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                 <span>Finalizing registration...</span>
               </div>
             </div>
@@ -2282,16 +2313,16 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
           </div>
         </div>
       )}
-      
+
       {/* Thank You overlay removed: now navigates to /thank-you */}
-      
+
       <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 text-white py-8 sm:py-12 pb-20 sm:pb-12 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full blur-3xl"></div>
         </div>
-        
+
         <div className="container mx-auto max-w-6xl px-4 relative z-10">
           <div className="text-center">
             {/* Logo and Brand */}
@@ -2310,7 +2341,7 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 <p className="text-purple-300 text-xs sm:text-sm font-medium">Event Management Company</p>
               </div>
             </div>
-            
+
             {/* Tagline */}
             <div className="mb-4 sm:mb-6">
               <p className="text-sm sm:text-lg text-white/90 font-medium mb-2">
@@ -2320,10 +2351,10 @@ const IndexV2 = ({ onRegistrationClick }: IndexV2Props) => {
                 Through creative competitions, recognition, and building a community of talented artists across India.
               </p>
             </div>
-            
+
             {/* Divider */}
             <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-4 sm:mb-6"></div>
-            
+
             {/* Copyright */}
             <div className="space-y-1 sm:space-y-2">
               <p className="text-white/80 font-medium text-sm sm:text-base">

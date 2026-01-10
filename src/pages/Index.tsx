@@ -1,287 +1,400 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, Users, Trophy, Star, Crown, Sparkles, Award, Clock } from "lucide-react";
+import { ArrowRight, Star, Quote, ChevronRight, Play, Award, Menu, Users, Gavel, CheckCircle, Snowflake } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import TrustSection from "@/components/home/TrustSection";
+import AboutSection from "@/components/home/AboutSection";
+import FeaturedOn from "@/components/home/FeaturedOn";
+import EventsPortfolio from "@/components/home/EventsPortfolio";
+import ContactSection from "@/components/home/ContactSection";
+import KitSection from "@/components/home/KitSection";
+import HomeTestimonials from "@/components/home/HomeTestimonials";
+import { useRef } from "react";
+
+
+
+
 
 const Index = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const targetRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ["start start", "end start"]
+    });
 
-  const handleJoinCompetition = () => {
-    navigate("/indiancreativestar/v2");
-  };
+    const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.9], [1, 0.8]);
 
-  return (
-    <div className="min-h-screen overflow-hidden relative font-inter">
-      {/* Premium Background with Continuous Animations */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-slate-900 to-black"></div>
-      </div>
+    return (
+        <div className="min-h-screen bg-[#0F0F0F] text-[#F5F5DC] font-lato selection:bg-[#D4AF37] selection:text-black overflow-x-hidden">
 
-      {/* Continuous Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Large floating orbs with continuous animation */}
-        <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-pink-500/8 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500/6 to-cyan-500/6 rounded-full blur-3xl animate-float-slow"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-orange-500/4 to-red-500/4 rounded-full blur-3xl animate-spin-very-slow"></div>
-        
-        {/* Moving gradient waves */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-purple-500/3 to-transparent animate-wave-horizontal"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-blue-500/2 to-transparent animate-wave-vertical"></div>
-        
-        {/* Floating particles */}
-        <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-white/20 rounded-full animate-float-particle delay-0"></div>
-        <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-purple-400/30 rounded-full animate-float-particle delay-1000"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-4 h-4 bg-blue-400/20 rounded-full animate-float-particle delay-2000"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-pink-400/30 rounded-full animate-float-particle delay-3000"></div>
-        <div className="absolute top-2/3 left-2/3 w-3 h-3 bg-orange-400/25 rounded-full animate-float-particle delay-4000"></div>
-      </div>
+            {/* Texture Overlay */}
+            <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/paper.png")' }}></div>
 
-      {/* Header */}
-      <header className="relative z-10 bg-black/10 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden ring-1 ring-white/10">
-              <img
-                src="/company-logo.webp"
-                alt="Daami Event"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-semibold text-white tracking-tight">Daami Event</h1>
-              <p className="text-xs text-white/50">Event Management</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={() => navigate("/marketplace")}
-              variant="outline"
-              className="hidden md:flex items-center gap-2 border-white/20 text-white hover:bg-white/10"
-            >
-              <Sparkles className="w-4 h-4" />
-              Art Shop
-            </Button>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-green-300 font-medium text-sm tracking-wide">LIVE EVENT</span>
-            </div>
-          </div>
-        </div>
-      </header>
+            {/* Navigation */}
+            <nav className="relative z-50 px-4 md:px-6 py-4 md:py-6 border-b border-[#D4AF37]/20 backdrop-blur-sm sticky top-0 bg-[#0F0F0F]/80">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+                        <div className="relative">
+                            <img src="/company-logo.webp" alt="Daami Event" className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border border-[#D4AF37]/50" />
+                            <Snowflake className="absolute -top-1 -right-1 w-4 h-4 text-blue-400 animate-spin-slow bg-black/50 rounded-full p-0.5" />
+                        </div>
+                        <div>
+                            <h1 className="font-playfair text-lg md:text-xl tracking-wider text-[#D4AF37] flex items-center gap-2">
+                                DAAMI EVENT
+                            </h1>
+                            <p className="text-[8px] md:text-[10px] tracking-[0.2em] uppercase text-white/40 flex items-center gap-1">
+                                Event Management <span className="text-blue-400">• Winter Edition</span>
+                            </p>
+                        </div>
+                    </div>
 
-      {/* Main Content */}
-      <main className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 py-12">
-        <div className="max-w-6xl mx-auto text-center space-y-8 sm:space-y-12">
-          
-          {/* YouTube-style Banner */}
-          <div className="relative group max-w-2xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-3xl blur-xl"></div>
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-              <img
-                src="/Daami Presents (1920 x 1080 px).webp"
-                alt="Daami Presents Banner"
-                className="w-full h-48 sm:h-56 lg:h-80 xl:h-96 object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10"></div>
-            </div>
-          </div>
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-8 text-sm tracking-widest uppercase text-white/80 font-medium">
+                        <button onClick={() => document.getElementById('about-daami')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">About Us</button>
+                        <button onClick={() => document.getElementById('events-portfolio')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Events</button>
+                        <button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Art Shop</button>
+                        <button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Contact</button>
+                    </div>
 
-          {/* Premium Badge */}
-          <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-2xl rounded-full px-6 py-3 border border-white/10 shadow-2xl animate-glow">
-            <Crown className="w-5 h-5 text-orange-300" />
-            <span className="text-white font-medium text-sm sm:text-base tracking-wide">ONGOING PREMIUM EVENT</span>
-            <Sparkles className="w-5 h-5 text-pink-300" />
-          </div>
+                    <div className="flex items-center gap-4">
+                        <Button
+                            onClick={() => navigate('/indiancreativestar/v2')}
+                            className="hidden sm:flex bg-[#D4AF37] text-black hover:bg-[#B59530] font-playfair rounded-none px-4 md:px-6 tracking-wide text-xs md:text-sm"
+                        >
+                            LATEST EVENT
+                        </Button>
 
-          {/* CTA Button - PROMINENT PLACEMENT */}
-          <div className="space-y-4">
-            <Button
-              onClick={handleJoinCompetition}
-              className="group bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 hover:from-orange-600 hover:via-red-600 hover:to-pink-600 text-white font-bold py-4 px-8 sm:py-6 sm:px-12 rounded-2xl text-base sm:text-lg lg:text-xl transition-all duration-500 hover:scale-105 shadow-2xl hover:shadow-orange-500/30 border border-white/10"
-            >
-              <span className="flex items-center gap-3">
-                <Crown className="h-5 w-5 sm:h-6 sm:w-6" />
-                JOIN COMPETITION NOW
-                <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </Button>
-          </div>
+                        {/* Mobile Menu Trigger */}
+                        <div className="md:hidden text-white hover:text-[#D4AF37]">
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="hover:bg-white/10">
+                                        <Menu className="w-6 h-6" />
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="right" className="bg-[#0F0F0F] border-l border-white/10 text-white w-[300px]">
+                                    <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
+                                    <div className="flex flex-col gap-8 mt-10">
+                                        <div className="space-y-6 text-lg tracking-wider font-playfair">
+                                            <button onClick={() => document.getElementById('about-daami')?.scrollIntoView({ behavior: 'smooth' })} className="block w-full text-left hover:text-[#D4AF37] transition-colors">About Us</button>
+                                            <button onClick={() => document.getElementById('events-portfolio')?.scrollIntoView({ behavior: 'smooth' })} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Events</button>
+                                            <button onClick={() => navigate('/marketplace')} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Art Shop</button>
+                                            <button onClick={() => navigate('/contact-us')} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Contact</button>
 
-          {/* Hero Title */}
-          <div className="space-y-4 sm:space-y-6">
-            <h3 className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-              <span className="block text-white/95 mb-1 sm:mb-2">Indian Creative Star</span>
-              <span className="block bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent font-black animate-gradient">
-                ART COMPETITION
-              </span>
-              <span className="block text-xl sm:text-3xl lg:text-5xl bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent font-semibold mt-2 sm:mt-4">
-                Season 2
-              </span>
-            </h3>
-            
-            <p className="text-base sm:text-xl lg:text-2xl text-white/80 font-light max-w-4xl mx-auto leading-relaxed">
-              India's Most Prestigious Art Competition is <span className="text-yellow-300 font-semibold animate-pulse">Live!</span>
-            </p>
-            
-            <p className="text-sm sm:text-lg text-white/60 max-w-3xl mx-auto leading-relaxed">
-              Join thousands of artists nationwide in this groundbreaking art movement.
-            </p>
-          </div>
-
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4 max-w-6xl mx-auto">
-            {[
-              { icon: Trophy, value: "₹50,000", label: "PRIZE POOL", gradient: "from-orange-500 to-red-500" },
-              { icon: Users, value: "1000+", label: "ARTISTS", gradient: "from-blue-500 to-purple-500" },
-              { icon: Calendar, value: "LIVE", label: "REGISTRATION", gradient: "from-green-500 to-emerald-500" },
-              { icon: Award, value: "GOVT", label: "CERTIFICATE", gradient: "from-yellow-500 to-orange-500" },
-              { icon: Clock, value: "500", label: "SLOTS LEFT", gradient: "from-red-500 to-pink-500" },
-              { icon: Star, value: "NATIONAL", label: "RECOGNITION", gradient: "from-purple-500 to-indigo-500" }
-            ].map((stat, index) => (
-              <div key={index} className="group relative animate-float-up" style={{animationDelay: `${index * 200}ms`}}>
-                <div className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`}></div>
-                <div className="relative bg-white/5 backdrop-blur-2xl rounded-2xl p-3 sm:p-6 border border-white/10 hover:border-white/20 transition-all duration-500 hover:scale-105">
-                  <div className={`w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-r ${stat.gradient} rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 shadow-xl`}>
-                    <stat.icon className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <div className="text-sm sm:text-xl lg:text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-white/60 text-xs font-medium tracking-wider">{stat.label}</div>
+                                            {/* Winter Art Royale Special Button */}
+                                            <div className="pt-4 border-t border-white/10">
+                                                <button
+                                                    onClick={() => navigate('/winter-art-royale')}
+                                                    className="w-full text-left group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-900/50 to-blue-800/50 border border-blue-500/30 p-4 transition-all hover:bg-blue-900"
+                                                >
+                                                    <div className="relative z-10 flex items-center justify-between">
+                                                        <div>
+                                                            <span className="block text-[10px] uppercase tracking-widest text-blue-300 font-bold mb-1">Live Now</span>
+                                                            <span className="block text-xl font-bold text-white">Winter Art Royale</span>
+                                                        </div>
+                                                        <Snowflake className="w-5 h-5 text-blue-400 animate-spin-slow" />
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
+            </nav>
 
+            {/* 1. HERO SECTION: Grand Welcome */}
+            <header ref={targetRef} className="relative z-10 min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-12 md:pt-0">
+                <motion.div style={{ opacity, scale }} className="text-center space-y-8 max-w-5xl mx-auto relative z-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="inline-flex items-center gap-2 border border-blue-500/30 px-6 py-2 bg-blue-900/10 backdrop-blur-md rounded-full mt-4 md:mt-0"
+                    >
+                        <span className="relative flex h-2 w-2 mr-1">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        <span className="text-blue-300 text-xs md:text-sm tracking-[0.2em] font-bold uppercase">Current Event: Winter Art Royale - W.A.R</span>
+                    </motion.div>
 
-      {/* Features Strip */}
-      <div className="relative z-10 py-8 px-4 sm:px-6 bg-black/30 backdrop-blur-sm border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-white/60">
-            {["Open Theme", "All Age Groups", "Digital Certificates", "Expert Jury"].map((feature, index) => (
-              <div key={index} className="flex items-center gap-2 text-sm font-medium">
-                <div className="w-1.5 h-1.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse" style={{animationDelay: `${index * 500}ms`}}></div>
-                <span>{feature}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="font-playfair text-5xl sm:text-7xl lg:text-9xl leading-[1.1] text-white"
+                    >
+                        Where Passion Meets <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F2D06B] to-[#D4AF37] italic">
+                            Prestige.
+                        </span>
+                    </motion.h1>
 
-      {/* Footer */}
-      <footer className="relative z-10 py-6 px-4 sm:px-6 bg-black/40 backdrop-blur-sm border-t border-white/5">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <div className="w-6 h-6 rounded-lg overflow-hidden">
-              <img
-                src="/company-logo.webp"
-                alt="Daami Event"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-white font-medium text-sm">Daami Event</span>
-          </div>
-          <p className="text-white/40 text-xs">© 2025 Daami Event. Empowering Artists Nationwide.</p>
-        </div>
-      </footer>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed"
+                    >
+                        Daami Event is the bridge between raw talent and national recognition. We curate premium artistic experiences that honor the creator in you.
+                    </motion.p>
 
-      {/* Advanced CSS Animations */}
-      <style>{`
-        @keyframes float-slow {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(180deg); }
-        }
-        
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.6; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.1); }
-        }
-        
-        @keyframes spin-very-slow {
-          0% { transform: translate(-50%, -50%) rotate(0deg); }
-          100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        @keyframes wave-horizontal {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        
-        @keyframes wave-vertical {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
-        }
-        
-        @keyframes float-particle {
-          0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
-          25% { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
-          50% { transform: translateY(-40px) translateX(-5px); opacity: 1; }
-          75% { transform: translateY(-20px) translateX(-10px); opacity: 0.7; }
-        }
-        
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
-        }
-        
-        @keyframes pulse-button {
-          0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(249, 115, 22, 0.4); }
-          50% { transform: scale(1.02); box-shadow: 0 0 50px rgba(249, 115, 22, 0.6); }
-        }
-        
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes float-up {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 1; transform: translateY(0px); }
-        }
-        
-        .animate-float-slow {
-          animation: float-slow 8s ease-in-out infinite;
-        }
-        
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
-        }
-        
-        .animate-spin-very-slow {
-          animation: spin-very-slow 20s linear infinite;
-        }
-        
-        .animate-wave-horizontal {
-          animation: wave-horizontal 15s linear infinite;
-        }
-        
-        .animate-wave-vertical {
-          animation: wave-vertical 18s linear infinite;
-        }
-        
-        .animate-float-particle {
-          animation: float-particle 6s ease-in-out infinite;
-        }
-        
-        .animate-glow {
-          animation: glow 3s ease-in-out infinite;
-        }
-        
-        .animate-pulse-button {
-          animation: pulse-button 2s ease-in-out infinite;
-        }
-        
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 3s ease infinite;
-        }
-        
-        .animate-float-up {
-          animation: float-up 0.8s ease-out forwards;
-        }
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        className="flex flex-col sm:flex-row justify-center items-center gap-6 pt-6"
+                    >
+                        {/* W.A.R Button */}
+                        <Button
+                            onClick={() => navigate('/winter-art-royale')}
+                            className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white hover:text-blue-200 border border-blue-500/50 rounded-xl px-4 py-3 h-auto min-w-[320px] transition-all duration-300 relative overflow-visible group shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:bg-blue-950 mt-4 md:mt-0"
+                        >
+                            {/* Live Badge - Top Left Border */}
+                            <div className="absolute -top-2 left-3 bg-red-600 text-white text-[8px] font-bold px-3 py-[2px] rounded-sm flex items-center gap-1 animate-pulse border border-red-400/50 shadow-sm z-30 tracking-widest uppercase transform -skew-x-12">
+                                <div className="w-1 h-1 bg-white rounded-full"></div> LIVE
+                            </div>
+
+                            <div className="relative z-10 flex items-center gap-4 text-left">
+                                <img src="https://i.ibb.co/Ldq3TDDB/Winter-Art-Royale-W-A-R-Logo.jpg" className="w-16 h-16 rounded-full border-2 border-blue-400/50 shadow-lg group-hover:scale-110 transition-transform duration-300 object-cover" alt="W.A.R Logo" />
+                                <div className="flex flex-col">
+                                    <span className="text-blue-200 text-[10px] font-bold tracking-widest uppercase mb-0.5">Join Current Live Event</span>
+                                    <span className="font-playfair font-bold text-2xl tracking-tight leading-none text-white">Winter Art Royale</span>
+                                </div>
+                            </div>
+
+                            {/* Shiny Effect Overlay - Wrapped to prevent overflow ghosting */}
+                            <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:animate-shimmer"></div>
+                            </div>
+                        </Button>
+
+                        {/* Standard Go To Event Button */}
+                        <Button
+                            onClick={() => document.getElementById('events-portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black rounded-xl px-10 py-6 h-auto text-sm font-bold tracking-[0.2em] transition-all duration-300 uppercase relative group overflow-hidden"
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                Go To Event <ChevronRight className="w-4 h-4" />
+                            </span>
+                        </Button>
+                    </motion.div>
+
+                    {/* Trust Badges */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1 }}
+                        className="flex flex-wrap justify-center gap-4 pt-10"
+                    >
+                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md">
+                            <Star className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
+                            <span className="text-sm font-medium">4.8/5 Reviews</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md">
+                            <Users className="w-4 h-4 text-[#D4AF37]" />
+                            <span className="text-sm font-medium">1550+ Artists</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md">
+                            <CheckCircle className="w-4 h-4 text-[#D4AF37]" />
+                            <span className="text-sm font-medium">65k+ Votes</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md">
+                            <Gavel className="w-4 h-4 text-[#D4AF37]" />
+                            <span className="text-sm font-medium">15+ Judges</span>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* Background Elements */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0F0F0F] via-transparent to-[#0F0F0F] z-10"></div>
+                    <img
+                        src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=2070&auto=format&fit=crop"
+                        alt="Background"
+                        className="w-full h-full object-cover opacity-20"
+                    />
+                </div>
+            </header>
+
+            {/* 2. IDENTITY SECTION: Who We Are */}
+            <section id="about-section" className="py-24 px-6 relative">
+                <div className="max-w-4xl mx-auto text-center space-y-12">
+                    <div className="space-y-4">
+                        <h2 className="font-playfair text-3xl md:text-4xl text-white">The Daami Event Philosophy</h2>
+                        <div className="w-24 h-1 bg-[#D4AF37] mx-auto"></div>
+                    </div>
+
+                    <div className="relative">
+                        <Quote className="absolute -top-8 -left-8 w-16 h-16 text-[#D4AF37]/10" />
+                        <p className="text-2xl md:text-4xl font-playfair italic leading-relaxed text-white/90">
+                            "They told your dreams don't pay, but your brush had more to say. India has millions of stories. <span className="text-[#D4AF37]">Let yours rise today.</span>"
+                        </p>
+                        <Quote className="absolute -bottom-8 -right-8 w-16 h-16 text-[#D4AF37]/10 rotate-180" />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-12 pt-12 text-left">
+                        <div className="space-y-4">
+                            <h3 className="font-playfair text-2xl text-[#D4AF37]">Our Mission</h3>
+                            <p className="text-white/60 leading-relaxed">
+                                To democratize artistic recognition in India. We believe every artist, regardless of their location or background, deserves a platform that treats their work with professional reverence and respect.
+                            </p>
+                        </div>
+                        <div className="space-y-4">
+                            <h3 className="font-playfair text-2xl text-[#D4AF37]">Our Promise</h3>
+                            <p className="text-white/60 leading-relaxed">
+                                Transparency, Fairness, and Opportunity. From our expert jury panels to our government-verified certificates, every building block of Daami Event is designed to build your trust and your career.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 2.5 TRUST SIGNALS */}
+            <TrustSection />
+
+            {/* 3. ABOUT & LEGACY */}
+            <AboutSection />
+
+            {/* 3.5 FEATURED ON */}
+            <FeaturedOn />
+
+            {/* 4. EVENTS PORTFOLIO (Upcoming & Ongoing) */}
+            <EventsPortfolio />
+
+            {/* 5. CURRENT EVENT SPOTLIGHT: Conversion */}
+            <section id="events-section" className="py-32 px-6 relative overflow-hidden">
+                {/* Background Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <div className="space-y-10 order-2 lg:order-1">
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span className="text-green-500 text-sm font-bold tracking-widest uppercase">Live Now</span>
+                                </div>
+                                <h2 className="font-playfair text-5xl md:text-6xl text-white leading-tight">
+                                    Indian Creative Star <br />
+                                    <span className="text-[#D4AF37]">Season 2</span>
+                                </h2>
+                                <p className="text-xl text-white/60 leading-relaxed max-w-lg">
+                                    The stage is bigger, the stakes are higher. Submit your artwork today and compete for India's most prestigious title.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-4 text-white/80">
+                                    <Star className="w-6 h-6 text-[#D4AF37]" />
+                                    <span className="text-lg">₹50,000 Prize Pool</span>
+                                </div>
+                                <div className="flex items-center gap-4 text-white/80">
+                                    <Award className="w-6 h-6 text-[#D4AF37]" />
+                                    <span className="text-lg">National Certificate for All Participants</span>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 pt-4">
+                                <Button
+                                    onClick={() => navigate('/indiancreativestar/v2')}
+                                    className="bg-white text-black hover:bg-[#D4AF37] hover:text-white rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
+                                >
+                                    I am an Artist
+                                </Button>
+                                <Button
+                                    onClick={() => navigate('/indiancreativestar/v2')}
+                                    className="bg-transparent border border-white/20 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
+                                >
+                                    I am a Parent
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="order-1 lg:order-2 relative group cursor-pointer" onClick={() => navigate('/indiancreativestar/v2')}>
+                            <div className="absolute inset-0 bg-[#D4AF37] transform rotate-6 rounded-2xl opacity-20 group-hover:rotate-12 transition-transform duration-500"></div>
+                            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 shadow-2xl">
+                                <img
+                                    src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop"
+                                    alt="Season 2 Poster"
+                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 flex flex-col justify-end p-8">
+                                    <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-[#D4AF37]/30">
+                                        <Play className="w-6 h-6 text-black fill-current ml-1" />
+                                    </div>
+                                    <p className="font-playfair text-2xl text-white">Watch Trailer</p>
+                                    <p className="text-white/60 text-sm mt-2">Discover what awaits you in Season 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 6. CREATIVE SHOWCASE & TESTIMONIALS */}
+            {/* 5.5 CREATIVE STAR KIT */}
+            <KitSection />
+
+            {/* 6. AUTHENTIC FEEDBACK & TESTIMONIALS */}
+            <HomeTestimonials />
+
+            {/* 7. CONTACT SECTION */}
+            <ContactSection />
+
+            {/* 8. FOOTER */}
+            <footer className="bg-[#050505] text-white/40 py-16 px-6 border-t border-white/5 font-lato">
+                <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 text-center md:text-left">
+                    <div className="space-y-6">
+                        <h5 className="font-playfair text-2xl text-[#D4AF37]">Daami Event</h5>
+                        <p className="text-sm leading-relaxed">
+                            Redefining artistic excellence through curated competition and events. Empowering the next generation of creators.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h6 className="text-white font-medium mb-6 tracking-widest uppercase text-xs">Navigation</h6>
+                        <ul className="space-y-4 text-sm">
+                            <li><button onClick={() => navigate('/')} className="hover:text-[#D4AF37]">Home</button></li>
+                            <li><button onClick={() => navigate('/indiancreativestar/v2')} className="hover:text-[#D4AF37]">Competitions</button></li>
+                            <li><button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37]">Art Shop</button></li>
+                            <li><button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37]">Contact</button></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h6 className="text-white font-medium mb-6 tracking-widest uppercase text-xs">Legal</h6>
+                        <ul className="space-y-4 text-sm">
+                            <li><button onClick={() => navigate('/privacy-policy')} className="hover:text-[#D4AF37]">Privacy Policy</button></li>
+                            <li><button onClick={() => navigate('/terms-and-conditions')} className="hover:text-[#D4AF37]">Terms & Conditions</button></li>
+                            <li><button onClick={() => navigate('/refund-and-cancellation')} className="hover:text-[#D4AF37]">Refund Policy</button></li>
+                        </ul>
+                    </div>
+
+                    <div className="flex flex-col items-center md:items-start">
+                        <h6 className="text-white font-medium mb-6 tracking-widest uppercase text-xs">Connect</h6>
+                        <Button onClick={() => navigate('/contact-us')} variant="outline" className="border-white/10 text-white hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37]">
+                            Contact Support
+                        </Button>
+                    </div>
+                </div>
+                <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 text-center text-[10px] tracking-[0.2em] uppercase">
+                    © 2025 Daami Event. All Rights Reserved.
+                </div>
+            </footer>
+
+            <style>{`
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-lato { font-family: 'Lato', sans-serif; }
       `}</style>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Index;

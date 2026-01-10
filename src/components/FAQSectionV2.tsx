@@ -11,37 +11,37 @@ import { useRef } from "react";
 
 const faqs = [
   {
-    question: "What format do I submit in?",
-    answer: "For artwork, you can submit a high-quality photo or scan of your work in JPG, PNG, or PDF format. Make sure the image clearly shows all details of your artwork."
+    question: "How do I send my art?",
+    answer: "Just upload a photo of your art. It's easy!"
   },
   {
     question: "Can kids join?",
-    answer: "Yes! Children aged 5 and above can participate. For participants under 18, we require parental consent during registration."
+    answer: "Yes! Kids 5+ can join. Parents just need to help sign up."
   },
   {
     question: "What if I don't win?",
-    answer: "Every participant receives a beautiful digital certificate of participation. Additionally, there's still a chance for your work to be featured in our online gallery or social media channels."
+    answer: "You still get a certificate and might be featured on our page!"
   },
   {
     question: "Can I submit multiple artworks?",
     answer: "You can submit up to 3 artworks in a single registration. Additional artworks can also be submitted."
   },
   {
-    question: "How are the winners selected?",
-    answer: "Entries are judged by a panel of professional artists and educators based on creativity, originality, technique, and interpretation of the theme."
+    question: "How do you pick winners?",
+    answer: "Expert artists judge based on creativity and skill."
   },
   {
     question: "When will the results be announced?",
     answer: "Results will be announced within 4 weeks after the submission deadline. All participants will be notified via email and WhatsApp."
   },
   {
-    question: "Is there an entry fee?",
-    answer: "No! The competition is completely free to enter. We believe in making art accessible to everyone."
+    question: "Is there a fee?",
+    answer: "Yes, a small fee of ₹249 to support the platform and prizes."
   },
   {
-    question: "What art mediums are accepted?",
-    answer: "We accept all art mediums including painting, drawing, digital art, photography, sculpture, mixed media, and more. Be creative!"
-  }
+    question: "What art is allowed?",
+    answer: "Paintings, sketches, digital art, photos... anything creative!"
+  },
 ];
 
 export function FAQSectionV2() {
@@ -75,13 +75,13 @@ export function FAQSectionV2() {
             ❓ FAQ
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Frequently Asked <span className="text-gradient">Questions</span>
+            Common <span className="text-gradient">Questions</span>
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            Get answers to common questions about the Sikkim Creative Star art challenge.
+            Everything you need to know.
           </p>
         </div>
-        
+
         <motion.div
           className="glassmorphism-card p-8"
           variants={{
@@ -106,7 +106,7 @@ export function FAQSectionV2() {
             ))}
           </Accordion>
         </motion.div>
-        
+
         {/* Additional Help Section */}
         <div className="text-center mt-12">
           <div className="glassmorphism-card p-8 max-w-2xl mx-auto">

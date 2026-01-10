@@ -16,14 +16,14 @@ const ArtworkSubmission = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isGoogleSigningIn, setIsGoogleSigningIn] = useState(false);
-  
+
   // Form states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+
   // Payment states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
@@ -35,12 +35,12 @@ const ArtworkSubmission = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       setIsLoading(false);
-      
+
       if (user) {
         // Auto-fill form with user data
         setName(user.displayName || '');
         setEmail(user.email || '');
-        
+
         // Check if user has phone number in database
         try {
           const userDoc = await getDoc(doc(db, 'indiancreativestar_accounts', user.uid));
@@ -69,11 +69,11 @@ const ArtworkSubmission = () => {
   // Handle Google Sign-In
   const handleGoogleSignIn = async () => {
     setIsGoogleSigningIn(true);
-    
+
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      
+
       // Save user to indiancreativestar_accounts collection
       await setDoc(doc(db, 'indiancreativestar_accounts', user.uid), {
         name: user.displayName || '',
@@ -83,7 +83,7 @@ const ArtworkSubmission = () => {
         createdAt: new Date(),
         lastLogin: new Date()
       }, { merge: true });
-      
+
     } catch (error: any) {
       console.error('Google sign-in error:', error);
       alert('Google sign-in failed. Please try again.');
@@ -132,7 +132,7 @@ const ArtworkSubmission = () => {
     setIsAuthenticating(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
+
       // Save user to indiancreativestar_accounts collection
       await setDoc(doc(db, 'indiancreativestar_accounts', userCredential.user.uid), {
         name: name,
@@ -142,7 +142,7 @@ const ArtworkSubmission = () => {
         createdAt: new Date(),
         lastLogin: new Date()
       });
-      
+
     } catch (error: any) {
       console.error('Registration error:', error);
       let errorMessage = 'Registration failed. Please try again.';
@@ -179,15 +179,18 @@ const ArtworkSubmission = () => {
     setIsProcessingPayment(true);
 
     try {
-      const response = await fetch('https://backendcashfree.vercel.app/create-payment', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name: name,
-          mobileNumber: whatsapp,
-          email: email
+          phone: whatsapp,
+          email: email,
+          amount: 1,
+          orderNote: 'Artwork Submission Fee'
         })
       });
 
@@ -209,7 +212,7 @@ const ArtworkSubmission = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (paymentStatus !== 'success') {
       setShowPayment(true);
       return;
@@ -220,13 +223,13 @@ const ArtworkSubmission = () => {
     try {
       // Simulate submission process
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       alert('Artwork submitted successfully! Thank you for participating in Indian Creative Star.');
-      
+
       // Reset payment status only
       setPaymentStatus(null);
       setShowPayment(false);
-      
+
     } catch (error) {
       console.error('Submission error:', error);
       alert('Failed to submit artwork. Please try again.');
@@ -256,7 +259,7 @@ const ArtworkSubmission = () => {
           {!currentUser ? (
             <>
               <h3 className="text-xl font-semibold mb-6 text-center text-creative-yellow">Login to Submit Artwork</h3>
-              
+
               {/* Google Sign-In */}
               <div className="mb-6">
                 <Button
@@ -270,7 +273,7 @@ const ArtworkSubmission = () => {
                     <>🔍 Continue with Google</>
                   )}
                 </Button>
-                
+
                 <div className="text-center text-gray-400 mb-4">or</div>
               </div>
 
@@ -278,17 +281,15 @@ const ArtworkSubmission = () => {
               <div className="flex mb-6 bg-gray-700 rounded-lg p-1">
                 <button
                   onClick={() => setIsLoginMode(true)}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-                    isLoginMode ? 'bg-creative-yellow text-gray-900' : 'text-gray-300'
-                  }`}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${isLoginMode ? 'bg-creative-yellow text-gray-900' : 'text-gray-300'
+                    }`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => setIsLoginMode(false)}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-                    !isLoginMode ? 'bg-creative-yellow text-gray-900' : 'text-gray-300'
-                  }`}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${!isLoginMode ? 'bg-creative-yellow text-gray-900' : 'text-gray-300'
+                    }`}
                 >
                   Register
                 </button>
@@ -309,7 +310,7 @@ const ArtworkSubmission = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="mb-6">
                     <Label htmlFor="password" className="block text-sm font-medium mb-2">Password</Label>
                     <div className="relative">
@@ -331,7 +332,7 @@ const ArtworkSubmission = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <Button
                     type="submit"
                     disabled={isAuthenticating}
@@ -355,7 +356,7 @@ const ArtworkSubmission = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="mb-4">
                     <Label htmlFor="email" className="block text-sm font-medium mb-2">Email</Label>
                     <Input
@@ -368,7 +369,7 @@ const ArtworkSubmission = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="mb-4">
                     <Label htmlFor="whatsapp" className="block text-sm font-medium mb-2">WhatsApp Number</Label>
                     <Input
@@ -381,7 +382,7 @@ const ArtworkSubmission = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="mb-4">
                     <Label htmlFor="password" className="block text-sm font-medium mb-2">Password</Label>
                     <div className="relative">
@@ -403,7 +404,7 @@ const ArtworkSubmission = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="mb-6">
                     <Label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">Confirm Password</Label>
                     <Input
@@ -416,7 +417,7 @@ const ArtworkSubmission = () => {
                       required
                     />
                   </div>
-                  
+
                   <Button
                     type="submit"
                     disabled={isAuthenticating}
@@ -430,7 +431,7 @@ const ArtworkSubmission = () => {
           ) : (
             <>
               <h3 className="text-xl font-semibold mb-6 text-center text-creative-yellow">Submit Your Artwork</h3>
-              
+
               {/* User Info Display */}
               <div className="mb-6 p-4 bg-gray-700 rounded-lg">
                 <div className="flex items-center gap-3 mb-3">
@@ -452,21 +453,21 @@ const ArtworkSubmission = () => {
                   <p className="text-green-100 text-sm">You can now submit your artwork.</p>
                 </div>
               )}
-              
+
               {paymentStatus === 'failed' && (
                 <div className="mb-6 p-4 bg-red-600 rounded-lg text-center">
                   <p className="text-white font-semibold">❌ Payment Failed!</p>
                   <p className="text-red-100 text-sm">Please try the payment again.</p>
                 </div>
               )}
-              
+
               {!paymentStatus && (
                 <div className="mb-6 p-4 bg-yellow-600 rounded-lg text-center">
                   <p className="text-white font-semibold">💰 Payment Required</p>
                   <p className="text-yellow-100 text-sm">Pay ₹1 to submit your artwork and participate in the competition.</p>
                 </div>
               )}
-              
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
@@ -480,7 +481,7 @@ const ArtworkSubmission = () => {
                     required
                   />
                 </div>
-                
+
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
                   <input
@@ -493,7 +494,7 @@ const ArtworkSubmission = () => {
                     required
                   />
                 </div>
-                
+
                 <div className="mb-4">
                   <label htmlFor="whatsapp" className="block text-sm font-medium mb-2">WhatsApp Number</label>
                   <input

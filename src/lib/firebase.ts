@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, Timestamp, doc, getDoc, setDoc, query, orderBy, getDocs } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,6 +28,7 @@ const googleProvider = new GoogleAuthProvider();
 // Collection names
 export const COLLECTIONS = {
   PARTICIPANTS: 'participants',
+  WINTER_ART_ROYALE: 'winterartroyaleregistrations',
   REVIEWS: 'reviews'
 };
 
@@ -39,7 +40,7 @@ export const checkLaunchScreenStatus = async (): Promise<boolean> => {
   try {
     const launchDoc = doc(db, 'settings', 'launchScreen');
     const docSnap = await getDoc(launchDoc);
-    
+
     if (docSnap.exists()) {
       const data = docSnap.data();
       return data.reveal === true;
@@ -72,7 +73,7 @@ const sendToWebhook = async (participantData: any, registrationId: string) => {
     const prizeMoney = {
       "Adult": "₹15,000 (1st Prize)",
       "Group A (5-8 years)": "₹5,000",
-      "Group B (9-12 years)": "₹5,000", 
+      "Group B (9-12 years)": "₹5,000",
       "Group C (13-17 years)": "₹10,000"
     };
 
@@ -124,19 +125,19 @@ const sendToWebhook = async (participantData: any, registrationId: string) => {
       },
       body: JSON.stringify(webhookPayload)
     });
-    
+
     // With no-cors mode, we can't read the response, so we assume success if no error
     console.log("✅ Webhook sent successfully to n8n automation");
-    return { 
-      success: true, 
+    return {
+      success: true,
       message: "Registration data sent to email automation",
       registration_id: registrationId
     };
 
   } catch (error) {
     console.error("❌ Webhook failed:", error);
-    return { 
-      success: false, 
+    return {
+      success: false,
       error: error,
       message: "Failed to trigger email automation"
     };
@@ -161,19 +162,19 @@ export const addParticipant = async (participantData: {
       status: 'registered',
       id: null // Will be updated with document ID
     });
-    
+
     console.log("Participant registered with ID: ", docRef.id);
-    
+
     // Then, send to webhook for email automation
     const webhookResult = await sendToWebhook(participantData, docRef.id);
-    
+
     if (webhookResult.success) {
       console.log("Email automation triggered successfully");
     } else {
       console.warn("Email automation failed, but registration saved:", webhookResult.error);
       // Note: We don't fail the registration if webhook fails
     }
-    
+
     return { success: true, id: docRef.id };
   } catch (error) {
     console.error("Error adding participant: ", error);
@@ -194,7 +195,7 @@ export const addReview = async (reviewData: {
       submissionDate: Timestamp.now(),
       approved: false // Reviews need approval before showing
     });
-    
+
     console.log("Review submitted with ID: ", docRef.id);
     return { success: true, id: docRef.id };
   } catch (error) {
@@ -203,5 +204,76 @@ export const addReview = async (reviewData: {
   }
 };
 
+// Function to register Winter Art Royale participant (Pending Payment)
+export const registerWinterArtUser = async (userData: any) => {
+  try {
+    const docData = {
+      ...userData,
+      registrationDate: Timestamp.now(),
+      paymentStatus: 'pending', // Starts as pending
+      amountPaid: 0,
+      orderId: null,
+      platform: 'website'
+    };
+
+    // Add to specific collection
+    const docRef = await addDoc(collection(db, COLLECTIONS.WINTER_ART_ROYALE), docData);
+    console.log("Winter Art Royale Registration initiated: ", docRef.id);
+
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error("Error registering Winter Art Royale user: ", error);
+    return { success: false, error };
+  }
+};
+
+// Function to fetch all Winter Art Royale registrations for Admin
+export const getWinterArtRegistrations = async () => {
+  try {
+    const q = query(collection(db, COLLECTIONS.WINTER_ART_ROYALE), orderBy("registrationDate", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    const registrations = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      // Convert Timestamp to Date for easier handling
+      registrationDate: doc.data().registrationDate?.toDate ? doc.data().registrationDate.toDate() : new Date(doc.data().registrationDate)
+    }));
+
+    console.log(`Fetched ${registrations.length} registrations`);
+    return { success: true, data: registrations };
+  } catch (error) {
+    console.error("Error fetching registrations: ", error);
+    return { success: false, error };
+  }
+};
+
+export const updateWinterArtPayment = async (docId: string, paymentDetails: {
+  paymentStatus: string;
+  amountPaid: number;
+  orderId: string;
+  paymentId?: string;
+}) => {
+  try {
+    if (!docId) throw new Error("Document ID is required");
+
+    const userDoc = doc(db, COLLECTIONS.WINTER_ART_ROYALE, docId);
+
+    await setDoc(userDoc, {
+      paymentStatus: paymentDetails.paymentStatus, // 'success' or 'failed'
+      amountPaid: paymentDetails.amountPaid,
+      orderId: paymentDetails.orderId,
+      paymentId: paymentDetails.paymentId || null,
+      lastUpdated: Timestamp.now()
+    }, { merge: true });
+
+    console.log(`Payment updated for ${docId}: ${paymentDetails.paymentStatus}`);
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating payment status: ", error);
+    return { success: false, error };
+  }
+};
+
 export { db, analytics, auth, googleProvider };
-export default app; 
+export default app;

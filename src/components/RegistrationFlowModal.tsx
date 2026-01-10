@@ -1,15 +1,16 @@
+
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowRight, CheckCircle, Palette, CreditCard, Loader2 } from "lucide-react";
+import { ArrowRight, CheckCircle, Palette, CreditCard, Loader2, X, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { addParticipant } from "@/lib/firebase";
+import { addParticipant, registerWinterArtUser } from "@/lib/firebase";
 import { load } from "@cashfreepayments/cashfree-js";
 
 interface RegistrationFlowModalProps {
@@ -40,7 +41,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
 
   const handleSubmit = async (values: any) => {
     setIsSubmitting(true);
-    
+
     try {
       // Determine category based on age
       let category = "Adult";
@@ -64,13 +65,13 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
         category: category
       };
 
-      // Save to Firebase first
-      const result = await addParticipant(participantData);
-      
+      // Save to Firebase first using registerWinterArtUser
+      const result = await registerWinterArtUser(participantData);
+
       if (result.success) {
         // Store registration data for later use
         const regData = {
-          id: result.id,
+          id: result.id, // This is the Firebase ID
           name: values.name,
           type: contestType,
           age: String(values.age ?? ""),
@@ -79,7 +80,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
           instagram: values.instagram ?? "",
           category
         };
-        
+
         setRegistrationData(regData);
         setIsSubmitting(false);
 
@@ -92,14 +93,14 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
         setTimeout(() => {
           initiatePayment(values, regData);
         }, 1000);
-        
+
       } else {
         throw new Error("Registration failed");
       }
     } catch (error) {
       setIsSubmitting(false);
       console.error("Registration error:", error);
-      
+
       toast({
         title: "Registration Failed",
         description: "There was an error processing your registration. Please try again.",
@@ -112,16 +113,17 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
   const initiatePayment = async (values: any, regData: any) => {
     console.log('🚀 [PAYMENT] Initiating payment for:', values.name);
     setIsProcessingPayment(true);
-    
+
     try {
       console.log('📡 [PAYMENT] Calling backend to create order...');
-      
+
       // Save registration data to sessionStorage BEFORE payment
       sessionStorage.setItem('ics_last_registration', JSON.stringify(regData));
+      sessionStorage.setItem('ics_firebase_id', regData.id);
       console.log('💾 [SESSION] Registration data saved to sessionStorage');
-      
-      // Call YOUR backend to create Cashfree order
-      const response = await fetch('https://backendcashfree.vercel.app/api/payment/create-order', {
+
+      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,16 +132,19 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
           name: values.name,
           email: values.email,
           phone: values.whatsapp,
-          amount: 249,
-          customerId: regData.id,
-          orderNote: `Indian Creative Star - ${regData.category} - Registration Fee`
+          amount: 1, // HARDCODED PAYMENT AMOUNT FOR TESTING (₹1)
+          customerId: regData.id, // Use the Firebase ID as customerId
+          orderNote: `Winter Art Royale - ${regData.category} `,
+          orderMeta: {
+            firebaseId: regData.id // Pass this if backend supports custom meta
+          }
         })
       });
 
       console.log('📡 [PAYMENT] Backend response status:', response.status);
-      
+
       if (!response.ok) {
-        throw new Error(`Backend returned ${response.status}: ${response.statusText}`);
+        throw new Error(`Backend returned ${response.status}: ${response.statusText} `);
       }
 
       const orderData = await response.json();
@@ -159,7 +164,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
     } catch (error) {
       console.error('❌ [PAYMENT] Payment initiation error:', error);
       setIsProcessingPayment(false);
-      
+
       toast({
         title: "Payment Error",
         description: error instanceof Error ? error.message : "Failed to initiate payment. Please try again or contact support.",
@@ -172,7 +177,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
   const openCashfreeCheckout = async (payment_session_id: string, order_id: string, regData: any) => {
     try {
       console.log('🏪 [CASHFREE] Initializing Cashfree SDK...');
-      
+
       // Initialize Cashfree SDK
       const cashfree = await load({
         mode: "production" // ✅ Production mode
@@ -194,7 +199,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
         // User closed popup or payment failed
         console.error('❌ [CASHFREE] Payment error:', result.error);
         setIsProcessingPayment(false);
-        
+
         toast({
           title: "Payment Cancelled",
           description: "Payment was cancelled or failed. Please try again.",
@@ -207,10 +212,10 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
         // Payment completed - Close modal and notify parent to show verification
         console.log('✅ [CASHFREE] Payment completed:', result.paymentDetails);
         console.log('🔍 [PAYMENT] Closing modal and starting verification on landing page...');
-        
+
         // Close modal first
         onClose();
-        
+
         // Notify parent to show verification animation
         if (onPaymentInitiated) {
           onPaymentInitiated(order_id, regData);
@@ -220,7 +225,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
     } catch (error) {
       console.error('❌ [CASHFREE] Checkout error:', error);
       setIsProcessingPayment(false);
-      
+
       toast({
         title: "Checkout Error",
         description: error instanceof Error ? error.message : "Failed to open payment page. Please try again.",
@@ -233,7 +238,8 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
   const verifyPaymentAndRedirect = async (order_id: string, regData: any) => {
     try {
       // Call YOUR backend to verify payment
-      const response = await fetch(`https://backendcashfree.vercel.app/api/payment/verify/${order_id}`);
+      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const response = await fetch(`${API_URL}/api/verify-payment?orderId=${order_id}`);
       const verifyData = await response.json();
 
       if (verifyData.success && verifyData.data.is_paid) {
@@ -264,7 +270,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
         // Redirect to thank you page after short delay
         setTimeout(() => {
           onClose();
-          
+
           const qp = new URLSearchParams({
             ...regData,
             payment: 'success',
@@ -282,7 +288,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
     } catch (error) {
       console.error('Payment verification error:', error);
       setIsProcessingPayment(false);
-      
+
       toast({
         title: "Verification Failed",
         description: "Payment verification failed. Please contact support with Order ID: " + order_id,
@@ -293,13 +299,13 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border-white/10 overflow-y-auto max-h-[90vh]`}>
+      <DialogContent className={`${isMobile ? 'max-w-[92%] p-4' : 'sm:max-w-[500px] p-6'} glassmorphism border - white / 10 overflow - y - auto max - h - [90vh]`}>
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl font-playfair text-center">
             {isProcessingPayment ? "Processing Payment..." : "Join Indian Creative Star"}
           </DialogTitle>
         </DialogHeader>
-        
+
         {isProcessingPayment ? (
           <div className="py-8 text-center space-y-4">
             <Loader2 className="h-12 w-12 sm:h-16 sm:w-16 text-creative-purple mx-auto animate-spin" />
@@ -323,7 +329,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                 </div>
                 <p className="text-xs sm:text-sm text-white/70 mt-1 pl-6">Drawing, Painting, Digital Art</p>
               </div>
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
@@ -333,7 +339,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   className="bg-white/5 border-white/10 h-10"
                 />
               </div>
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="age">Age</Label>
                 <Input
@@ -346,7 +352,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   max="100"
                 />
               </div>
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="whatsapp">WhatsApp Number</Label>
                 <Input
@@ -358,7 +364,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   inputMode="tel"
                 />
               </div>
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -370,7 +376,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   className="bg-white/5 border-white/10 h-10"
                 />
               </div>
-              
+
               <div className="space-y-1.5">
                 <Label htmlFor="instagram">Instagram ID (Optional)</Label>
                 <Input
@@ -380,15 +386,15 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   className="bg-white/5 border-white/10 h-10"
                 />
               </div>
-              
+
               <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                 <CheckCircle className="h-3 w-3 text-green-500" />
                 <span>Entry Fee: ₹249</span>
               </div>
-              
-              <Button 
-                type="submit" 
-                className="w-full creative-btn py-2 sm:py-3 h-auto" 
+
+              <Button
+                type="submit"
+                className="w-full creative-btn py-2 sm:py-3 h-auto"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -403,7 +409,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
                   </>
                 )}
               </Button>
-              
+
               <p className="text-xs text-center text-muted-foreground mt-2">
                 You will be redirected to secure payment after registration
               </p>

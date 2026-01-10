@@ -36,22 +36,22 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
   const normalizePhoneNumber = (phone: string): string => {
     // Remove all spaces, dashes, parentheses, and trim
     let cleaned = phone.replace(/[\s\-\(\)]/g, '').trim();
-    
+
     // Remove + prefix if exists
     if (cleaned.startsWith('+')) {
       cleaned = cleaned.substring(1);
     }
-    
+
     // If 10 digits, add 91 prefix
     if (cleaned.length === 10 && /^\d{10}$/.test(cleaned)) {
       return `91${cleaned}`;
     }
-    
+
     // If 12 digits starting with 91, return as is
     if (cleaned.length === 12 && cleaned.startsWith('91') && /^\d{12}$/.test(cleaned)) {
       return cleaned;
     }
-    
+
     // Return cleaned version (validation will catch invalid formats)
     return cleaned;
   };
@@ -71,13 +71,13 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         timestamp: new Date().toISOString()
       });
       console.log('✅ [GTM] registration_started event pushed');
-      
+
       // Save current scroll position
       const scrollY = window.scrollY;
-      
+
       // Get the main app container (the landing page)
       const appRoot = document.getElementById('root') || document.body;
-      
+
       // Lock scroll on body and html
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
@@ -85,18 +85,18 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
       document.body.style.right = '0';
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
-      
+
       // Additional iOS Safari fix
       document.documentElement.style.overflow = 'hidden';
       document.documentElement.style.height = '100%';
       document.documentElement.style.position = 'fixed';
       document.documentElement.style.width = '100%';
-      
+
       // Prevent touch move on document (mobile)
       const preventTouchMove = (e: TouchEvent) => {
         const drawer = document.querySelector('[data-drawer-content]');
         const target = e.target as Element;
-        
+
         // Only allow scroll inside the drawer content area
         if (drawer && drawer.contains(target)) {
           // Check if the drawer content is actually scrollable
@@ -109,21 +109,21 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           e.preventDefault();
         }
       };
-      
+
       // Prevent mouse wheel scroll (desktop)
       const preventWheel = (e: WheelEvent) => {
         const drawer = document.querySelector('[data-drawer-content]');
         const target = e.target as Element;
-        
+
         if (!drawer || !drawer.contains(target)) {
           e.preventDefault();
         }
       };
-      
+
       // Add event listeners
       document.addEventListener('touchmove', preventTouchMove, { passive: false });
       document.addEventListener('wheel', preventWheel, { passive: false });
-      
+
       return () => {
         // Restore scroll position
         document.body.style.position = '';
@@ -136,11 +136,11 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         document.documentElement.style.height = '';
         document.documentElement.style.position = '';
         document.documentElement.style.width = '';
-        
+
         // Remove event listeners
         document.removeEventListener('touchmove', preventTouchMove);
         document.removeEventListener('wheel', preventWheel);
-        
+
         // Restore scroll position
         window.scrollTo(0, scrollY);
       };
@@ -163,12 +163,12 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
     } else {
       // Remove all spaces, dashes, parentheses
       let cleanPhone = formData.whatsapp.replace(/[\s\-\(\)]/g, '');
-      
+
       // Remove + prefix if exists
       if (cleanPhone.startsWith('+')) {
         cleanPhone = cleanPhone.substring(1);
       }
-      
+
       // Check length and format
       if (cleanPhone.length === 10) {
         // Valid: 7250504240 (10 digits)
@@ -228,7 +228,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         error_fields: Object.keys(errors).join(', ')
       });
       console.log('✅ [GTM] form_validation_failed event pushed');
-      
+
       toast({
         title: 'Validation Error',
         description: 'Please fill all fields correctly',
@@ -241,12 +241,12 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
     try {
       console.log('🚀 [REGISTRATION] Starting payment process...');
-      
+
       // Get or retrieve persistent external_id for this user
       const getOrCreateExternalId = () => {
         const storageKey = 'ics_external_id';
         let externalId = localStorage.getItem(storageKey);
-        
+
         if (!externalId) {
           // Generate new unique external_id (same algorithm as PageView)
           const timestamp = Date.now();
@@ -256,29 +256,29 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
             a = ((a << 5) - a) + b.charCodeAt(0);
             return a & a;
           }, 0).toString(36);
-          
+
           externalId = `EXT_ICS_${timestamp}_${random1}_${random2}_${browserFingerprint}`;
           localStorage.setItem(storageKey, externalId);
           console.log('🆔 [EXTERNAL ID] Created new external_id:', externalId);
         } else {
           console.log('🆔 [EXTERNAL ID] Retrieved existing external_id:', externalId);
         }
-        
+
         return externalId;
       };
-      
+
       const externalId = getOrCreateExternalId();
-      
+
       // Prepare normalized customer data (Meta format)
       const nameParts = formData.fullName.trim().split(' ');
       const firstName = (nameParts[0] || '').toLowerCase();
       const lastName = (nameParts.slice(1).join(' ') || '').toLowerCase();
       const normalizedPhone = normalizePhoneNumber(formData.whatsapp);
       const normalizedEmail = formData.email.trim().toLowerCase();
-      
+
       // Generate event_id upfront (will be used for tracking and as order_id)
       const eventId = `ORDER_ICS_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // Get Facebook Pixel cookies (fbp and fbc) for tracking
       const getCookie = (name: string) => {
         const value = `; ${document.cookie}`;
@@ -286,17 +286,17 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         if (parts.length === 2) return parts.pop()?.split(';').shift();
         return undefined;
       };
-      
+
       const fbp = getCookie('_fbp');
       const fbc = getCookie('_fbc');
-      
+
       // 🎯 GTM Event: InitiateCheckout - BEFORE PAYMENT (Custom Trigger for GTM)
       console.log('🎯 [GTM] InitiateCheckout Event - User clicked "Pay & Submit"');
       console.log('🆔 [INITIATE CHECKOUT] Event ID:', eventId);
       console.log('🆔 [INITIATE CHECKOUT] External ID:', externalId);
       console.log('🍪 [INITIATE CHECKOUT] FBP:', fbp || 'not_available');
       console.log('🍪 [INITIATE CHECKOUT] FBC:', fbc || 'not_available');
-      
+
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'initiate_checkout_custom',           // ✅ Custom trigger name for GTM
@@ -304,29 +304,29 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         external_id: externalId,                     // ✅ Persistent user identifier (same across all events)
         event_name: 'InitiateCheckout',              // ✅ Standard FB event name
         event_time: Math.floor(Date.now() / 1000),  // ✅ Unix timestamp
-        
+
         // Facebook Attribution
         fbp: fbp || 'not_available',                 // ✅ Facebook browser ID
         fbc: fbc || 'not_available',                 // ✅ Facebook click ID
-        
+
         // Transaction Details (NO payment info yet)
         value: 249,                                  // ✅ Purchase value
         currency: 'INR',                             // ✅ Currency code
-        
+
         // Product/Content Details (Same as Purchase event)
         content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],  // ✅ Fixed product ID
         content_type: 'competition_entry',           // ✅ Content type
         content_name: 'Indian Creative Star Art Competition Entry',
         content_category: 'art',                     // ✅ Hardcoded 'art' (consistent with PageView)
         num_items: 1,                                // ✅ Number of items
-        
+
         // Customer Information (Meta format - lowercase, normalized)
         email: normalizedEmail,                      // ✅ Meta: 'em' parameter
         phone_number: normalizedPhone,               // ✅ Meta: 'ph' parameter
         first_name: firstName,                       // ✅ Meta: 'fn' parameter
         last_name: lastName,                         // ✅ Meta: 'ln' parameter
         country: 'in',                               // ✅ Meta: 'country' parameter
-        
+
         // Legacy fields (for backwards compatibility)
         customer_email: normalizedEmail,
         customer_phone: normalizedPhone,
@@ -334,31 +334,31 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         customer_last_name: lastName,
         customer_name: formData.fullName,
         customer_age: formData.age,
-        
+
         // Contest Info
         contest_type: contestType,
         registration_type: contestType,
-        
+
         // Page Info
         page_url: window.location.href,
         page_path: window.location.pathname,
         referrer: document.referrer || 'direct',
-        
+
         // Browser Info
         user_agent: navigator.userAgent,
         screen_resolution: `${window.screen.width}x${window.screen.height}`,
         viewport_size: `${window.innerWidth}x${window.innerHeight}`,
-        
+
         // Timestamps
         client_timestamp: new Date().toISOString(),
         event_timestamp: new Date().toISOString(),
-        
+
         // Event Category
         event_category: 'Checkout',
         event_action: 'Initiate Checkout',
         event_label: 'Pay & Submit Button Clicked'
       });
-      
+
       console.log('✅ [GTM] initiate_checkout_custom event pushed to GTM dataLayer');
       console.log('📊 [GTM] Configure GTM trigger for "initiate_checkout_custom" event');
       console.log('📊 [INITIATE CHECKOUT] Complete Data (Meta Format):', {
@@ -381,13 +381,13 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         'FBC Cookie': fbc || 'not_available',
         'Note': '✅ All PII will be AUTO-HASHED by Facebook Pixel'
       });
-      
+
       // 🔥 Send InitiateCheckout event to Make.com webhook (OPTIMIZED - NON-BLOCKING)
       // ✅ SENDING EXACT SAME DATA AS GTM DATALAYER
       console.log('📤 [INITIATE CHECKOUT WEBHOOK] Sending to Make.com (non-blocking)...');
-      
+
       const { browser, deviceType } = getBrowserInfo();
-      
+
       // Fire and forget - won't block payment flow
       sendInitiateCheckoutWebhook({
         // ✅ SAME AS GTM DATALAYER - ALL FIELDS
@@ -396,29 +396,29 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         external_id: externalId,
         event_name: 'InitiateCheckout',
         event_time: Math.floor(Date.now() / 1000),
-        
+
         // Facebook Attribution
         fbp: fbp || 'not_available',
         fbc: fbc || 'not_available',
-        
+
         // Transaction Details
         value: 249,
         currency: 'INR',
-        
+
         // Product/Content Details
         content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],
         content_type: 'competition_entry',
         content_name: 'Indian Creative Star Art Competition Entry',
         content_category: 'art',
         num_items: 1,
-        
+
         // Customer Information (Meta format)
         email: normalizedEmail,
         phone_number: normalizedPhone,
         first_name: firstName,
         last_name: lastName,
         country: 'in',
-        
+
         // Legacy fields
         customer_email: normalizedEmail,
         customer_phone: normalizedPhone,
@@ -426,31 +426,31 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         customer_last_name: lastName,
         customer_name: formData.fullName,
         customer_age: formData.age,
-        
+
         // Contest Info
         contest_type: contestType,
         registration_type: contestType,
-        
+
         // Page Info
         page_url: window.location.href,
         page_path: window.location.pathname,
         referrer: document.referrer || 'direct',
-        
+
         // Browser Info
         user_agent: navigator.userAgent,
         screen_resolution: `${window.screen.width}x${window.screen.height}`,
         viewport_size: `${window.innerWidth}x${window.innerHeight}`,
-        
+
         // Timestamps
         client_timestamp: new Date().toISOString(),
         event_timestamp: new Date().toISOString(),
-        
+
         // Event Category
         event_category: 'Checkout',
         event_action: 'Initiate Checkout',
         event_label: 'Pay & Submit Button Clicked'
       });
-      
+
       // Save registration data to sessionStorage (including external_id)
       const registrationData = {
         fullName: formData.fullName,
@@ -461,13 +461,14 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         external_id: externalId,                     // ✅ Store external_id for Purchase event
         timestamp: Date.now()
       };
-      
+
       sessionStorage.setItem('ics_last_registration', JSON.stringify(registrationData));
       console.log('💾 [SESSION] Registration data saved (with external_id)');
       console.log('🆔 [SESSION] External ID stored:', externalId);
 
       // Call backend to create Cashfree order (use variables already declared above)
-      const response = await fetch('https://backendcashfree.vercel.app/api/payment/create-order', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -539,14 +540,14 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
       if (result.error) {
         console.error('❌ [CASHFREE] Payment error:', result.error);
-        
+
         // Normalize customer data for Meta format
         const nameParts = formData.fullName.trim().split(' ');
         const firstName = (nameParts[0] || '').toLowerCase();
         const lastName = (nameParts.slice(1).join(' ') || '').toLowerCase();
         const normalizedPhone = normalizePhoneNumber(formData.whatsapp);  // Use helper function
         const normalizedEmail = formData.email.trim().toLowerCase();
-        
+
         // 🎯 GTM Event: Payment cancelled/failed - WITH CUSTOMER DATA
         console.log('🎯 [GTM] Payment Cancelled or Failed');
         window.dataLayer = window.dataLayer || [];
@@ -555,32 +556,32 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           event_category: 'Payment',
           event_action: 'Payment Cancelled',
           event_label: contestType,
-          
+
           // Transaction Details
           order_id: order_id,
           transaction_id: order_id,
           event_id: order_id,
           value: 249,
           currency: 'INR',
-          
+
           // Customer Details (Meta format - normalized)
           email: normalizedEmail,
           phone_number: normalizedPhone,
           first_name: firstName,
           last_name: lastName,
           country: 'in',
-          
+
           // Legacy fields
           customer_email: normalizedEmail,
           customer_phone: normalizedPhone,
           customer_name: formData.fullName,
           customer_age: formData.age,
-          
+
           // Error Details
           error_message: result.error.message || 'User cancelled payment',
           payment_gateway: 'Cashfree',
           contest_type: contestType,
-          
+
           // Timestamp
           event_timestamp: new Date().toISOString()
         });
@@ -596,7 +597,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           'Value': '₹249',
           'Note': '✅ All PII will be AUTO-HASHED by Facebook Pixel'
         });
-        
+
         toast({
           title: 'Payment Cancelled',
           description: 'Payment was cancelled or failed. Please try again.',
@@ -608,7 +609,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
       if (result.paymentDetails) {
         console.log('✅ [CASHFREE] Payment completed');
-        
+
         // Get external_id from sessionStorage or localStorage
         const getExternalId = () => {
           // First try to get from registration data in sessionStorage
@@ -624,35 +625,35 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
               console.warn('⚠️ [PURCHASE] Failed to parse registration data');
             }
           }
-          
+
           // Fallback: get from localStorage
           const externalId = localStorage.getItem('ics_external_id');
           if (externalId) {
             console.log('🆔 [PURCHASE] Retrieved external_id from localStorage:', externalId);
             return externalId;
           }
-          
+
           console.warn('⚠️ [PURCHASE] No external_id found - this should not happen');
           return 'not_available';
         };
-        
+
         const externalId = getExternalId();
-        
+
         // Split name for Facebook Pixel format & normalize to lowercase (Meta requirement)
         const nameParts = formData.fullName.trim().split(' ');
         const firstName = (nameParts[0] || '').toLowerCase();
         const lastName = (nameParts.slice(1).join(' ') || '').toLowerCase();
-        
+
         // Normalize phone number with country code +91 (India) - handles all formats
         const normalizedPhone = normalizePhoneNumber(formData.whatsapp);  // Use helper function
-        
+
         // Normalize email to lowercase (Meta requirement)
         const normalizedEmail = formData.email.trim().toLowerCase();
-        
+
         // Get Facebook cookies and browser info
         const { fbp, fbc } = getFBCookies();
         const { browser, deviceType } = getBrowserInfo();
-        
+
         // 🎯 GTM Event: Payment success (client-side) - COMPLETE CONVERSION DATA
         console.log('🎯 [GTM] Payment Completed Successfully (Client-side)');
         console.log('🆔 [PURCHASE] Event ID:', order_id);
@@ -663,7 +664,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           event_category: 'Payment',
           event_action: 'Payment Completed',
           event_label: contestType,
-          
+
           // Transaction Details (Critical for conversion tracking)
           event_id: order_id,                          // Unique event ID for deduplication
           external_id: externalId,                     // ✅ Persistent user identifier (same across all events)
@@ -671,21 +672,21 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           order_id: order_id,                          // Cashfree Order ID
           value: 249,                                  // Purchase value
           currency: 'INR',                             // Currency code
-          
+
           // Product/Content Details (Fixed for all purchases)
           content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],  // Fixed product ID
           content_type: 'competition_entry',           // Content type
           content_name: 'Indian Creative Star Art Competition Entry',
           content_category: 'art',                     // ✅ Hardcoded 'art' (consistent with PageView)
           num_items: 1,                                // Number of items
-          
+
           // Customer Information (Meta format - lowercase, normalized, will be auto-hashed by Pixel)
           email: normalizedEmail,                      // Meta: 'em' parameter
           phone_number: normalizedPhone,               // Meta: 'ph' parameter (with country code)
           first_name: firstName,                       // Meta: 'fn' parameter (lowercase)
           last_name: lastName,                         // Meta: 'ln' parameter (lowercase)
           country: 'in',                               // Meta: 'country' parameter (ISO code)
-          
+
           // Legacy fields (for backwards compatibility)
           customer_email: normalizedEmail,
           customer_phone: normalizedPhone,
@@ -693,24 +694,24 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           customer_last_name: lastName,
           customer_name: formData.fullName,
           customer_age: formData.age,
-          
+
           // Payment Details
           payment_method: result.paymentDetails?.payment_method || 'Unknown',
           payment_status: 'completed',
           payment_gateway: 'Cashfree',
-          
+
           // Additional Tracking
           contest_type: contestType,
           registration_type: contestType,
-          
+
           // Timestamps
           event_timestamp: new Date().toISOString(),
           event_time: Math.floor(Date.now() / 1000),   // Unix timestamp for Meta
-          
+
           // ✅ Facebook Pixel Parameters (Critical for Meta Conversions API)
           fbp: fbp,                                     // Facebook Browser ID cookie (_fbp)
           fbc: fbc,                                     // Facebook Click ID cookie (_fbc)
-          
+
           // ✅ Source & Device Information
           source_url: window.location.href,             // Current page URL
           user_agent: navigator.userAgent,              // User agent string
@@ -718,11 +719,11 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           device_type: deviceType                       // Device type (mobile/tablet/desktop)
         });
         console.log('✅ [GTM] payment_success_client event pushed with FULL conversion data');
-        
+
         // 🔥 Send Purchase event to Make.com webhook (OPTIMIZED - NON-BLOCKING)
         // ✅ SENDING EXACT SAME DATA AS GTM DATALAYER
         console.log('📤 [WEBHOOK] Sending Purchase event to Make.com (non-blocking)...');
-        
+
         // Fire and forget - won't block redirect to thank you page
         sendPurchaseWebhook({
           // ✅ SAME AS GTM DATALAYER - ALL FIELDS (EXACT MATCH)
@@ -730,7 +731,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           event_category: 'Payment',
           event_action: 'Payment Completed',
           event_label: contestType,
-          
+
           // Transaction Details
           event_id: order_id,
           external_id: externalId,
@@ -738,21 +739,21 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           order_id: order_id,
           value: 249,
           currency: 'INR',
-          
+
           // Product/Content Details
           content_ids: ['INDIAN_CREATIVE_STAR_ART_COMP_2025_ENTRY'],
           content_type: 'competition_entry',
           content_name: 'Indian Creative Star Art Competition Entry',
           content_category: 'art',
           num_items: 1,
-          
+
           // Customer Information (Meta format)
           email: normalizedEmail,
           phone_number: normalizedPhone,
           first_name: firstName,
           last_name: lastName,
           country: 'in',
-          
+
           // Legacy fields (for backwards compatibility)
           customer_email: normalizedEmail,
           customer_phone: normalizedPhone,
@@ -760,24 +761,24 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           customer_last_name: lastName,
           customer_name: formData.fullName,
           customer_age: formData.age,
-          
+
           // Payment Details
           payment_method: result.paymentDetails?.payment_method || 'Unknown',
           payment_status: 'completed',
           payment_gateway: 'Cashfree',
-          
+
           // Additional Tracking
           contest_type: contestType,
           registration_type: contestType,
-          
+
           // Timestamps (✅ event_time in Unix timestamp format)
           event_timestamp: new Date().toISOString(),
           event_time: Math.floor(Date.now() / 1000),  // ✅ Unix timestamp (same as GTM)
-          
+
           // ✅ Facebook Pixel Parameters (Critical for Meta Conversions API)
           fbp: fbp,                                     // Facebook Browser ID cookie (_fbp)
           fbc: fbc,                                     // Facebook Click ID cookie (_fbc)
-          
+
           // ✅ Source & Device Information
           source_url: window.location.href,             // Current page URL
           user_agent: navigator.userAgent,              // User agent string
@@ -804,10 +805,10 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
           'Content Name': 'Indian Creative Star Art Competition Entry',
           'Note': '✅ All PII will be AUTO-HASHED by Facebook Pixel'
         });
-        
+
         // Close drawer
         onClose();
-        
+
         // Show success toast
         toast({
           title: 'Payment Successful!',
@@ -816,7 +817,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
         // Redirect to thank you page with user details
         const thankYouUrl = `/thank-you?type=${contestType}&name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.whatsapp)}&age=${encodeURIComponent(formData.age)}&whatsapp=${encodeURIComponent(formData.whatsapp)}&orderId=${order_id}&payment=success&from=/indiancreativestar/v2`;
-        
+
         setTimeout(() => {
           navigate(thankYouUrl);
         }, 500);
@@ -853,7 +854,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998]"
-            style={{ 
+            style={{
               position: 'fixed',
               top: 0,
               left: 0,
@@ -870,31 +871,31 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
-            transition={{ 
-              type: 'spring', 
-              damping: 30, 
-            stiffness: 300,
-            duration: 0.4 
-          }}
-          className="z-[9999] max-h-[95vh] bg-white rounded-t-[32px] shadow-2xl overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
-          style={{ 
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            touchAction: 'pan-y'
-          }}
-          data-drawer-content
-        >
-          <div className="overflow-y-auto max-h-[95vh]">
-            {/* Drag Handle */}
-            <div className="flex justify-center pt-4 pb-2 bg-white sticky top-0 z-10">
-              <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
-            </div>
+            transition={{
+              type: 'spring',
+              damping: 30,
+              stiffness: 300,
+              duration: 0.4
+            }}
+            className="z-[9999] max-h-[95vh] bg-white rounded-t-[32px] shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              touchAction: 'pan-y'
+            }}
+            data-drawer-content
+          >
+            <div className="overflow-y-auto max-h-[95vh]">
+              {/* Drag Handle */}
+              <div className="flex justify-center pt-4 pb-2 bg-white sticky top-0 z-10">
+                <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+              </div>
 
-            {/* Content Container */}
-            <div className="px-4 pb-6 sm:px-6 sm:pb-8 md:px-8 md:pb-10 max-w-2xl mx-auto bg-white">                {/* Close Button */}
+              {/* Content Container */}
+              <div className="px-4 pb-6 sm:px-6 sm:pb-8 md:px-8 md:pb-10 max-w-2xl mx-auto bg-white">                {/* Close Button */}
                 <button
                   onClick={onClose}
                   className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full hover:bg-gray-100 transition-colors z-20 bg-white/80 backdrop-blur-sm"
@@ -904,9 +905,9 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
                 {/* Banner Image */}
                 <div className="relative mb-4 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl mx-auto max-w-xs sm:max-w-sm">
-                  <img 
+                  <img
                     src="https://i.ibb.co/5Pcjhz7/Daami-Presents1920x1080px1000x1000px.jpg"
-                    alt="Indian Creative Star Competition Banner" 
+                    alt="Indian Creative Star Competition Banner"
                     className="w-full h-auto object-contain"
                     loading="eager"
                     onError={(e) => {
@@ -927,7 +928,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
                   >
                     <Award className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                   </motion.div>
-                  
+
                   <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">
                     Register Now
                   </h2>
@@ -941,7 +942,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
                       <Shield className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
                       Important Details
                     </h3>
-                    
+
                     {/* Mobile: Stacked Layout, Desktop: Pills */}
                     <div className="hidden sm:flex flex-wrap justify-center gap-2 md:gap-3">
                       <div className="flex items-center gap-2 px-3 md:px-4 py-2 bg-white rounded-full border border-red-200 shadow-sm">
@@ -998,7 +999,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
 
                 {/* Form */}
                 <div className="space-y-4 sm:space-y-6">
-                  
+
                   {/* Full Name */}
                   <div>
                     <Label htmlFor="fullName" className="text-sm sm:text-base font-semibold text-gray-800 mb-2">
@@ -1127,8 +1128,8 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
                 disabled={isProcessing}
                 className="w-full h-12 sm:h-14 text-base sm:text-lg font-bold text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] relative overflow-hidden"
                 style={{
-                  background: isProcessing 
-                    ? 'linear-gradient(to right, rgb(22, 163, 74), rgb(5, 150, 105))' 
+                  background: isProcessing
+                    ? 'linear-gradient(to right, rgb(22, 163, 74), rgb(5, 150, 105))'
                     : 'linear-gradient(90deg, rgb(22, 163, 74) 0%, rgb(16, 185, 129) 30%, rgba(255, 255, 255, 0.15) 50%, rgb(16, 185, 129) 70%, rgb(5, 150, 105) 100%)',
                   backgroundSize: isProcessing ? '100% 100%' : '200% auto',
                   animation: isProcessing ? 'none' : 'shine-right-to-left 6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite',
