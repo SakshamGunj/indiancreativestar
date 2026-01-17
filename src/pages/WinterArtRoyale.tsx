@@ -1329,36 +1329,42 @@ const WinterArtRoyale = () => {
                                 transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
                             >
                                 {[
-                                    "https://i.ibb.co/60WQ1Q4Q/artwork-1762353412751.jpg",
-                                    "https://i.ibb.co/g0M4rZX/artwork-1762229280616.jpg",
-                                    "https://i.ibb.co/rKTRyNk3/artwork-1761851051490.jpg",
-                                    "https://i.ibb.co/MmV16NK/artwork-1761754760236.jpg",
-                                    "https://i.ibb.co/8nZvQ1CX/artwork-Hn-Cjlnnn-Fo-OLc8l-Ug-Im0-WBi-Hs-AC3-1761747781067.jpg",
-                                    "https://i.ibb.co/d44XrDDm/artwork-1761725665374.jpg",
-                                    "https://i.ibb.co/8LkC7NJZ/artwork-KCDc-Oju-Cqqbg8f-CEw-Fwk-U4x5c-Ff2-1761745137536.jpg",
-                                    "https://i.ibb.co/934S9czw/artwork-1761707855856.jpg",
-                                    "https://i.ibb.co/pBLxzWzz/artwork-1761662549363.jpg",
-                                    "https://i.ibb.co/Pv39ydhP/artwork-1761324889394.jpg",
-                                    "https://i.ibb.co/V0vsyWwr/artwork-1760958935863.jpg",
-                                    "https://i.ibb.co/7JScRm2W/artwork-1760958935902.jpg",
-                                    "https://i.ibb.co/xKJMVT8W/artwork-v5-XLj-M1-Qz7-WIWd-E6ht-DKMoh3-Elv1-1760814935176.jpg",
+                                    "/optimized_gallery/gallery_1.webp",
+                                    "/optimized_gallery/gallery_2.webp",
+                                    "/optimized_gallery/gallery_3.webp",
+                                    "/optimized_gallery/gallery_4.webp",
+                                    "/optimized_gallery/gallery_5.webp",
+                                    "/optimized_gallery/gallery_6.webp",
+                                    "/optimized_gallery/gallery_7.webp",
+                                    "/optimized_gallery/gallery_8.webp",
+                                    "/optimized_gallery/gallery_9.webp",
+                                    "/optimized_gallery/gallery_10.webp",
+                                    "/optimized_gallery/gallery_11.webp",
+                                    "/optimized_gallery/gallery_12.webp",
+                                    "/optimized_gallery/gallery_13.webp",
                                     // Duplicate for infinite loop
-                                    "https://i.ibb.co/60WQ1Q4Q/artwork-1762353412751.jpg",
-                                    "https://i.ibb.co/g0M4rZX/artwork-1762229280616.jpg",
-                                    "https://i.ibb.co/rKTRyNk3/artwork-1761851051490.jpg",
-                                    "https://i.ibb.co/MmV16NK/artwork-1761754760236.jpg",
-                                    "https://i.ibb.co/8nZvQ1CX/artwork-Hn-Cjlnnn-Fo-OLc8l-Ug-Im0-WBi-Hs-AC3-1761747781067.jpg",
-                                    "https://i.ibb.co/d44XrDDm/artwork-1761725665374.jpg",
-                                    "https://i.ibb.co/8LkC7NJZ/artwork-KCDc-Oju-Cqqbg8f-CEw-Fwk-U4x5c-Ff2-1761745137536.jpg",
-                                    "https://i.ibb.co/934S9czw/artwork-1761707855856.jpg",
-                                    "https://i.ibb.co/pBLxzWzz/artwork-1761662549363.jpg",
-                                    "https://i.ibb.co/Pv39ydhP/artwork-1761324889394.jpg",
-                                    "https://i.ibb.co/V0vsyWwr/artwork-1760958935863.jpg",
-                                    "https://i.ibb.co/7JScRm2W/artwork-1760958935902.jpg",
-                                    "https://i.ibb.co/xKJMVT8W/artwork-v5-XLj-M1-Qz7-WIWd-E6ht-DKMoh3-Elv1-1760814935176.jpg"
+                                    "/optimized_gallery/gallery_1.webp",
+                                    "/optimized_gallery/gallery_2.webp",
+                                    "/optimized_gallery/gallery_3.webp",
+                                    "/optimized_gallery/gallery_4.webp",
+                                    "/optimized_gallery/gallery_5.webp",
+                                    "/optimized_gallery/gallery_6.webp",
+                                    "/optimized_gallery/gallery_7.webp",
+                                    "/optimized_gallery/gallery_8.webp",
+                                    "/optimized_gallery/gallery_9.webp",
+                                    "/optimized_gallery/gallery_10.webp",
+                                    "/optimized_gallery/gallery_11.webp",
+                                    "/optimized_gallery/gallery_12.webp",
+                                    "/optimized_gallery/gallery_13.webp"
                                 ].map((img, i) => (
                                     <div key={i} className="w-[200px] md:w-[300px] aspect-[4/3] rounded-xl overflow-hidden border border-white/5 relative group flex-shrink-0">
-                                        <img src={img} alt={`Gallery Artwork ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                                        <img
+                                            src={img}
+                                            alt={`Gallery Artwork ${i}`}
+                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 backface-hidden"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
                                     </div>
                                 ))}
                             </motion.div>
@@ -1375,36 +1381,42 @@ const WinterArtRoyale = () => {
                                 transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
                             >
                                 {[
-                                    "https://i.ibb.co/nqFnpHJj/artwork-1760796807708.jpg",
-                                    "https://i.ibb.co/JRMnL8R6/artwork-NKKekfy-PXxd5-Vdit-Hwp-CROh-HTFy2-1760786741753.jpg",
-                                    "https://i.ibb.co/KjyMbj50/artwork-1760775217011.jpg",
-                                    "https://i.ibb.co/0yhM5Wn4/artwork-x-Kc-Gcy-Cux-Xf-XGmu-Tp-Nsh6-HSt-Orn1-1760758580157.jpg",
-                                    "https://i.ibb.co/cSCf6Byp/artwork-3epwp-U6-Ngjaynf2-UJZyzu-N0-C0-Fz2-1760723698714.jpg",
-                                    "https://i.ibb.co/FqXgss3R/artwork-yt-Kp-PKo-Gnngf-X0-Zex-XOPcc-FGg-Im2-1760687675388.jpg",
-                                    "https://i.ibb.co/nqqTCVG1/artwork-L2-Eav5w2a-VM30-Jnfz4yl-QS6k3-KB3-1760513955767.jpg",
-                                    "https://i.ibb.co/LDT0Jn0z/artwork-by-TLGOHgk-Ghl-Dqdkrwg1k-EANgt43-1760509536643.jpg",
-                                    "https://i.ibb.co/bjXyJ73W/artwork-b-UWFv-Elsof-M1w-IU1-TQV1bsdhkw03-1759994580222.jpg",
-                                    "https://i.ibb.co/wZq3rfZ3/artwork-U0bem5y-EGRZPs-K0-YRW5f7lt-Ue1a2-1759976624499.jpg",
-                                    "https://i.ibb.co/jccLbpV/artwork-vha-U4-TMSvxgm-Ums3-I0j0-CCN0-J223-1759937295648.jpg",
-                                    "https://i.ibb.co/fV7hcSDq/artwork-qoi2-DJWfc-EWw-OIL4-S7c9a3-E7-Mao2-1759937357479.jpg",
-                                    "https://i.ibb.co/Psk6qFjm/artwork-8-TOjxn7d-D6-W797tqaxa-A7oq-Ay3-N2-1759828866548.jpg",
+                                    "/optimized_gallery/gallery_14.webp",
+                                    "/optimized_gallery/gallery_15.webp",
+                                    "/optimized_gallery/gallery_16.webp",
+                                    "/optimized_gallery/gallery_17.webp",
+                                    "/optimized_gallery/gallery_18.webp",
+                                    "/optimized_gallery/gallery_19.webp",
+                                    "/optimized_gallery/gallery_20.webp",
+                                    "/optimized_gallery/gallery_21.webp",
+                                    "/optimized_gallery/gallery_22.webp",
+                                    "/optimized_gallery/gallery_23.webp",
+                                    "/optimized_gallery/gallery_24.webp",
+                                    "/optimized_gallery/gallery_25.webp",
+                                    "/optimized_gallery/gallery_26.webp",
                                     // Duplicate for infinite loop
-                                    "https://i.ibb.co/nqFnpHJj/artwork-1760796807708.jpg",
-                                    "https://i.ibb.co/JRMnL8R6/artwork-NKKekfy-PXxd5-Vdit-Hwp-CROh-HTFy2-1760786741753.jpg",
-                                    "https://i.ibb.co/KjyMbj50/artwork-1760775217011.jpg",
-                                    "https://i.ibb.co/0yhM5Wn4/artwork-x-Kc-Gcy-Cux-Xf-XGmu-Tp-Nsh6-HSt-Orn1-1760758580157.jpg",
-                                    "https://i.ibb.co/cSCf6Byp/artwork-3epwp-U6-Ngjaynf2-UJZyzu-N0-C0-Fz2-1760723698714.jpg",
-                                    "https://i.ibb.co/FqXgss3R/artwork-yt-Kp-PKo-Gnngf-X0-Zex-XOPcc-FGg-Im2-1760687675388.jpg",
-                                    "https://i.ibb.co/nqqTCVG1/artwork-L2-Eav5w2a-VM30-Jnfz4yl-QS6k3-KB3-1760513955767.jpg",
-                                    "https://i.ibb.co/LDT0Jn0z/artwork-by-TLGOHgk-Ghl-Dqdkrwg1k-EANgt43-1760509536643.jpg",
-                                    "https://i.ibb.co/bjXyJ73W/artwork-b-UWFv-Elsof-M1w-IU1-TQV1bsdhkw03-1759994580222.jpg",
-                                    "https://i.ibb.co/wZq3rfZ3/artwork-U0bem5y-EGRZPs-K0-YRW5f7lt-Ue1a2-1759976624499.jpg",
-                                    "https://i.ibb.co/jccLbpV/artwork-vha-U4-TMSvxgm-Ums3-I0j0-CCN0-J223-1759937295648.jpg",
-                                    "https://i.ibb.co/fV7hcSDq/artwork-qoi2-DJWfc-EWw-OIL4-S7c9a3-E7-Mao2-1759937357479.jpg",
-                                    "https://i.ibb.co/Psk6qFjm/artwork-8-TOjxn7d-D6-W797tqaxa-A7oq-Ay3-N2-1759828866548.jpg"
+                                    "/optimized_gallery/gallery_14.webp",
+                                    "/optimized_gallery/gallery_15.webp",
+                                    "/optimized_gallery/gallery_16.webp",
+                                    "/optimized_gallery/gallery_17.webp",
+                                    "/optimized_gallery/gallery_18.webp",
+                                    "/optimized_gallery/gallery_19.webp",
+                                    "/optimized_gallery/gallery_20.webp",
+                                    "/optimized_gallery/gallery_21.webp",
+                                    "/optimized_gallery/gallery_22.webp",
+                                    "/optimized_gallery/gallery_23.webp",
+                                    "/optimized_gallery/gallery_24.webp",
+                                    "/optimized_gallery/gallery_25.webp",
+                                    "/optimized_gallery/gallery_26.webp"
                                 ].map((img, i) => (
                                     <div key={i} className="w-[200px] md:w-[300px] aspect-[4/3] rounded-xl overflow-hidden border border-white/5 relative group flex-shrink-0">
-                                        <img src={img} alt={`Gallery Artwork ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                                        <img
+                                            src={img}
+                                            alt={`Gallery Artwork ${i}`}
+                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 backface-hidden"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
                                     </div>
                                 ))}
                             </motion.div>
@@ -1421,36 +1433,42 @@ const WinterArtRoyale = () => {
                                 transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
                             >
                                 {[
-                                    "https://i.ibb.co/bgjZ0qxp/artwork-S2crxv-HOlr-Xg4-BMf5-S8now7fnz62-1759737202019.jpg",
-                                    "https://i.ibb.co/fzFF974y/artwork-mqr-ZGwpw9c-YNVTEd-Qba-Ja-KHRHx-N2-1759483186472.jpg",
-                                    "https://i.ibb.co/BJNJf09/artwork-MLWMW6-P4-Zn-PUKBhk2-Ce-Ep0w-E6xk2-1758700995997.jpg",
-                                    "https://i.ibb.co/WppFgXMy/artwork-mqr-ZGwpw9c-YNVTEd-Qba-Ja-KHRHx-N2-1758699797690.jpg",
-                                    "https://i.ibb.co/jkCjJQc1/artwork-ixj-TSs76-Lv-UDy-WPm-Tp6y4-P3-Yny-H3-1758586940004.jpg",
-                                    "https://i.ibb.co/fV4PHwB0/artwork-QI3-SW7o-Xu6-RAc6-UQT3-BKfky-Bjis1-1759331147803.jpg",
-                                    "https://i.ibb.co/Z1R90MhX/artwork-Bb-Zqhv-I2-DWOr-Hb03qjg-AVTrx-As93-1759421515111.jpg",
-                                    "https://i.ibb.co/YgS15L4/artwork-wq-Pz-OIcltc-UVa-OZ1-Nv4t5-KEizgu1-1759312098224.jpg",
-                                    "https://i.ibb.co/TxZw5pMn/artwork-Ntqssjw9s-KNqk4-Ubq-K6xluud3zr1-1762852332829.jpg",
-                                    "https://i.ibb.co/b5myKfdK/artwork-1763115458120.jpg",
-                                    "https://i.ibb.co/6cPxTSJx/artwork-1763127764360.jpg",
-                                    "https://i.ibb.co/RkP9jj1X/artwork-1763136068751.jpg",
-                                    "https://i.ibb.co/JWyDDWB9/artwork-1763366242290.jpg",
+                                    "/optimized_gallery/gallery_27.webp",
+                                    "/optimized_gallery/gallery_28.webp",
+                                    "/optimized_gallery/gallery_29.webp",
+                                    "/optimized_gallery/gallery_30.webp",
+                                    "/optimized_gallery/gallery_31.webp",
+                                    "/optimized_gallery/gallery_32.webp",
+                                    "/optimized_gallery/gallery_33.webp",
+                                    "/optimized_gallery/gallery_34.webp",
+                                    "/optimized_gallery/gallery_35.webp",
+                                    "/optimized_gallery/gallery_36.webp",
+                                    "/optimized_gallery/gallery_37.webp",
+                                    "/optimized_gallery/gallery_38.webp",
+                                    "/optimized_gallery/gallery_39.webp",
                                     // Duplicate for infinite loop
-                                    "https://i.ibb.co/bgjZ0qxp/artwork-S2crxv-HOlr-Xg4-BMf5-S8now7fnz62-1759737202019.jpg",
-                                    "https://i.ibb.co/fzFF974y/artwork-mqr-ZGwpw9c-YNVTEd-Qba-Ja-KHRHx-N2-1759483186472.jpg",
-                                    "https://i.ibb.co/BJNJf09/artwork-MLWMW6-P4-Zn-PUKBhk2-Ce-Ep0w-E6xk2-1758700995997.jpg",
-                                    "https://i.ibb.co/WppFgXMy/artwork-mqr-ZGwpw9c-YNVTEd-Qba-Ja-KHRHx-N2-1758699797690.jpg",
-                                    "https://i.ibb.co/jkCjJQc1/artwork-ixj-TSs76-Lv-UDy-WPm-Tp6y4-P3-Yny-H3-1758586940004.jpg",
-                                    "https://i.ibb.co/fV4PHwB0/artwork-QI3-SW7o-Xu6-RAc6-UQT3-BKfky-Bjis1-1759331147803.jpg",
-                                    "https://i.ibb.co/Z1R90MhX/artwork-Bb-Zqhv-I2-DWOr-Hb03qjg-AVTrx-As93-1759421515111.jpg",
-                                    "https://i.ibb.co/YgS15L4/artwork-wq-Pz-OIcltc-UVa-OZ1-Nv4t5-KEizgu1-1759312098224.jpg",
-                                    "https://i.ibb.co/TxZw5pMn/artwork-Ntqssjw9s-KNqk4-Ubq-K6xluud3zr1-1762852332829.jpg",
-                                    "https://i.ibb.co/b5myKfdK/artwork-1763115458120.jpg",
-                                    "https://i.ibb.co/6cPxTSJx/artwork-1763127764360.jpg",
-                                    "https://i.ibb.co/RkP9jj1X/artwork-1763136068751.jpg",
-                                    "https://i.ibb.co/JWyDDWB9/artwork-1763366242290.jpg"
+                                    "/optimized_gallery/gallery_27.webp",
+                                    "/optimized_gallery/gallery_28.webp",
+                                    "/optimized_gallery/gallery_29.webp",
+                                    "/optimized_gallery/gallery_30.webp",
+                                    "/optimized_gallery/gallery_31.webp",
+                                    "/optimized_gallery/gallery_32.webp",
+                                    "/optimized_gallery/gallery_33.webp",
+                                    "/optimized_gallery/gallery_34.webp",
+                                    "/optimized_gallery/gallery_35.webp",
+                                    "/optimized_gallery/gallery_36.webp",
+                                    "/optimized_gallery/gallery_37.webp",
+                                    "/optimized_gallery/gallery_38.webp",
+                                    "/optimized_gallery/gallery_39.webp"
                                 ].map((img, i) => (
                                     <div key={i} className="w-[200px] md:w-[300px] aspect-[4/3] rounded-xl overflow-hidden border border-white/5 relative group flex-shrink-0">
-                                        <img src={img} alt={`Gallery Artwork ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                                        <img
+                                            src={img}
+                                            alt={`Gallery Artwork ${i}`}
+                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 backface-hidden"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
                                     </div>
                                 ))}
                             </motion.div>

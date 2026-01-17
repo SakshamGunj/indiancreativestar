@@ -55,7 +55,6 @@ const Index = () => {
                     <div className="hidden md:flex items-center gap-8 text-sm tracking-widest uppercase text-white/80 font-medium">
                         <button onClick={() => document.getElementById('about-daami')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">About Us</button>
                         <button onClick={() => document.getElementById('events-portfolio')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Events</button>
-                        <button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Art Shop</button>
                         <button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Contact</button>
                     </div>
 
@@ -81,13 +80,12 @@ const Index = () => {
                                         <div className="space-y-6 text-lg tracking-wider font-playfair">
                                             <button onClick={() => document.getElementById('about-daami')?.scrollIntoView({ behavior: 'smooth' })} className="block w-full text-left hover:text-[#D4AF37] transition-colors">About Us</button>
                                             <button onClick={() => document.getElementById('events-portfolio')?.scrollIntoView({ behavior: 'smooth' })} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Events</button>
-                                            <button onClick={() => navigate('/marketplace')} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Art Shop</button>
                                             <button onClick={() => navigate('/contact-us')} className="block w-full text-left hover:text-[#D4AF37] transition-colors">Contact</button>
 
                                             {/* Winter Art Royale Special Button */}
                                             <div className="pt-4 border-t border-white/10">
                                                 <button
-                                                    onClick={() => navigate('/winter-art-royale')}
+                                                    onClick={() => navigate('/winterartroyale/v2')}
                                                     className="w-full text-left group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-900/50 to-blue-800/50 border border-blue-500/30 p-4 transition-all hover:bg-blue-900"
                                                 >
                                                     <div className="relative z-10 flex items-center justify-between">
@@ -153,7 +151,7 @@ const Index = () => {
                     >
                         {/* W.A.R Button */}
                         <Button
-                            onClick={() => navigate('/winter-art-royale')}
+                            onClick={() => navigate('/winterartroyale/v2')}
                             className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white hover:text-blue-200 border border-blue-500/50 rounded-xl px-4 py-3 h-auto min-w-[320px] transition-all duration-300 relative overflow-visible group shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] hover:bg-blue-950 mt-4 md:mt-0"
                         >
                             {/* Live Badge - Top Left Border */}
@@ -271,66 +269,66 @@ const Index = () => {
             {/* 5. CURRENT EVENT SPOTLIGHT: Conversion */}
             <section id="events-section" className="py-32 px-6 relative overflow-hidden">
                 {/* Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none"></div>
 
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-10 order-2 lg:order-1">
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                    <span className="text-green-500 text-sm font-bold tracking-widest uppercase">Live Now</span>
+                                    <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                                    <span className="text-red-500 text-sm font-bold tracking-widest uppercase">Live Now</span>
                                 </div>
                                 <h2 className="font-playfair text-5xl md:text-6xl text-white leading-tight">
-                                    Indian Creative Star <br />
-                                    <span className="text-[#D4AF37]">Season 2</span>
+                                    Winter Art Royale <br />
+                                    <span className="text-blue-500">Season 2</span>
                                 </h2>
                                 <p className="text-xl text-white/60 leading-relaxed max-w-lg">
-                                    The stage is bigger, the stakes are higher. Submit your artwork today and compete for India's most prestigious title.
+                                    The arena is open. The battle for artistic supremacy begins now. Submit your masterpiece and claim the Winter Crown.
                                 </p>
                             </div>
 
                             <div className="flex flex-col gap-4">
                                 <div className="flex items-center gap-4 text-white/80">
-                                    <Star className="w-6 h-6 text-[#D4AF37]" />
+                                    <Star className="w-6 h-6 text-blue-500" />
                                     <span className="text-lg">₹50,000 Prize Pool</span>
                                 </div>
                                 <div className="flex items-center gap-4 text-white/80">
-                                    <Award className="w-6 h-6 text-[#D4AF37]" />
+                                    <Award className="w-6 h-6 text-blue-500" />
                                     <span className="text-lg">National Certificate for All Participants</span>
                                 </div>
                             </div>
 
                             <div className="flex flex-wrap gap-4 pt-4">
                                 <Button
-                                    onClick={() => navigate('/indiancreativestar/v2')}
-                                    className="bg-white text-black hover:bg-[#D4AF37] hover:text-white rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
+                                    onClick={() => navigate('/winterartroyale/v2')}
+                                    className="bg-white text-black hover:bg-blue-600 hover:text-white rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
                                 >
-                                    I am an Artist
+                                    Enter the Arena
                                 </Button>
                                 <Button
-                                    onClick={() => navigate('/indiancreativestar/v2')}
-                                    className="bg-transparent border border-white/20 text-white hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
+                                    onClick={() => navigate('/winterartroyale/v2')}
+                                    className="bg-transparent border border-white/20 text-white hover:bg-blue-600 hover:border-blue-600 hover:text-white rounded-none px-8 py-6 text-lg font-playfair min-w-[200px] transition-all"
                                 >
-                                    I am a Parent
+                                    View Battle Plan
                                 </Button>
                             </div>
                         </div>
 
-                        <div className="order-1 lg:order-2 relative group cursor-pointer" onClick={() => navigate('/indiancreativestar/v2')}>
-                            <div className="absolute inset-0 bg-[#D4AF37] transform rotate-6 rounded-2xl opacity-20 group-hover:rotate-12 transition-transform duration-500"></div>
+                        <div className="order-1 lg:order-2 relative group cursor-pointer" onClick={() => navigate('/winterartroyale/v2')}>
+                            <div className="absolute inset-0 bg-blue-600 transform rotate-6 rounded-2xl opacity-20 group-hover:rotate-12 transition-transform duration-500"></div>
                             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] border border-white/10 shadow-2xl">
                                 <img
-                                    src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop"
-                                    alt="Season 2 Poster"
+                                    src="https://i.ibb.co/Ldq3TDDB/Winter-Art-Royale-W-A-R-Logo.jpg"
+                                    alt="Winter Art Royale Season 2"
                                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 flex flex-col justify-end p-8">
-                                    <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-[#D4AF37]/30">
-                                        <Play className="w-6 h-6 text-black fill-current ml-1" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+                                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-600/30">
+                                        <Play className="w-6 h-6 text-white fill-current ml-1" />
                                     </div>
                                     <p className="font-playfair text-2xl text-white">Watch Trailer</p>
-                                    <p className="text-white/60 text-sm mt-2">Discover what awaits you in Season 2</p>
+                                    <p className="text-white/60 text-sm mt-2">Witness the glory of Season 2</p>
                                 </div>
                             </div>
                         </div>
@@ -363,7 +361,6 @@ const Index = () => {
                         <ul className="space-y-4 text-sm">
                             <li><button onClick={() => navigate('/')} className="hover:text-[#D4AF37]">Home</button></li>
                             <li><button onClick={() => navigate('/indiancreativestar/v2')} className="hover:text-[#D4AF37]">Competitions</button></li>
-                            <li><button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37]">Art Shop</button></li>
                             <li><button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37]">Contact</button></li>
                         </ul>
                     </div>

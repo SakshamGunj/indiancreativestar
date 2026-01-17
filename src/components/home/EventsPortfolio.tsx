@@ -4,6 +4,41 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import EventDrawer from "./EventDrawer";
 
+const icsReviews = [
+    { name: "Aarav Sharma", rating: 5, comment: "This competition was a turning point in my artistic journey. The exposure and recognition I received were incredible.", verified: true },
+    { name: "Priya Singh", rating: 5, comment: "A fantastic platform to connect with other artists and learn from their experiences. Highly recommended!", verified: true },
+    { name: "Rohan Verma", rating: 4, comment: "The entire experience was so well-organized. I'm already looking forward to the next season!", verified: true },
+    { name: "Ananya Gupta", rating: 5, comment: "Winning the category award changed my career trajectory. Thank you Indian Creative Star!", verified: true },
+    { name: "Rahul Mehta", rating: 5, comment: "Such a professional event. The judges were very fair and the feedback was constructive.", verified: true }
+];
+
+const scsReviews = [
+    { name: "Ojashwi Pakhrin", rating: 4, comment: "Thank you for this wonderful opportunity to represent myself. In my opinion next time there should also be a second and third place in the kids category.", verified: true },
+    { name: "Kewal Rai", rating: 4, comment: "You guys are doing great just keep organising competition like this so artist's can improve more", verified: true },
+    { name: "Biswajyoti Sarma", rating: 5, comment: "Good experience", verified: true },
+    { name: "Satish Paswan", rating: 5, comment: "It was a wonderful experience participating in this creative art competition. The platform gave artists like me an opportunity to express our creativity.", verified: true },
+    { name: "Nimesh Rai", rating: 5, comment: "This competition was a wonderful experience for me. I not only got a chance to showcase my art but also learned so much throughout the journey.", verified: true },
+    { name: "Gracy Kami (Ghimiray)", rating: 5, comment: "Thank you for giving us this opportunity 🙏🙏 I really enjoyed it ☺️ I want to participate in future also.", verified: true },
+];
+
+const icsHallOfFame = [
+    { name: "Aarav Sharma", category: "Oil Painting • Category A", image: "/artworks/artwork_1.jpg" },
+    { name: "Priya Singh", category: "Digital Art • Category B", image: "/artworks/artwork_2.jpg" }
+];
+
+const scsHallOfFame = [
+    { name: "Ojashwi Pakhrin", category: "Sketching • Category A", image: "/artworks/artwork_3.jpg" },
+    { name: "Kewal Rai", category: "Watercolors • Category B", image: "/artworks/artwork_4.jpg" }
+];
+
+const highlightsGalore = [
+    "/artworks/artwork_5.jpg",
+    "/artworks/artwork_6.jpg",
+    "/artworks/artwork_7.jpg",
+    "/artworks/artwork_1.jpg",
+    "/artworks/artwork_2.jpg"
+];
+
 const eventData = [
     {
         id: 1,
@@ -30,32 +65,9 @@ const eventData = [
         image: "https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp",
         link: "#",
         color: "text-blue-400 border-blue-400",
-        reviews: [
-            { name: "Ojashwi Pakhrin", rating: 4, comment: "Thank you for this wonderful opportunity to represent myself. In my opinion next time there should also be a second and third place in the kids category.", verified: true },
-            { name: "Kewal Rai", rating: 4, comment: "You guys are doing great just keep organising competition like this so artist's can improve more", verified: true },
-            { name: "Biswajyoti Sarma", rating: 5, comment: "Good experience", verified: true },
-            { name: "Satish Paswan", rating: 5, comment: "It was a wonderful experience participating in this creative art competition. The platform gave artists like me an opportunity to express our creativity.", verified: true },
-            { name: "Nimesh Rai", rating: 5, comment: "This competition was a wonderful experience for me. I not only got a chance to showcase my art but also learned so much throughout the journey.", verified: true },
-            { name: "Gracy Kami (Ghimiray)", rating: 5, comment: "Thank you for giving us this opportunity 🙏🙏 I really enjoyed it ☺️ I want to participate in future also.", verified: true },
-            { name: "Shashi Bhusan Thakur", rating: 5, comment: "I got excellent platform for my Art work and recognise with all. Thank you so much.", verified: true },
-            { name: "Aakriti Thakur", rating: 5, comment: "Very good opportunity for kids, thank you.", verified: true },
-            { name: "Mngma Tamang", rating: 4, comment: "It was really good ,and it can help us to next competitive level thankyou to daami events", verified: true },
-            { name: "Pramita Pradhan", rating: 4, comment: "This was my first art competition, and as a beginner who loves painting, the experience has been truly wonderful.", verified: true },
-            { name: "Yonten Phuntshok Tamang", rating: 5, comment: "It was too good", verified: true }
-        ]
-    },
-    {
-        id: 3,
-        title: "Guru Art Program",
-        season: "Mentorship",
-        status: "open",
-        category: "Education",
-        description: "A specialized program for art teachers and schools to partner with Daami Event.",
-        date: "Registrations Open",
-        location: "Pan India",
-        image: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?q=80&w=1974&auto=format&fit=crop",
-        link: "/guru/portal",
-        color: "text-[#D4AF37] border-[#D4AF37]"
+        reviews: scsReviews,
+        hallOfFame: scsHallOfFame,
+        highlights: highlightsGalore
     }
 ];
 
@@ -100,7 +112,23 @@ const EventsPortfolio = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Sikkim Creative Star S1 */}
                     <div
-                        onClick={() => { setSelectedEvent({ ...eventData[1], status: 'past', title: 'Sikkim Creative Star S1', season: 'Season 1', description: 'The inaugural season that started it all.', date: 'Completed 2023', image: 'https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp' }); setIsDrawerOpen(true); }}
+                        onClick={() => {
+                            setSelectedEvent({
+                                ...eventData[1],
+                                status: 'past',
+                                title: 'Sikkim Creative Star S1',
+                                season: 'Season 1',
+                                description: 'The inaugural season that highlighted the raw talent of Sikkim. Over 500 artists participated across the state, showcasing incredible creativity in sketching, painting, and digital art. It was a celebration of local culture and artistic expression.',
+                                date: 'Completed 2023',
+                                image: 'https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp',
+                                stats: [
+                                    { label: "Artists Joined", value: "500+" },
+                                    { label: "Prize Pool", value: "₹1 Lakh+" },
+                                    { label: "Cities", value: "20+" }
+                                ]
+                            });
+                            setIsDrawerOpen(true);
+                        }}
                         className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
                     >
                         <div className="relative aspect-video w-full overflow-hidden">
@@ -148,7 +176,23 @@ const EventsPortfolio = () => {
 
                     {/* Indian Creative Star S1 */}
                     <div
-                        onClick={() => { setSelectedEvent({ ...eventData[0], status: 'past', title: 'Indian Creative Star S1', season: 'Season 1', description: 'The first national edition bringing artists together.', date: 'Completed 2024', image: 'https://i.ibb.co/qL29ZCrV/THE-Shakespeare-Poetry-Award-2025-2.webp' }); setIsDrawerOpen(true); }}
+                        onClick={() => {
+                            setSelectedEvent({
+                                ...eventData[0],
+                                status: 'past',
+                                title: 'Indian Creative Star S1',
+                                season: 'Season 1',
+                                description: 'A national phenomenon that brought together artists from every corner of India. From Kashmir to Kanyakumari, thousands of creators submitted their masterpieces, making it one of the largest online art competitions in the country.',
+                                date: 'Completed 2024',
+                                image: 'https://i.ibb.co/qL29ZCrV/THE-Shakespeare-Poetry-Award-2025-2.webp',
+                                stats: [
+                                    { label: "Artists Joined", value: "12,000+" },
+                                    { label: "Prize Pool", value: "₹5 Lakh+" },
+                                    { label: "Reach", value: "Pan India" }
+                                ]
+                            });
+                            setIsDrawerOpen(true);
+                        }}
                         className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
                     >
                         <div className="relative aspect-video w-full overflow-hidden">
@@ -231,8 +275,8 @@ const EventsPortfolio = () => {
                 </div>
             </div>
 
-            {/* 3. UPCOMING EVENTS - "The Future" */}
-            <div className="max-w-7xl mx-auto space-y-12">
+            {/* 3. UPCOMING EVENTS - Hidden as per request */}
+            {/* <div className="max-w-7xl mx-auto space-y-12">
                 <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
                     <div className="space-y-4">
                         <h4 className="text-[#D4AF37] tracking-[0.2em] text-xs font-bold uppercase">Coming Soon</h4>
@@ -271,7 +315,7 @@ const EventsPortfolio = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <EventDrawer
                 isOpen={isDrawerOpen}

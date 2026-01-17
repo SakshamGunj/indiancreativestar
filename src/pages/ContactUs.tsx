@@ -16,7 +16,7 @@ const ContactUs: React.FC = () => {
           </div>
           <div className="rounded-lg border border-white/10 p-4 bg-white/5">
             <h2 className="font-semibold mb-2">Phone/WhatsApp</h2>
-            <p>+91 9635908358</p>
+            <p>+91 96359 08358</p>
           </div>
         </div>
 

@@ -28,7 +28,6 @@ const About = () => {
                     <div className="hidden md:flex items-center gap-8 text-sm tracking-widest uppercase text-white/80 font-medium">
                         <button onClick={() => navigate('/about')} className="text-[#D4AF37] transition-colors duration-300 relative group">About Us</button>
                         <button onClick={() => navigate('/#events-portfolio')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Events</button>
-                        <button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Art Shop</button>
                         <button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37] transition-colors duration-300 relative group">Contact</button>
                     </div>
 
@@ -50,7 +49,6 @@ const About = () => {
                                     <div className="flex flex-col gap-6 mt-8">
                                         <button onClick={() => navigate('/about')} className="text-xl font-playfair text-[#D4AF37] text-left">About Us</button>
                                         <button onClick={() => navigate('/#events-portfolio')} className="text-xl font-playfair hover:text-[#D4AF37] text-left transition-colors">Events</button>
-                                        <button onClick={() => navigate('/marketplace')} className="text-xl font-playfair hover:text-[#D4AF37] text-left transition-colors">Art Shop</button>
                                         <button onClick={() => navigate('/contact-us')} className="text-xl font-playfair hover:text-[#D4AF37] text-left transition-colors">Contact</button>
                                         <Button onClick={() => navigate('/#events-portfolio')} className="mt-4 bg-[#D4AF37] text-black hover:bg-white border border-[#D4AF37] rounded-none w-full tracking-widest">
                                             PARTICIPATE NOW
@@ -91,7 +89,6 @@ const About = () => {
                         <ul className="space-y-4 text-sm">
                             <li><button onClick={() => navigate('/')} className="hover:text-[#D4AF37]">Home</button></li>
                             <li><button onClick={() => navigate('/indiancreativestar/v2')} className="hover:text-[#D4AF37]">Competitions</button></li>
-                            <li><button onClick={() => navigate('/marketplace')} className="hover:text-[#D4AF37]">Art Shop</button></li>
                             <li><button onClick={() => navigate('/contact-us')} className="hover:text-[#D4AF37]">Contact</button></li>
                         </ul>
                     </div>

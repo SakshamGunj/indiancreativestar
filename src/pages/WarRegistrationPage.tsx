@@ -329,7 +329,7 @@ export default function WarRegistrationPage() {
 
                                         // 🟢 PERISKOPE WHATSAPP NOTIFICATION
                                         try {
-                                            const PERISKOPE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCIgOiAiZDU3MTg4NDgtMTZiYy00MTY5LWIzNDgtMjI2Njk5Njk5OTU3IiwgInJvbGUiIDogImFwaSIsICJ0eXBlIiA6ICJhcGkiLCAibmFtZSIgOiAid2ludGVyYXJ0cm95YWxlIiwgImV4cCIgOiAyMDgzNTk2MDE2LCAiaWF0IiA6IDE3NjgwNjMyMTYsICJzdWIiIDogImE0ODQ0M2EyLWRmNzctNGU2OS1iY2VmLWMwZDk5MTdhMThmYSIsICJpc3MiIDogInBlcmlza29wZS5hcHAiLCAibWV0YWRhdGEiIDogeyJzY29wZXMiOiBbIjkxOTYzNTkwODM1OEBjLnVzIl19fQ.GDZOxp3R-VCw1M1nQvV2goz5khdNPl4KpgC-l4-qcUM";
+                                            const PERISKOPE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCIgOiAiYTBhZWFmMDUtNWIyZC00ZjEyLWIxN2MtYTU3ZDY4ZWRhNTA3IiwgInJvbGUiIDogImFwaSIsICJ0eXBlIiA6ICJhcGkiLCAibmFtZSIgOiAiZGFhbWlldmVudCIsICJleHAiIDogMjA4Mzg0MTkzMSwgImlhdCIgOiAxNzY4MzA5MTMxLCAic3ViIiA6ICJlYTU1NzRhNC0wM2QyLTQzNzktODRjMC0zOTAxYTdkOGQwZTAiLCAiaXNzIiA6ICJwZXJpc2tvcGUuYXBwIiwgIm1ldGFkYXRhIiA6IHsic2NvcGVzIjogWyI5MTk2MzU5MDgzNThAYy51cyJdfX0.jeLLE6lEEztv1krpler0MKy9HrA3y6KT5tD8CbMJlMs";
                                             const senderPhone = "919635908358";
                                             const recipientPhone = `91${formData.phone}`;
 

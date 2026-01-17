@@ -88,7 +88,7 @@ const KitSection = () => {
                 {/* KIT CTA */}
                 <div className="mt-16 text-center">
                     <Button
-                        onClick={() => navigate('/winter-art-royale')}
+                        onClick={() => navigate('/winterartroyale/v2')}
                         className="bg-[#D4AF37] text-black hover:bg-[#B59530] font-playfair font-bold py-6 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(212,175,55,0.3)] transform hover:scale-105 transition-all"
                     >
                         Register Now & Get Your Kit

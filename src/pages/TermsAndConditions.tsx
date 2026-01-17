@@ -31,7 +31,7 @@ const TermsAndConditions: React.FC = () => {
             <li><strong>Type of Business:</strong> Event Management Company (Online & Offline Events)</li>
             <li><strong>Registered Address:</strong> Majitar, Sikkim – 737136, India</li>
             <li><strong>Official Email:</strong> <a className="text-blue-300 underline" href="mailto:daamievent@gmail.com">daamievent@gmail.com</a></li>
-            <li><strong>Contact Number/WhatsApp:</strong> +91 9635908358</li>
+            <li><strong>Contact Number/WhatsApp:</strong> +91 96359 08358</li>
             <li><strong>Support Hours:</strong> Monday–Saturday, 10:00 AM – 7:00 PM IST</li>
             <li><strong>Response SLA:</strong> Within 24–48 business hours</li>
             <li><strong>Governing Law:</strong> Laws of India; disputes subject to Sikkim jurisdiction</li>
@@ -96,7 +96,7 @@ const TermsAndConditions: React.FC = () => {
         <section className="space-y-2 text-white/90 mt-8">
           <h2 className="text-xl font-semibold">10. Contact Us</h2>
           <p><strong>Email:</strong> <a className="text-blue-300 underline" href="mailto:daamievent@gmail.com">daamievent@gmail.com</a></p>
-          <p><strong>Phone/WhatsApp:</strong> +91 9635908358</p>
+          <p><strong>Phone/WhatsApp:</strong> +91 96359 08358</p>
           <p><strong>Business Address:</strong> Majitar, Sikkim – 737136, India</p>
           <p><strong>Instagram:</strong> <a className="text-blue-300 underline" href="https://www.instagram.com/daamievent/" target="_blank" rel="noreferrer">Daami Event</a></p>
         </section>

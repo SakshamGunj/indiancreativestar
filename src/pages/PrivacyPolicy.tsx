@@ -105,7 +105,7 @@ const PrivacyPolicy: React.FC = () => {
         <section className="space-y-2 text-white/90 mt-8">
           <h2 className="text-xl font-semibold">11. Contact Us</h2>
           <p>Email: <a className="text-blue-300 underline" href="mailto:daamievent@gmail.com">daamievent@gmail.com</a></p>
-          <p>Phone/WhatsApp: +91 9635908358</p>
+          <p>Phone/WhatsApp: +91 96359 08358</p>
           <p>Address: Majitar, Sikkim – 737136, India</p>
         </section>
       </div>

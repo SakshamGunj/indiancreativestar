@@ -15,6 +15,7 @@ import { GalleryPage } from "./pages/GalleryPage"; // Import the new GalleryPage
 import SikkimCreativeStar from "./pages/SikkimCreativeStar";
 import IndexV2 from "./pages/v2/IndexV2";
 import IndexV3 from "./pages/v3/IndexV3";
+// V2 Pages are now Lazy Loaded locally
 import WinterArtRoyale from "./pages/WinterArtRoyale";
 import WinterAdmin from "./pages/WinterAdmin";
 import WarThankYou from "./pages/WarThankYou";
@@ -47,8 +48,13 @@ import GuruDashboard from "./pages/guru/GuruDashboard";
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
+
+const WinterArtRoyaleV2 = lazy(() => import("./pages/WinterArtRoyaleV2")); // V2 Page Lazy
+const WarRegistrationPageV2 = lazy(() => import("./pages/WarRegistrationPageV2")); // V2 Registration Lazy
+const WarThankYouV2 = lazy(() => import("./pages/WarThankYouV2")); // V2 Thank You Lazy
+const WarSubmission = lazy(() => import("./pages/WarSubmission")); // New Premium Submission Flow
 
 const queryClient = new QueryClient();
 
@@ -66,8 +72,9 @@ const App = () => {
 
   // Trigger loader on route change
   useEffect(() => {
-    // Skip loader for registration page
-    if (location.pathname === '/winter-art-royale/register') {
+    // Skip loader for registration pages
+    const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you'];
+    if (excludedPaths.includes(location.pathname)) {
       setAppLoading(false);
       return;
     }
@@ -135,7 +142,40 @@ const App = () => {
   };
 
   // Show loading state
-  if ((isCheckingLaunchStatus || appLoading) && location.pathname !== '/winter-art-royale/register') {
+  const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission'];
+  if ((isCheckingLaunchStatus || appLoading) && !excludedPaths.includes(location.pathname)) {
+    const isV2 = location.pathname.startsWith('/winterartroyale/v2');
+
+    if (isV2) {
+      // White Theme Loader for V2
+      return (
+        <div className="min-h-screen bg-white flex flex-col items-center justify-center relative overflow-hidden font-sans">
+          <div className="text-center z-10 space-y-6 max-w-md w-full px-6">
+            <div className="mb-8 relative flex justify-center">
+              <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full"></div>
+              <h1 className="relative font-heading text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
+                DAAMI EVENT
+              </h1>
+            </div>
+
+            {/* Simple Progress Bar (Blue) */}
+            <div className="w-full bg-slate-100 rounded-full h-1 overflow-hidden relative">
+              <div
+                className="h-full bg-blue-600 transition-all duration-300 ease-out"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+
+            <div className="flex justify-between items-center text-xs text-slate-400 font-bold tracking-widest uppercase">
+              <span>Loading...</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Default Dark Loader
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
         {/* Background Effects */}
@@ -201,6 +241,29 @@ const App = () => {
                   <Route path="/indiancreativestar/v3" element={<IndexV3 />} />
                   <Route path="/winter-art-royale" element={<WinterArtRoyale />} />
                   <Route path="/winter-art-royale/thank-you" element={<WarThankYou />} />
+                  <Route path="/winterartroyale/v2" element={
+                    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+                      <WinterArtRoyaleV2 />
+                    </Suspense>
+                  } />
+                  <Route path="/winterartroyale/v2/register" element={
+                    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+                      <WarRegistrationPageV2 />
+                    </Suspense>
+                  } />
+                  <Route path="/winterartroyale/v2/thank-you" element={
+                    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+                      <WarThankYouV2 />
+                    </Suspense>
+                  } />
+
+                  {/* NEW Premium Submission Page */}
+                  <Route path="/winterartroyale/submission" element={
+                    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+                      <WarSubmission />
+                    </Suspense>
+                  } />
+
                   <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
                   <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
                   <Route path="/winter-art-royale/register" element={<WarRegistrationPage />} />
@@ -246,7 +309,7 @@ const App = () => {
           </div>
 
           {/* Launch Screen - Overlays everything */}
-          {showLaunchScreen && <LaunchScreen onLaunch={handleLaunch} />}
+          {showLaunchScreen && !['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission'].includes(location.pathname) && <LaunchScreen onLaunch={handleLaunch} />}
 
           {/* Transition overlay to ensure smooth handoff */}
           {isTransitioning && (
