@@ -265,7 +265,7 @@ const App = () => {
                   } />
 
                   <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
-                  <Route path="/winterartroyale/event/elte/admin" element={<WinterAdmin />} />
+
                   <Route path="/winter-art-royale/register" element={<WarRegistrationPage />} />
                   <Route path="/partnership-indiancreativestar" element={<PartnershipIndianCreativeStar />} />
                   <Route path="/admin/export" element={<AdminExport />} />

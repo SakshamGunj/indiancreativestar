@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, Loader2, ChevronRight, Upload, Trophy, ShieldCheck, Crown, Star } from "lucide-react";
+import { CheckCircle, Loader2, ChevronRight, Upload, Trophy, ShieldCheck, Crown, Star, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { uploadToSupabase } from "@/lib/storage";
 import { addArtworkSubmission } from "@/lib/db";
@@ -83,6 +83,10 @@ export default function WarSubmission() {
 
             setFiles(prev => [...prev, ...newFiles]);
         }
+    };
+
+    const removeFile = (index: number) => {
+        setFiles(prev => prev.filter((_, i) => i !== index));
     };
 
     const handlePayment = async () => {
@@ -216,6 +220,17 @@ export default function WarSubmission() {
 
             setFinalizingStep(1); // Submitting Artworks (Animation)
 
+            // 1.5 UPLOAD FILES FROM INDEXED DB
+            // The files are waiting in IndexedDB. We need to upload them now.
+            const files = await getStoredFiles();
+            let uploadedUrls: string[] = [];
+
+            if (files && files.length > 0) {
+                uploadedUrls = await Promise.all(files.map(file => uploadToSupabase(file)));
+            } else {
+                console.warn("No files found in IndexedDB for upload.");
+            }
+
             // 2. Create DB Record NOW
             const selectedPlanDetails = PLANS.find(p => p.id === savedData.planId);
 
@@ -238,7 +253,7 @@ export default function WarSubmission() {
                 .update({
                     payment_status: 'PAID',
                     order_id: orderId,
-                    artwork_urls: savedData.uploadedUrls
+                    artworks: uploadedUrls
                 })
                 .eq('id', submissionRes.id);
 
@@ -254,7 +269,7 @@ export default function WarSubmission() {
                 phone: savedData.formData.phone, // Added phone
                 orderId: orderId,
                 planId: savedData.planId,
-                artworks: savedData.uploadedUrls, // Save the URLs!
+                artworks: uploadedUrls, // Save the actual URLs
                 timestamp: new Date().toISOString()
             };
             localStorage.setItem("war_completed_submission", JSON.stringify(completedData));
@@ -262,7 +277,7 @@ export default function WarSubmission() {
             setFinalizingStep(2); // Done
 
             // ⚡ UPDATE STATE FOR IMMEDIATE VIEW (Fixes generic placeholders)
-            setExistingArtworks(savedData.uploadedUrls || []);
+            setExistingArtworks(uploadedUrls || []);
             setExistingOrderId(orderId);
             // formData is already set, so name/plan will work fine.
 
@@ -554,30 +569,57 @@ export default function WarSubmission() {
                                         <span onClick={() => setStep(2)} className="text-xs font-bold text-blue-600 cursor-pointer hover:underline">Change Plan ({selectedPlan.name})</span>
                                     </div>
 
-                                    <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-slate-100 transition-colors">
+                                    <div className="grid grid-cols-2 gap-3 md:gap-4">
+                                        {/* Hidden Input Triggered by Cards */}
                                         <Input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden" id="file-upload" />
-                                        <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center gap-4">
-                                            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                                <Upload className="w-8 h-8 text-blue-600" />
-                                            </div>
-                                            <div>
-                                                <div className="text-lg font-bold text-slate-900">Click to Upload Artwork</div>
-                                                <p className="text-slate-500 text-sm">You can upload max {selectedPlan.maxArtworks} images.</p>
-                                            </div>
-                                        </label>
-                                    </div>
 
-                                    {files.length > 0 && (
-                                        <div className="space-y-2">
-                                            <h4 className="font-bold text-sm text-slate-700">Selected Files:</h4>
-                                            {files.map((f, i) => (
-                                                <div key={i} className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
-                                                    <span className="text-sm truncate max-w-[200px]">{f.name}</span>
-                                                    <span className="text-xs font-mono text-slate-400">{(f.size / 1024 / 1024).toFixed(2)} MB</span>
+                                        {[...Array(selectedPlan.maxArtworks || 1)].map((_, index) => {
+                                            const file = files[index];
+                                            return (
+                                                <div key={index} className="aspect-square relative group">
+                                                    {file ? (
+                                                        // FILLED SLOT
+                                                        <div className="w-full h-full rounded-xl overflow-hidden border-2 border-slate-200 relative bg-slate-900">
+                                                            <img
+                                                                src={URL.createObjectURL(file)}
+                                                                alt={file.name}
+                                                                className="w-full h-full object-cover opacity-90 transition-opacity group-hover:opacity-75"
+                                                            />
+                                                            <div className="absolute inset-x-0 bottom-0 bg-black/80 backdrop-blur-sm p-3 flex items-center justify-between">
+                                                                <div className="overflow-hidden">
+                                                                    <p className="text-white text-xs font-bold truncate">{file.name}</p>
+                                                                    <p className="text-slate-400 text-[10px] uppercase">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                                                </div>
+                                                                <button
+                                                                    onClick={(e) => { e.stopPropagation(); removeFile(index); }}
+                                                                    className="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-full transition-colors"
+                                                                >
+                                                                    <X className="w-4 h-4" />
+                                                                </button>
+                                                            </div>
+                                                            <div className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                                                Artwork {index + 1}
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        // EMPTY SLOT
+                                                        <label
+                                                            htmlFor="file-upload"
+                                                            className="w-full h-full rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 hover:bg-slate-100 hover:border-blue-400 hover:text-blue-600 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 text-slate-400"
+                                                        >
+                                                            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center border border-slate-200 group-hover:scale-110 transition-transform">
+                                                                <Upload className="w-6 h-6" />
+                                                            </div>
+                                                            <div className="text-center">
+                                                                <p className="text-sm font-bold group-hover:text-blue-600">Upload Artwork {index + 1}</p>
+                                                                <p className="text-[10px] uppercase tracking-wider opacity-60">Click to Select</p>
+                                                            </div>
+                                                        </label>
+                                                    )}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    )}
+                                            );
+                                        })}
+                                    </div>
 
                                     <div className="pt-4 border-t border-slate-100">
                                         <div className="flex justify-between items-center mb-4">

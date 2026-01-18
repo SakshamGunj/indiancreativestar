@@ -11,10 +11,9 @@ import ContactSection from "@/components/home/ContactSection";
 import KitSection from "@/components/home/KitSection";
 import HomeTestimonials from "@/components/home/HomeTestimonials";
 import { useRef } from "react";
+import companyLogo from "@/assets/images/company-logo.webp";
 
-
-
-
+// ... existing code ...
 
 const Index = () => {
     const navigate = useNavigate();
@@ -38,7 +37,7 @@ const Index = () => {
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
                         <div className="relative">
-                            <img src="/company-logo.webp" alt="Daami Event" className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border border-[#D4AF37]/50" />
+                            <img src={companyLogo} alt="Daami Event" className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border border-[#D4AF37]/50" />
                             <Snowflake className="absolute -top-1 -right-1 w-4 h-4 text-blue-400 animate-spin-slow bg-black/50 rounded-full p-0.5" />
                         </div>
                         <div>
@@ -50,6 +49,7 @@ const Index = () => {
                             </p>
                         </div>
                     </div>
+
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-8 text-sm tracking-widest uppercase text-white/80 font-medium">
@@ -103,11 +103,11 @@ const Index = () => {
                             </Sheet>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </div >
+            </nav >
 
             {/* 1. HERO SECTION: Grand Welcome */}
-            <header ref={targetRef} className="relative z-10 min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-12 md:pt-0">
+            < header ref={targetRef} className="relative z-10 min-h-[90vh] flex items-center justify-center px-4 md:px-6 overflow-hidden pt-12 md:pt-0" >
                 <motion.div style={{ opacity, scale }} className="text-center space-y-8 max-w-5xl mx-auto relative z-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -219,10 +219,10 @@ const Index = () => {
                         className="w-full h-full object-cover opacity-20"
                     />
                 </div>
-            </header>
+            </header >
 
             {/* 2. IDENTITY SECTION: Who We Are */}
-            <section id="about-section" className="py-24 px-6 relative">
+            < section id="about-section" className="py-24 px-6 relative" >
                 <div className="max-w-4xl mx-auto text-center space-y-12">
                     <div className="space-y-4">
                         <h2 className="font-playfair text-3xl md:text-4xl text-white">The Daami Event Philosophy</h2>
@@ -252,24 +252,24 @@ const Index = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* 2.5 TRUST SIGNALS */}
-            <TrustSection />
+            < TrustSection />
 
             {/* 3. ABOUT & LEGACY */}
-            <AboutSection />
+            < AboutSection />
 
             {/* 3.5 FEATURED ON */}
-            <FeaturedOn />
+            < FeaturedOn />
 
             {/* 4. EVENTS PORTFOLIO (Upcoming & Ongoing) */}
-            <EventsPortfolio />
+            < EventsPortfolio />
 
             {/* 5. CURRENT EVENT SPOTLIGHT: Conversion */}
-            <section id="events-section" className="py-32 px-6 relative overflow-hidden">
+            < section id="events-section" className="py-32 px-6 relative overflow-hidden" >
                 {/* Background Glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+                < div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none" ></div >
 
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -334,7 +334,7 @@ const Index = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* 6. CREATIVE SHOWCASE & TESTIMONIALS */}
             {/* 5.5 CREATIVE STAR KIT */}
@@ -390,7 +390,7 @@ const Index = () => {
         .font-playfair { font-family: 'Playfair Display', serif; }
         .font-lato { font-family: 'Lato', sans-serif; }
       `}</style>
-        </div>
+        </div >
     );
 };
 

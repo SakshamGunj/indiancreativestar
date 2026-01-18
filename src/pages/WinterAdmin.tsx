@@ -232,18 +232,18 @@ export default function WinterAdmin() {
                                             </TableCell>
                                             <TableCell>
                                                 <Badge className={`${reg.payment_status === 'PAID' || reg.payment_status === 'SUCCESS'
-                                                        ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                                                        : reg.payment_status === 'FAILED'
-                                                            ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                                                            : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+                                                    ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                                                    : reg.payment_status === 'FAILED'
+                                                        ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                                                        : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
                                                     } uppercase text-[10px]`}>
                                                     {reg.payment_status || 'PENDING'}
                                                 </Badge>
                                             </TableCell>
                                             <TableCell>
-                                                {reg.artwork_urls && reg.artwork_urls.length > 0 ? (
+                                                {reg.artworks && reg.artworks.length > 0 ? (
                                                     <div className="flex items-center gap-2">
-                                                        {reg.artwork_urls.map((url: string, index: number) => (
+                                                        {reg.artworks.map((url: string, index: number) => (
                                                             <Dialog key={index}>
                                                                 <DialogTrigger>
                                                                     <div className="w-10 h-10 rounded bg-white/10 overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
@@ -261,7 +261,7 @@ export default function WinterAdmin() {
                                                                 </DialogContent>
                                                             </Dialog>
                                                         ))}
-                                                        <span className="text-xs text-white/40">({reg.artwork_urls.length})</span>
+                                                        <span className="text-xs text-white/40">({reg.artworks.length})</span>
                                                     </div>
                                                 ) : (
                                                     <span className="text-white/20 text-xs italic">No Artworks</span>

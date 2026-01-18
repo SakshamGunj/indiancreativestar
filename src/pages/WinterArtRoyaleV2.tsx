@@ -7,23 +7,45 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+// 🖼️ Asset Imports (Production Safe)
+import companyLogo from "@/assets/images/company-logo.webp";
+import warLogo from "@/assets/optimized_assets/war_logo_v2.webp";
+import daamiLogo from "@/assets/optimized_assets/daami_logo.webp";
+import founderPhoto from "@/assets/optimized_assets/founder_photo.webp";
+
 const WinterArtRoyaleV2 = () => {
-    // Optimized images array (same as used in V1)
+    // 📦 Dynamic Asset Loader
+    const galleryAssets = import.meta.glob('@/assets/optimized_gallery/*.webp', { eager: true, import: 'default' });
+    const miscAssets = import.meta.glob('@/assets/optimized_assets/*.webp', { eager: true, import: 'default' });
+
+    const getGallery = (filename: string) => {
+        const key = Object.keys(galleryAssets).find(k => k.endsWith(filename));
+        return key ? (galleryAssets[key] as string) : filename;
+    };
+
+    // Helper for arrays of filenames
+    const getAsset = (filename: string) => {
+        const key = Object.keys(miscAssets).find(k => k.endsWith(filename));
+        return key ? (miscAssets[key] as string) : filename;
+    };
+
+
+    // Optimized images array (Mapped to imports)
     const galleryImages = [
-        "/optimized_gallery/gallery_1.webp", "/optimized_gallery/gallery_2.webp", "/optimized_gallery/gallery_3.webp",
-        "/optimized_gallery/gallery_4.webp", "/optimized_gallery/gallery_5.webp", "/optimized_gallery/gallery_6.webp",
-        "/optimized_gallery/gallery_7.webp", "/optimized_gallery/gallery_8.webp", "/optimized_gallery/gallery_9.webp",
-        "/optimized_gallery/gallery_10.webp", "/optimized_gallery/gallery_11.webp", "/optimized_gallery/gallery_12.webp",
-        "/optimized_gallery/gallery_13.webp", "/optimized_gallery/gallery_14.webp", "/optimized_gallery/gallery_15.webp",
-        "/optimized_gallery/gallery_16.webp", "/optimized_gallery/gallery_17.webp", "/optimized_gallery/gallery_18.webp",
-        "/optimized_gallery/gallery_19.webp", "/optimized_gallery/gallery_20.webp", "/optimized_gallery/gallery_21.webp",
-        "/optimized_gallery/gallery_22.webp", "/optimized_gallery/gallery_23.webp", "/optimized_gallery/gallery_24.webp",
-        "/optimized_gallery/gallery_25.webp", "/optimized_gallery/gallery_26.webp", "/optimized_gallery/gallery_27.webp",
-        "/optimized_gallery/gallery_28.webp", "/optimized_gallery/gallery_29.webp", "/optimized_gallery/gallery_30.webp",
-        "/optimized_gallery/gallery_31.webp", "/optimized_gallery/gallery_32.webp", "/optimized_gallery/gallery_33.webp",
-        "/optimized_gallery/gallery_34.webp", "/optimized_gallery/gallery_35.webp", "/optimized_gallery/gallery_36.webp",
-        "/optimized_gallery/gallery_37.webp", "/optimized_gallery/gallery_38.webp", "/optimized_gallery/gallery_39.webp"
-    ];
+        "gallery_1.webp", "gallery_2.webp", "gallery_3.webp",
+        "gallery_4.webp", "gallery_5.webp", "gallery_6.webp",
+        "gallery_7.webp", "gallery_8.webp", "gallery_9.webp",
+        "gallery_10.webp", "gallery_11.webp", "gallery_12.webp",
+        "gallery_13.webp", "gallery_14.webp", "gallery_15.webp",
+        "gallery_16.webp", "gallery_17.webp", "gallery_18.webp",
+        "gallery_19.webp", "gallery_20.webp", "gallery_21.webp",
+        "gallery_22.webp", "gallery_23.webp", "gallery_24.webp",
+        "gallery_25.webp", "gallery_26.webp", "gallery_27.webp",
+        "gallery_28.webp", "gallery_29.webp", "gallery_30.webp",
+        "gallery_31.webp", "gallery_32.webp", "gallery_33.webp",
+        "gallery_34.webp", "gallery_35.webp", "gallery_36.webp",
+        "gallery_37.webp", "gallery_38.webp", "gallery_39.webp"
+    ].map(name => getGallery(name));
 
     const { scrollYProgress } = useScroll();
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -45,17 +67,17 @@ const WinterArtRoyaleV2 = () => {
         let originalIcon = '';
         if (link) {
             originalIcon = link.href;
-            link.href = '/optimized_assets/war_logo_v2.webp';
+            link.href = warLogo;
         }
 
         // 3. Update Meta Tags (Open Graph for WhatsApp/Insta)
         const metaTags = {
             'og:title': "Winter Art Royale - Art Competition",
             'og:description': "Join India's National Art Contest. Prize Pool ₹2 Lakhs+. Register Now!",
-            'og:image': "/optimized_assets/war_logo_v2.webp",
+            'og:image': warLogo,
             'twitter:title': "Winter Art Royale - Art Competition",
             'twitter:description': "Join India's National Art Contest. Prize Pool ₹2 Lakhs+. Register Now!",
-            'twitter:image': "/optimized_assets/war_logo_v2.webp"
+            'twitter:image': warLogo
         };
 
         const originalMeta: Record<string, string> = {};
@@ -123,7 +145,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                     {/* Brand */}
                     <Link to="/" className="flex items-center gap-3 group">
                         <div className="relative">
-                            <img src="/company-logo.webp" alt="Daami Event" className="h-14 w-14 md:h-10 md:w-10 object-cover rounded-full border border-slate-200 shadow-sm" />
+                            <img src={companyLogo} alt="Daami Event" className="h-14 w-14 md:h-10 md:w-10 object-cover rounded-full border border-slate-200 shadow-sm" />
                             <Snowflake className="absolute -top-1 -right-1 w-3.5 h-3.5 text-blue-500 animate-spin-slow bg-white rounded-full p-0.5 shadow-sm" />
                         </div>
                         <div>
@@ -214,7 +236,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                     <div className="space-y-6 relative z-10 text-center lg:text-left">
                         {/* Logo & Live Badge Row */}
                         <div className="flex items-center justify-center lg:justify-start gap-4">
-                            <img src="/optimized_assets/war_logo_v2.webp" alt="W.A.R Logo" className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-slate-200 shadow-lg" />
+                            <img src={warLogo} alt="W.A.R Logo" className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-slate-200 shadow-lg" />
                             <div className="hidden md:inline-flex items-center gap-2 px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full animate-pulse">
                                 <span className="w-2 h-2 bg-white rounded-full"></span> Registration Open
                             </div>
@@ -251,15 +273,15 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                                 {/* Artist Avatar Stack */}
                                 <div className="flex -space-x-4">
                                     {[
-                                        "/optimized_assets/avatar_v2_1.webp",
-                                        "/optimized_assets/avatar_v2_2.webp",
-                                        "/optimized_assets/avatar_v2_3.webp",
-                                        "/optimized_assets/avatar_v2_4.webp",
-                                        "/optimized_assets/avatar_v2_5.webp",
-                                        "/optimized_assets/avatar_v2_6.webp"
+                                        "avatar_v2_1.webp",
+                                        "avatar_v2_2.webp",
+                                        "avatar_v2_3.webp",
+                                        "avatar_v2_4.webp",
+                                        "avatar_v2_5.webp",
+                                        "avatar_v2_6.webp"
                                     ].map((img, i) => (
                                         <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden relative" title="Artist">
-                                            <img src={img} className="w-full h-full object-cover" alt="Artist" />
+                                            <img src={getAsset(img)} className="w-full h-full object-cover" alt="Artist" />
                                         </div >
                                     ))}
                                     <div className="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-bold">
@@ -309,7 +331,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                             <div className="w-48 h-48 md:w-64 md:h-64 bg-white rounded-full shadow-2xl flex items-center justify-center p-3 border-[8px] border-white/80 backdrop-blur-sm">
                                 <img
-                                    src="/optimized_assets/war_logo_v2.webp"
+                                    src={warLogo}
                                     className="w-full h-full rounded-full object-cover border border-slate-100 shadow-inner"
                                     alt="Winter Art Royale Logo"
                                 />
@@ -485,7 +507,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                                         <span className="font-bold text-slate-700">Excellence</span>
                                     </div>
                                     <div className="rounded-xl overflow-hidden border border-slate-200 shadow-md group/cert-exc relative">
-                                        <img src="/optimized_assets/cert_excellence.webp" alt="WAR Certificate of Creative Excellence" className="w-full object-cover transform group-hover/cert-exc:scale-105 transition-transform duration-500" />
+                                        <img src={getAsset("cert_excellence.webp")} alt="WAR Certificate of Creative Excellence" className="w-full object-cover transform group-hover/cert-exc:scale-105 transition-transform duration-500" />
                                         <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[10px] p-2 text-center font-bold">WAR Certificate of Creative Excellence</div>
                                     </div>
                                 </div>
@@ -496,7 +518,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                                         <span className="font-bold text-slate-700">Participation Certificate</span>
                                     </div>
                                     <div className="rounded-xl overflow-hidden border border-slate-200 shadow-md group/cert-part relative">
-                                        <img src="/optimized_assets/cert_participation.webp" alt="WAR Certificate of Participation" className="w-full object-cover transform group-hover/cert-part:scale-105 transition-transform duration-500" />
+                                        <img src={getAsset("cert_participation.webp")} alt="WAR Certificate of Participation" className="w-full object-cover transform group-hover/cert-part:scale-105 transition-transform duration-500" />
                                         <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-[10px] p-2 text-center font-bold">WAR Certificate of Participation</div>
                                     </div>
                                 </div>
@@ -511,7 +533,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                                 <p className="text-slate-500 mb-6 italic">Your professional identity within the Daami ecosystem.</p>
 
                                 <div className="my-auto rounded-xl overflow-hidden border border-slate-200 shadow-xl group/idcard relative w-full max-w-sm mx-auto">
-                                    <img src="/optimized_assets/artist_id_card.webp" alt="Winter art riyal ID card" className="w-full object-cover transform group-hover/idcard:scale-105 transition-transform duration-500" />
+                                    <img src={getAsset("artist_id_card.webp")} alt="Winter art riyal ID card" className="w-full object-cover transform group-hover/idcard:scale-105 transition-transform duration-500" />
                                 </div>
                                 <div className="flex gap-3 justify-center mt-6">
                                     <div className="px-4 py-2 rounded-full bg-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider">National Level</div>
@@ -557,21 +579,21 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                         transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                     >
                         {[
-                            "/optimized_assets/recognition_1.webp",
-                            "/optimized_assets/recognition_2.webp",
-                            "/optimized_assets/recognition_3.webp",
-                            "/optimized_assets/recognition_1.webp",
-                            "/optimized_assets/recognition_2.webp",
-                            "/optimized_assets/recognition_3.webp",
-                            "/optimized_assets/recognition_1.webp",
-                            "/optimized_assets/recognition_2.webp",
-                            "/optimized_assets/recognition_3.webp",
-                            "/optimized_assets/recognition_1.webp",
-                            "/optimized_assets/recognition_2.webp",
-                            "/optimized_assets/recognition_3.webp"
-                        ].map((imgUrl, i) => (
+                            "recognition_1.webp",
+                            "recognition_2.webp",
+                            "recognition_3.webp",
+                            "recognition_1.webp",
+                            "recognition_2.webp",
+                            "recognition_3.webp",
+                            "recognition_1.webp",
+                            "recognition_2.webp",
+                            "recognition_3.webp",
+                            "recognition_1.webp",
+                            "recognition_2.webp",
+                            "recognition_3.webp"
+                        ].map((imgName, i) => (
                             <div key={i} className="w-[280px] md:w-[350px] aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 shadow-lg relative group transition-all flex-shrink-0 bg-white">
-                                <img src={imgUrl} alt={`Recognition Mockup ${i}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                <img src={getAsset(imgName)} alt={`Recognition Mockup ${i}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                                 <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded">Mockup {i}</div>
                             </div>
                         ))}
@@ -603,22 +625,22 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                             transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                         >
                             {[
-                                "/optimized_assets/kit_1.webp",
-                                "/optimized_assets/kit_2.webp",
-                                "/optimized_assets/kit_3.webp",
-                                "/optimized_assets/kit_4.webp",
-                                "/optimized_assets/kit_5.webp",
-                                "/optimized_assets/kit_6.webp"
+                                "kit_1.webp",
+                                "kit_2.webp",
+                                "kit_3.webp",
+                                "kit_4.webp",
+                                "kit_5.webp",
+                                "kit_6.webp"
                             ].concat([
-                                "/optimized_assets/kit_1.webp",
-                                "/optimized_assets/kit_2.webp",
-                                "/optimized_assets/kit_3.webp",
-                                "/optimized_assets/kit_4.webp",
-                                "/optimized_assets/kit_5.webp",
-                                "/optimized_assets/kit_6.webp"
+                                "kit_1.webp",
+                                "kit_2.webp",
+                                "kit_3.webp",
+                                "kit_4.webp",
+                                "kit_5.webp",
+                                "kit_6.webp"
                             ]).map((img, i) => (
                                 <div key={i} className="w-[160px] md:w-[240px] aspect-square rounded-2xl overflow-hidden border border-slate-200 shadow-sm group hover:shadow-lg transition-all flex-shrink-0 bg-white relative">
-                                    <img src={img} alt={`Kit Item ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 block" loading="lazy" />
+                                    <img src={getAsset(img)} alt={`Kit Item ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 block" loading="lazy" />
                                 </div>
                             ))}
                         </motion.div>
@@ -633,20 +655,20 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                             transition={{ repeat: Infinity, duration: 35, ease: "linear" }}
                         >
                             {[
-                                "/optimized_assets/kit_7.webp",
-                                "/optimized_assets/kit_8.webp",
-                                "/optimized_assets/kit_9.webp",
-                                "/optimized_assets/kit_10.webp",
-                                "/optimized_assets/kit_11.webp"
+                                "kit_7.webp",
+                                "kit_8.webp",
+                                "kit_9.webp",
+                                "kit_10.webp",
+                                "kit_11.webp"
                             ].concat([
-                                "/optimized_assets/kit_7.webp",
-                                "/optimized_assets/kit_8.webp",
-                                "/optimized_assets/kit_9.webp",
-                                "/optimized_assets/kit_10.webp",
-                                "/optimized_assets/kit_11.webp"
+                                "kit_7.webp",
+                                "kit_8.webp",
+                                "kit_9.webp",
+                                "kit_10.webp",
+                                "kit_11.webp"
                             ]).map((img, i) => (
                                 <div key={i} className="w-[160px] md:w-[240px] aspect-square rounded-2xl overflow-hidden border border-slate-200 shadow-sm group hover:shadow-lg transition-all flex-shrink-0 bg-white relative">
-                                    <img src={img} alt={`Kit Item ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 block" loading="lazy" />
+                                    <img src={getAsset(img)} alt={`Kit Item ${i}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 block" loading="lazy" />
                                 </div>
                             ))}
                         </motion.div>
@@ -656,7 +678,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
             {/* 🎯 KIT CTA (V2 Style) */}
             < div className="py-16 bg-white border-y border-slate-100 relative z-10 flex flex-col items-center gap-8 shadow-sm" >
-                <img src="/optimized_assets/war_logo_v2.webp" alt="W.A.R Logo" className="w-24 h-24 rounded-full border-4 border-slate-100 shadow-xl object-cover" />
+                <img src={warLogo} alt="W.A.R Logo" className="w-24 h-24 rounded-full border-4 border-slate-100 shadow-xl object-cover" />
                 <Link to="/winterartroyale/v2/register">
                     <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-8 px-12 rounded-full text-xl shadow-2xl hover:-translate-y-1 transition-all">
                         Register Now & Get Your Kit
@@ -671,7 +693,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-orange-700 text-xs font-bold tracking-widest uppercase">
                             <Sparkles className="w-3 h-3 fill-orange-700" /> The Organizers
                         </div>
-                        <img src="/optimized_assets/daami_logo.webp" alt="Daami Event Logo" className="w-20 h-20 rounded-full border-4 border-white shadow-xl mb-6 object-cover" />
+                        <img src={daamiLogo} alt="Daami Event Logo" className="w-20 h-20 rounded-full border-4 border-white shadow-xl mb-6 object-cover" />
                         <h2 className="text-3xl md:text-6xl font-black text-slate-900 leading-tight mb-6">
                             We are <span className="text-blue-600">Daami Event</span>
                         </h2>
@@ -708,7 +730,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                     </div>
 
                     <div className="relative h-[500px] md:h-[600px] rounded-[2rem] overflow-hidden shadow-2xl group">
-                        <img src="/optimized_assets/founder_photo.webp" alt="GT Dhungel Sir" className="absolute inset-0 w-full h-full object-cover object-top hover:scale-105 transition-transform duration-1000" />
+                        <img src={founderPhoto} alt="GT Dhungel Sir" className="absolute inset-0 w-full h-full object-cover object-top hover:scale-105 transition-transform duration-1000" />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90"></div>
                         <div className="absolute bottom-8 left-8 right-8 text-white z-10">
                             <div className="mb-6">
