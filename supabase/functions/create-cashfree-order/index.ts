@@ -14,11 +14,14 @@ serve(async (req) => {
     try {
         const { orderAmount, customerName, customerPhone, customerEmail, returnUrlBase } = await req.json()
 
-        // 🔴 THESE KEYS SHOULD BE IN YOUR .env OR SUPABASE SECRETS
-        // For now, using what you provided for the Sandbox
-        const APP_ID = "TEST43081579b14abcb389514d7571518034"
-        const SECRET_KEY = "TEST4d671e6275b581ff8679fec50d5088ee7d7d9a11"
-        const API_URL = "https://sandbox.cashfree.com/pg/orders"
+        // 🔴 Secrets are now managed via Supabase Secrets (Production Secure)
+        const APP_ID = Deno.env.get("CASHFREE_APP_ID")
+        const SECRET_KEY = Deno.env.get("CASHFREE_SECRET_KEY")
+        const API_URL = Deno.env.get("CASHFREE_API_URL") || "https://api.cashfree.com/pg/orders"
+
+        if (!APP_ID || !SECRET_KEY) {
+            throw new Error("Missing Cashfree Credentials in Edge Function Secrets")
+        }
 
         // Unique Order ID
         const orderId = `WAR_${Date.now()}_${Math.floor(Math.random() * 1000)}`
@@ -28,7 +31,7 @@ serve(async (req) => {
             headers: {
                 "x-client-id": APP_ID,
                 "x-client-secret": SECRET_KEY,
-                "x-api-version": "2023-08-01",
+                "x-api-version": "2025-01-01",
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },

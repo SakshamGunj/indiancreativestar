@@ -19,7 +19,12 @@ const PLANS = [
         name: "Rising Star",
         price: 299,
         maxArtworks: 1,
-        features: ["Submit 1 Masterpiece", "Digital Artist Certificate", "Participation Badge", "Official Entry"],
+        features: [
+            "Submit 1 Artwork",
+            "Get participation certificate ( Digital format )",
+            "Get creative excellence certificate ( Digital format )",
+            "Get artist id card ( Digital format )"
+        ],
         color: "blue",
         badge: "Entry Level"
     },
@@ -28,9 +33,17 @@ const PLANS = [
         name: "Elite Artist",
         price: 499,
         maxArtworks: 2,
-        features: ["Submit 2 Masterpieces", "Hardcopy Certificate (Sent Home)", "Verified Artist Batch", "Priority Jury Review", "Double Winning Chances"],
+        features: [
+            "Submit 2 Artworks",
+            "Get participation certificate ( Delivered to your home )",
+            "Get creative excellence certificate ( Delivered to your home )",
+            "Get your own Artist portfolio website",
+            "Get artist id card ( Digital format )",
+            "Get appreciation letter ( Delivered to your home )"
+        ],
         color: "yellow",
-        badge: "Best Value"
+        badge: "Best Value",
+        note: "Without any extra charges"
     }
 ];
 
@@ -39,6 +52,26 @@ export default function WarSubmission() {
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [loadingText, setLoadingText] = useState("Processing...");
+
+    // 🦁 Dynamic Metadata Manager (Favicon, Title)
+    React.useEffect(() => {
+        // 1. Update Title
+        const originalTitle = document.title;
+        document.title = "Submission Portal | Winter Art Royale";
+
+        // 2. Update Favicon
+        const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+        let originalIcon = '';
+        if (link) {
+            originalIcon = link.href;
+            link.href = 'https://i.ibb.co/Ldq3TDDB/Winter-Art-Royale-W-A-R-Logo.jpg';
+        }
+
+        return () => {
+            document.title = originalTitle;
+            if (link && originalIcon) link.href = originalIcon;
+        };
+    }, []);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -140,7 +173,7 @@ export default function WarSubmission() {
 
                 // Initialize Cashfree
                 const cashfree = new (window as any).Cashfree({
-                    mode: "sandbox" // Change to "production" when live
+                    mode: "production"
                 });
 
                 cashfree.checkout({
@@ -482,7 +515,7 @@ export default function WarSubmission() {
                             {/* STEP 1: IDENTITY */}
                             {step === 1 && (
                                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-                                    <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">Who are you, Artist?</h2>
+                                    <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">Fill your details</h2>
                                     <div className="grid gap-4">
                                         <div className="space-y-2">
                                             <Label>Full Name</Label>
@@ -521,40 +554,65 @@ export default function WarSubmission() {
                             {/* STEP 2: PLANS */}
                             {step === 2 && (
                                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-                                    <h2 className="text-2xl font-bold text-slate-900 border-b border-slate-100 pb-2">Select Your Tier</h2>
-                                    <div className="grid gap-4 md:grid-cols-2">
-                                        {PLANS.map(plan => (
-                                            <div key={plan.id} onClick={() => handleSelectPlan(plan.id)}
-                                                className={`cursor-pointer border-2 rounded-xl p-6 transition-all hover:scale-[1.01] relative overflow-hidden group
-                                                ${plan.color === 'yellow' ? 'border-yellow-400 bg-yellow-50/50 hover:bg-yellow-50' :
-                                                        plan.color === 'purple' ? 'border-purple-400 bg-purple-50/50 hover:bg-purple-50' :
-                                                            'border-blue-200 bg-white hover:border-blue-400'}`}>
+                                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                                        <h2 className="text-2xl font-bold text-slate-900">Select Your Tier</h2>
+                                        <span onClick={() => setStep(1)} className="text-xs font-bold text-slate-400 cursor-pointer hover:text-slate-900">Change Details</span>
+                                    </div>
 
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {PLANS.map((plan) => (
+                                            <div
+                                                key={plan.id}
+                                                onClick={() => handleSelectPlan(plan.id)}
+                                                className={`relative p-6 rounded-2xl border-2 transition-all cursor-pointer group ${plan.color === 'yellow'
+                                                    ? 'bg-gradient-to-br from-slate-900 to-slate-800 border-yellow-500 shadow-xl'
+                                                    : 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-lg'
+                                                    }`}
+                                            >
                                                 {plan.badge && (
-                                                    <div className={`absolute top-0 right-0 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white rounded-bl-lg
-                                                        ${plan.color === 'yellow' ? 'bg-yellow-600' : plan.color === 'purple' ? 'bg-purple-600' : 'bg-blue-600'}`}>
+                                                    <div className={`absolute -top-3 left-6 px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest ${plan.color === 'yellow' ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/50' : 'bg-blue-100 text-blue-600'}`}>
                                                         {plan.badge}
                                                     </div>
                                                 )}
 
                                                 <div className="flex justify-between items-start mb-4">
                                                     <div>
-                                                        <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
-                                                        <div className="text-sm text-slate-500 font-medium">{plan.maxArtworks} Artwork Submission(s)</div>
+                                                        <h3 className={`text-xl font-black ${plan.color === 'yellow' ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
+                                                        <p className={`text-xs font-bold uppercase tracking-wide ${plan.color === 'yellow' ? 'text-yellow-400' : 'text-slate-500'}`}>
+                                                            {plan.maxArtworks} Artwork Submission(s)
+                                                        </p>
                                                     </div>
                                                     <div className="text-right">
-                                                        <div className="text-2xl font-black text-slate-900">₹{plan.price}</div>
-                                                        <div className="text-[10px] text-slate-400 uppercase">per entry</div>
+                                                        <div className={`text-3xl font-black ${plan.color === 'yellow' ? 'text-white' : 'text-slate-900'}`}>₹{plan.price}</div>
+                                                        <div className={`text-[10px] uppercase font-bold tracking-wider ${plan.color === 'yellow' ? 'text-slate-400' : 'text-slate-400'}`}>per entry</div>
                                                     </div>
                                                 </div>
-                                                <ul className="space-y-2">
-                                                    {plan.features.map((feature, i) => (
-                                                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                                                            <CheckCircle className={`w-4 h-4 ${plan.color === 'yellow' ? 'text-yellow-600' : plan.color === 'purple' ? 'text-purple-600' : 'text-blue-500'}`} />
-                                                            {feature}
-                                                        </li>
-                                                    ))}
+
+                                                <ul className="space-y-3 mb-4">
+                                                    {plan.features.map((feature, idx) => {
+                                                        const isHomeDelivery = feature.toLowerCase().includes("delivered to");
+                                                        return (
+                                                            <li key={idx} className={`flex items-start gap-3 text-sm font-medium ${plan.color === 'yellow' ? 'text-slate-300' : 'text-slate-600'}`}>
+                                                                {isHomeDelivery ? (
+                                                                    <Trophy className={`w-4 h-4 flex-shrink-0 ${plan.color === 'yellow' ? 'text-yellow-400' : 'text-yellow-500'}`} />
+                                                                ) : (
+                                                                    <CheckCircle className={`w-4 h-4 flex-shrink-0 ${plan.color === 'yellow' ? 'text-blue-400' : 'text-blue-500'}`} />
+                                                                )}
+                                                                <span className={isHomeDelivery && plan.color === 'yellow' ? 'text-yellow-100 font-bold' : ''}>
+                                                                    {feature}
+                                                                </span>
+                                                            </li>
+                                                        );
+                                                    })}
                                                 </ul>
+
+                                                {plan.note && (
+                                                    <div className="mt-4 pt-4 border-t border-slate-700/50 text-center">
+                                                        <p className="text-yellow-400 text-xs font-bold uppercase tracking-widest animate-pulse">
+                                                            ✨ {plan.note} ✨
+                                                        </p>
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>

@@ -1123,17 +1123,17 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
                 <div className="max-w-7xl mx-auto columns-2 md:columns-4 gap-4 space-y-4 px-4 overflow-visible">
                     {[
-                        "/optimized_assets/snapshot_1.webp",
-                        "/optimized_assets/snapshot_2.webp",
-                        "/optimized_assets/snapshot_3.webp",
-                        "/optimized_assets/snapshot_4.webp",
-                        "/optimized_assets/snapshot_5.webp",
-                        "/optimized_assets/snapshot_6.webp",
-                        "/optimized_assets/snapshot_7.webp"
-                    ].map((imgUrl, i) => (
+                        "snapshot_1.webp",
+                        "snapshot_2.webp",
+                        "snapshot_3.webp",
+                        "snapshot_4.webp",
+                        "snapshot_5.webp",
+                        "snapshot_6.webp",
+                        "snapshot_7.webp"
+                    ].map((imgName, i) => (
                         <div key={i} className="break-inside-avoid rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all bg-white group relative">
                             <img
-                                src={imgUrl}
+                                src={getAsset(imgName)}
                                 alt={`User Review Snapshot ${i}`}
                                 className="w-full h-auto block"
                                 loading="lazy"
@@ -1235,7 +1235,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                         {/* Featured Large Image (First in Masonry) */}
                         <div className="break-inside-avoid relative group overflow-hidden rounded-3xl shadow-xl">
                             <img
-                                src="/optimized_assets/prize_ceremony_main.webp"
+                                src={getAsset("prize_ceremony_main.webp")}
                                 alt="Celebrating Excellence"
                                 className="w-full h-auto block transform group-hover:scale-105 transition-transform duration-700"
                             />
@@ -1247,16 +1247,16 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
                         {/* Other Moments */}
                         {[
-                            "/optimized_assets/prize_ceremony_1.webp",
-                            "/optimized_assets/prize_ceremony_2.webp",
-                            "/optimized_assets/prize_ceremony_3.webp",
-                            "/optimized_assets/prize_ceremony_4.webp",
-                            "/optimized_assets/prize_ceremony_5.webp",
-                            "/optimized_assets/prize_ceremony_6.webp"
-                        ].map((imgUrl, index) => (
+                            "prize_ceremony_1.webp",
+                            "prize_ceremony_2.webp",
+                            "prize_ceremony_3.webp",
+                            "prize_ceremony_4.webp",
+                            "prize_ceremony_5.webp",
+                            "prize_ceremony_6.webp"
+                        ].map((imgName, index) => (
                             <div key={index} className="break-inside-avoid relative group overflow-hidden rounded-2xl shadow-md">
                                 <img
-                                    src={imgUrl}
+                                    src={getAsset(imgName)}
                                     alt={`Ceremony Moment ${index + 1}`}
                                     className="w-full h-auto block transform group-hover:scale-105 transition-transform duration-700"
                                 />
@@ -1272,7 +1272,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
             {/* Final CTA */}
             < section className="py-12 md:py-24 px-4 md:px-6 text-center bg-white" >
                 <div className="max-w-3xl mx-auto space-y-8 flex flex-col items-center">
-                    <img src="/optimized_assets/war_logo_v2.webp" alt="W.A.R Logo" className="w-32 h-32 rounded-full border-4 border-slate-100 shadow-2xl object-cover mb-4" />
+                    <img src={warLogo} alt="W.A.R Logo" className="w-32 h-32 rounded-full border-4 border-slate-100 shadow-2xl object-cover mb-4" />
 
                     <h2 className="text-3xl md:text-6xl font-black text-slate-900 leading-tight">
                         Ready to make history?
