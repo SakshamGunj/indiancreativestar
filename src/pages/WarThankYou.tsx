@@ -105,7 +105,7 @@ const WarThankYou = () => {
                                     Join our WhatsApp group to get all further information, updates, and announcements about the competition.
                                 </p>
                                 <Button
-                                    onClick={() => window.open('https://chat.whatsapp.com/invite/FadPzypQUPiBSXr4CiqzoT', '_blank')}
+                                    onClick={() => window.open('https://chat.whatsapp.com/FM3NzzsaGSVJDEVJ0YXQdA', '_blank')}
                                     className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-6 rounded-xl shadow-lg shadow-green-900/20 group"
                                 >
                                     <span className="flex items-center gap-2">

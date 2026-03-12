@@ -51,10 +51,18 @@ import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/fire
 import { useEffect, useState, lazy, Suspense } from "react";
 import { RegistrationFlowModal } from "./components/RegistrationFlowModal";
 
-const WinterArtRoyaleV2 = lazy(() => import("./pages/WinterArtRoyaleV2")); // V2 Page Lazy
+const WinterArtRoyaleV2 = lazy(() => import("./pages/WinterArtRoyaleV2"));
+const WinterArtContestRegistration = lazy(() => import("./pages/WinterArtContestRegistration"));
+const WinterArtContest = lazy(() => import("./pages/WinterArtContest"));
+const WinterArtContestThankYou = lazy(() => import("./pages/WinterArtContestThankYou"));
+
+
+// ... in excludedPaths check ...
+const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register']; // V2 Page Lazy
 const WarRegistrationPageV2 = lazy(() => import("./pages/WarRegistrationPageV2")); // V2 Registration Lazy
 const WarThankYouV2 = lazy(() => import("./pages/WarThankYouV2")); // V2 Thank You Lazy
 const WarSubmission = lazy(() => import("./pages/WarSubmission")); // New Premium Submission Flow
+const WarHallOfFame = lazy(() => import("./pages/WarHallOfFame"));
 
 const queryClient = new QueryClient();
 
@@ -73,7 +81,7 @@ const App = () => {
   // Trigger loader on route change
   useEffect(() => {
     // Skip loader for registration pages
-    const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you'];
+    const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register'];
     if (excludedPaths.includes(location.pathname)) {
       setAppLoading(false);
       return;
@@ -142,7 +150,7 @@ const App = () => {
   };
 
   // Show loading state
-  const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission'];
+  const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register', '/winterartroyale/artcontest/thank-you'];
   if ((isCheckingLaunchStatus || appLoading) && !excludedPaths.includes(location.pathname)) {
     const isV2 = location.pathname.startsWith('/winterartroyale/v2');
 
@@ -210,7 +218,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className={`app - wrapper min - h - screen bg - gradient - to - b from - black to - [#1a1a2e] relative ${showLaunchScreen ? '' : 'overflow-auto'} `}>
+        <div className={`app - wrapper min - h - screen bg - gradient - to - b from - black to - [#1a1a2e] relative `}>
           <Toaster />
           <Sonner />
 
@@ -246,6 +254,21 @@ const App = () => {
                       <WinterArtRoyaleV2 />
                     </Suspense>
                   } />
+                  <Route path="/winterartroyale/artcontest" element={
+                    <Suspense fallback={<div className="min-h-screen bg-[#FFFAF0]" />}>
+                      <WinterArtContest />
+                    </Suspense>
+                  } />
+                  <Route path="/winterartroyale/artcontest/register" element={
+                    <Suspense fallback={<div className="min-h-screen bg-[#FFFAF0]" />}>
+                      <WinterArtContestRegistration />
+                    </Suspense>
+                  } />
+                  <Route path="/winterartroyale/artcontest/thank-you" element={
+                    <Suspense fallback={<div className="min-h-screen bg-[#FFFAF0]" />}>
+                      <WinterArtContestThankYou />
+                    </Suspense>
+                  } />
                   <Route path="/winterartroyale/v2/register" element={
                     <Suspense fallback={<div className="min-h-screen bg-white" />}>
                       <WarRegistrationPageV2 />
@@ -261,6 +284,12 @@ const App = () => {
                   <Route path="/winterartroyale/submission" element={
                     <Suspense fallback={<div className="min-h-screen bg-white" />}>
                       <WarSubmission />
+                    </Suspense>
+                  } />
+
+                  <Route path="/winterartroyale/halloffame" element={
+                    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+                      <WarHallOfFame />
                     </Suspense>
                   } />
 
@@ -309,7 +338,7 @@ const App = () => {
           </div>
 
           {/* Launch Screen - Overlays everything */}
-          {showLaunchScreen && !['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission'].includes(location.pathname) && <LaunchScreen onLaunch={handleLaunch} />}
+          {showLaunchScreen && !['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest'].includes(location.pathname) && <LaunchScreen onLaunch={handleLaunch} />}
 
           {/* Transition overlay to ensure smooth handoff */}
           {isTransitioning && (
