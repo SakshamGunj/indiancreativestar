@@ -76,33 +76,34 @@ const WinterArtRoyaleWrapped = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
 
-  const slidesCount = 12; // Expanded to 12 slides
+  const slidesCount = 13; // Expanded to 13 slides
   const slideDuration = 6000;
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
     let progressInterval: NodeJS.Timeout;
 
     if (isPlaying) {
       const tick = 50; 
       progressInterval = setInterval(() => {
         setProgress((prev) => {
-          if (prev >= 100) return 100;
-          return prev + (tick / slideDuration) * 100;
+          const newProgress = prev + (tick / slideDuration) * 100;
+          if (newProgress >= 100) {
+            // Time to advance
+            if (currentSlide < slidesCount - 1) {
+              setDirection(1);
+              setCurrentSlide((c) => c + 1);
+              return 0;
+            } else {
+              setIsPlaying(false);
+              return 100;
+            }
+          }
+          return newProgress;
         });
       }, tick);
-
-      timer = setTimeout(() => {
-        if (currentSlide < slidesCount - 1) {
-          nextSlide();
-        } else {
-          setIsPlaying(false);
-        }
-      }, slideDuration);
     }
 
     return () => {
-      clearTimeout(timer);
       clearInterval(progressInterval);
     };
   }, [currentSlide, isPlaying]);
@@ -871,8 +872,69 @@ const WinterArtRoyaleWrapped = () => {
               </motion.div>
             )}
 
-            {/* SLIDE 11: OUTRO */}
+            {/* SLIDE 11: TOP 50 ARTISTS */}
             {currentSlide === 11 && (
+              <motion.div
+                key="slide11"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className={`absolute inset-0 bg-[#00E5FF] flex flex-col pt-28 px-5 pb-10 ${slideScrollClasses}`}
+              >
+                <div className="absolute inset-0 opacity-[0.2] pointer-events-none" style={{
+                  backgroundImage: "repeating-linear-gradient(45deg, #FF007F 25%, transparent 25%, transparent 75%, #FF007F 75%, #FF007F), repeating-linear-gradient(45deg, #FF007F 25%, transparent 25%, transparent 75%, #FF007F 75%, #FF007F)",
+                  backgroundPosition: "0 0, 10px 10px",
+                  backgroundSize: "20px 20px"
+                }}></div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="z-10 mb-8 pt-4 w-full flex flex-col items-center text-center shrink-0"
+                >
+                  <Crown className="w-16 h-16 text-[#1A1A1A] mb-4" />
+                  <h2 className="font-black font-heading text-[3.8rem] text-[#1A1A1A] uppercase tracking-tighter leading-[0.85]">
+                    THE ELITE<br/>TOP 50
+                  </h2>
+                </motion.div>
+
+                <div className="flex-1 w-full flex flex-col gap-6 justify-center items-center text-center z-10 min-h-max py-4">
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
+                    className="bg-[#F4F2EB] text-[#1A1A1A] border-4 border-[#1A1A1A] p-6 shadow-[8px_8px_0_#FF007F] transform rotate-2 relative w-full"
+                  >
+                    <p className="font-black text-[2.5rem] leading-[0.9] uppercase tracking-tighter mb-4 font-heading text-[#00E5FF]" style={{ WebkitTextStroke: "2px #1A1A1A" }}>
+                      THE HALL<br/>OF FAME
+                    </p>
+                    <p className="font-bold text-sm uppercase tracking-tight text-[#1A1A1A]/80 mb-6">
+                      Did you make it to the Top 50 Artists in India? Download the official list below.
+                    </p>
+                    <a 
+                      href="/Top-50-Artists-WAR.pdf" 
+                      download="Top_50_Artists_Winter_Art_Royale.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block w-full bg-[#FF007F] text-[#F4F2EB] font-black uppercase tracking-[0.1em] py-4 text-center border-4 border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#00E5FF] transition-colors shadow-[4px_4px_0_#1A1A1A] active:translate-y-1 active:shadow-none pointer-events-auto cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      onPointerDown={(e) => e.stopPropagation()}
+                    >
+                      Download PDF
+                    </a>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* SLIDE 12: OUTRO */}
+            {currentSlide === 12 && (
               <motion.div
                 key="slide11"
                 custom={direction}
