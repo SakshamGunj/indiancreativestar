@@ -45,6 +45,14 @@ import GuruStudentForm from "./pages/guru/GuruStudentForm";
 import GuruLogin from "./pages/guru/GuruLogin";
 import GuruDashboard from "./pages/guru/GuruDashboard";
 
+// Artist Portfolio
+import { PortfolioPublicLayout, PortfolioAdminLayout } from "./portfolio/PortfolioLayout";
+import { PublicPortfolio } from "./portfolio/pages/PublicPortfolio";
+import { WorkDetails } from "./portfolio/pages/WorkDetails";
+import { AdminDashboard } from "./portfolio/pages/AdminDashboard";
+import { AdminWorks } from "./portfolio/pages/AdminWorks";
+import { AdminProfile } from "./portfolio/pages/AdminProfile";
+
 import { BrandingProvider } from "./lib/branding";
 import { LaunchScreen } from "./components/LaunchScreen";
 import { checkLaunchScreenStatus, disableLaunchScreenGlobally } from "./lib/firebase";
@@ -55,10 +63,11 @@ const WinterArtRoyaleV2 = lazy(() => import("./pages/WinterArtRoyaleV2"));
 const WinterArtContestRegistration = lazy(() => import("./pages/WinterArtContestRegistration"));
 const WinterArtContest = lazy(() => import("./pages/WinterArtContest"));
 const WinterArtContestThankYou = lazy(() => import("./pages/WinterArtContestThankYou"));
+const WinterArtRoyaleWrapped = lazy(() => import("./pages/WinterArtRoyaleWrapped"));
 
 
 // ... in excludedPaths check ...
-const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register']; // V2 Page Lazy
+const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register', '/winterartroyale/wrapped']; // V2 Page Lazy
 const WarRegistrationPageV2 = lazy(() => import("./pages/WarRegistrationPageV2")); // V2 Registration Lazy
 const WarThankYouV2 = lazy(() => import("./pages/WarThankYouV2")); // V2 Thank You Lazy
 const WarSubmission = lazy(() => import("./pages/WarSubmission")); // New Premium Submission Flow
@@ -81,7 +90,7 @@ const App = () => {
   // Trigger loader on route change
   useEffect(() => {
     // Skip loader for registration pages
-    const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register'];
+    const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register', '/winterartroyale/wrapped'];
     if (excludedPaths.includes(location.pathname)) {
       setAppLoading(false);
       return;
@@ -150,7 +159,7 @@ const App = () => {
   };
 
   // Show loading state
-  const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register', '/winterartroyale/artcontest/thank-you'];
+  const excludedPaths = ['/winter-art-royale/register', '/winterartroyale/v2', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/artcontest/register', '/winterartroyale/artcontest/thank-you', '/winterartroyale/wrapped'];
   if ((isCheckingLaunchStatus || appLoading) && !excludedPaths.includes(location.pathname)) {
     const isV2 = location.pathname.startsWith('/winterartroyale/v2');
 
@@ -254,6 +263,11 @@ const App = () => {
                       <WinterArtRoyaleV2 />
                     </Suspense>
                   } />
+                  <Route path="/winterartroyale/wrapped" element={
+                    <Suspense fallback={<div className="min-h-screen bg-black" />}>
+                      <WinterArtRoyaleWrapped />
+                    </Suspense>
+                  } />
                   <Route path="/winterartroyale/artcontest" element={
                     <Suspense fallback={<div className="min-h-screen bg-[#FFFAF0]" />}>
                       <WinterArtContest />
@@ -325,6 +339,17 @@ const App = () => {
                   <Route path="/guru/dashboard" element={<GuruDashboard />} />
                   <Route path="/guru/onboard" element={<GuruStudentForm />} />
 
+                  {/* Artist Portfolio Sub-App */}
+                  <Route path="/artist-portfolio" element={<PortfolioPublicLayout />}>
+                    <Route index element={<PublicPortfolio />} />
+                    <Route path="work/:id" element={<WorkDetails />} />
+                  </Route>
+                  <Route path="/admin" element={<PortfolioAdminLayout />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="works" element={<AdminWorks />} />
+                    <Route path="profile" element={<AdminProfile />} />
+                  </Route>
+
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
@@ -338,7 +363,7 @@ const App = () => {
           </div>
 
           {/* Launch Screen - Overlays everything */}
-          {showLaunchScreen && !['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest'].includes(location.pathname) && <LaunchScreen onLaunch={handleLaunch} />}
+          {showLaunchScreen && !['/winter-art-royale/register', '/winterartroyale/v2/register', '/winterartroyale/v2/thank-you', '/winterartroyale/submission', '/winterartroyale/halloffame', '/winterartroyale/artcontest', '/winterartroyale/wrapped'].includes(location.pathname) && <LaunchScreen onLaunch={handleLaunch} />}
 
           {/* Transition overlay to ensure smooth handoff */}
           {isTransitioning && (

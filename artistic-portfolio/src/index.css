@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card: var(--card);
+  --color-border: var(--border);
+}
+
+@layer base {
+  :root {
+    --bg: #fdfdfc;
+    --fg: #0a0a0a;
+    --primary: #ccff00; /* Neon green */
+    --secondary: #ff99cc; /* Soft pink */
+    --accent: #7c3aed; /* Violet */
+    --card: #ffffff;
+    --border: #141414;
+  }
+
+  .dark {
+    --bg: #0a0a0a;
+    --fg: #fdfdfc;
+    --primary: #ccff00;
+    --secondary: #ff99cc;
+    --accent: #a78bfa;
+    --card: #171717;
+    --border: #333333;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom Utilities for the artistic vibe */
+@layer utilities {
+  .brutal-border {
+    border: 2px solid var(--border);
+  }
+  
+  .brutal-shadow {
+    box-shadow: 4px 4px 0px 0px var(--border);
+  }
+  
+  .brutal-shadow-hover:hover {
+    box-shadow: 6px 6px 0px 0px var(--border);
+    transform: translate(-2px, -2px);
+  }
+
+  .dark .brutal-shadow {
+    box-shadow: 4px 4px 0px 0px var(--primary);
+  }
+
+  .dark .brutal-shadow-hover:hover {
+    box-shadow: 6px 6px 0px 0px var(--primary);
+  }
+
+  .grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+
+  .dark .grid-pattern {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+}
+
+/* Custom Cursor Hiding on Desktop */
+@media (pointer: fine) {
+  body.custom-cursor-active {
+    cursor: none;
+  }
+  body.custom-cursor-active a, 
+  body.custom-cursor-active button, 
+  body.custom-cursor-active input, 
+  body.custom-cursor-active textarea, 
+  body.custom-cursor-active select, 
+  body.custom-cursor-active [role="button"] {
+    cursor: none !important;
+  }
+}
+
+/* Print Styles for Downloadable Case Studies */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    cursor: auto !important;
+  }
+  
+  .grid-pattern {
+    background-image: none !important;
+  }
+  
+  .brutal-shadow, .brutal-shadow-hover {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  
+  .brutal-border {
+    border-color: #ccc !important;
+    border-width: 1px !important;
+  }
+  
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  .print-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+}

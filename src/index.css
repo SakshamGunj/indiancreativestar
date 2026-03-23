@@ -437,3 +437,83 @@ body {
   /* Matches card bg */
   border-radius: inherit;
 }
+
+/* ------------------------------------- */
+/* ARTIST PORTFOLIO SCOPE */
+/* ------------------------------------- */
+
+.portfolio-scope {
+    --background: 60 33% 99%;
+    --foreground: 0 0% 4%;
+    --primary: 75 100% 50%;
+    --secondary: 330 100% 80%;
+    --accent: 262 83% 58%;
+    --card: 0 0% 100%;
+    --border: 0 0% 8%;
+}
+
+.dark .portfolio-scope {
+    --background: 0 0% 4%;
+    --foreground: 60 33% 99%;
+    --primary: 75 100% 50%;
+    --secondary: 330 100% 80%;
+    --accent: 255 92% 76%;
+    --card: 0 0% 9%;
+    --border: 0 0% 20%;
+}
+
+/* Portfolio Utilities */
+.portfolio-scope .brutal-border {
+  border: 2px solid hsl(var(--border) / 1);
+}
+
+.portfolio-scope .brutal-shadow {
+  box-shadow: 4px 4px 0px 0px hsl(var(--border) / 1);
+}
+
+.portfolio-scope .brutal-shadow-hover:hover {
+  box-shadow: 6px 6px 0px 0px hsl(var(--border) / 1);
+  transform: translate(-2px, -2px);
+}
+
+.dark .portfolio-scope .brutal-shadow {
+  box-shadow: 4px 4px 0px 0px hsl(var(--primary) / 1);
+}
+
+.dark .portfolio-scope .brutal-shadow-hover:hover {
+  box-shadow: 6px 6px 0px 0px hsl(var(--primary) / 1);
+}
+
+.portfolio-scope .grid-pattern {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+.dark .portfolio-scope .grid-pattern {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (pointer: fine) {
+  body.custom-cursor-active .portfolio-scope {
+    cursor: none;
+  }
+  body.custom-cursor-active .portfolio-scope a, 
+  body.custom-cursor-active .portfolio-scope button, 
+  body.custom-cursor-active .portfolio-scope input, 
+  body.custom-cursor-active .portfolio-scope textarea, 
+  body.custom-cursor-active .portfolio-scope select, 
+  body.custom-cursor-active .portfolio-scope [role="button"] {
+    cursor: none !important;
+  }
+}
