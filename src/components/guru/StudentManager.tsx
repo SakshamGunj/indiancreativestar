@@ -32,7 +32,7 @@ const uploadToImgBB = async (file: File): Promise<string> => {
   }
 };
 
-const StudentManager = ({ user, guruData, students: initialStudents }) => {
+const StudentManager = ({ user, guruData, students: initialStudents }: { user: any, guruData: any, students: any[] }) => {
   const [students, setStudents] = useState(initialStudents);
   const [studentName, setStudentName] = useState('');
   const [studentAge, setStudentAge] = useState('');
@@ -158,7 +158,7 @@ const StudentManager = ({ user, guruData, students: initialStudents }) => {
     }
   };
 
-  const copyToClipboard = (text, id) => {
+  const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(''), 2000);

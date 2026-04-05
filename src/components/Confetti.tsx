@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const colors = [
   "#8B5CF6", // creative-purple
@@ -10,7 +10,7 @@ const colors = [
 ];
 
 export function Confetti() {
-  const [confetti, setConfetti] = useState<JSX.Element[]>([]);
+  const [confetti, setConfetti] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
     createConfetti();

@@ -1,11 +1,14 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { 
-  Instagram,
+  Globe,
   ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useBranding } from "@/lib/branding";
 
@@ -25,7 +28,7 @@ interface HeaderProps {
 export function Header({ onRegistrationClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const navigate = useNavigate();
+  const router = useRouter();
   const isMobile = useIsMobile();
   const { brandName } = useBranding();
 
@@ -118,7 +121,7 @@ export function Header({ onRegistrationClick }: HeaderProps) {
             item.href.startsWith('/') ? (
               <button
                 key={item.name}
-                onClick={() => navigate(item.href)}
+                onClick={() => router.push(item.href)}
                 className="text-xs sm:text-sm font-medium text-white whitespace-nowrap hover:text-primary transition-colors bg-transparent border-none cursor-pointer"
               >
                 {item.name}
@@ -142,7 +145,7 @@ export function Header({ onRegistrationClick }: HeaderProps) {
             rel="noopener noreferrer"
             className="rounded-full bg-white/10 p-1.5 sm:p-2 text-white hover:bg-white/20 transition"
           >
-            <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+            <Globe className="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
           <Button
             className="creative-btn group text-xs sm:text-sm py-1 sm:py-2 px-3 sm:px-4 h-auto"

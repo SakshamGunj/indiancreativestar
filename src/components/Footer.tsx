@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Instagram, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
+import { Globe, ArrowRight, Mail, MapPin, PhoneCall } from "lucide-react";
 
 interface FooterProps {
   onRegisterClick?: () => void;
@@ -29,7 +29,7 @@ export function Footer({ onRegisterClick }: FooterProps) {
                 rel="noopener noreferrer" 
                 className="h-9 w-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-purple-100 transition-colors"
               >
-                <Instagram className="h-4 w-4 text-gray-600" />
+                <Globe className="h-4 w-4 text-gray-600" />
               </a>
             </div>
           </div>

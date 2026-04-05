@@ -1,3 +1,5 @@
+"use client";
+
 
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -6,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 
 interface RegistrationModalProps {
   contestType: "art" | "poetry";
@@ -25,7 +28,7 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,7 +55,7 @@ export function RegistrationModal({ contestType, buttonText = "Enter Now", butto
         setIsOpen(false);
         
         // Navigate to thank you page with query params
-        navigate(`/thank-you?type=${contestType}&name=${encodeURIComponent(formState.name)}`);
+        router.push(`/thank-you?type=${contestType}&name=${encodeURIComponent(formState.name)}`);
         
         setFormState({
           name: "",

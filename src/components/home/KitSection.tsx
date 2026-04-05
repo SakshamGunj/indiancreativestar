@@ -1,12 +1,11 @@
+"use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
 
 const KitSection = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
 
-    // Kit Images (From Winter Art Royale)
     const row1Images = [
         "https://i.ibb.co/bjVyrwd0/Whats-App-Image2026-01-08at5-26-11-PM.jpg",
         "https://i.ibb.co/21GKJVbk/Whats-App-Image2026-01-08at5-26-11-PM1.jpg",
@@ -25,75 +24,81 @@ const KitSection = () => {
     ];
 
     return (
-        <section className="py-24 px-6 bg-[#050510] relative overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#0F0F0F] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0F0F0F] to-transparent z-10 pointer-events-none"></div>
+        <section className="py-16 md:py-24 relative overflow-hidden z-10">
+            {/* Top/bottom gradient masks to blend into page bg */}
+            <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent z-10 pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="text-center mb-16 px-4">
-                    <h4 className="text-blue-400 tracking-[0.2em] text-xs font-bold uppercase mb-4">The Creative Star Kit</h4>
-                    <h2 className="text-3xl md:text-5xl font-playfair text-white leading-tight mb-6">
-                        We gave to our artists <br />
-                        <span className="text-white/60 text-lg md:text-2xl font-normal font-lato block mt-4">
-                            Kit for Our Previous Art Competition called <span className="text-[#D4AF37] font-bold">Indian Creative Star</span>
-                        </span>
+            <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-20">
+
+                {/* Section eyebrow */}
+                <div className="flex items-center gap-4 mb-10">
+                    <div className="w-8 h-[1px] bg-[#D4AF37]/60" />
+                    <span className="text-[9px] uppercase tracking-[0.35em] font-black text-[#D4AF37]/60">The Creative Star Kit</span>
+                    <div className="flex-1 h-[1px] bg-white/5" />
+                </div>
+
+                {/* Title */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
+                    className="mb-10"
+                >
+                    <h2 className="font-playfair font-black leading-[1.1] text-white mb-3" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
+                        We gave to our <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F2D06B]">artists.</span>
                     </h2>
-                    <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mt-8"></div>
-                </div>
+                    <p className="text-white/35 font-lato text-sm leading-relaxed border-l-2 border-[#D4AF37]/20 pl-4 max-w-lg">
+                        The official competition kit for{' '}
+                        <span className="text-[#D4AF37]/70 font-bold">Indian Creative Star</span> — everything an artist needs to compete with confidence.
+                    </p>
+                </motion.div>
+            </div>
 
-                <div className="space-y-8 relative">
-                    {/* Gradient Fades for Infinite Look */}
-                    <div className="absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-[#050510] to-transparent z-20 pointer-events-none"></div>
-                    <div className="absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-[#050510] to-transparent z-20 pointer-events-none"></div>
+            {/* Gallery rows */}
+            <div className="space-y-5 relative">
+                {/* Edge fades */}
+                <div className="absolute inset-y-0 left-0 w-16 md:w-28 bg-gradient-to-r from-black/60 to-transparent z-20 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-16 md:w-28 bg-gradient-to-l from-black/60 to-transparent z-20 pointer-events-none" />
 
-                    {/* ROW 1: Left to Right */}
-                    <div className="relative overflow-hidden">
-                        <motion.div
-                            className="flex gap-4 w-max items-center"
-                            animate={{ x: ["-50%", "0%"] }}
-                            transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-                        >
-                            {[...row1Images, ...row1Images, ...row1Images, ...row1Images].map((img, i) => (
-                                <div key={`row1-${i}`} className="w-[160px] md:w-[240px] aspect-square rounded-2xl overflow-hidden border border-white/10 group hover:border-blue-500/50 transition-all flex-shrink-0 bg-black/40 relative">
-                                    <img src={img} alt={`Kit Item ${i}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 block" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                        <span className="text-white text-xs font-bold uppercase tracking-wider">Kit Item {i % row1Images.length}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </motion.div>
-                    </div>
-
-                    {/* ROW 2: Right to Left */}
-                    <div className="relative overflow-hidden">
-                        <motion.div
-                            className="flex gap-4 w-max items-center"
-                            animate={{ x: ["0%", "-50%"] }}
-                            transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-                        >
-                            {[...row2Images, ...row2Images, ...row2Images, ...row2Images].map((img, i) => (
-                                <div key={`row2-${i}`} className="w-[160px] md:w-[240px] aspect-square rounded-2xl overflow-hidden border border-white/10 group hover:border-blue-500/50 transition-all flex-shrink-0 bg-black/40 relative">
-                                    <img src={img} alt={`Kit Item ${i}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 block" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                        <span className="text-white text-xs font-bold uppercase tracking-wider">Kit Item {i % row2Images.length}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </motion.div>
-                    </div>
-                </div>
-
-                {/* KIT CTA */}
-                <div className="mt-16 text-center">
-                    <Button
-                        onClick={() => navigate('/winterartroyale/v2')}
-                        className="bg-[#D4AF37] text-black hover:bg-[#B59530] font-playfair font-bold py-6 px-10 rounded-full text-lg shadow-[0_0_30px_rgba(212,175,55,0.3)] transform hover:scale-105 transition-all"
+                {/* ROW 1 — left to right */}
+                <div className="relative overflow-hidden">
+                    <motion.div
+                        className="flex gap-3 w-max items-center"
+                        animate={{ x: ["-50%", "0%"] }}
+                        transition={{ repeat: Infinity, duration: 40, ease: "linear" as any }}
                     >
-                        Register Now & Get Your Kit
-                    </Button>
+                        {[...row1Images, ...row1Images, ...row1Images, ...row1Images].map((img, i) => (
+                            <div key={`row1-${i}`} className="w-[140px] md:w-[200px] aspect-square overflow-hidden border border-white/8 group hover:border-[#D4AF37]/30 transition-all flex-shrink-0 bg-black/40 relative">
+                                <img src={img} alt={`Kit Item ${i % row1Images.length}`} className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-500 block" />
+                            </div>
+                        ))}
+                    </motion.div>
                 </div>
+
+                {/* ROW 2 — right to left */}
+                <div className="relative overflow-hidden">
+                    <motion.div
+                        className="flex gap-3 w-max items-center"
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{ repeat: Infinity, duration: 45, ease: "linear" as any }}
+                    >
+                        {[...row2Images, ...row2Images, ...row2Images, ...row2Images].map((img, i) => (
+                            <div key={`row2-${i}`} className="w-[140px] md:w-[200px] aspect-square overflow-hidden border border-white/8 group hover:border-[#D4AF37]/30 transition-all flex-shrink-0 bg-black/40 relative">
+                                <img src={img} alt={`Kit Item ${i % row2Images.length}`} className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-500 block" />
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* CTA */}
+            <div className="max-w-5xl mx-auto px-4 md:px-6 mt-10 relative z-20">
+                <button
+                    onClick={() => router.push('/winterartroyale/v2')}
+                    className="group flex items-center gap-3 px-6 py-3 border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:bg-[#D4AF37]/5 text-[#D4AF37] text-[10px] tracking-[0.3em] uppercase font-black transition-all duration-300"
+                >
+                    Register Now &amp; Get Your Kit
+                    <span className="text-white/20 group-hover:text-[#D4AF37] transition-colors">→</span>
+                </button>
             </div>
         </section>
     );

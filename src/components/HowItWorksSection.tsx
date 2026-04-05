@@ -1,20 +1,23 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Star } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 
 interface HowItWorksSectionProps {
   onRegistrationClick?: () => void;
 }
 
 export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   const handleEnterCompetitions = () => {
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
-      navigate("/competitions");
+      router.push("/competitions");
     }
   };
   
@@ -136,7 +139,7 @@ export function HowItWorksSection({ onRegistrationClick }: HowItWorksSectionProp
           </p>
           <Button 
             className="bg-gradient-to-r from-creative-yellow to-creative-orange text-black font-bold group py-3 px-8"
-            onClick={onRegistrationClick || (() => navigate("/competitions"))}
+            onClick={onRegistrationClick || (() => router.push("/competitions"))}
           >
             Submit Now – Free! <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>

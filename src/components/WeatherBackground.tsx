@@ -48,7 +48,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: [0, 100, 0], opacity: [0, 0.7, 0.7, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" as any }}
         className="absolute top-10 left-0"
       >
         <Cloud className="h-20 w-20 text-white/20" />
@@ -57,7 +57,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
       <motion.div
         initial={{ x: 100, opacity: 0 }}
         animate={{ x: [0, -100, 0], opacity: [0, 0.6, 0.6, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 5 }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" as any, delay: 5 }}
         className="absolute top-32 right-0"
       >
         <Cloud className="h-32 w-32 text-white/15" />
@@ -66,7 +66,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
       <motion.div
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: [0, 30, 0], opacity: [0, 0.5, 0.5, 0] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" as any }}
         className="absolute top-1/4 left-1/4"
       >
         <Cloud className="h-24 w-24 text-white/10" />
@@ -77,14 +77,14 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
         <>
           <motion.div
             animate={{ x: [0, 50, 0], rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" as any }}
             className="absolute top-20 right-1/4"
           >
             <CloudRain className="h-16 w-16 text-gray-400/30" />
           </motion.div>
           <motion.div
             animate={{ x: [0, -30, 0], rotate: [0, -5, 5, 0] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" as any, delay: 2 }}
             className="absolute bottom-1/4 left-1/3"
           >
             <CloudRain className="h-20 w-20 text-gray-500/25" />
@@ -96,14 +96,14 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
         <>
           <motion.div
             animate={{ x: [0, 40, 0], rotate: [0, 3, -3, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" as any }}
             className="absolute top-1/3 right-1/3"
           >
             <div className="relative">
               <Cloud className="h-28 w-28 text-gray-400/20" />
               <motion.div
                 animate={{ y: [0, 20, 40] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" as any }}
                 className="absolute -bottom-8 left-1/2 transform -translate-x-1/2"
               >
                 <Droplets className="h-4 w-4 text-blue-400/40" />
@@ -117,14 +117,14 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
         <>
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" as any }}
             className="absolute top-16 right-16"
           >
             <Sun className="h-24 w-24 text-yellow-300/40" />
           </motion.div>
           <motion.div
             animate={{ x: [0, 100, 0], opacity: [0, 0.3, 0.3, 0] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" as any }}
             className="absolute top-1/2 left-0"
           >
             <Cloud className="h-16 w-16 text-white/10" />
@@ -135,9 +135,8 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
   );
 
   // Rain effect
-  const RainEffect = ({ intensity }: { intensity: 'heavy' | 'light' }) => {
+  const RainEffect = ({ intensity }: { intensity: 'heavy' | 'light' | 'none' }) => {
     if (intensity === 'none') return null;
-
     const drops = intensity === 'heavy' ? 50 : 20;
 
     return (
@@ -154,7 +153,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
               duration: intensity === 'heavy' ? 1 : 2,
               repeat: Infinity,
               delay: Math.random() * 3,
-              ease: "linear"
+              ease: "linear" as any
             }}
             className="absolute"
             style={{
@@ -187,7 +186,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
               duration: 5 + Math.random() * 5,
               repeat: Infinity,
               delay: Math.random() * 5,
-              ease: "easeOut"
+              ease: "easeOut" as any
             }}
             className="absolute"
             style={{
@@ -216,7 +215,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
               duration: 8 + Math.random() * 4,
               repeat: Infinity,
               delay: Math.random() * 8,
-              ease: "linear"
+              ease: "linear" as any
             }}
             className="absolute"
             style={{
@@ -236,7 +235,7 @@ const WeatherBackground: React.FC<WeatherBackgroundProps> = ({ weatherType, chil
       <motion.div
         className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"
         animate={{ opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" as any }}
       />
 
       {/* Weather effects */}

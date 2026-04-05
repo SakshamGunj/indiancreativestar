@@ -39,7 +39,7 @@ export const IntroSnowfall = () => {
                             }}
                             transition={{
                                 duration: Math.random() * 3 + 2, // 2-5 seconds duration
-                                ease: "linear",
+                                ease: "linear" as any,
                                 repeat: Infinity,
                                 delay: Math.random() * 2,
                             }}
@@ -66,7 +66,7 @@ export const IntroSnowfall = () => {
                             }}
                             transition={{
                                 duration: Math.random() * 4 + 3,
-                                ease: "linear",
+                                ease: "linear" as any,
                                 repeat: Infinity,
                                 delay: Math.random() * 2,
                             }}

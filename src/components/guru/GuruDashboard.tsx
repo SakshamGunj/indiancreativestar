@@ -4,7 +4,7 @@ import { LogOut, LayoutDashboard, Users, Settings } from 'lucide-react';
 import DashboardOverview from './DashboardOverview';
 import StudentManager from './StudentManager';
 
-const GuruDashboard = ({ user, guruData, students, handleLogout }) => {
+const GuruDashboard = ({ user, guruData, students, handleLogout }: { user: any, guruData: any, students: any[], handleLogout: () => void }) => {
   const [activeTab, setActiveTab] = useState('overview');
 
   const renderContent = () => {

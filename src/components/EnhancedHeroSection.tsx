@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,7 +14,8 @@ import {
   Palette,
   Users
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { useBranding } from "@/lib/branding";
 
@@ -21,14 +24,14 @@ interface EnhancedHeroSectionProps {
 }
 
 export function EnhancedHeroSection({ onRegisterClick }: EnhancedHeroSectionProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { brandName, regionName } = useBranding();
   
   const handleEnterCompetitions = () => {
     if (onRegisterClick) {
       onRegisterClick();
     } else {
-      navigate("/competitions");
+      router.push("/competitions");
     }
   };
 

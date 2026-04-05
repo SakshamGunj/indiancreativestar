@@ -1,0 +1,194 @@
+export interface Winner {
+    id: string;
+    name: string;
+    rank: number;
+    title: string;
+    category?: string;
+    imageUrl?: string;
+}
+
+export interface EventStats {
+    artistsJoined: string;
+    artworksSubmitted: string;
+    prizePool: string;
+    satisfactionRate: string;
+}
+
+export interface TrustPillar {
+    icon: 'Shield' | 'Users' | 'Trophy' | 'Globe';
+    title: string;
+    description: string;
+}
+
+export interface EventWinners {
+    eventId: string;
+    eventName: string;
+    eventDate: string;
+    description: string;
+    aboutParagraphs?: string[];
+    trustPillars?: TrustPillar[];
+    valueStack?: string[];
+    stats?: EventStats;
+    coverImage: string;
+    galleryUrls?: string[];
+    winners: Winner[];
+}
+
+// ==========================================
+// DAAMI EVENT HALL OF FAME DATA
+// ==========================================
+
+export const hallOfFameData: EventWinners[] = [
+    {
+        eventId: "sikkim-creative-star-1",
+        eventName: "Sikkim Creative Star Season 1",
+        eventDate: "Art Contest",
+        description: "Celebrating the incredible artistic talents that emerged during the inaugural season in Sikkim.",
+        aboutParagraphs: [
+            "Sikkim Creative Star (Season 1) was the inaugural state-level art competition organized by Daami Event in 2025. Daami Event is an event management company in India dedicated to providing accessible platforms for creative talent. This landmark competition was hosted to celebrate the monumental occasion of the 50th Statehood Year of Sikkim, making it one of the largest and most culturally significant art contests ever held in the state.",
+            "Demonstrating high institutional trust and authority, Sikkim Creative Star was officially supported by the Culture Department of Sikkim, the Honorable Culture Minister, and various prominent government figures and local personalities. The event operated on a hybrid model, successfully blending online accessibility with offline community engagement. In a massive display of public involvement, over 12,000 citizens of Sikkim participated in a live public voting system, ensuring the community had a voice alongside our expert judging panel.",
+            "The competition was inclusive, featuring dedicated categories for both children and adults. To honor the incredible talent, Daami Event hosted a grand prize distribution ceremony at a premium local resort. Every single participant was recognized for their effort with an official E-Certificate and a verified Artist ID card. The winners were honored with physical certificates, commemorative mementos, and special awards of gratitude and recognition to validate their artistic journey."
+        ],
+        trustPillars: [
+            { icon: "Shield", title: "Institutional Authority", description: "Officially supported by the Culture Department of Sikkim, the Honorable Culture Minister, and prominent government officials." },
+            { icon: "Users", title: "Massive Scale", description: "Over 12,000 citizens participated in a live public voting system, blending online accessibility with offline engagement." },
+            { icon: "Trophy", title: "Premium Rewards", description: "A grand prize distribution ceremony was hosted at a premium local resort to officially honor the winners." }
+        ],
+        valueStack: [
+            "Verified Artist ID Card for every participant",
+            "Official E-Certificate of Recognition",
+            "Physical Certificates for Winners",
+            "Commemorative Mementos & Special Awards of Gratitude"
+        ],
+        stats: { artistsJoined: "220", artworksSubmitted: "400+", prizePool: "₹50,000", satisfactionRate: "90%" },
+        coverImage: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775292600/THE_Shakespeare_Poetry_Award_2025_3_-compressed_en8pt3.webp",
+        galleryUrls: [
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775158756/DSCF5853-compressed_lkuyeg.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775158759/DSCF5856-compressed_bezet1.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775158757/DSCF5855-compressed_xxget6.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775158755/DSCF5843-compressed_ytil9s.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775158756/DSCF5848-compressed_aagpig.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157337/DSCF5841-compressed_hse0kr.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157335/DSCF5838-compressed_anvtp8.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157334/DSCF5836-compressed_iiochq.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157333/DSCF5834-compressed_xld5x0.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157332/DSCF5833-compressed_sxkgip.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157331/DSCF5827-compressed_yw3nna.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157330/DSCF5824-compressed_mnv8ow.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157329/DSCF5821-compressed_xmujwe.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775157329/DSCF5823-compressed_mag5be.webp"
+        ],
+        winners: [
+            // Adult Category
+            { id: "scs1-1", rank: 1, name: "Yograj Gurung", title: "Champion", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134634/8277FC0E-A7B4-4E90-807E-F09192D87C48_1_105_c-compressed_jypn3r.webp" },
+            { id: "scs1-2", rank: 2, name: "Chogyal Lama Grangdan", title: "1st Runner Up", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134638/F63F6B8F-BF70-4C55-A434-9F36A64D4352_1_105_c-compressed_per9sx.webp" },
+            { id: "scs1-3", rank: 3, name: "Sashi Thakur", title: "2nd Runner Up", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134634/61B4B6AA-E4F8-4529-86D4-43804C72489D_1_105_c-compressed_mqko9y.webp" },
+            // Kids Category (age-group 1st places)
+            { id: "scs1-4", rank: 1, name: "Aakriti Thakur", title: "1st Place (5–8 yrs)", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775329715/IMG-20250903-WA0000-compressed_vg9tno.webp" },
+            { id: "scs1-5", rank: 1, name: "Akshita Sunwar", title: "1st Place (9–12 yrs)", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134635/ACCA95C8-4D88-4BE9-A72A-DB3B2ED306B7_1_105_c-compressed_gq53uc.webp" },
+            { id: "scs1-6", rank: 1, name: "Nimesh Rai", title: "1st Place (13–17 yrs)", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134634/1FE49799-B50D-4842-9BC7-09F7D242265B_1_105_c-compressed_xaabqf.webp" },
+        ]
+    },
+    {
+        eventId: "indian-creative-star-2",
+        eventName: "Indian Creative Star Season 2",
+        eventDate: "Art Contest",
+        description: "A nationwide search for extraordinary creativity, highlighting the best among the rest across India.",
+        aboutParagraphs: [
+            "Indian Creative Star (Season 2) was a national-level online art competition hosted by Daami Event in 2025. Following the massive success and community trust built during the state-level Sikkim Creative Star, Daami Event expanded its mission to discover and promote artistic talent across all of India. This event marked our transition into a nationwide platform, making high-quality art contests accessible to a much wider demographic.",
+            "Operating as a completely online event, Indian Creative Star ensured that artists from every corner of the country, spanning both adult and kids categories, could easily submit their work without geographical barriers. Daami Event prioritized a premium participant experience by guaranteeing that every artist received an E-Certificate, an official Artist ID card, and a formal Letter of Appreciation.",
+            "To further elevate the experience and provide tangible value, we introduced an optional home-delivery service. For a nominal fee, participants could opt to have physical certificates, appreciation letters, and Artist ID cards shipped directly to their doorsteps. For our top talents, the rewards were substantial: winners received high-quality trophies, mementos, and medals, all securely home-delivered to celebrate their national victory."
+        ],
+        trustPillars: [
+            { icon: "Globe", title: "National Scale", description: "Transitioned into a nationwide platform, making high-quality art contests accessible to a wide demographic across all of India." },
+            { icon: "Users", title: "Zero Geographic Barriers", description: "Completely online event ensuring artists from every corner of the country could submit their work easily and securely." },
+            { icon: "Trophy", title: "Premium Celebration", description: "Winners received high-quality trophies, mementos, and medals to celebrate their massive national victory." }
+        ],
+        valueStack: [
+            "Guaranteed Official E-Certificate",
+            "Verified Artist ID Card",
+            "Formal Letter of Appreciation",
+            "Optional secure home-delivery service for all physical rewards"
+        ],
+        stats: { artistsJoined: "475", artworksSubmitted: "725", prizePool: "₹50,000", satisfactionRate: "92%" },
+        coverImage: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775290486/THE_Shakespeare_Poetry_Award_2025_1_-compressed_twejlf.webp",
+        galleryUrls: [
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289416/Whats-App-Image2026-01-08at5-26-14-PM1-compressed_yxwqsr.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289416/Whats-App-Image2026-01-08at5-26-14-PM-compressed_zzviqx.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289415/Whats-App-Image2026-01-08at5-26-13-PM2-compressed_wz0efx.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-12-PM2-compressed_wwnoye.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289415/Whats-App-Image2026-01-08at5-26-13-PM1-compressed_rhjoqt.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-13-PM-compressed_agnsiz.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-12-PM1-compressed_t4osbs.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-12-PM-compressed_umwuka.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-11-PM1-compressed_yqpy8j.webp",
+            "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775289414/Whats-App-Image2026-01-08at5-26-11-PM-compressed_hvqjk0.webp"
+        ],
+        winners: [
+            { id: "ics2-1", rank: 1, name: "Anshika Raj", title: "Champion", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134636/entry_fee_poster_5_-compressed_bs2vhy.webp" },
+            { id: "ics2-2", rank: 2, name: "En. Rohit", title: "1st Runner Up", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134635/entry_fee_poster_4_-compressed_e1lmfj.webp" },
+            { id: "ics2-3", rank: 3, name: "Kanchi", title: "2nd Runner Up" },
+            { id: "ics2-4", rank: 4, name: "Dr. Hetal Jariwala", title: "Finalist", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134637/entry_fee_poster_6_-compressed_rfjtwm.webp" },
+            { id: "ics2-5", rank: 5, name: "Aishwarya Shaw", title: "Finalist" },
+            { id: "ics2-6", rank: 6, name: "P. Pavanraj", title: "Finalist", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134639/WhatsApp_Image_2025-11-26_at_6.56.04_PM_1_-compressed_x60qmv.webp" },
+            { id: "ics2-7", rank: 7, name: "M.S. Priyavarshini", title: "Finalist", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134640/WhatsApp_Image_2026-03-30_at_1.14.08_PM-compressed_ntqkpl.webp" },
+        ]
+    },
+    {
+        eventId: "winter-art-royale",
+        eventName: "Winter Art Royale",
+        eventDate: "Art Contest",
+        description: "The fierce winter battle of artists where true mastery in the cold season shone the brightest.",
+        aboutParagraphs: [
+            "Winter Art Royale (2026) was a multi-category, national-level art competition organized by Daami Event. Launched during the winter season of 2025 and culminating in early 2026, this event represents Daami Event’s most significant expansion in both scale and creative diversity. Recognizing the varied talents of the Indian art community, we evolved beyond traditional formats to introduce a highly thematic and categorized competitive experience.",
+            "To better serve our growing community of creators, Winter Art Royale was divided into five distinct artistic categories: Sketching, Painting, Craft, Digital Art, and Creative Blend. This structural expansion allowed specialists in different mediums to compete fairly and showcase their unique skills. The competition remained open to all of India, featuring dedicated brackets for both children and adults.",
+            "Reflecting Daami Event's growing authority and commitment to the arts, we tripled our financial backing for this event, offering a massive prize pool to support the next generation of Indian artists. The sheer volume of participation and the remarkably high satisfaction rate cemented Winter Art Royale as our most successful and engaging initiative to date."
+        ],
+        trustPillars: [
+            { icon: "Globe", title: "Creative Diversity", description: "Evolved beyond traditional formats to introduce a highly thematic and categorized competitive experience across 5 distinct mediums." },
+            { icon: "Shield", title: "Massive Backing", description: "Tripled our financial backing to support the next generation of Indian artists with a monumental prize pool." },
+            { icon: "Users", title: "Record Engagement", description: "Achieved a 93% satisfaction rate with sheer volume of participation, cementing our most successful initiative yet." }
+        ],
+        valueStack: [
+            "Fair competition with 5 dedicated distinct categories",
+            "Dedicated brackets for both children and adults",
+            "Massive ₹1,50,000 Total Prize Pool",
+            "National-level recognition and premium exposure"
+        ],
+        stats: { artistsJoined: "325", artworksSubmitted: "620", prizePool: "₹150,000", satisfactionRate: "93%" },
+        coverImage: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775290829/THE_Shakespeare_Poetry_Award_2025_2_-compressed_poypn2.webp",
+        winners: [
+            // ── Craft – Adult Category ──────────────────────────────────────
+            { id: "war-craft-1", rank: 1, name: "Devendra Yeshwant Waghmare", title: "Champion", category: "Craft – Adult Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775321305/WhatsApp_Image_2026-04-02_at_4.46.42_PM-compressed_hdwrj6.webp" },
+            { id: "war-craft-2", rank: 2, name: "M. Hemkumar", title: "1st Runner Up", category: "Craft – Adult Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775321305/WhatsApp_Image_2026-04-02_at_4.44.07_PM-compressed_cps6b8.webp" },
+            { id: "war-craft-3", rank: 3, name: "Libitha Senthil", title: "2nd Runner Up", category: "Craft – Adult Category" },
+            { id: "war-craft-4", rank: 4, name: "Devangi Nishikant Chavan", title: "Finalist", category: "Craft – Adult Category" },
+            { id: "war-craft-5", rank: 5, name: "Aakash", title: "Finalist", category: "Craft – Adult Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775323259/WhatsApp_Image_2026-04-04_at_10.48.34_PM-compressed_xvdun5.webp" },
+
+            // ── Creative Lens Art ───────────────────────────────────────────
+            { id: "war-lens-1", rank: 1, name: "Saugata Sen", title: "Champion", category: "Creative Lens Art", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134641/WhatsApp_Image_2026-04-02_at_4.43.19_PM-compressed_fqkr2a.webp" },
+            { id: "war-lens-2", rank: 2, name: "Shreya Patwardhan", title: "1st Runner Up", category: "Creative Lens Art" },
+            { id: "war-lens-3", rank: 3, name: "Pravat Chaki", title: "2nd Runner Up", category: "Creative Lens Art" },
+            { id: "war-lens-4", rank: 4, name: "Dr. Indraneel Saha", title: "Finalist", category: "Creative Lens Art" },
+            { id: "war-lens-5", rank: 5, name: "Athul Pradeep", title: "Finalist", category: "Creative Lens Art", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134641/WhatsApp_Image_2026-04-02_at_4.59.53_PM-compressed_pm3mvm.webp" },
+
+            // ── Kids Category ───────────────────────────────────────────────
+            { id: "war-kids-1", rank: 1, name: "Nivaan Samip Kewalramani", title: "Champion", category: "Kids Category" },
+            { id: "war-kids-2", rank: 2, name: "S. Haja Fathima", title: "1st Runner Up", category: "Kids Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775321305/WhatsApp_Image_2026-04-02_at_4.45.24_PM-compressed_o89oip.webp" },
+            { id: "war-kids-3", rank: 3, name: "Sahana Radhakrishnan", title: "2nd Runner Up", category: "Kids Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775321305/WhatsApp_Image_2026-04-02_at_4.49.54_PM-compressed_lv23im.webp" },
+            { id: "war-kids-4", rank: 4, name: "Purva Sunil Bamnolkar", title: "Finalist", category: "Kids Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775321361/WhatsApp_Image_2026-04-02_at_7.57.40_PM-compressed_wxcqsv.webp" },
+            { id: "war-kids-5a", rank: 5, name: "Aarya Nair", title: "Finalist (Tied 5th)", category: "Kids Category" },
+            { id: "war-kids-5b", rank: 5, name: "Gracy", title: "Finalist (Tied 5th)", category: "Kids Category", imageUrl: "https://res.cloudinary.com/dhvzfbhbe/image/upload/v1775134640/WhatsApp_Image_2026-03-30_at_1.14.08_PM-compressed_ntqkpl.webp" },
+
+            // ── Painting Category ───────────────────────────────────────────
+            { id: "war-paint-1", rank: 1, name: "Rehanpreet Singh", title: "Champion", category: "Painting Category" },
+            { id: "war-paint-2", rank: 2, name: "Manimala P.", title: "1st Runner Up", category: "Painting Category" },
+            { id: "war-paint-3", rank: 3, name: "Anwesha", title: "2nd Runner Up", category: "Painting Category" },
+
+            // ── Sketching Category ──────────────────────────────────────────
+            { id: "war-sketch-1", rank: 1, name: "Kabir Armaan", title: "Champion", category: "Sketching Category" },
+            { id: "war-sketch-2", rank: 2, name: "Zaid", title: "1st Runner Up", category: "Sketching Category" },
+            { id: "war-sketch-3", rank: 3, name: "Rekha Kar", title: "2nd Runner Up", category: "Sketching Category" },
+        ]
+    }
+];

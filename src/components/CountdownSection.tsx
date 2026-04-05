@@ -84,7 +84,7 @@ const CountdownSection: React.FC<CountdownSectionProps> = ({ onRegisterClick }) 
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any as any
       }
     }
   };

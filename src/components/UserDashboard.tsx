@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,7 +22,8 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import QRCode from "qrcode";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 import { signOut } from "firebase/auth";
 import { doc as firestoreDoc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
@@ -49,7 +52,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isGeneratePassModalOpen, setIsGeneratePassModalOpen] = useState(false);
   const [generatedPasses, setGeneratedPasses] = useState<any[]>([]);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,7 +96,7 @@ export function UserDashboard({ user }: UserDashboardProps) {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      navigate('/sikkimcreativestar');
+      router.push('/sikkimcreativestar');
     } catch (error) {
       console.error("Error signing out:", error);
     }

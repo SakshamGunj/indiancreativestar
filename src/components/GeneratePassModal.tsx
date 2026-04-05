@@ -28,7 +28,14 @@ interface GeneratePassModalProps {
   onPassesGenerated: (passes: any[]) => void;
 }
 
-const PassForm = ({ passNumber, onUpdate, passData, isUserPass = false }) => {
+interface PassFormProps {
+  passNumber: number;
+  onUpdate: (index: number, field: string, value: string) => void;
+  passData: { name: string; phone: string };
+  isUserPass?: boolean;
+}
+
+const PassForm = ({ passNumber, onUpdate, passData, isUserPass = false }: PassFormProps) => {
   return (
     <div className="space-y-4 p-4 border rounded-lg">
       <h4 className="font-semibold">{isUserPass ? "Your Pass" : `Guest Pass #${passNumber}`}</h4>
@@ -67,7 +74,7 @@ export function GeneratePassModal({
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState(1);
 
-  const handleNumberOfGuestsChange = (amount) => {
+  const handleNumberOfGuestsChange = (amount: number) => {
     const newCount = numberOfGuests + amount;
     if (newCount >= 0 && newCount <= 4) {
       setNumberOfGuests(newCount);
@@ -79,7 +86,7 @@ export function GeneratePassModal({
     }
   };
 
-  const handleGuestDataChange = (index, field, value) => {
+  const handleGuestDataChange = (index: number, field: string, value: string) => {
     const newGuestDetails = [...guestDetails];
     newGuestDetails[index][field] = value;
     setGuestDetails(newGuestDetails);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Trophy, TrendingUp } from 'lucide-react';
 
-const DashboardOverview = ({ guruData, students }) => {
+const DashboardOverview = ({ guruData, students }: { guruData: any, students: any[] }) => {
   return (
     <div className="space-y-6">
       <Card className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] rounded-2xl overflow-hidden">

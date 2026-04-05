@@ -1,0 +1,392 @@
+import { ArrowRight, MapPin, Calendar, Clock, Sparkles, Snowflake } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import EventDrawer from "./EventDrawer";
+
+const icsReviews = [
+    { name: "Aarav Sharma", rating: 5, comment: "This competition was a turning point in my artistic journey. The exposure and recognition I received were incredible.", verified: true },
+    { name: "Priya Singh", rating: 5, comment: "A fantastic platform to connect with other artists and learn from their experiences. Highly recommended!", verified: true },
+    { name: "Rohan Verma", rating: 4, comment: "The entire experience was so well-organized. I'm already looking forward to the next season!", verified: true },
+    { name: "Ananya Gupta", rating: 5, comment: "Winning the category award changed my career trajectory. Thank you Indian Creative Star!", verified: true },
+    { name: "Rahul Mehta", rating: 5, comment: "Such a professional event. The judges were very fair and the feedback was constructive.", verified: true }
+];
+
+const scsReviews = [
+    { name: "Ojashwi Pakhrin", rating: 4, comment: "Thank you for this wonderful opportunity to represent myself. In my opinion next time there should also be a second and third place in the kids category.", verified: true },
+    { name: "Kewal Rai", rating: 4, comment: "You guys are doing great just keep organising competition like this so artist's can improve more", verified: true },
+    { name: "Biswajyoti Sarma", rating: 5, comment: "Good experience", verified: true },
+    { name: "Satish Paswan", rating: 5, comment: "It was a wonderful experience participating in this creative art competition. The platform gave artists like me an opportunity to express our creativity.", verified: true },
+    { name: "Nimesh Rai", rating: 5, comment: "This competition was a wonderful experience for me. I not only got a chance to showcase my art but also learned so much throughout the journey.", verified: true },
+    { name: "Gracy Kami (Ghimiray)", rating: 5, comment: "Thank you for giving us this opportunity 🙏🙏 I really enjoyed it ☺️ I want to participate in future also.", verified: true },
+];
+
+const icsHallOfFame = [
+    { name: "Aarav Sharma", category: "Oil Painting • Category A", image: "/artworks/artwork_1.jpg" },
+    { name: "Priya Singh", category: "Digital Art • Category B", image: "/artworks/artwork_2.jpg" }
+];
+
+const scsHallOfFame = [
+    { name: "Ojashwi Pakhrin", category: "Sketching • Category A", image: "/artworks/artwork_3.jpg" },
+    { name: "Kewal Rai", category: "Watercolors • Category B", image: "/artworks/artwork_4.jpg" }
+];
+
+const highlightsGalore = [
+    "/artworks/artwork_5.jpg",
+    "/artworks/artwork_6.jpg",
+    "/artworks/artwork_7.jpg",
+    "/artworks/artwork_1.jpg",
+    "/artworks/artwork_2.jpg"
+];
+
+const eventData = [
+    {
+        id: 1,
+        title: "Indian Creative Star",
+        season: "Season 3",
+        status: "ongoing",
+        category: "National",
+        description: "The biggest national art competition returns. Present your art on a grand stage and receive massive recognition.",
+        date: "Live Now",
+        location: "Online",
+        image: "https://i.ibb.co/qL29ZCrV/THE-Shakespeare-Poetry-Award-2025-2.webp",
+        link: "/indiancreativestar/v3",
+        color: "text-purple-400 border-purple-400"
+    },
+    {
+        id: 2,
+        title: "Rang Kala Award",
+        season: "2025",
+        status: "ongoing",
+        category: "National",
+        description: "An exclusive, high-prestige platform honoring raw artistic talents across India.",
+        date: "Live Now",
+        location: "Online",
+        image: "https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp", // Will re-use or update later
+        link: "/rangkala-award",
+        color: "text-orange-400 border-orange-400",
+        reviews: scsReviews,
+        hallOfFame: scsHallOfFame,
+        highlights: highlightsGalore
+    }
+];
+
+const EventsPortfolio = () => {
+    const navigate = useNavigate();
+    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const handleEventClick = (event: any) => {
+        if (event.status === 'ongoing' || event.link.startsWith('/')) {
+            // If it's the main ongoing event or has a direct internal link, navigate
+            navigate(event.link);
+        } else {
+            // Otherwise open the drawer (for upcoming, past, or non-linked events)
+            setSelectedEvent(event);
+            setIsDrawerOpen(true);
+        }
+    };
+
+    const previousEvents = eventData.filter(e => e.status === 'past'); // We'll need to add a 'past' event to data
+    const currentEvents = eventData.filter(e => e.status === 'ongoing');
+    const upcomingEvents = eventData.filter(e => e.status === 'upcoming' || e.status === 'open'); // Grouping open mentorship with upcoming for now
+
+    // Temporary: Add a mock past event to data if not present (handled in render for now or update data)
+    // Actually, let's update the eventData first to be sure.
+
+    return (
+        <section className="py-24 px-6 bg-[#0a0a0a] space-y-32" id="events-portfolio">
+
+            {/* 1. PREVIOUS EVENTS - "The Legacy" */}
+            <div className="max-w-7xl mx-auto space-y-12">
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
+                    <div className="space-y-4">
+                        <h4 className="text-[#D4AF37] tracking-[0.2em] text-xs font-bold uppercase">Our Legacy</h4>
+                        <h2 className="font-playfair text-4xl md:text-5xl text-white">Previous Seasons</h2>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-white/40 text-sm max-w-md">Discover the champions who started their journey with us. Explore the gallery of excellence.</p>
+                    </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Sikkim Creative Star S1 */}
+                    <div
+                        onClick={() => {
+                            setSelectedEvent({
+                                ...eventData[1],
+                                status: 'past',
+                                title: 'Sikkim Creative Star S1',
+                                season: 'Season 1',
+                                description: 'The inaugural season that highlighted the raw talent of Sikkim. Over 500 artists participated across the state, showcasing incredible creativity in sketching, painting, and digital art. It was a celebration of local culture and artistic expression.',
+                                date: 'Completed 2023',
+                                image: 'https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp',
+                                stats: [
+                                    { label: "Artists Joined", value: "500+" },
+                                    { label: "Prize Pool", value: "₹1 Lakh+" },
+                                    { label: "Cities", value: "20+" }
+                                ]
+                            });
+                            setIsDrawerOpen(true);
+                        }}
+                        className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
+                    >
+                        <div className="relative aspect-video w-full overflow-hidden">
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                            <img src="https://i.ibb.co/SDwFD23N/PHOTO-2025-10-27-20-05-20.webp" alt="Season 1" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                            <div className="absolute top-4 left-4 z-20 flex gap-2">
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-green-900/40 text-green-400 border-green-500/30 backdrop-blur-md rounded-full">COMPLETED</span>
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-blue-900/40 text-blue-400 border-blue-500/30 backdrop-blur-md rounded-full">STATE LEVEL</span>
+                            </div>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <div>
+                                <h3 className="text-2xl font-playfair text-white mb-1">Sikkim Creative Star</h3>
+                                <p className="text-[#D4AF37] text-sm font-lato italic">Season 1 • Regional Excellence</p>
+                            </div>
+
+                            {/* Trust Metrics Grid */}
+                            <div className="grid grid-cols-2 gap-3 py-4 border-y border-white/5">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artists Joined</p>
+                                    <p className="text-white font-medium flex items-center gap-1"><Sparkles className="w-3 h-3 text-[#D4AF37]" /> 500+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Prize Pool</p>
+                                    <p className="text-white font-medium">₹1 Lakh+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artworks</p>
+                                    <p className="text-white font-medium">800+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Satisfaction</p>
+                                    <p className="text-white font-medium text-green-400">98%</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2">
+                                <Button variant="link" className="text-white/40 hover:text-[#D4AF37] p-0 h-auto">View Highlights <ArrowRight className="ml-2 w-4 h-4" /></Button>
+                                <div className="flex text-[#D4AF37] gap-0.5">
+                                    {[1, 2, 3, 4, 5].map(i => <Sparkles key={i} className="w-3 h-3 fill-current" />)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Indian Creative Star S1 */}
+                    <div
+                        onClick={() => {
+                            setSelectedEvent({
+                                ...eventData[0],
+                                status: 'past',
+                                title: 'Indian Creative Star S1',
+                                season: 'Season 1',
+                                description: 'A national phenomenon that brought together artists from every corner of India. From Kashmir to Kanyakumari, thousands of creators submitted their masterpieces, making it one of the largest online art competitions in the country.',
+                                date: 'Completed 2024',
+                                image: 'https://i.ibb.co/qL29ZCrV/THE-Shakespeare-Poetry-Award-2025-2.webp',
+                                stats: [
+                                    { label: "Artists Joined", value: "12,000+" },
+                                    { label: "Prize Pool", value: "₹5 Lakh+" },
+                                    { label: "Reach", value: "Pan India" }
+                                ]
+                            });
+                            setIsDrawerOpen(true);
+                        }}
+                        className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
+                    >
+                        <div className="relative aspect-video w-full overflow-hidden">
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                            <img src="https://i.ibb.co/qL29ZCrV/THE-Shakespeare-Poetry-Award-2025-2.webp" alt="ICS Season 1" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                            <div className="absolute top-4 left-4 z-20 flex gap-2">
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-green-900/40 text-green-400 border-green-500/30 backdrop-blur-md rounded-full">COMPLETED</span>
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-purple-900/40 text-purple-400 border-purple-500/30 backdrop-blur-md rounded-full">NATIONAL LEVEL</span>
+                            </div>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <div>
+                                <h3 className="text-2xl font-playfair text-white mb-1">Indian Creative Star</h3>
+                                <p className="text-[#D4AF37] text-sm font-lato italic">Season 1 • National Phenomenon</p>
+                            </div>
+
+                            {/* Trust Metrics Grid */}
+                            <div className="grid grid-cols-2 gap-3 py-4 border-y border-white/5">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artists Joined</p>
+                                    <p className="text-white font-medium flex items-center gap-1"><Sparkles className="w-3 h-3 text-[#D4AF37]" /> 12k+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Prize Pool</p>
+                                    <p className="text-white font-medium">₹5 Lakh+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artworks</p>
+                                    <p className="text-white font-medium">15k+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Satisfaction</p>
+                                    <p className="text-white font-medium text-green-400">4.9/5</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2">
+                                <Button variant="link" className="text-white/40 hover:text-[#D4AF37] p-0 h-auto">View Highlights <ArrowRight className="ml-2 w-4 h-4" /></Button>
+                                <div className="flex text-[#D4AF37] gap-0.5">
+                                    {[1, 2, 3, 4, 5].map(i => <Sparkles key={i} className="w-3 h-3 fill-current" />)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Winter Art Royale W.A.R */}
+                    <div
+                        onClick={() => {
+                            setSelectedEvent({
+                                id: 3,
+                                status: 'past',
+                                title: 'Winter Art Royale',
+                                season: 'W.A.R',
+                                description: 'The ultimate winter creative showdown. Artists battled it out in the cold to claim the Winter Crown, showcasing immense talent in a highly competitive national arena.',
+                                date: 'Completed 2024',
+                                image: 'https://i.ibb.co/Ldq3TDDB/Winter-Art-Royale-W-A-R-Logo.jpg',
+                                stats: [
+                                    { label: "Artists Joined", value: "8,000+" },
+                                    { label: "Prize Pool", value: "₹50,000" },
+                                    { label: "Reach", value: "Pan India" }
+                                ]
+                            });
+                            setIsDrawerOpen(true);
+                        }}
+                        className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
+                    >
+                        <div className="relative aspect-video w-full overflow-hidden">
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                            <img src="https://i.ibb.co/Ldq3TDDB/Winter-Art-Royale-W-A-R-Logo.jpg" alt="Winter Art Royale" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                            <div className="absolute top-4 left-4 z-20 flex gap-2">
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-green-900/40 text-green-400 border-green-500/30 backdrop-blur-md rounded-full">COMPLETED</span>
+                                <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-blue-900/40 text-blue-400 border-blue-500/30 backdrop-blur-md rounded-full">NATIONAL LEVEL</span>
+                            </div>
+                        </div>
+                        <div className="p-6 space-y-4">
+                            <div>
+                                <h3 className="text-2xl font-playfair text-white mb-1">Winter Art Royale</h3>
+                                <p className="text-[#D4AF37] text-sm font-lato italic">W.A.R • Winter Showdown</p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3 py-4 border-y border-white/5">
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artists Joined</p>
+                                    <p className="text-white font-medium flex items-center gap-1"><Sparkles className="w-3 h-3 text-[#D4AF37]" /> 8k+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Prize Pool</p>
+                                    <p className="text-white font-medium">₹50,000</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Artworks</p>
+                                    <p className="text-white font-medium">10k+</p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] uppercase text-white/40 tracking-wider">Satisfaction</p>
+                                    <p className="text-white font-medium text-green-400">4.8/5</p>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2">
+                                <Button variant="link" className="text-white/40 hover:text-[#D4AF37] p-0 h-auto">View Highlights <ArrowRight className="ml-2 w-4 h-4" /></Button>
+                                <div className="flex text-[#D4AF37] gap-0.5">
+                                    {[1, 2, 3, 4, 5].map(i => <Sparkles key={i} className="w-3 h-3 fill-current" />)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 2. CURRENT EVENT - "The Spotlight" */}
+            <div className="max-w-7xl mx-auto">
+                <div className="relative rounded-3xl overflow-hidden border border-blue-500/20 group">
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    {/* Spotlight Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-950 via-black/80 to-transparent z-10"></div>
+
+                    {/* Decorative Stars */}
+                    <Sparkles className="absolute top-10 left-[10%] text-white/5 w-24 h-24 animate-bounce duration-[10000ms]" />
+                    <Sparkles className="absolute bottom-10 right-[20%] text-white/5 w-32 h-32 animate-pulse duration-[8000ms]" />
+
+                    <img src={eventData[0].image} alt="Current Event" className="absolute inset-0 w-full h-full object-cover opacity-60 z-0 group-hover:scale-105 transition-transform duration-[2000ms]" />
+
+                    <div className="relative z-20 p-8 md:p-16 grid lg:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-8">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-400/30 text-purple-300 text-xs font-bold tracking-widest uppercase animate-pulse">
+                                <span className="w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_10px_#A855F7]"></span> Live Event
+                            </div>
+                            <h2 className="font-playfair text-5xl md:text-6xl text-white leading-tight drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                                {eventData[0].title} <span className="text-purple-300 italic block mt-2 text-4xl md:text-5xl">{eventData[0].season}</span>
+                            </h2>
+                            <p className="text-xl text-purple-100/80 leading-relaxed max-w-xl">
+                                {eventData[0].description}
+                            </p>
+                            <Button
+                                onClick={() => navigate(eventData[0].link)}
+                                className="bg-purple-600 text-white hover:bg-white hover:text-purple-900 transition-all duration-500 px-10 py-8 text-lg rounded-none font-playfair hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] border border-purple-500/50"
+                            >
+                                Enter The Competition <ArrowRight className="ml-3 w-5 h-5" />
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 3. UPCOMING EVENTS - Hidden as per request */}
+            {/* <div className="max-w-7xl mx-auto space-y-12">
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
+                    <div className="space-y-4">
+                        <h4 className="text-[#D4AF37] tracking-[0.2em] text-xs font-bold uppercase">Coming Soon</h4>
+                        <h2 className="font-playfair text-4xl md:text-5xl text-white">Upcoming Events</h2>
+                    </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {upcomingEvents.map((event) => (
+                        <div
+                            key={event.id}
+                            onClick={() => handleEventClick(event)}
+                            className="group relative bg-[#121212] border border-white/5 hover:border-transparent transition-all duration-500 flex flex-col h-full rounded-md overflow-hidden cursor-pointer gradient-border-glow"
+                        >
+                            <div className="relative h-64 overflow-hidden">
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                                <img src={event.image} alt={event.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                <div className="absolute top-4 left-4 z-20">
+                                    <span className="px-3 py-1 text-[10px] font-bold tracking-widest uppercase border bg-blue-500/10 text-blue-400 border-blue-500/50 backdrop-blur-md rounded-full">
+                                        {event.status}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="p-6 flex-1 flex flex-col">
+                                <div className="space-y-2 mb-4">
+                                    <h3 className="text-2xl font-playfair text-white">{event.title}</h3>
+                                    <p className="text-white/40 text-sm font-lato italic">{event.season}</p>
+                                </div>
+                                <p className="text-white/60 text-sm leading-relaxed mb-6">{event.description}</p>
+                                <div className="mt-auto">
+                                    <Button className="w-full bg-white/5 hover:bg-gradient-to-r hover:from-[#D4AF37] hover:to-[#B59530] hover:text-black text-white border border-white/10 rounded-none transition-all duration-300 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                                        View Details <ArrowRight className="ml-2 w-4 h-4" />
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div> */}
+
+            <EventDrawer
+                isOpen={isDrawerOpen}
+                onClose={() => setIsDrawerOpen(false)}
+                event={selectedEvent}
+            />
+        </section>
+    );
+};
+
+export default EventsPortfolio;

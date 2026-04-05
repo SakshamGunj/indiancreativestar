@@ -1,7 +1,10 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Star, Users, Upload, Award, Trophy } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -10,7 +13,7 @@ interface HowItWorksSectionV2Props {
 }
 
 export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2Props) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const ref = useRef(null);
   const headerRef = useRef(null);
   const stepsRef = useRef(null);
@@ -30,7 +33,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       scale: 1,
       transition: { 
         duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         staggerChildren: 0.1
       } 
     },
@@ -44,7 +47,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       rotateY: 0,
       transition: { 
         duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.2
       } 
     },
@@ -58,7 +61,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       rotateY: 0,
       transition: { 
         duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.3
       } 
     },
@@ -72,7 +75,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       rotateX: 0,
       transition: { 
         duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.1
       } 
     },
@@ -87,7 +90,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       rotateX: 0,
       transition: { 
         duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any
       } 
     },
   };
@@ -100,7 +103,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
       scale: 1,
       transition: { 
         duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         staggerChildren: 0.1
       } 
     },
@@ -120,7 +123,7 @@ export function HowItWorksSectionV2({ onRegistrationClick }: HowItWorksSectionV2
     if (onRegistrationClick) {
       onRegistrationClick();
     } else {
-      navigate("/competitions");
+      router.push("/competitions");
     }
   };
   

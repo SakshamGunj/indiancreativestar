@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,7 +9,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { load } from '@cashfreepayments/cashfree-js';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+
 import { sendInitiateCheckoutWebhook, sendPurchaseWebhook, getBrowserInfo, getFBCookies } from '@/utils/webhookOptimized';
 
 interface RegistrationDrawerProps {
@@ -22,7 +25,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
   contestType = 'art'
 }) => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -467,7 +470,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
       console.log('🆔 [SESSION] External ID stored:', externalId);
 
       // Call backend to create Cashfree order (use variables already declared above)
-      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
       const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: {
@@ -819,7 +822,7 @@ export const RegistrationDrawer: React.FC<RegistrationDrawerProps> = ({
         const thankYouUrl = `/thank-you?type=${contestType}&name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.whatsapp)}&age=${encodeURIComponent(formData.age)}&whatsapp=${encodeURIComponent(formData.whatsapp)}&orderId=${order_id}&payment=success&from=/indiancreativestar/v2`;
 
         setTimeout(() => {
-          navigate(thankYouUrl);
+          router.push(thankYouUrl);
         }, 500);
       } else {
         // Handle unexpected result

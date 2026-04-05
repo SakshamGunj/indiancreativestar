@@ -8,7 +8,7 @@ export const GallerySectionV3 = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeOut" as any as any }
     }
   };
 

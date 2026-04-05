@@ -1,3 +1,5 @@
+"use client";
+
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -14,12 +16,13 @@ interface WarRegistrationModalProps {
     onClose: () => void;
 }
 
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 
 // ... existing imports
 
 export const WarRegistrationModal = ({ isOpen, onClose }: WarRegistrationModalProps) => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [step, setStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useToast();
@@ -86,7 +89,7 @@ export const WarRegistrationModal = ({ isOpen, onClose }: WarRegistrationModalPr
 
             // Redirect to Thank You Page on success
             handleClose(); // Close and reset modal
-            navigate('/winter-art-royale/thank-you');
+            router.push('/winter-art-royale/thank-you');
         }, 2000);
     };
 

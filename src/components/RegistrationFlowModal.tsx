@@ -1,3 +1,5 @@
+"use client";
+
 
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -6,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, CheckCircle, Palette, CreditCard, Loader2, X, AlertCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/navigation';
+
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -26,7 +29,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [registrationData, setRegistrationData] = useState<any>(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
   const isMobile = useIsMobile();
 
   const form = useForm({
@@ -122,7 +125,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
       sessionStorage.setItem('ics_firebase_id', regData.id);
       console.log('💾 [SESSION] Registration data saved to sessionStorage');
 
-      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
       const response = await fetch(`${API_URL}/api/create-order`, {
         method: 'POST',
         headers: {
@@ -238,7 +241,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
   const verifyPaymentAndRedirect = async (order_id: string, regData: any) => {
     try {
       // Call YOUR backend to verify payment
-      const API_URL = import.meta.env.VITE_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://daamieventsitebackendpayment.gunj06saksham-d14.workers.dev';
       const response = await fetch(`${API_URL}/api/verify-payment?orderId=${order_id}`);
       const verifyData = await response.json();
 
@@ -277,7 +280,7 @@ export function RegistrationFlowModal({ isOpen, onClose, contestType = "art", on
             orderId: order_id
           });
 
-          navigate(`/thank-you?${qp.toString()}`);
+          router.push(`/thank-you?${qp.toString()}`);
         }, 2000);
 
       } else {

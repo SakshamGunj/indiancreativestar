@@ -39,7 +39,7 @@ export function PrizeSectionV2() {
       scale: 1,
       transition: { 
         duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         staggerChildren: 0.1
       } 
     },
@@ -53,7 +53,7 @@ export function PrizeSectionV2() {
       rotateY: 0,
       transition: { 
         duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.2
       } 
     },
@@ -67,7 +67,7 @@ export function PrizeSectionV2() {
       rotateY: 0,
       transition: { 
         duration: 1.2, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.3
       } 
     },
@@ -81,7 +81,7 @@ export function PrizeSectionV2() {
       rotateX: 0,
       transition: { 
         duration: 1, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         delay: 0.1
       } 
     },
@@ -96,7 +96,7 @@ export function PrizeSectionV2() {
       rotateX: 0,
       transition: { 
         duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any
       } 
     },
   };
@@ -110,7 +110,7 @@ export function PrizeSectionV2() {
       rotateY: 0,
       transition: { 
         duration: 0.9, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any
       } 
     },
   };
@@ -123,7 +123,7 @@ export function PrizeSectionV2() {
       scale: 1,
       transition: { 
         duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as any as any,
         staggerChildren: 0.1
       } 
     },
@@ -359,7 +359,7 @@ export function PrizeSectionV2() {
                   </Card>
                 </motion.div>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Kids Art Competition Prizes */}

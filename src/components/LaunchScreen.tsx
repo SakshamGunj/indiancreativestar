@@ -101,18 +101,9 @@ export function LaunchScreen({ onLaunch }: LaunchScreenProps) {
           <Button
             onClick={handleLaunch}
             disabled={isLaunching}
-            className={`group relative px-4 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-creative-purple via-creative-blue to-creative-yellow hover:from-creative-yellow hover:via-creative-pink hover:to-creative-purple transition-all duration-500 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`group relative px-4 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-creative-purple via-creative-blue to-creative-yellow hover:from-creative-yellow hover:via-creative-pink hover:to-creative-purple transition-all duration-500 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed w-[200px] sm:w-[280px] h-[50px] sm:h-[70px] rounded-[50px] ${
               isLaunching ? 'scale-110 animate-pulse' : 'scale-100'
             }`}
-            style={{
-              borderRadius: '50px',
-              minWidth: '200px',
-              height: '50px',
-              '@media (min-width: 640px)': {
-                minWidth: '280px',
-                height: '70px'
-              }
-            }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-creative-purple/20 via-creative-blue/20 to-creative-yellow/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500" />
             

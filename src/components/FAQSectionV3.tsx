@@ -10,7 +10,7 @@ export const FAQSectionV3 = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeOut" as any as any }
     }
   };
 
@@ -98,7 +98,7 @@ export const FAQSectionV3 = () => {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.3, ease: "easeOut" as any }}
                   className="px-6 pb-4"
                 >
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
